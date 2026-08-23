@@ -49,6 +49,7 @@ Each skill is a self-contained directory. See [`skills/_template/SKILL.md`](skil
 | [_template](skills/_template/) | Starter template for authoring new skills |
 | [fix-dependabot-alert](skills/fix-dependabot-alert/) | Remediate a GitHub Dependabot security alert, then open a PR |
 | [fix-dependabot-pr](skills/fix-dependabot-pr/) | Make a Dependabot dependency update PR pass CI |
+| [fix-failing-ci](skills/fix-failing-ci/) | Diagnose a red GitHub Actions run, fix it on the built branch, and push until green |
 | [fix-issue](skills/fix-issue/) | Pick an open GitHub issue, implement it, and open a PR |
 | [fix-renovate-pr](skills/fix-renovate-pr/) | Make a Renovate (or Dependabot) dependency update PR pass CI |
 
