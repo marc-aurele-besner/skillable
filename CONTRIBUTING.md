@@ -10,15 +10,24 @@ Thank you for helping grow this collection of agent skills.
    - Write a specific third-person `description` that includes both **what** the skill does and **when** the agent should use it
    - Replace the template body with your instructions
 3. Add optional supporting files (`reference.md`, `examples.md`, `scripts/`) only if they add real value.
-4. Open a pull request with:
+4. Add a row to the **Available skills** table in `README.md` (alphabetical, after `_template`):
+   `| [<your-skill-name>](skills/<your-skill-name>/) | Short description |`
+5. Open a pull request with:
    - A short summary of the skill's purpose
    - Example trigger phrases a user might say
    - Any external dependencies (CLI tools, APIs, etc.)
+
+CI runs on pull requests that add or change skills. It fails if the new skill is missing from the README table, or if `SKILL.md` does not follow the structure and formatting rules below. Run the same checks locally:
+
+```bash
+python3 scripts/validate_skills.py
+```
 
 ## Skill quality checklist
 
 Before submitting, verify:
 
+- [ ] Skill is listed in the README **Available skills** table
 - [ ] `name` is lowercase with hyphens only
 - [ ] `description` is under 1024 characters and written in third person
 - [ ] `SKILL.md` is under 500 lines
