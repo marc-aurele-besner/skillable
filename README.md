@@ -47,8 +47,9 @@ Each skill is a self-contained directory. See [`skills/_template/SKILL.md`](skil
 | Skill | Description |
 |-------|-------------|
 | [_template](skills/_template/) | Starter template for authoring new skills |
-
-> Skills will be listed here as they are added. See [CONTRIBUTING.md](CONTRIBUTING.md) to submit one.
+| [fix-dependabot-alert](skills/fix-dependabot-alert/) | Remediate a GitHub Dependabot security alert, then open a PR |
+| [fix-dependabot-pr](skills/fix-dependabot-pr/) | Make a Dependabot dependency update PR pass CI |
+| [fix-renovate-pr](skills/fix-renovate-pr/) | Make a Renovate (or Dependabot) dependency update PR pass CI |
 
 ## What makes a good skill?
 
