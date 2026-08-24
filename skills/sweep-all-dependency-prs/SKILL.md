@@ -105,9 +105,11 @@ Run `sweep-dependency-prs` on one repo at a time. Finish repo N (including its r
 
 A child sweep that errors on one repo must not abort the others — record the failure and continue.
 
+Every agent must return the child sweep's **full report** (step 7 of `sweep-dependency-prs`) as its result. The parent keeps all of them — they are the raw material for the per-repo sections below. Do not discard or paraphrase child detail into one-line rollups.
+
 ## 4. Report
 
-Roll child reports up; do not dump every empty repo as its own section.
+The report is organized **per repo**, not per action: every repo the sweep touched in any way (approved, commented, requested a rebase, merged, pushed a fix) gets its own section showing exactly what was done there. Nothing that was touched may be summarized away into a count.
 
 ```markdown
 # Dependency PR sweep — all controlled repos
@@ -115,25 +117,34 @@ Roll child reports up; do not dump every empty repo as its own section.
 **Mode:** parallel | sequential
 **Owned orgs:** org1 (n repos), org2 (n repos)
 **Repos scanned:** N (personal: P, from owned orgs: O, other controlled: C; skipped forks: F, archived: A)
-**Repos with bot PRs:** M
-**Called sweep-dependency-prs:** M
+**Repos swept:** M — merged: X PRs, fixed then merged: Y, auto-merging: Z, still open: W
 
-## Merged
-- owner/repo#n title
+## Per-repo results
 
-## Auto-merge enabled (CI still running)
-- owner/repo#n title
+### owner/repo1 — 2 merged, 1 fixed then merged, 1 still open
+| PR | Result | Detail |
+|----|--------|--------|
+| [#12 bump foo 1.2.3 → 1.2.4](url) | Merged | squash, checks green |
+| [#13 bump bar (grouped)](url) | Merged | squash, checks green |
+| [#14 bump baz 2.x → 3.0 (major)](url) | Fixed then merged | lint broke, fix-renovate-pr, then squash |
+| [#15 bump qux](url) | Still open | conflict; rebase requested, not landed |
 
-## Fixed then merged
-- owner/repo#n title — what broke
+### owner/repo2 — ...
 
-## Still open
-- owner/repo#n title — conflict | still red | blocked | skipped (why)
-
-## Repos skipped
+## Repos probed but not swept
 - no open PRs: count
-- human PRs only: count (and the repos, if few)
-- probe/sweep failed: owner/repo — error
+- human PRs only: count (name the repos if few)
+- draft bot PRs only: repos
+- probe or sweep failed: owner/repo — the error
+
+## Out of scope
+- human PRs left alone: count across swept repos
 ```
 
-Include PR URLs. If the controlled-repo list looks wrong (missing an org, or an org they do not want), say how it was filtered so they can rerun with a narrower scope.
+Rules for the per-repo sections:
+
+- Every PR the child sweep processed appears as a row, with its URL, title (mark majors), and one of: Merged, Auto-merge enabled, Fixed then merged, Still open (conflict | still red | blocked | skipped), with the reason in Detail.
+- Actions short of a merge still count as touching: an approval on a blocked PR or a rebase comment must show up in that repo's rows, not vanish.
+- Order repo sections by most work done first (fixed/merged before untouched-but-swept); keep untouched repos out of the per-repo sections entirely — they belong in the probed-but-not-swept counts.
+
+If the controlled-repo list looks wrong (missing an org, or an org they do not want), say how it was filtered so they can rerun with a narrower scope.
