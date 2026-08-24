@@ -47,6 +47,7 @@ Each skill is a self-contained directory. See [`skills/_template/SKILL.md`](skil
 | Skill | Description |
 |-------|-------------|
 | [_template](skills/_template/) | Starter template for authoring new skills |
+| [build-landing-page](skills/build-landing-page/) | Scaffold, design, wire analytics, and deploy a landing page from a product idea |
 | [dedupe-and-prune-deps](skills/dedupe-and-prune-deps/) | Collapse duplicate versions, declare phantom imports, and remove unused dependencies |
 | [fix-dependabot-alert](skills/fix-dependabot-alert/) | Remediate a GitHub Dependabot security alert, then open a PR |
 | [fix-dependabot-pr](skills/fix-dependabot-pr/) | Make a Dependabot dependency update PR pass CI |
