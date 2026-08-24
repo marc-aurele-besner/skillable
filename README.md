@@ -71,6 +71,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [sweep-all-dependabot-alerts](skills/sweep-all-dependabot-alerts/) | 🤖 Find open Dependabot **security alerts** across every repo you own (orgs included) and fan out fix-dependabot-alert |
 | [sweep-all-dependency-prs](skills/sweep-all-dependency-prs/) | 🤖 Fan out across **every repo you own** (orgs included) and sweep their bot PRs in parallel |
 | [sweep-dependency-prs](skills/sweep-dependency-prs/) | 🤖 Approve & merge every green Dependabot/Renovate PR in a repo; dispatch fixes for the red ones |
+| [upgrade-node-across-org](skills/upgrade-node-across-org/) | 🛠 Find every repo you own that pins Node (orgs included) and fan out upgrade-node-version — one PR per repo |
 | [upgrade-node-version](skills/upgrade-node-version/) | 🛠 Bump Node across `.nvmrc`, `engines`, CI workflows, and Dockerfiles — then fix the fallout |
 
 ## 🔍 Anatomy of a skill
