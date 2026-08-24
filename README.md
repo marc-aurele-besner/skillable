@@ -6,7 +6,7 @@
 
 A curated, community-driven collection of [Agent Skills](https://cursor.com/docs/context/skills) — plain-markdown playbooks that turn "explain it to the agent again" into a single slash command.
 
-[![Skills](https://img.shields.io/badge/skills-10-blueviolet)](#-skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-10-blueviolet)](#available-skills)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Made for Cursor](https://img.shields.io/badge/made%20for-Cursor-black)](https://cursor.com)
@@ -54,34 +54,23 @@ cp -r skillable/skills/<skill-name> .cursor/skills/
 
 > **Tip:** the `SKILL.md` format is plain markdown + frontmatter, so these skills also work with other agents that read skill folders (e.g. Claude Code via `~/.claude/skills/`).
 
-## 📚 Skill catalog
+## Available skills
 
-### 🤖 Dependency autopilot
-
-| Skill | What it does |
-|-------|--------------|
-| [sweep-all-dependency-prs](skills/sweep-all-dependency-prs/) | Fan out across **every repo you own** (orgs included) and sweep their bot PRs in parallel |
-| [sweep-dependency-prs](skills/sweep-dependency-prs/) | Approve & merge every green Dependabot/Renovate PR in a repo; dispatch fixes for the red ones |
-| [fix-renovate-pr](skills/fix-renovate-pr/) | Take over a Renovate bump PR and push commits until CI passes |
-| [fix-dependabot-pr](skills/fix-dependabot-pr/) | Same, for Dependabot PRs — including grouped updates and major-version migrations |
-| [fix-dependabot-alert](skills/fix-dependabot-alert/) | Remediate a Dependabot **security alert** end-to-end: bump/override, branch, PR |
-| [dedupe-and-prune-deps](skills/dedupe-and-prune-deps/) | Collapse duplicate versions, declare phantom imports, remove unused dependencies |
-
-### 🚑 CI & issues
+Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & building
 
 | Skill | What it does |
 |-------|--------------|
-| [fix-failing-ci](skills/fix-failing-ci/) | Paste a red Actions run URL; get diagnosis, a fix on the built branch, and a green build |
-| [fix-issue](skills/fix-issue/) | Pick an open GitHub issue, implement it on a fresh branch, open the PR |
-
-### 🛠 Upgrades & building
-
-| Skill | What it does |
-|-------|--------------|
-| [upgrade-node-version](skills/upgrade-node-version/) | Bump Node across `.nvmrc`, `engines`, CI workflows, and Dockerfiles — then fix the fallout |
-| [build-landing-page](skills/build-landing-page/) | Idea → scaffolded, designed, analytics-wired, **deployed** landing page with a live URL |
-
-Want to write your own? Start from [`skills/_template/SKILL.md`](skills/_template/SKILL.md).
+| [_template](skills/_template/) | 📐 Starter template for authoring new skills — copy it to write your own |
+| [build-landing-page](skills/build-landing-page/) | 🛠 Idea → scaffolded, designed, analytics-wired, **deployed** landing page with a live URL |
+| [dedupe-and-prune-deps](skills/dedupe-and-prune-deps/) | 🤖 Collapse duplicate versions, declare phantom imports, remove unused dependencies |
+| [fix-dependabot-alert](skills/fix-dependabot-alert/) | 🤖 Remediate a Dependabot **security alert** end-to-end: bump/override, branch, PR |
+| [fix-dependabot-pr](skills/fix-dependabot-pr/) | 🤖 Take over a Dependabot bump PR — grouped updates and major migrations included — and push commits until CI passes |
+| [fix-failing-ci](skills/fix-failing-ci/) | 🚑 Paste a red Actions run URL; get diagnosis, a fix on the built branch, and a green build |
+| [fix-issue](skills/fix-issue/) | 🚑 Pick an open GitHub issue, implement it on a fresh branch, open the PR |
+| [fix-renovate-pr](skills/fix-renovate-pr/) | 🤖 Take over a Renovate bump PR and push commits until CI passes |
+| [sweep-all-dependency-prs](skills/sweep-all-dependency-prs/) | 🤖 Fan out across **every repo you own** (orgs included) and sweep their bot PRs in parallel |
+| [sweep-dependency-prs](skills/sweep-dependency-prs/) | 🤖 Approve & merge every green Dependabot/Renovate PR in a repo; dispatch fixes for the red ones |
+| [upgrade-node-version](skills/upgrade-node-version/) | 🛠 Bump Node across `.nvmrc`, `engines`, CI workflows, and Dockerfiles — then fix the fallout |
 
 ## 🔍 Anatomy of a skill
 
