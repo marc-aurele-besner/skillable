@@ -61,6 +61,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | Skill | What it does |
 |-------|--------------|
 | [_template](skills/_template/) | 📐 Starter template for authoring new skills — copy it to write your own |
+| [align-minimum-release-age](skills/align-minimum-release-age/) | 🤖 Sync the dependency cooldown between pnpm/npm/Poetry and Renovate to the most conservative value — one repo or your whole fleet |
 | [build-landing-page](skills/build-landing-page/) | 🛠 Idea → scaffolded, designed, analytics-wired, **deployed** landing page with a live URL |
 | [dedupe-and-prune-deps](skills/dedupe-and-prune-deps/) | 🤖 Collapse duplicate versions, declare phantom imports, remove unused dependencies |
 | [fix-dependabot-alert](skills/fix-dependabot-alert/) | 🤖 Remediate a Dependabot **security alert** end-to-end: bump/override, branch, PR |
