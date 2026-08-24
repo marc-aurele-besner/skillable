@@ -4,12 +4,12 @@
 
 **Teach your AI agent the workflows you're tired of repeating.**
 
-A curated, community-driven collection of [Agent Skills](https://cursor.com/docs/context/skills) — plain-markdown playbooks that turn "explain it to the agent again" into a single slash command.
+A curated, community-driven collection of [Agent Skills](https://agentskills.io) — plain-markdown playbooks that turn "explain it to the agent again" into a single slash command. Built on the open `SKILL.md` format, so they work with Cursor, Claude Code, and [any skills-capable agent](https://agentskills.io/clients).
 
 [![Skills](https://img.shields.io/badge/skills-10-blueviolet)](#available-skills)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Made for Cursor](https://img.shields.io/badge/made%20for-Cursor-black)](https://cursor.com)
+[![Format: Agent Skills](https://img.shields.io/badge/format-open%20Agent%20Skills-black)](https://agentskills.io)
 
 </div>
 
@@ -41,18 +41,18 @@ agent:  Listing every repo you own (and your orgs') …
 
 ```bash
 git clone https://github.com/marc-aurele-besner/skillable.git
-cp -r skillable/skills/* ~/.cursor/skills/
+
+cp -r skillable/skills/* ~/.cursor/skills/   # Cursor
+cp -r skillable/skills/* ~/.claude/skills/   # Claude Code
 ```
 
-Restart Cursor or start a new agent session — skills are picked up automatically from their `description` field, or invoked directly as `/skill-name`.
+Using a different agent? Same idea — copy the skill folders into wherever it discovers skills (see the [client list](https://agentskills.io/clients) for yours). Then start a new session: skills are picked up automatically from their `description` field, or invoked directly as `/skill-name`.
 
 **Or share one skill with your team** by dropping it into a project:
 
 ```bash
-cp -r skillable/skills/<skill-name> .cursor/skills/
+cp -r skillable/skills/<skill-name> .cursor/skills/   # or .claude/skills/, etc.
 ```
-
-> **Tip:** the `SKILL.md` format is plain markdown + frontmatter, so these skills also work with other agents that read skill folders (e.g. Claude Code via `~/.claude/skills/`).
 
 ## Available skills
 
