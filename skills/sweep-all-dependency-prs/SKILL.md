@@ -124,10 +124,10 @@ The report is organized **per repo**, not per action: every repo the sweep touch
 ### owner/repo1 — 2 merged, 1 fixed then merged, 1 still open
 | PR | Result | Detail |
 |----|--------|--------|
-| [#12 bump foo 1.2.3 → 1.2.4](url) | Merged | squash, checks green |
-| [#13 bump bar (grouped)](url) | Merged | squash, checks green |
-| [#14 bump baz 2.x → 3.0 (major)](url) | Fixed then merged | lint broke, fix-renovate-pr, then squash |
-| [#15 bump qux](url) | Still open | conflict; rebase requested, not landed |
+| [#12 bump foo 1.2.3 → 1.2.4](https://github.com/owner/repo1/pull/12) | Merged | squash, checks green |
+| [#13 bump bar (grouped)](https://github.com/owner/repo1/pull/13) | Merged | squash, checks green |
+| [#14 bump baz 2.x → 3.0 (major)](https://github.com/owner/repo1/pull/14) | Fixed then merged | lint broke, fix-renovate-pr, then squash |
+| [#15 bump qux](https://github.com/owner/repo1/pull/15) | Still open | conflict; rebase requested, not landed |
 
 ### owner/repo2 — ...
 
