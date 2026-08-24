@@ -54,6 +54,7 @@ Each skill is a self-contained directory. See [`skills/_template/SKILL.md`](skil
 | [fix-failing-ci](skills/fix-failing-ci/) | Diagnose a red GitHub Actions run, fix it on the built branch, and push until green |
 | [fix-issue](skills/fix-issue/) | Pick an open GitHub issue, implement it, and open a PR |
 | [fix-renovate-pr](skills/fix-renovate-pr/) | Make a Renovate (or Dependabot) dependency update PR pass CI |
+| [sweep-all-dependency-prs](skills/sweep-all-dependency-prs/) | Fan out sweep-dependency-prs across every repo the user owns, including org-owned repos |
 | [sweep-dependency-prs](skills/sweep-dependency-prs/) | Approve and merge open Dependabot/Renovate PRs; fix red CI with the existing skills |
 | [upgrade-node-version](skills/upgrade-node-version/) | Bump Node across .nvmrc, engines, CI, and Docker, then fix the breakage |
 
