@@ -144,7 +144,7 @@ The report is organized **per repo**, not per action: every repo the sweep touch
 Rules for the per-repo sections:
 
 - Every PR the child sweep processed appears as a row, with its URL, title (mark majors), and one of: Merged, Auto-merge enabled, Fixed then merged, Still open (conflict | still red | blocked | skipped), with the reason in Detail.
-- Actions short of a merge still count as touching: an approval on a blocked PR or a rebase comment must show up in that repo's rows, not vanish.
+- Actions short of a merge still count as touching: an approval on a blocked PR or a rebase request (Dependabot comment, or Renovate description checkbox) must show up in that repo's rows, not vanish.
 - Order repo sections by most work done first (fixed/merged before untouched-but-swept); keep untouched repos out of the per-repo sections entirely — they belong in the probed-but-not-swept counts.
 
 If the controlled-repo list looks wrong (missing an org, or an org they do not want), say how it was filtered so they can rerun with a narrower scope.

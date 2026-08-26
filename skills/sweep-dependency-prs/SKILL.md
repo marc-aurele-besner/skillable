@@ -62,14 +62,18 @@ A PR can be both red and dirty — **Conflict wins**: the fix skills can't help 
 
 `mergeStateStatus` cheat sheet: `CLEAN` = ready (still confirm no failed checks), `UNSTABLE` = treat as red if any check failed, `DIRTY` = conflict, `BLOCKED` = reviews/required checks, `BEHIND` = not up to date — do not merge if protection requires a linear branch; request a bot rebase first.
 
-**Bot rebase only when the branch is still the bot's** (no human/agent commits yet):
+**Bot rebase only when the branch is still the bot's** (no human/agent commits yet). The two bots are **not** the same:
 
-- Dependabot: comment `@dependabot rebase`
-- Renovate: comment `@renovate rebase`
+- **Dependabot:** comment `@dependabot rebase`
+- **Renovate:** do **not** comment. `@renovate rebase` (or any comment that tags the bot with the word rebase) is ignored. Edit the PR **description** and check the rebase box:
+  `- [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box`
+  →
+  `- [x] <!-- rebase-check -->If you want to rebase/retry this PR, check this box`
+  Use `gh pr edit` on the body (see **`fix-renovate-pr`**). Leave the `<!-- rebase-check -->` marker in place.
 
-Never comment `recreate` after anyone else has pushed (it force-pushes and wipes those commits).
+Never comment `recreate` after anyone else has pushed (it force-pushes and wipes those commits). Never check Renovate's rebase box after anyone else has pushed — Renovate regenerates the branch and wipes those commits.
 
-After commenting, poll `mergeable`/`mergeStateStatus` every ~30 s for up to ~3 minutes. If the rebase has not landed by then, don't stall the sweep: leave the PR in Conflict, do one last re-check at the end of the sweep, and report it as "rebase requested".
+After requesting the rebase, poll `mergeable`/`mergeStateStatus` every ~30 s for up to ~3 minutes. If the rebase has not landed by then, don't stall the sweep: leave the PR in Conflict, do one last re-check at the end of the sweep, and report it as "rebase requested".
 
 ## 3. Approve
 

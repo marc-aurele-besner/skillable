@@ -28,7 +28,42 @@ gh pr checkout <number> --repo <owner>/<repo>
 git pull --rebase origin <headRefName>
 ```
 
-Renovate may rebase the branch at any time. Always pull latest before working, and prefer finishing the task in one session to avoid racing Renovate's rebases.
+Renovate may rebase the branch at any time **until someone else pushes a commit**. Always pull latest before working, and prefer finishing the task in one session to avoid racing Renovate's rebases.
+
+### Requesting a rebase from Renovate
+
+Unlike Dependabot, **commenting `@renovate rebase` (or tagging the bot with the word rebase) does not work.** Renovate ignores those comments. The only reliable way to ask it to rebase/retry is to **edit the PR description** and check the rebase checkbox.
+
+Unchecked (as Renovate writes it):
+
+```
+- [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box
+```
+
+Checked (what you must write):
+
+```
+- [x] <!-- rebase-check -->If you want to rebase/retry this PR, check this box
+```
+
+Keep the `<!-- rebase-check -->` HTML comment — that is the marker Renovate looks for. Fetch the current body, flip that one checkbox, and write the body back with `gh pr edit`. Do not post a comment.
+
+```bash
+gh pr view <number> --repo <owner>/<repo> --json body --jq .body > /tmp/renovate-pr-body.md
+python3 -c "
+from pathlib import Path
+p = Path('/tmp/renovate-pr-body.md')
+text = p.read_text()
+old = '[ ] <!-- rebase-check -->'
+new = '[x] <!-- rebase-check -->'
+if old not in text:
+    raise SystemExit('unchecked rebase-check checkbox not found in PR body')
+p.write_text(text.replace(old, new, 1))
+"
+gh pr edit <number> --repo <owner>/<repo> --body-file /tmp/renovate-pr-body.md
+```
+
+Only do this when the branch is still Renovate's (no human/agent commits) and it is conflicted or behind the base branch. After you have pushed your own commits, never check the box: Renovate will regenerate the branch and wipe that work. Resolve conflicts yourself instead (rebase or merge the base branch into the PR branch).
 
 ## 3. Learn what CI actually runs
 
