@@ -6,6 +6,7 @@ Checks:
   - YAML frontmatter (required name/description, allowed fields, name format)
   - SKILL.md body length, leftover template copy, broken relative links
   - README.md "Available skills" table lists every published skill
+  - Authoring template lives at templates/skill/ (outside skills/)
 
 On pull requests, newly added skill directories are called out explicitly and
 must appear in README.md.
@@ -23,7 +24,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = REPO_ROOT / "skills"
 README_PATH = REPO_ROOT / "README.md"
-TEMPLATE_DIR_NAME = "_template"
+TEMPLATE_DIR = REPO_ROOT / "templates" / "skill"
 
 MAX_NAME_LENGTH = 64
 MAX_DESCRIPTION_LENGTH = 1024
@@ -440,9 +441,8 @@ def validate_body(body: str, skill_dir: Path, skill_md: Path) -> list[Issue]:
     return issues
 
 
-def validate_skill(skill_dir: Path, *, is_new: bool) -> list[Issue]:
+def validate_skill(skill_dir: Path, *, is_new: bool, is_template: bool = False) -> list[Issue]:
     issues: list[Issue] = []
-    is_template = skill_dir.name == TEMPLATE_DIR_NAME
     skill_md = skill_dir / "SKILL.md"
 
     if not NAME_RE.fullmatch(skill_dir.name) and not is_template:
@@ -613,16 +613,7 @@ def main() -> int:
             )
         )
 
-    names = list(readme_rows)
-    if TEMPLATE_DIR_NAME in names and names[0] != TEMPLATE_DIR_NAME:
-        issues.append(
-            Issue(
-                README_PATH,
-                f"'{TEMPLATE_DIR_NAME}' should be the first row in the Available skills table",
-            )
-        )
-
-    catalog = [name for name in readme_rows if name != TEMPLATE_DIR_NAME]
+    catalog = list(readme_rows)
     if catalog != sorted(catalog):
         issues.append(
             Issue(
@@ -631,6 +622,17 @@ def main() -> int:
                 f"(expected: {', '.join(sorted(catalog))})",
             )
         )
+
+    if not (TEMPLATE_DIR / "SKILL.md").is_file():
+        issues.append(
+            Issue(
+                TEMPLATE_DIR,
+                "Missing authoring template at templates/skill/SKILL.md "
+                "(keep it outside skills/ so the CLI does not install the placeholder)",
+            )
+        )
+    else:
+        issues.extend(validate_skill(TEMPLATE_DIR, is_new=False, is_template=True))
 
     for skill_dir in skill_dirs:
         issues.extend(validate_skill(skill_dir, is_new=skill_dir.name in set(new_names)))
