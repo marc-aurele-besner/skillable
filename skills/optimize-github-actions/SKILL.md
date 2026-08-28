@@ -16,7 +16,7 @@ disable-model-invocation: false
 
 Goal: inventory a repo's GitHub Actions workflows, measure where minutes actually go, apply **performance-only** YAML changes (duplicate triggers, concurrency, redundant workflows, matrix/runner bloat, timeouts, caching), then open a PR. Do not merge.
 
-This is not `fix-failing-ci` (red builds), not `upgrade-node-version` (runtime pins), and not a security hardening sweep. If the user said **all repos** / **the org** / **fleet-wide**, use `optimize-github-actions-across-org` instead.
+This is not `fix-failing-ci` (red builds), not `upgrade-node-version` (runtime pins), and not a security hardening sweep. If the user said **all repos** / **the org** / **fleet-wide**, use `optimize-all-github-actions` instead.
 
 If `$ARGUMENTS` / the user message is a single `owner/repo` or GitHub URL, use that. If omitted, use `git remote get-url origin`. Never ask for the URL when origin is enough. If `gh` is not authenticated, stop and say to run `gh auth login`.
 

@@ -1,5 +1,5 @@
 ---
-name: optimize-github-actions-across-org
+name: optimize-all-github-actions
 description: >-
   List every GitHub repo the authenticated user owns or controls — including
   every repo in organizations they own — find repos with GitHub Actions
@@ -7,12 +7,12 @@ description: >-
   isolated branch. Use whenever the user wants to cut Actions minutes across
   an org, optimize CI fleet-wide, trim redundant workflows in every repo they
   own, or reduce GitHub Actions billing at account scale. Also triggers on
-  /optimize-github-actions-across-org with optional parallel|sequential.
+  /optimize-all-github-actions with optional parallel|sequential.
 argument-hint: "[parallel|sequential]"
 disable-model-invocation: false
 ---
 
-# Optimize GitHub Actions Across Org
+# Optimize All GitHub Actions
 
 Goal: list **every repo the user owns or controls**, including **every repo in organizations they own**, cheaply probe which of them have GitHub Actions workflows, and for each eligible repo **call `optimize-github-actions`** in an isolated clone. Do not reimplement trigger/concurrency/matrix analysis here — read and follow `optimize-github-actions` (and its playbook) per repo. That child opens a PR and does not merge; this parent must not merge those PRs either unless the user explicitly asks.
 
