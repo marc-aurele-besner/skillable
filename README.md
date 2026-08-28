@@ -7,6 +7,7 @@
 A curated, community-driven collection of [Agent Skills](https://agentskills.io) — plain-markdown playbooks that turn "explain it to the agent again" into a single slash command. Built on the open `SKILL.md` format, so they work with Cursor, Claude Code, and [any skills-capable agent](https://agentskills.io/clients).
 
 [![Skills](https://img.shields.io/badge/skills-16-blueviolet)](#available-skills)
+[![skills.sh](https://skills.sh/b/marc-aurele-besner/skillable)](https://skills.sh/marc-aurele-besner/skillable)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Format: Agent Skills](https://img.shields.io/badge/format-open%20Agent%20Skills-black)](https://agentskills.io)
@@ -37,22 +38,55 @@ agent:  Listing every repo you own (and your orgs') …
 
 ## 🚀 Quick start
 
-**Install every skill globally** (available in all your projects):
+Install with the [skills CLI](https://vercel.com/docs/agent-resources/skills). It detects which agents you have (Cursor, Claude Code, GitHub Copilot, Cline, and [18+ others](https://agentskills.io/clients)) and puts the skills where they look.
+
+**Every skill, on every project on this machine:**
+
+```bash
+npx skills add -g marc-aurele-besner/skillable
+```
+
+**This project only** (committed with the repo, shared with your team):
+
+```bash
+npx skills add marc-aurele-besner/skillable
+```
+
+**One skill:**
+
+```bash
+npx skills add marc-aurele-besner/skillable --skill sweep-dependency-prs
+```
+
+Useful extras:
+
+```bash
+npx skills add marc-aurele-besner/skillable --list   # preview without installing
+npx skills find skillable                            # search the public directory
+```
+
+Start a **new agent session** after installing. Skills load from their `description` when the task matches, or you can invoke one directly as `/skill-name`.
+
+<details>
+<summary>Manual install (clone and copy)</summary>
+
+If you can't run the CLI, copy skill folders into your agent's skills directory:
 
 ```bash
 git clone https://github.com/marc-aurele-besner/skillable.git
-
 cp -r skillable/skills/* ~/.cursor/skills/   # Cursor
 cp -r skillable/skills/* ~/.claude/skills/   # Claude Code
 ```
 
-Using a different agent? Same idea — copy the skill folders into wherever it discovers skills (see the [client list](https://agentskills.io/clients) for yours). Then start a new session: skills are picked up automatically from their `description` field, or invoked directly as `/skill-name`.
-
-**Or share one skill with your team** by dropping it into a project:
+Share one skill with your team by dropping it into the project:
 
 ```bash
 cp -r skillable/skills/<skill-name> .cursor/skills/   # or .claude/skills/, etc.
 ```
+
+Using a different agent? Same idea — see the [client list](https://agentskills.io/clients) for its skills path.
+
+</details>
 
 ## Available skills
 
@@ -60,7 +94,6 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 
 | Skill | What it does |
 |-------|--------------|
-| [_template](skills/_template/) | 📐 Starter template for authoring new skills — copy it to write your own |
 | [align-minimum-release-age](skills/align-minimum-release-age/) | 🤖 Sync the dependency cooldown between pnpm/npm/Poetry and Renovate to the most conservative value — one repo or your whole fleet |
 | [build-landing-page](skills/build-landing-page/) | 🛠 Idea → scaffolded, designed, analytics-wired, **deployed** landing page with a live URL |
 | [dedupe-and-prune-deps](skills/dedupe-and-prune-deps/) | 🤖 Collapse duplicate versions, declare phantom imports, remove unused dependencies |
@@ -82,10 +115,10 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 
 ```text
 skills/<skill-name>/
-├── SKILL.md         # Required — frontmatter (name, description, triggers) + instructions
-├── reference.md     # Optional — detailed docs the agent loads on demand
-├── examples.md      # Optional — usage examples
-└── scripts/         # Optional — helper scripts
+├── SKILL.md          # Required — frontmatter (name, description) + instructions
+├── scripts/          # Optional — helper scripts the agent can run
+├── references/       # Optional — longer docs loaded on demand
+└── assets/           # Optional — templates and other static files
 ```
 
 A good skill has four traits:
@@ -93,7 +126,9 @@ A good skill has four traits:
 - **One specific purpose** — a clear workflow, not a catch-all prompt dump
 - **A trigger-rich description** — tells the agent *when* to reach for it, unprompted
 - **A concise body** — assume the agent is smart; only add what it wouldn't know
-- **Progressive disclosure** — keep `SKILL.md` under 500 lines; push depth into reference files
+- **Progressive disclosure** — keep `SKILL.md` under 500 lines; push depth into `references/`
+
+Authoring a new one? Copy [`templates/skill/`](templates/skill/) into `skills/<your-skill-name>/` — it lives outside `skills/` so the CLI does not install the placeholder.
 
 ## 🤝 Contributing
 
