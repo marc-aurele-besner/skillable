@@ -6,7 +6,7 @@
 
 A curated, community-driven collection of [Agent Skills](https://agentskills.io) — plain-markdown playbooks that turn "explain it to the agent again" into a single slash command. Built on the open `SKILL.md` format, so they work with Cursor, Claude Code, and [any skills-capable agent](https://agentskills.io/clients).
 
-[![Skills](https://img.shields.io/badge/skills-16-blueviolet)](#available-skills)
+[![Skills](https://img.shields.io/badge/skills-17-blueviolet)](#available-skills)
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-black.svg)](https://skills.sh)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -102,6 +102,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [fix-failing-ci](skills/fix-failing-ci/) | 🚑 Paste a red Actions run URL; get diagnosis, a fix on the built branch, and a green build |
 | [fix-issue](skills/fix-issue/) | 🚑 Pick an open GitHub issue, implement it on a fresh branch, open the PR |
 | [fix-renovate-pr](skills/fix-renovate-pr/) | 🤖 Take over a Renovate bump PR and push commits until CI passes |
+| [nudge-stale-prs](skills/nudge-stale-prs/) | 🚑 Find open PRs older than 2 days across every repo you can write to and tag you in a comment to review/merge — including PRs you authored that never hit notifications |
 | [optimize-all-github-actions](skills/optimize-all-github-actions/) | 🚑 Find every repo you own with Actions (orgs included) and fan out optimize-github-actions — one PR per repo |
 | [optimize-github-actions](skills/optimize-github-actions/) | 🚑 Analyze workflows, cut wasted Actions minutes (duplicate runs, redundant jobs, matrix bloat), open a PR — without weakening security |
 | [prune-deps-across-org](skills/prune-deps-across-org/) | 🤖 Find every JS repo you own (orgs included) and fan out dedupe-and-prune-deps — one hygiene PR per repo |
