@@ -102,7 +102,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [fix-failing-ci](skills/fix-failing-ci/) | 🚑 Paste a red Actions run URL; get diagnosis, a fix on the built branch, and a green build |
 | [fix-issue](skills/fix-issue/) | 🚑 Pick an open GitHub issue, implement it on a fresh branch, open the PR |
 | [fix-renovate-pr](skills/fix-renovate-pr/) | 🤖 Take over a Renovate bump PR and push commits until CI passes |
-| [nudge-stale-prs](skills/nudge-stale-prs/) | 🚑 Find open PRs older than 2 days across every repo you can write to and tag you in a comment to review/merge — including PRs you authored that never hit notifications |
+| [nudge-stale-prs](skills/nudge-stale-prs/) | 🚑 Find open PRs older than 2 days across every repo you can write to and have Cursor/Claude/Codex's GitHub user tag you to review/merge — self-mentions do not notify |
 | [optimize-all-github-actions](skills/optimize-all-github-actions/) | 🚑 Find every repo you own with Actions (orgs included) and fan out optimize-github-actions — one PR per repo |
 | [optimize-github-actions](skills/optimize-github-actions/) | 🚑 Analyze workflows, cut wasted Actions minutes (duplicate runs, redundant jobs, matrix bloat), open a PR — without weakening security |
 | [prune-deps-across-org](skills/prune-deps-across-org/) | 🤖 Find every JS repo you own (orgs included) and fan out dedupe-and-prune-deps — one hygiene PR per repo |
