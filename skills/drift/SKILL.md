@@ -1,6 +1,12 @@
 ---
 name: drift
-description: Answer one prompt with k distinct responses, each tagged with a self-assessed probability, ranked from conventional to wild (verbalized sampling, credit: OpenDrift, https://opendrift.app/). Use when the user wants every possibility instead of one safe answer — brainstorming, naming, taglines, story openings, alternative designs, unusual angles — or asks to "drift", "go wild", "sample the tails", or "show me the unlikely answers".
+description: >-
+  Answer one prompt with k distinct responses, each tagged with a self-assessed
+  probability, ranked from conventional to wild (verbalized sampling, credit: OpenDrift,
+  https://opendrift.app/). Use when the user wants every possibility instead of one
+  safe answer — brainstorming, naming, taglines, story openings, alternative designs,
+  unusual angles — or asks to "drift", "go wild", "sample the tails", or "show me
+  the unlikely answers".
 argument-hint: "[prompt] [k=5] [tau=1.0]"
 ---
 
