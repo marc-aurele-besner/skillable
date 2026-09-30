@@ -1,20 +1,7 @@
 ---
 name: drift
 description: Answer one prompt with k distinct responses, each tagged with a self-assessed probability, ranked from conventional to wild (verbalized sampling, credit: OpenDrift, https://opendrift.app/). Use when the user wants every possibility instead of one safe answer — brainstorming, naming, taglines, story openings, alternative designs, unusual angles — or asks to "drift", "go wild", "sample the tails", or "show me the unlikely answers".
-user-invocable: true
-args:
-  - name: prompt
-    description: The prompt to drift on. If omitted, use the user's most recent request.
-    required: false
-  - name: k
-    description: Number of responses to generate, 1–10. Default 5.
-    required: false
-  - name: tau
-    description: >-
-      Probability threshold τ between 0.01 and 1.0. Every response must have a
-      self-assessed probability below τ. 1.0 = no constraint (conventional answers
-      allowed); 0.1 = creative and wild only; 0.01 = deep tails. Default 1.0.
-    required: false
+argument-hint: "[prompt] [k=5] [tau=1.0]"
 ---
 
 One prompt, every possibility. Instead of collapsing to the single most typical answer, verbalize a
