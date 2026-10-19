@@ -8,72 +8,53 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
+/* Five base colours per theme; everything else is mixed from them so presets and custom themes stay coherent. */
 :root {
-  --bg: #f4f2ec;
-  --bg-2: #ebe8df;
-  --ink: #1c2229;
-  --ink-soft: #5b6672;
-  --line: rgba(28, 34, 41, .78);
-  --line-faint: rgba(28, 34, 41, .16);
-  --face: #fbfaf6;
-  --face-side: #efece4;
-  --face-dark: #e3dfd4;
+  --bg: #f4f1e8;
+  --ink: #1d2329;
   --glow: #ff9f1c;
-  --glow-soft: rgba(255, 159, 28, .22);
-  --degraded: #e4572e;
-  --down: #8a939c;
   --accent: #1f7a8c;
-  --panel: rgba(251, 250, 246, .94);
-  --panel-border: rgba(28, 34, 41, .14);
+  --alert: #d9480f;
   --shadow: 0 10px 30px rgba(28, 34, 41, .12);
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #090d12;
-    --bg-2: #0f151c;
-    --ink: #d7e1ea;
-    --ink-soft: #8696a6;
-    --line: rgba(196, 214, 230, .72);
-    --line-faint: rgba(196, 214, 230, .12);
-    --face: #0f161e;
-    --face-side: #0c1219;
-    --face-dark: #080c11;
+    --bg: #0a1622;
+    --ink: #cfe3f5;
     --glow: #4ff0ff;
-    --glow-soft: rgba(79, 240, 255, .18);
-    --degraded: #ff8a3d;
-    --down: #4a5561;
     --accent: #7cc7ff;
-    --panel: rgba(13, 19, 26, .92);
-    --panel-border: rgba(196, 214, 230, .14);
+    --alert: #ff8a3d;
     --shadow: 0 10px 30px rgba(0, 0, 0, .5);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #090d12;
-  --bg-2: #0f151c;
-  --ink: #d7e1ea;
-  --ink-soft: #8696a6;
-  --line: rgba(196, 214, 230, .72);
-  --line-faint: rgba(196, 214, 230, .12);
-  --face: #0f161e;
-  --face-side: #0c1219;
-  --face-dark: #080c11;
+  --bg: #0a1622;
+  --ink: #cfe3f5;
   --glow: #4ff0ff;
-  --glow-soft: rgba(79, 240, 255, .18);
-  --degraded: #ff8a3d;
-  --down: #4a5561;
   --accent: #7cc7ff;
-  --panel: rgba(13, 19, 26, .92);
-  --panel-border: rgba(196, 214, 230, .14);
+  --alert: #ff8a3d;
   --shadow: 0 10px 30px rgba(0, 0, 0, .5);
   color-scheme: dark;
+}
+:root {
+  --bg-2: color-mix(in srgb, var(--bg) 88%, var(--ink));
+  --ink-soft: color-mix(in srgb, var(--ink) 62%, var(--bg));
+  --line: color-mix(in srgb, var(--ink) 78%, transparent);
+  --line-faint: color-mix(in srgb, var(--ink) 15%, transparent);
+  --face: color-mix(in srgb, var(--bg) 95%, var(--ink));
+  --face-side: color-mix(in srgb, var(--bg) 87%, var(--ink));
+  --face-dark: color-mix(in srgb, var(--bg) 79%, var(--ink));
+  --glow-soft: color-mix(in srgb, var(--glow) 22%, transparent);
+  --down: color-mix(in srgb, var(--ink) 38%, var(--bg));
+  --panel: color-mix(in srgb, var(--bg) 93%, transparent);
+  --panel-border: color-mix(in srgb, var(--ink) 15%, transparent);
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; }
 body {
-  background: radial-gradient(ellipse at 50% 40%, var(--bg-2), var(--bg) 70%);
+  background: radial-gradient(ellipse at 50% 40%, var(--bg-2), var(--bg) 72%);
   background-color: var(--bg);
   color: var(--ink);
   font: 14px/1.45 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -89,64 +70,67 @@ svg#scene { width: 100%; height: 100%; display: block; }
 .face.top { fill: var(--face); }
 .face.side-a { fill: var(--face-side); }
 .face.side-b { fill: var(--face-dark); }
-.detail { fill: none; stroke: var(--line); stroke-width: .7; vector-effect: non-scaling-stroke; }
+.face.glass { fill: var(--bg-2); }
+.detail { fill: none; stroke: var(--line); stroke-width: .7; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.led { fill: var(--down); stroke: none; }
 .platform .face { stroke: var(--line-faint); stroke-width: 1; }
-.platform .face.top { fill: var(--line-faint); fill-opacity: .25; }
-.platform .grid { stroke: var(--line-faint); stroke-width: .6; }
+.platform .face.top { fill: var(--line-faint); fill-opacity: .22; }
+.platform .grid { stroke: var(--line-faint); stroke-width: .6; vector-effect: non-scaling-stroke; }
+.platform.slate .face.top { fill-opacity: .12; }
+.band { stroke: var(--line-faint); stroke-dasharray: 2 6; vector-effect: non-scaling-stroke; }
 .platform-label { fill: var(--ink-soft); font: 600 11px "JetBrains Mono", ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; }
 .zone { fill: none; stroke: var(--accent); stroke-width: 1; stroke-dasharray: 5 4; opacity: .55; vector-effect: non-scaling-stroke; }
 .zone-label { fill: var(--accent); font: 600 10px "JetBrains Mono", ui-monospace, monospace; letter-spacing: .08em; opacity: .85; }
 
 .node { cursor: pointer; outline: none; transition: opacity .25s; }
-.node.on .face { stroke: var(--glow); }
-.node.on .face.top { fill: var(--glow-soft); }
-.node.on .detail { stroke: var(--glow); }
-.node.on .glow-layer { filter: url(#glow); }
-.node.degraded .face, .node.degraded .detail { stroke: var(--degraded); }
-.node.degraded .face.top { fill: color-mix(in srgb, var(--degraded) 18%, transparent); }
+.node.on .face, .node.on .detail { stroke: var(--glow); }
+.node.on .face.top, .node.on .face.glass { fill: var(--glow-soft); }
+.node.on .led { fill: var(--glow); }
+.node.on .glow-layer { filter: url(#glow); animation: breathe 3.2s ease-in-out infinite; }
+.node.degraded .face, .node.degraded .detail { stroke: var(--alert); }
+.node.degraded .face.top, .node.degraded .face.glass { fill: color-mix(in srgb, var(--alert) 18%, transparent); }
+.node.degraded .led { fill: var(--alert); }
 .node.degraded .glow-layer { filter: url(#glow); animation: flicker 1.6s infinite steps(2, end); }
 .node.off .face, .node.off .detail { stroke: var(--down); }
-.node.off .face.top { fill: var(--face); }
 .node.idle .face, .node.idle .detail { stroke-dasharray: 3 3; }
 .node.external .face, .node.external .detail { stroke-dasharray: 6 3; }
-.node.external .face { fill: transparent; }
+.node.external .face { fill: var(--bg); fill-opacity: .55; }
 .node:hover .face, .node:focus-visible .face, .node.selected .face { stroke-width: 1.8; }
-.node.selected .face.top { fill: color-mix(in srgb, var(--accent) 22%, transparent); }
-.dim .node:not(.related), .dim .link:not(.related), .dim .label:not(.related) { opacity: .16; }
+.node.selected .face.top { fill: color-mix(in srgb, var(--accent) 24%, transparent); }
+svg.dim .node:not(.related), svg.dim .link:not(.related), svg.dim .label:not(.related) { opacity: .14; }
+svg.dim .flowpath:not(.related) { opacity: .1; }
 
 .link path { fill: none; vector-effect: non-scaling-stroke; }
-.link .wire { stroke: var(--line); stroke-width: 1; opacity: .55; }
+.link .wire { stroke: var(--line); stroke-width: 1; opacity: .5; }
 .link .hit { stroke: transparent; stroke-width: 12; cursor: pointer; }
 .link.async .wire { stroke-dasharray: 4 4; }
-.link.live .wire { stroke: var(--glow); opacity: .7; }
-.link.broken .wire { stroke: var(--degraded); stroke-dasharray: 2 5; opacity: .9; }
+.link.live .wire { stroke: var(--glow); opacity: .6; }
+.link.broken .wire { stroke: var(--alert); stroke-dasharray: 2 5; opacity: .9; }
 .link.related .wire, .link.selected .wire { stroke-width: 2; opacity: 1; }
+.flowpath path { fill: none; stroke-width: 3; opacity: .85; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+.flowpath path.async { stroke-dasharray: 6 5; }
+.flowpath text { font: 600 9.5px "JetBrains Mono", ui-monospace, monospace; fill: #fff; }
 .packet { fill: var(--glow); filter: url(#glow); }
-.packet.flow { fill: var(--accent); }
 
 .label { pointer-events: none; transition: opacity .25s; }
 .label text { font: 600 11.5px "JetBrains Mono", ui-monospace, monospace; fill: var(--ink); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
 .label .sub { font-weight: 400; font-size: 10px; fill: var(--ink-soft); }
-.label line { stroke: var(--line-faint); }
-.labels-off .label { display: none; }
+.label line { stroke: var(--line-faint); vector-effect: non-scaling-stroke; }
 .link-label { font: 10px "JetBrains Mono", ui-monospace, monospace; fill: var(--ink-soft); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; pointer-events: none; }
 
 @keyframes flicker { 50% { opacity: .55; } }
-@keyframes breathe { 50% { opacity: .78; } }
-.node.on .glow-layer { animation: breathe 3.2s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) {
-  .node .glow-layer { animation: none !important; }
-}
+@keyframes breathe { 50% { opacity: .8; } }
+@media (prefers-reduced-motion: reduce) { .node .glow-layer { animation: none !important; } }
 
 /* chrome */
 header {
   position: fixed; top: 16px; left: 16px; right: 16px;
-  display: flex; gap: 12px; align-items: flex-start; justify-content: space-between;
-  pointer-events: none;
+  display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; pointer-events: none;
 }
 header > * { pointer-events: auto; }
+.title { min-width: 0; }
 .title h1 { margin: 0; font: 600 18px/1.2 "JetBrains Mono", ui-monospace, monospace; letter-spacing: -.01em; }
-.title p { margin: 4px 0 0; color: var(--ink-soft); font-size: 12.5px; max-width: 52ch; }
+.title p { margin: 4px 0 0; color: var(--ink-soft); font-size: 12.5px; max-width: 52ch; overflow-wrap: anywhere; }
 .title a { color: var(--accent); }
 .toolbar { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
 button, select, input[type="search"] {
@@ -157,21 +141,13 @@ button, select, input[type="search"] {
 button { cursor: pointer; }
 button:hover { border-color: var(--accent); }
 button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+button:disabled, input:disabled { opacity: .45; cursor: default; }
 button:focus-visible, select:focus-visible, input:focus-visible, .node:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 input[type="search"] { width: 150px; }
 
-.dock {
-  position: fixed; left: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 8px;
-  max-width: calc(100vw - 32px);
-}
+.dock { position: fixed; left: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 8px; max-width: calc(100vw - 32px); }
 .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.slider { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-soft);
-  background: var(--panel); border: 1px solid var(--panel-border); border-radius: 8px; padding: 4px 10px; box-shadow: var(--shadow); }
-.slider input { width: 110px; accent-color: var(--accent); }
-.caption {
-  background: var(--panel); border: 1px solid var(--panel-border); border-radius: 10px; box-shadow: var(--shadow);
-  padding: 8px 12px; font-size: 12.5px; max-width: 520px; display: none;
-}
+.caption { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 10px; box-shadow: var(--shadow); padding: 8px 12px; font-size: 12.5px; max-width: 520px; display: none; }
 .caption.show { display: block; }
 .caption b { color: var(--accent); }
 
@@ -182,25 +158,55 @@ input[type="search"] { width: 150px; }
 }
 .legend i { display: inline-block; width: 18px; height: 0; border-top: 2px solid; vertical-align: middle; margin-right: 6px; }
 
-aside#panel {
-  position: fixed; top: 84px; right: 16px; width: 340px; max-height: calc(100vh - 160px); overflow: auto;
+.sheet {
+  position: fixed; top: 84px; width: 340px; max-height: calc(100vh - 160px); overflow: auto;
   background: var(--panel); border: 1px solid var(--panel-border); border-radius: 12px; box-shadow: var(--shadow);
   padding: 14px 16px; display: none; backdrop-filter: blur(10px);
 }
-aside#panel.open { display: block; }
-aside h2 { margin: 0 0 2px; font: 600 16px "JetBrains Mono", ui-monospace, monospace; }
-aside h3 { margin: 14px 0 6px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
-aside p { margin: 6px 0; }
-aside ul { margin: 0; padding-left: 0; list-style: none; }
-aside li { margin: 3px 0; font-size: 12.5px; }
-aside a { color: var(--accent); word-break: break-all; }
-.chip { display: inline-block; font: 11px "JetBrains Mono", ui-monospace, monospace; border: 1px solid var(--panel-border); border-radius: 999px; padding: 1px 8px; margin: 2px 4px 2px 0; }
+.sheet.open { display: block; }
+#panel { right: 16px; }
+#settings { left: 16px; width: 320px; }
+.sheet h2 { margin: 0 0 2px; font: 600 16px "JetBrains Mono", ui-monospace, monospace; }
+.sheet h3 { margin: 12px 0 6px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.sheet p { margin: 6px 0; }
+.sheet ul { margin: 0; padding-left: 0; list-style: none; }
+.sheet li { margin: 3px 0; font-size: 12.5px; }
+.sheet a { color: var(--accent); word-break: break-all; }
+.chip { display: inline-block; font: 11px "JetBrains Mono", ui-monospace, monospace; border: 1px solid var(--panel-border); border-radius: 999px; padding: 1px 8px; margin: 2px 4px 2px 0; background: none; box-shadow: none; color: var(--ink); backdrop-filter: none; }
+button.chip { cursor: pointer; }
+button.chip[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 18%, transparent); }
 .state-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
 .close { position: absolute; top: 8px; right: 8px; box-shadow: none; padding: 2px 8px; }
 .switch { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding: 8px 10px; border: 1px solid var(--panel-border); border-radius: 8px; }
 .switch button { box-shadow: none; }
 .linkish { background: none; border: none; box-shadow: none; padding: 0; color: var(--accent); cursor: pointer; font: inherit; font-size: 12.5px; text-decoration: underline; text-underline-offset: 2px; backdrop-filter: none; }
-.impact { color: var(--degraded); font-size: 12.5px; }
+.impact { color: var(--alert); font-size: 12.5px; }
+
+#settings details { border-top: 1px solid var(--panel-border); padding: 8px 0; }
+#settings details:first-of-type { border-top: none; }
+#settings summary { cursor: pointer; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin: 8px 0; }
+.seg button { box-shadow: none; padding: 6px 4px; }
+.field { display: grid; grid-template-columns: 1fr 110px 30px; align-items: center; gap: 8px; font-size: 12.5px; margin: 6px 0; }
+.field input[type="range"] { width: 100%; accent-color: var(--accent); }
+.field output { font: 11px "JetBrains Mono", ui-monospace, monospace; color: var(--ink-soft); text-align: right; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 12.5px; margin: 4px 0; cursor: pointer; }
+.check input { accent-color: var(--accent); margin: 0; }
+.checks { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
+.flow-row { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: start; padding: 6px 0; border-bottom: 1px dashed var(--panel-border); }
+.flow-row:last-child { border-bottom: none; }
+.flow-row .who { font-size: 11.5px; color: var(--ink-soft); }
+.flow-row button:not(.linkish) { box-shadow: none; padding: 3px 8px; }
+.swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
+.triggers { font-size: 12px; margin-top: 6px; padding: 8px 10px; border: 1px solid var(--panel-border); border-radius: 8px; display: none; }
+.triggers.show { display: block; }
+.themes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 8px 0; }
+.themes button { box-shadow: none; padding: 6px 4px; font-size: 11px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.themes .dots { display: flex; gap: 2px; }
+.themes .dots span { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--panel-border); }
+.custom { display: none; grid-template-columns: 1fr auto; gap: 6px 10px; align-items: center; font-size: 12.5px; }
+.custom.show { display: grid; }
+.custom input[type="color"] { width: 44px; height: 26px; border: 1px solid var(--panel-border); border-radius: 6px; background: none; padding: 0; }
 
 details.textview { position: fixed; left: 16px; top: 100px; max-width: 360px; max-height: 50vh; overflow: auto;
   background: var(--panel); border: 1px solid var(--panel-border); border-radius: 10px; padding: 6px 12px; font-size: 12px; box-shadow: var(--shadow); display: none; }
@@ -210,7 +216,7 @@ details.textview.show { display: block; }
   header { flex-direction: column; }
   .toolbar { justify-content: flex-start; }
   .legend { display: none; }
-  aside#panel { top: auto; bottom: 0; right: 0; left: 0; width: auto; max-height: 55vh; border-radius: 14px 14px 0 0; }
+  .sheet, #settings { top: auto; bottom: 0; right: 0; left: 0; width: auto; max-height: 58vh; border-radius: 14px 14px 0 0; }
   input[type="search"] { width: 120px; }
 }
 </style>
@@ -221,16 +227,17 @@ details.textview.show { display: block; }
     <title id="scene-title">Isometric stack map</title>
     <defs>
       <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="3.2" result="b1"/>
-        <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="b2"/>
+        <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b1"/>
+        <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b2"/>
         <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
     </defs>
     <g id="world">
       <g id="g-platforms"></g>
       <g id="g-zones"></g>
-      <g id="g-nodes"></g>
       <g id="g-links"></g>
+      <g id="g-nodes"></g>
+      <g id="g-flows"></g>
       <g id="g-packets"></g>
       <g id="g-labels"></g>
     </g>
@@ -244,39 +251,104 @@ details.textview.show { display: block; }
   </div>
   <div class="toolbar" role="toolbar" aria-label="View controls">
     <input type="search" id="search" placeholder="Find…  ( / )" aria-label="Find a component">
+    <button id="b-settings" aria-pressed="false" title="Layout, visibility, highlights, flows and themes (S)">⚙ Settings</button>
     <button id="b-iso" title="Snap to isometric (I)">Iso</button>
     <button id="b-rot-l" title="Rotate 90° left (←)" aria-label="Rotate left">⟲</button>
     <button id="b-rot-r" title="Rotate 90° right (→)" aria-label="Rotate right">⟳</button>
     <button id="b-top" title="Top-down view (T)">Top</button>
     <button id="b-fit" title="Fit to screen (F)">Fit</button>
-    <button id="b-labels" aria-pressed="true" title="Toggle labels (L)">Labels</button>
-    <button id="b-flow" aria-pressed="true" title="Toggle traffic animation (Space)">Traffic</button>
     <button id="b-text" aria-pressed="false" title="Text view of every component and connection">Text</button>
-    <button id="b-theme" title="Toggle light / dark theme">◐</button>
   </div>
 </header>
+
+<aside id="settings" class="sheet" aria-label="Settings">
+  <button class="close" id="settings-close" aria-label="Close settings">×</button>
+  <h2>Settings</h2>
+
+  <details open>
+    <summary>Layout</summary>
+    <div class="seg" role="group" aria-label="Layout mode">
+      <button data-layout="staircase" title="Tiers rise and step back so nothing hides behind anything">Staircase</button>
+      <button data-layout="tower" title="Tiers stacked straight up">Tower</button>
+      <button data-layout="flat" title="Everything on one flat isometric slate">Flat slate</button>
+    </div>
+    <label class="field">Component spacing <input type="range" id="s-spacing" min="3" max="8" step="0.1"><output id="o-spacing"></output></label>
+    <label class="field">Layer height <input type="range" id="s-gap" min="0.5" max="7" step="0.1"><output id="o-gap"></output></label>
+    <label class="field">Layer step-back <input type="range" id="s-stagger" min="0" max="1.5" step="0.05"><output id="o-stagger"></output></label>
+    <div class="seg" role="group" aria-label="Cable style">
+      <button data-cables="arc">Arc cables</button>
+      <button data-cables="ortho">Right-angle</button>
+      <button data-cables="straight">Straight</button>
+    </div>
+  </details>
+
+  <details open>
+    <summary>Show &amp; hide</summary>
+    <h3>Layers</h3>
+    <div class="checks" id="vis-layers"></div>
+    <h3>Component kinds</h3>
+    <div class="checks" id="vis-kinds"></div>
+    <h3>Overlays</h3>
+    <div class="checks">
+      <label class="check"><input type="checkbox" id="v-external"> External services</label>
+      <label class="check"><input type="checkbox" id="v-idle"> Idle / optional</label>
+      <label class="check"><input type="checkbox" id="v-zones"> Network zones</label>
+      <label class="check"><input type="checkbox" id="v-labels"> Labels</label>
+      <label class="check"><input type="checkbox" id="v-linklabels"> Protocol labels</label>
+      <label class="check"><input type="checkbox" id="v-traffic"> Traffic animation</label>
+      <label class="check"><input type="checkbox" id="v-platforms"> Platforms</label>
+    </div>
+  </details>
+
+  <details>
+    <summary>Highlight</summary>
+    <div id="hl-chips"></div>
+    <p><button class="linkish" id="hl-clear">Clear highlights</button></p>
+  </details>
+
+  <details open id="flows-section">
+    <summary>User flows &amp; actions</summary>
+    <div class="checks">
+      <label class="check"><input type="checkbox" id="v-clients"> Users &amp; clients</label>
+      <label class="check" id="flowpaths-toggle"><input type="checkbox" id="v-flowpaths"> Draw flow paths</label>
+    </div>
+    <div id="flow-list"></div>
+    <div class="triggers" id="triggers" aria-live="polite"></div>
+  </details>
+
+  <details>
+    <summary>Theme</summary>
+    <div class="themes" id="themes" role="group" aria-label="Theme"></div>
+    <div class="custom" id="custom-theme">
+      <label for="c-bg">Background</label><input type="color" id="c-bg" data-var="bg">
+      <label for="c-ink">Lines &amp; text</label><input type="color" id="c-ink" data-var="ink">
+      <label for="c-glow">Running glow</label><input type="color" id="c-glow" data-var="glow">
+      <label for="c-accent">Accent &amp; zones</label><input type="color" id="c-accent" data-var="accent">
+      <label for="c-alert">Degraded</label><input type="color" id="c-alert" data-var="alert">
+    </div>
+  </details>
+  <p><button class="linkish" id="settings-reset">Reset all settings</button></p>
+</aside>
 
 <details class="textview" id="textview" open><summary>Components &amp; connections</summary><div id="textview-body"></div></details>
 
 <div class="dock">
   <div class="caption" id="caption" aria-live="polite"></div>
   <div class="row">
-    <label class="slider">Explode <input type="range" id="explode" min="1.6" max="6" step="0.1" value="4.2" aria-label="Layer separation"></label>
-    <select id="flows" aria-label="Play a flow"><option value="">▶ Play a flow…</option></select>
     <button id="b-reset" title="Power every component back on">Reset power</button>
   </div>
 </div>
 
 <div class="legend" aria-label="Legend">
   <span><i style="border-color: var(--glow)"></i>running</span>
-  <span><i style="border-color: var(--degraded)"></i>degraded</span>
+  <span><i style="border-color: var(--alert)"></i>degraded</span>
   <span><i style="border-color: var(--down)"></i>off</span>
   <span><i style="border-color: var(--line); border-top-style: dashed"></i>external / optional</span>
   <span><i style="border-color: var(--accent); border-top-style: dashed"></i>network zone</span>
   <span><i style="border-color: var(--line); border-top-style: dotted"></i>async link</span>
 </div>
 
-<aside id="panel" aria-live="polite"></aside>
+<aside id="panel" class="sheet" aria-live="polite"></aside>
 
 <!-- The scene is data. build_scene.py replaces the JSON below; everything else stays fixed. -->
 <script type="application/json" id="scene-data">
@@ -289,51 +361,67 @@ details.textview.show { display: block; }
     { "id": "data", "label": "Data" },
     { "id": "services", "label": "Services" },
     { "id": "apps", "label": "Apps & edge" },
-    { "id": "clients", "label": "Clients" }
+    { "id": "clients", "label": "Users & clients" }
   ],
   "zones": [
     { "id": "vpc", "label": "VPC 10.0.0.0/16", "nodes": ["api", "worker", "orders-queue", "postgres", "redis"] },
     { "id": "public", "label": "public subnet", "nodes": ["alb"] }
   ],
   "nodes": [
-    { "id": "browser", "label": "Browser", "kind": "client", "layer": "clients", "state": "on", "desc": "End users on the storefront." },
-    { "id": "mobile", "label": "Mobile app", "kind": "client", "layer": "clients", "state": "idle", "tech": ["Expo"], "desc": "Optional mobile client; not deployed by default." },
-    { "id": "cdn", "label": "CDN", "kind": "gateway", "layer": "apps", "state": "external", "tech": ["CloudFront"] },
-    { "id": "web", "label": "web", "kind": "frontend", "layer": "apps", "state": "on", "tech": ["Next.js 15", "React 19"], "port": 3000, "desc": "Storefront rendered on the server." },
+    { "id": "shopper", "label": "Shopper", "kind": "user", "layer": "clients", "state": "on", "desc": "A customer browsing and buying." },
+    { "id": "browser", "label": "Browser", "kind": "client", "layer": "clients", "state": "on" },
+    { "id": "mobile", "label": "Mobile app", "kind": "mobile", "layer": "clients", "state": "idle", "tech": ["Expo"], "desc": "Optional mobile client; not deployed by default." },
+    { "id": "cdn", "label": "CDN", "kind": "cdn", "layer": "apps", "state": "external", "tech": ["CloudFront"] },
+    { "id": "web", "label": "web", "kind": "frontend", "layer": "apps", "state": "on", "tech": ["Next.js 15", "React 19"], "port": 3000, "tags": ["checkout"], "desc": "Storefront rendered on the server." },
     { "id": "alb", "label": "ALB", "kind": "gateway", "layer": "apps", "state": "on", "tech": ["AWS ALB"], "port": 443 },
-    { "id": "api", "label": "api", "kind": "service", "layer": "services", "state": "on", "tech": ["NestJS", "Node 22"], "port": 8080, "desc": "REST API for catalog, cart and checkout." },
-    { "id": "worker", "label": "worker", "kind": "worker", "layer": "services", "state": "on", "tech": ["BullMQ"], "desc": "Fulfils orders asynchronously." },
-    { "id": "stripe", "label": "Stripe", "kind": "external", "layer": "services", "state": "external", "tech": ["Payments API"] },
+    { "id": "api", "label": "api", "kind": "service", "layer": "services", "state": "on", "tech": ["NestJS", "Node 22"], "port": 8080, "tags": ["checkout"], "desc": "REST API for catalog, cart and checkout." },
+    { "id": "worker", "label": "worker", "kind": "worker", "layer": "services", "state": "on", "tech": ["Node 22"], "tags": ["checkout"], "desc": "Fulfils orders and sends receipts." },
+    { "id": "email-fn", "label": "send-email", "kind": "function", "layer": "services", "state": "on", "tech": ["Lambda"] },
+    { "id": "stripe", "label": "Stripe", "kind": "external", "layer": "services", "state": "external", "tech": ["Payments API"], "tags": ["checkout"] },
     { "id": "orders-queue", "label": "orders", "kind": "queue", "layer": "data", "state": "on", "tech": ["SQS"] },
     { "id": "postgres", "label": "postgres", "kind": "database", "layer": "data", "state": "on", "tech": ["Postgres 16"], "port": 5432 },
     { "id": "redis", "label": "redis", "kind": "cache", "layer": "data", "state": "on", "tech": ["Redis 7"], "port": 6379 },
     { "id": "s3", "label": "assets", "kind": "storage", "layer": "data", "state": "on", "tech": ["S3"] }
   ],
   "links": [
+    { "from": "shopper", "to": "browser", "protocol": "uses" },
+    { "from": "shopper", "to": "mobile", "protocol": "uses", "critical": false },
     { "from": "browser", "to": "cdn", "protocol": "HTTPS" },
     { "from": "cdn", "to": "web", "protocol": "HTTPS" },
     { "from": "mobile", "to": "alb", "protocol": "HTTPS" },
     { "from": "web", "to": "alb", "protocol": "HTTP", "port": 443 },
     { "from": "alb", "to": "api", "protocol": "HTTP", "port": 8080 },
     { "from": "api", "to": "postgres", "protocol": "SQL", "port": 5432 },
-    { "from": "api", "to": "redis", "protocol": "RESP", "port": 6379 },
-    { "from": "api", "to": "stripe", "protocol": "HTTPS", "critical": false },
+    { "from": "api", "to": "redis", "protocol": "RESP", "port": 6379, "critical": false },
+    { "from": "api", "to": "stripe", "protocol": "HTTPS" },
     { "from": "api", "to": "orders-queue", "protocol": "SQS send", "async": true },
     { "from": "orders-queue", "to": "worker", "protocol": "SQS poll", "async": true, "kind": "consume" },
     { "from": "worker", "to": "postgres", "protocol": "SQL", "port": 5432 },
+    { "from": "worker", "to": "email-fn", "protocol": "invoke", "async": true },
     { "from": "web", "to": "s3", "protocol": "HTTPS", "critical": false }
   ],
   "flows": [
-    { "id": "checkout", "label": "Checkout", "steps": [
+    { "id": "checkout", "label": "Checkout", "actor": "shopper", "trigger": "Clicks “Pay now”", "steps": [
+      { "from": "shopper", "to": "browser", "note": "Submits the checkout form" },
       { "from": "browser", "to": "cdn", "note": "POST /checkout" },
-      { "from": "cdn", "to": "web", "note": "Server action submits cart" },
+      { "from": "cdn", "to": "web", "note": "Server action submits the cart" },
       { "from": "web", "to": "alb", "note": "Calls the API" },
       { "from": "alb", "to": "api", "note": "Routes to /orders" },
       { "from": "api", "to": "stripe", "note": "Creates a PaymentIntent" },
       { "from": "api", "to": "postgres", "note": "Inserts the order" },
-      { "from": "api", "to": "orders-queue", "note": "Enqueues fulfilment" },
-      { "from": "orders-queue", "to": "worker", "note": "Worker picks the job" },
-      { "from": "worker", "to": "postgres", "note": "Marks the order fulfilled" }
+      { "from": "api", "to": "orders-queue", "note": "Enqueues fulfilment", "async": true },
+      { "from": "orders-queue", "to": "worker", "note": "Worker picks the job", "async": true },
+      { "from": "worker", "to": "postgres", "note": "Marks the order fulfilled" },
+      { "from": "worker", "to": "email-fn", "note": "Sends the receipt", "async": true }
+    ] },
+    { "id": "browse", "label": "Browse catalog", "actor": "shopper", "trigger": "Opens a product page", "steps": [
+      { "from": "shopper", "to": "browser", "note": "Opens /p/123" },
+      { "from": "browser", "to": "cdn", "note": "GET /p/123 (cache miss)" },
+      { "from": "cdn", "to": "web", "note": "Renders the page" },
+      { "from": "web", "to": "s3", "note": "Loads product images" },
+      { "from": "web", "to": "alb", "note": "Fetches the product" },
+      { "from": "alb", "to": "api", "note": "GET /products/123" },
+      { "from": "api", "to": "redis", "note": "Cache hit returns the product" }
     ] }
   ]
 }
@@ -367,112 +455,181 @@ details.textview.show { display: block; }
   const safeUrl = (u) => {
     try { const url = new URL(u); return url.protocol === 'https:' ? url.href : null; } catch { return null; }
   };
+  const safeColor = (c) => (typeof c === 'string' && /^#[0-9a-f]{6}$/i.test(c) ? c : null);
 
   const KIND = {
-    service:  { shape: 'box', w: 1.6, d: 1.6, h: 1.1 },
-    frontend: { shape: 'screen', w: 1.8, d: 1.3, h: 1.0 },
-    client:   { shape: 'screen', w: 1.5, d: 1.1, h: 0.8 },
-    gateway:  { shape: 'frustum', w: 1.8, d: 1.8, h: 0.7 },
-    worker:   { shape: 'hex', r: 0.85, h: 1.0 },
-    function: { shape: 'box', w: 1.0, d: 1.0, h: 0.8 },
-    database: { shape: 'cylinder', r: 0.85, h: 1.3, rings: 2 },
-    cache:    { shape: 'cylinder', r: 0.75, h: 0.6, rings: 0 },
-    storage:  { shape: 'bucket', r: 0.85, h: 0.9 },
-    queue:    { shape: 'queue', w: 2.4, d: 0.9, h: 0.6 },
-    external: { shape: 'box', w: 1.5, d: 1.5, h: 0.9 },
-    library:  { shape: 'box', w: 1.2, d: 1.2, h: 0.5 },
-    infra:    { shape: 'box', w: 2.0, d: 1.4, h: 0.6 },
+    service:  { shape: 'server', w: 1.3, d: 1.3, h: 1.6, label: 'Services' },
+    frontend: { shape: 'monitor', w: 1.9, d: 1.1, h: 1.5, label: 'Web apps' },
+    client:   { shape: 'monitor', w: 1.6, d: 1.0, h: 1.3, label: 'Clients' },
+    mobile:   { shape: 'phone', w: 0.7, d: 0.6, h: 1.2, label: 'Mobile' },
+    user:     { shape: 'person', w: 0.8, d: 0.8, h: 1.5, label: 'Users' },
+    gateway:  { shape: 'switch', w: 2.0, d: 1.2, h: 0.5, label: 'Gateways' },
+    cdn:      { shape: 'globe', w: 1.6, d: 1.6, h: 1.7, label: 'CDN / DNS' },
+    worker:   { shape: 'worker', w: 1.6, d: 1.4, h: 1.0, label: 'Workers' },
+    function: { shape: 'function', w: 1.0, d: 1.0, h: 0.9, label: 'Functions' },
+    database: { shape: 'database', w: 1.6, d: 1.6, h: 1.5, label: 'Databases' },
+    cache:    { shape: 'chip', w: 1.5, d: 1.5, h: 0.3, label: 'Caches' },
+    storage:  { shape: 'bucket', w: 1.7, d: 1.7, h: 1.1, label: 'Storage' },
+    queue:    { shape: 'queue', w: 2.6, d: 1.0, h: 0.65, label: 'Queues' },
+    external: { shape: 'cloud', w: 2.0, d: 1.4, h: 1.2, label: 'External' },
+    library:  { shape: 'package', w: 1.2, d: 1.2, h: 0.8, label: 'Libraries' },
+    infra:    { shape: 'rack', w: 1.2, d: 1.0, h: 2.2, label: 'Infra' },
   };
-  const SPACING = 3.4, BUS = 1.6, PLATFORM_H = 0.12, PAD = 1.4;
+  const CLIENT_KINDS = new Set(['user', 'client', 'mobile']);
+  const FLOW_COLORS = ['#ff6b6b', '#4dabf7', '#51cf66', '#fcc419', '#cc5de8', '#ff922b', '#20c997', '#f06595'];
+  const PLATFORM_H = 0.12, PAD = 1.3;
 
   const layers = (scene.layers || []).map((l, i) => ({ ...l, index: i }));
   const layerById = new Map(layers.map((l) => [l.id, l]));
-  const nodes = (scene.nodes || []).filter((n) => layerById.has(n.layer)).map((n) => ({
-    ...n, spec: { ...(KIND[n.kind] || KIND.service), ...(n.size || {}) },
-    state0: ['on', 'idle', 'off', 'external'].includes(n.state) ? n.state : 'on',
-  }));
+  const nodes = (scene.nodes || []).filter((n) => layerById.has(n.layer)).map((n) => {
+    const spec = { ...(KIND[n.kind] || KIND.service), ...(n.size || {}) };
+    return { ...n, kind: KIND[n.kind] ? n.kind : 'service', spec, half: Math.max(spec.w, spec.d) / 2,
+      state0: ['on', 'idle', 'off', 'external'].includes(n.state) ? n.state : 'on', pos: null, target: null };
+  });
   const nodeById = new Map(nodes.map((n) => [n.id, n]));
   const links = (scene.links || []).filter((l) => nodeById.has(l.from) && nodeById.has(l.to))
     .map((l, i) => ({ ...l, i, key: l.from + '->' + l.to }));
   const linkByKey = new Map(links.map((l) => [l.key, l]));
-  const flows = (scene.flows || []).filter((f) => Array.isArray(f.steps) && f.steps.length);
+  const flows = (scene.flows || []).filter((f) => Array.isArray(f.steps) && f.steps.length)
+    .map((f, i) => ({ ...f, color: safeColor(f.color) || FLOW_COLORS[i % FLOW_COLORS.length] }));
+  const kindsPresent = [...new Set(nodes.map((n) => n.kind))];
+  const tagsPresent = [...new Set(nodes.flatMap((n) => Array.isArray(n.tags) ? n.tags : []))];
+
+  // ---------- settings ----------
+  const DEFAULTS = {
+    layout: 'staircase', spacing: 4.6, gap: 1.6, stagger: 1, cables: 'arc',
+    hiddenLayers: [], hiddenKinds: [], external: true, idle: true, zones: true, labels: true,
+    linkLabels: false, traffic: !reducedMotion, platforms: true, clients: true, flowPaths: false,
+    shownFlows: flows.map((f) => f.id), highlight: [], theme: 'auto', custom: null,
+  };
+  const STORE_KEY = 'stack-map:' + (scene.title || 'scene');
+  let S = { ...DEFAULTS };
+  try { Object.assign(S, JSON.parse(localStorage.getItem(STORE_KEY) || '{}')); } catch {}
+  const save = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch {} };
+
+  const isVisible = (n) => !S.hiddenLayers.includes(n.layer) && !S.hiddenKinds.includes(n.kind)
+    && (S.external || n.state0 !== 'external') && (S.idle || n.state0 !== 'idle')
+    && (S.clients || !CLIENT_KINDS.has(n.kind));
+  let visibleNodes = [], visibleLayers = [];
 
   // ---------- layout ----------
-  // Nodes with explicit x/y keep them (layer-local grid units). Others are ordered by the
-  // barycenter of their neighbours on already-placed layers, then wrapped into rows.
-  const neighbours = new Map(nodes.map((n) => [n.id, []]));
-  links.forEach((l) => { neighbours.get(l.from).push(l.to); neighbours.get(l.to).push(l.from); });
-  const placed = new Map();
-  const order = [...layers].sort((a, b) => b.index - a.index); // top layer first
-  for (const layer of order) {
-    const members = nodes.filter((n) => n.layer === layer.id);
-    const auto = members.filter((n) => typeof n.x !== 'number' || typeof n.y !== 'number');
-    auto.forEach((n, i) => {
-      const xs = neighbours.get(n.id).map((id) => placed.get(id)).filter(Boolean).map((p) => p.x);
-      n._bary = xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : i * SPACING;
-    });
-    auto.sort((a, b) => a._bary - b._bary);
-    const cols = auto.length <= 6 ? auto.length : Math.ceil(auto.length / 2);
-    auto.forEach((n, i) => {
-      n.x = (i % Math.max(cols, 1)) * SPACING;
-      n.y = Math.floor(i / Math.max(cols, 1)) * SPACING;
-    });
-    // centre the layer on the origin so the stack lines up
-    if (members.length) {
-      const minX = Math.min(...members.map((n) => n.x)), maxX = Math.max(...members.map((n) => n.x));
-      const minY = Math.min(...members.map((n) => n.y)), maxY = Math.max(...members.map((n) => n.y));
-      const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
-      members.forEach((n) => { n.x -= cx; n.y -= cy; placed.set(n.id, n); });
+  // Inside a layer, nodes are ordered by the barycentre of their neighbours on already-placed
+  // layers and wrapped into rows. Layers then rise (gap) and step back (stagger) so that, in the
+  // default staircase, no tier sits in front of another. "Flat" is the same with no height.
+  const computeLayout = () => {
+    visibleNodes = nodes.filter(isVisible);
+    const vis = new Set(visibleNodes.map((n) => n.id));
+    visibleLayers = layers.filter((l) => !S.hiddenLayers.includes(l.id) && visibleNodes.some((n) => n.layer === l.id));
+    const neighbours = new Map(visibleNodes.map((n) => [n.id, []]));
+    links.forEach((l) => { if (vis.has(l.from) && vis.has(l.to)) { neighbours.get(l.from).push(l.to); neighbours.get(l.to).push(l.from); } });
+    const sp = S.spacing, local = new Map();
+    for (const layer of [...visibleLayers].reverse()) {
+      const members = visibleNodes.filter((n) => n.layer === layer.id);
+      const fixed = members.filter((n) => typeof n.x === 'number' && typeof n.y === 'number');
+      const auto = members.filter((n) => !fixed.includes(n));
+      auto.forEach((n, i) => {
+        const xs = neighbours.get(n.id).map((id) => local.get(id)).filter(Boolean).map((p) => p.x);
+        n._bary = xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : (i - auto.length / 2) * sp;
+      });
+      auto.sort((a, b) => a._bary - b._bary);
+      const cols = auto.length <= 5 ? auto.length : Math.ceil(auto.length / Math.ceil(auto.length / 5));
+      const pos = new Map();
+      auto.forEach((n, i) => pos.set(n.id, { x: (i % Math.max(cols, 1)) * sp, y: Math.floor(i / Math.max(cols, 1)) * sp * 0.85 }));
+      fixed.forEach((n) => pos.set(n.id, { x: n.x * sp / 4, y: n.y * sp / 4 }));
+      if (members.length) {
+        const xs = members.map((n) => pos.get(n.id).x), ys = members.map((n) => pos.get(n.id).y);
+        const cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+        members.forEach((n) => { const p = pos.get(n.id); p.x -= cx; p.y -= cy; local.set(n.id, p); });
+      }
+      const ext = (f) => members.length ? Math.max(...members.map((n) => f(local.get(n.id)) + n.half)) - Math.min(...members.map((n) => f(local.get(n.id)) - n.half)) + PAD * 2 : 4;
+      layer.w = ext((p) => p.x);
+      layer.d = ext((p) => p.y);
     }
-    const half = (n) => (n.spec.r || Math.max(n.spec.w, n.spec.d) / 2);
-    layer.bounds = members.length ? {
-      x0: Math.min(...members.map((n) => n.x - half(n))) - PAD,
-      x1: Math.max(...members.map((n) => n.x + half(n))) + PAD,
-      y0: Math.min(...members.map((n) => n.y - half(n))) - PAD,
-      y1: Math.max(...members.map((n) => n.y + half(n))) + PAD,
-    } : { x0: -2, x1: 2, y0: -2, y1: 2 };
-  }
+    // layer offsets: each tier rises by its tallest component plus the gap, and steps back by its depth
+    const flat = S.layout === 'flat', tower = S.layout === 'tower';
+    const gap = flat ? 0 : S.gap, stagger = flat ? 1 : tower ? 0 : S.stagger;
+    const maxH = (layer) => Math.max(0.5, ...visibleNodes.filter((n) => n.layer === layer.id).map((n) => n.spec.h));
+    let oy = 0, oz = 0;
+    visibleLayers.forEach((layer, i) => {
+      if (i > 0) {
+        const prev = visibleLayers[i - 1];
+        oy -= (prev.d / 2 + layer.d / 2 + (flat ? 0.6 : 0.4)) * stagger;
+        oz += flat ? 0 : maxH(prev) + gap;
+      }
+      layer.target = { ox: 0, oy, oz };
+    });
+    visibleLayers.forEach((l) => { l.target.oy -= oy / 2; if (!l.cur) l.cur = { ...l.target }; });
+    visibleNodes.forEach((n) => {
+      n.target = { ...local.get(n.id) };
+      if (!n.pos) n.pos = { ...n.target };
+    });
+  };
 
   // ---------- camera ----------
   const ISO_PITCH = Math.atan(1 / Math.SQRT2);
-  const cam = { yaw: Math.PI / 4, pitch: ISO_PITCH, zoom: 1, panX: 0, panY: 0, gap: 4.2 };
-  const UNIT = 34;
-  const layerZ = (layer) => layer.index * cam.gap;
-  let vx, vy, vz, cy_, sy_, cp, sp;
+  const cam = { yaw: Math.PI / 4, pitch: ISO_PITCH, zoom: 1, panX: 0, panY: 0 };
+  const UNIT = 30;
+  let vx, vy, vz, cy_, sy_, cp, sp_;
   const updateCam = () => {
-    cy_ = Math.cos(cam.yaw); sy_ = Math.sin(cam.yaw); cp = Math.cos(cam.pitch); sp = Math.sin(cam.pitch);
-    vx = sy_ * cp; vy = cy_ * cp; vz = sp; // unit vector from the scene toward the viewer
+    cy_ = Math.cos(cam.yaw); sy_ = Math.sin(cam.yaw); cp = Math.cos(cam.pitch); sp_ = Math.sin(cam.pitch);
+    vx = sy_ * cp; vy = cy_ * cp; vz = sp_; // unit vector from the scene toward the viewer
   };
   const project = (x, y, z) => {
     const xr = x * cy_ - y * sy_, yr = x * sy_ + y * cy_;
-    return [xr * UNIT, (yr * sp - z * cp) * UNIT, yr * cp + z * sp];
+    return [xr * UNIT, (yr * sp_ - z * cp) * UNIT, yr * cp + z * sp_];
   };
-  const pts = (arr) => arr.map((p) => { const q = project(p[0], p[1], p[2]); return q[0].toFixed(1) + ',' + q[1].toFixed(1); }).join(' ');
+  const P = (p) => { const q = project(p[0], p[1], p[2]); return q[0].toFixed(1) + ',' + q[1].toFixed(1); };
+  const pts = (arr) => arr.map(P).join(' ');
+  const facing = (n) => n[0] * vx + n[1] * vy + n[2] * vz > 0.001;
+  const depth = (p) => project(p[0], p[1], p[2])[2];
 
-  // ---------- meshes ----------
-  const prism = (foot, z0, h, topFoot) => {
-    const top = (topFoot || foot).map(([x, y]) => [x, y, z0 + h]);
-    const bot = foot.map(([x, y]) => [x, y, z0]);
-    const faces = [{ poly: top, top: true }];
-    for (let i = 0; i < foot.length; i++) {
-      const j = (i + 1) % foot.length;
-      faces.push({ poly: [bot[i], bot[j], top[j], top[i]] });
+  // world position of a node's footprint centre and base height
+  const base = (n) => {
+    const l = layerById.get(n.layer).cur;
+    return [l.ox + n.pos.x, l.oy + n.pos.y, l.oz + PLATFORM_H];
+  };
+  const nodeTop = (n) => { const b = base(n); return [b[0], b[1], b[2] + n.spec.h]; };
+
+  // ---------- primitives ----------
+  // A box exposes its faces as frames (origin o, axes u and v, normal n) so details can be drawn
+  // in face-local (s, t) coordinates: s runs left → right, t bottom → top as seen from outside.
+  const boxFrames = (cx, cy, z0, w, d, h) => {
+    const x0 = cx - w / 2, x1 = cx + w / 2, y0 = cy - d / 2, y1 = cy + d / 2, z1 = z0 + h;
+    return {
+      top:   { o: [x0, y0, z1], u: [w, 0, 0], v: [0, d, 0], n: [0, 0, 1], shade: 'top' },
+      front: { o: [x1, y1, z0], u: [-w, 0, 0], v: [0, 0, h], n: [0, 1, 0], shade: 'side-b' },
+      right: { o: [x1, y0, z0], u: [0, d, 0], v: [0, 0, h], n: [1, 0, 0], shade: 'side-a' },
+      back:  { o: [x0, y0, z0], u: [w, 0, 0], v: [0, 0, h], n: [0, -1, 0], shade: 'side-b' },
+      left:  { o: [x0, y1, z0], u: [0, -d, 0], v: [0, 0, h], n: [-1, 0, 0], shade: 'side-a' },
+    };
+  };
+  const at = (f, s, t) => [f.o[0] + f.u[0] * s + f.v[0] * t, f.o[1] + f.u[1] * s + f.v[1] * t, f.o[2] + f.u[2] * s + f.v[2] * t];
+  const box = (g, cx, cy, z0, w, d, h) => {
+    const F = boxFrames(cx, cy, z0, w, d, h);
+    for (const k of ['back', 'left', 'right', 'front', 'top']) {
+      const f = F[k];
+      if (!facing(f.n)) continue;
+      el('polygon', { class: 'face ' + f.shade, points: pts([at(f, 0, 0), at(f, 1, 0), at(f, 1, 1), at(f, 0, 1)]) }, g);
     }
-    return faces;
+    return F;
   };
-  const rect = (cx, cy, w, d) => [[cx - w / 2, cy - d / 2], [cx + w / 2, cy - d / 2], [cx + w / 2, cy + d / 2], [cx - w / 2, cy + d / 2]];
-  const ngon = (cx, cy, r, k, rot = 0) => Array.from({ length: k }, (_, i) => {
-    const a = rot + (i / k) * Math.PI * 2; return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  // draw polylines on a face, only when that face is visible
+  const onFace = (g, f, lines, cls = 'detail') => {
+    if (!facing(f.n)) return;
+    for (const line of lines) el('polyline', { class: cls, points: pts(line.map(([s, t]) => at(f, s, t))) }, g);
+  };
+  const rectOn = (g, f, s0, t0, s1, t1, cls = 'detail') => {
+    if (!facing(f.n)) return;
+    el('polygon', { class: cls, points: pts([at(f, s0, t0), at(f, s1, t0), at(f, s1, t1), at(f, s0, t1)]) }, g);
+  };
+  const led = (g, f, s, t, r = 1.6) => {
+    if (!facing(f.n)) return;
+    const q = project(...at(f, s, t));
+    el('circle', { class: 'led', cx: q[0].toFixed(1), cy: q[1].toFixed(1), r }, g);
+  };
+  const ring = (cx, cy, z, r, k = 40) => Array.from({ length: k }, (_, i) => {
+    const a = (i / k) * Math.PI * 2; return [cx + r * Math.cos(a), cy + r * Math.sin(a), z];
   });
-  const normalOf = (poly, centroid) => {
-    const [a, b, c] = poly;
-    const u = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], w = [c[0] - a[0], c[1] - a[1], c[2] - a[2]];
-    let n = [u[1] * w[2] - u[2] * w[1], u[2] * w[0] - u[0] * w[2], u[0] * w[1] - u[1] * w[0]];
-    const fc = poly.reduce((s, p) => [s[0] + p[0], s[1] + p[1], s[2] + p[2]], [0, 0, 0]).map((v) => v / poly.length);
-    if (n[0] * (fc[0] - centroid[0]) + n[1] * (fc[1] - centroid[1]) + n[2] * (fc[2] - centroid[2]) < 0) n = n.map((v) => -v);
-    const len = Math.hypot(...n) || 1;
-    return n.map((v) => v / len);
-  };
   const hull = (p) => {
     p = p.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
     const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
@@ -481,78 +638,223 @@ details.textview.show { display: block; }
     for (const q of p.reverse()) { while (up.length >= 2 && cross(up[up.length - 2], up[up.length - 1], q) <= 0) up.pop(); up.push(q); }
     return lo.slice(0, -1).concat(up.slice(0, -1));
   };
-  const circle3 = (cx, cy, z, r, k = 40) => ngon(cx, cy, r, k).map(([x, y]) => [x, y, z]);
-
-  const drawFaces = (g, faces, centroid) => {
-    for (const f of faces) {
-      const n = normalOf(f.poly, centroid);
-      const dot = n[0] * vx + n[1] * vy + n[2] * vz;
-      if (dot <= 0.001) continue;
-      const shade = f.top ? 'top' : (Math.abs(n[0] * Math.cos(cam.yaw + Math.PI / 4)) > Math.abs(n[1] * Math.sin(cam.yaw + Math.PI / 4)) ? 'side-a' : 'side-b');
-      el('polygon', { class: 'face ' + shade, points: pts(f.poly) }, g);
-    }
+  // the contiguous part of a closed 3D loop whose points face the viewer, relative to centre c
+  const visibleArc = (loop, c) => {
+    const vis = loop.map((p) => (p[0] - c[0]) * vx + (p[1] - c[1]) * vy + (p[2] - c[2]) * vz >= -1e-6);
+    if (vis.every(Boolean)) return loop.concat([loop[0]]);
+    const start = vis.findIndex((v, i) => v && !vis[(i - 1 + vis.length) % vis.length]);
+    if (start < 0) return [];
+    const out = [];
+    for (let k = 0; k < loop.length; k++) { const i = (start + k) % loop.length; if (!vis[i]) break; out.push(loop[i]); }
+    return out;
   };
-  const drawCylinder = (g, cx, cy, z0, r, h, rings, open) => {
-    const bot = circle3(cx, cy, z0, r), top = circle3(cx, cy, z0 + h, r);
-    const body = hull([...bot, ...top].map((p) => project(...p).slice(0, 2)));
+  const frontArc = (g, cx, cy, z, r) => {
+    const arc = visibleArc(ring(cx, cy, z, r, 48), [cx, cy, z]);
+    if (arc.length > 1) el('polyline', { class: 'detail', points: pts(arc) }, g);
+  };
+  const cylinder = (g, cx, cy, z0, r0, h, r1 = r0, open = false) => {
+    const body = hull([...ring(cx, cy, z0, r0), ...ring(cx, cy, z0 + h, r1)].map((p) => project(...p)));
     el('polygon', { class: 'face side-a', points: body.map((p) => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ') }, g);
-    // front arcs: points on the circle that face the viewer
-    const front = (z, rr = r) => {
-      const ring = ngon(cx, cy, rr, 48).map(([x, y]) => [x, y, z]);
-      const vis = ring.filter(([x, y]) => (x - cx) * vx + (y - cy) * vy >= -1e-6);
-      if (vis.length < 2) return;
-      // order by angle so the polyline is continuous
-      const base = Math.atan2(vy, vx);
-      vis.sort((a, b) => wrap(Math.atan2(a[1] - cy, a[0] - cx) - base) - wrap(Math.atan2(b[1] - cy, b[0] - cx) - base));
-      el('polyline', { class: 'detail', points: pts(vis) }, g);
-    };
-    for (let i = 1; i <= rings; i++) front(z0 + (h * i) / (rings + 1));
-    el('polygon', { class: 'face top', points: pts(top) }, g);
-    if (open) el('polygon', { class: 'detail', points: pts(circle3(cx, cy, z0 + h, r * 0.8)) }, g);
+    el('polygon', { class: 'face top', points: pts(ring(cx, cy, z0 + h, r1)) }, g);
+    if (open) el('polygon', { class: 'detail', points: pts(ring(cx, cy, z0 + h, r1 * 0.86)) }, g);
   };
-  const wrap = (a) => { while (a <= -Math.PI) a += 2 * Math.PI; while (a > Math.PI) a -= 2 * Math.PI; return a; };
+  const sphere = (g, x, y, z, r, cls = 'face top') => {
+    const q = project(x, y, z);
+    el('circle', { class: cls, cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: (r * UNIT).toFixed(1) }, g);
+  };
+  const line3 = (g, a, b, cls = 'detail') => el('polyline', { class: cls, points: pts([a, b]) }, g);
 
-  const drawNodeShape = (g, n) => {
-    const s = n.spec, z0 = layerZ(layerById.get(n.layer)) + PLATFORM_H, x = n.x, y = n.y;
-    const C = (h) => [x, y, z0 + h / 2];
-    switch (s.shape) {
-      case 'cylinder': drawCylinder(g, x, y, z0, s.r, s.h, s.rings || 0, false); break;
-      case 'bucket': drawCylinder(g, x, y, z0, s.r, s.h, 0, true); break;
-      case 'hex': drawFaces(g, prism(ngon(x, y, s.r, 6, Math.PI / 6), z0, s.h), C(s.h)); break;
-      case 'frustum': drawFaces(g, prism(rect(x, y, s.w, s.d), z0, s.h, rect(x, y, s.w * 0.6, s.d * 0.6)), C(s.h)); break;
-      case 'queue': {
-        drawFaces(g, prism(rect(x, y, s.w, s.d), z0, s.h), C(s.h));
-        const slots = 5;
-        for (let i = 1; i < slots; i++) {
-          const sx = x - s.w / 2 + (s.w * i) / slots;
-          el('polyline', { class: 'detail', points: pts([[sx, y - s.d / 2, z0 + s.h], [sx, y + s.d / 2, z0 + s.h]]) }, g);
+  // ---------- glyphs: recognisable real-world objects ----------
+  const GLYPH = {
+    // rack-mount server: stacked 1U blades with status LEDs and a vented side
+    server(g, n, [x, y, z]) {
+      const { w, d, h } = n.spec, units = 4;
+      const F = box(g, x, y, z, w, d, h);
+      for (const face of [F.front, F.back]) {
+        for (let i = 1; i < units; i++) onFace(g, face, [[[0.06, i / units], [0.94, i / units]]]);
+        for (let i = 0; i < units; i++) {
+          onFace(g, face, [[[0.32, (i + 0.5) / units], [0.84, (i + 0.5) / units]]]);
+          led(g, face, 0.14, (i + 0.5) / units);
         }
-        break;
       }
-      case 'screen': {
-        drawFaces(g, prism(rect(x, y, s.w, s.d), z0, s.h * 0.18), C(s.h * 0.18));
-        const sz = z0 + s.h * 0.18;
-        drawFaces(g, prism(rect(x, y - s.d * 0.3, s.w * 0.86, 0.08), sz, s.h * 0.82), [x, y - s.d * 0.3, sz + s.h * 0.41]);
-        break;
+      for (const face of [F.right, F.left]) for (let i = 0; i < 5; i++) onFace(g, face, [[[0.2 + i * 0.15, 0.7], [0.2 + i * 0.15, 0.92]]]);
+    },
+    // full-height cabinet with a door frame and many units
+    rack(g, n, [x, y, z]) {
+      const { w, d, h } = n.spec;
+      const F = box(g, x, y, z, w, d, h);
+      for (const face of [F.front, F.back]) {
+        rectOn(g, face, 0.08, 0.05, 0.92, 0.95);
+        for (let i = 1; i < 9; i++) onFace(g, face, [[[0.12, 0.05 + i * 0.1], [0.88, 0.05 + i * 0.1]]]);
+        for (let i = 0; i < 9; i++) led(g, face, 0.18, 0.1 + i * 0.1, 1.3);
       }
-      default: drawFaces(g, prism(rect(x, y, s.w, s.d), z0, s.h), C(s.h));
-    }
-  };
-  const nodeTop = (n) => {
-    const s = n.spec;
-    return [n.x, n.y, layerZ(layerById.get(n.layer)) + PLATFORM_H + s.h];
+    },
+    // monitor on a stand; the screen shows a web page (frontend) or a terminal (client)
+    monitor(g, n, [x, y, z]) {
+      const { w, h } = n.spec, sh = h * 0.68, sz = z + h - sh;
+      box(g, x, y, z, w * 0.45, 0.5, 0.06);
+      box(g, x, y - 0.03, z + 0.06, 0.14, 0.1, h - sh - 0.04);
+      const F = box(g, x, y, sz, w, 0.12, sh);
+      for (const face of [F.front, F.back]) {
+        rectOn(g, face, 0.05, 0.08, 0.95, 0.92, 'face glass');
+        onFace(g, face, [[[0.05, 0.78], [0.95, 0.78]]]);
+        [0.1, 0.15, 0.2].forEach((s) => led(g, face, s, 0.85, 1.1));
+        if (n.kind === 'frontend') {
+          rectOn(g, face, 0.1, 0.42, 0.45, 0.7);
+          [0.66, 0.58, 0.5].forEach((t) => onFace(g, face, [[[0.52, t], [0.9, t]]]));
+          onFace(g, face, [[[0.1, 0.3], [0.9, 0.3]], [[0.1, 0.2], [0.7, 0.2]]]);
+        } else {
+          [0.66, 0.55, 0.44, 0.33].forEach((t, i) => onFace(g, face, [[[0.12, t], [0.88 - i * 0.12, t]]]));
+        }
+      }
+    },
+    // smartphone standing on its edge
+    phone(g, n, [x, y, z]) {
+      const { w, h } = n.spec;
+      const F = box(g, x, y, z, w, 0.1, h);
+      for (const face of [F.front, F.back]) {
+        rectOn(g, face, 0.1, 0.1, 0.9, 0.88, 'face glass');
+        onFace(g, face, [[[0.4, 0.94], [0.6, 0.94]], [[0.38, 0.05], [0.62, 0.05]]]);
+      }
+    },
+    // a person: tapered body, shoulders and a head
+    person(g, n, [x, y, z]) {
+      cylinder(g, x, y, z, 0.3, 0.8, 0.24);
+      sphere(g, x, y, z + 0.8, 0.24, 'face side-a');
+      sphere(g, x, y, z + 1.22, 0.24);
+    },
+    // network switch / load balancer: flat 1U box with a row of ports and two antennas
+    switch(g, n, [x, y, z]) {
+      const { w, d, h } = n.spec;
+      const F = box(g, x, y, z, w, d, h);
+      for (const face of [F.front, F.back]) {
+        for (let i = 0; i < 8; i++) rectOn(g, face, 0.08 + i * 0.085, 0.25, 0.14 + i * 0.085, 0.7);
+        led(g, face, 0.85, 0.5); led(g, face, 0.91, 0.5);
+      }
+      onFace(g, F.top, [[[0.15, 0.3], [0.85, 0.3]], [[0.15, 0.7], [0.85, 0.7]]]);
+      for (const s of [0.2, 0.8]) {
+        const a = at(F.top, s, 0.1);
+        line3(g, a, [a[0], a[1], a[2] + 0.6]);
+        sphere(g, a[0], a[1], a[2] + 0.62, 0.05, 'led');
+      }
+    },
+    // globe on a pedestal: CDN, DNS, the internet
+    globe(g, n, [x, y, z]) {
+      const r = n.spec.w / 2 * 0.85, cz = z + 0.2 + r, c = [x, y, cz];
+      cylinder(g, x, y, z, 0.35, 0.1);
+      line3(g, [x, y, z + 0.1], [x, y, z + 0.2]);
+      sphere(g, x, y, cz, r);
+      for (const lat of [0, 0.5, -0.5]) {
+        const rr = r * Math.cos(Math.asin(lat)), loop = ring(x, y, cz + r * lat, rr, 48);
+        const arc = visibleArc(loop, c);
+        if (arc.length > 1) el('polyline', { class: 'detail', points: pts(arc) }, g);
+      }
+      for (const a of [0, Math.PI / 3, (2 * Math.PI) / 3]) {
+        const loop = Array.from({ length: 48 }, (_, i) => {
+          const t = (i / 48) * Math.PI * 2;
+          return [x + Math.cos(a) * r * Math.cos(t), y + Math.sin(a) * r * Math.cos(t), cz + r * Math.sin(t)];
+        });
+        const arc = visibleArc(loop, c);
+        if (arc.length > 1) el('polyline', { class: 'detail', points: pts(arc) }, g);
+      }
+    },
+    // small factory with a saw-tooth roof and a chimney: background workers
+    worker(g, n, [x, y, z]) {
+      const { w, d, h } = n.spec, wall = h * 0.6, y0 = y - d / 2, y1 = y + d / 2;
+      const F = box(g, x, y, z, w, d, wall);
+      for (const face of [F.front, F.back]) { rectOn(g, face, 0.12, 0, 0.32, 0.65); rectOn(g, face, 0.5, 0.35, 0.86, 0.75); }
+      const ridges = [0, 1, 2];
+      if (vx < 0) ridges.reverse();
+      for (const i of ridges) {
+        const xa = x - w / 2 + (w * i) / 3, xb = xa + w / 3, zt = z + h, zw = z + wall;
+        if (facing([0, -1, 0])) el('polygon', { class: 'face side-b', points: pts([[xa, y0, zw], [xb, y0, zw], [xb, y0, zt]]) }, g);
+        if (facing([0, 1, 0])) el('polygon', { class: 'face side-b', points: pts([[xa, y1, zw], [xb, y1, zw], [xb, y1, zt]]) }, g);
+        if (facing([-(h - wall), 0, w / 3])) el('polygon', { class: 'face top', points: pts([[xa, y0, zw], [xb, y0, zt], [xb, y1, zt], [xa, y1, zw]]) }, g);
+        if (facing([1, 0, 0])) el('polygon', { class: 'face glass', points: pts([[xb, y0, zw], [xb, y0, zt], [xb, y1, zt], [xb, y1, zw]]) }, g);
+      }
+      cylinder(g, x - w / 2 + 0.25, y + d / 2 - 0.25, z + wall, 0.12, h * 0.95);
+    },
+    // serverless function: a cube with a lambda on its faces
+    function(g, n, [x, y, z]) {
+      const { w, d, h } = n.spec;
+      const F = box(g, x, y, z, w, d, h);
+      const lambda = [[[0.3, 0.85], [0.42, 0.85], [0.72, 0.15]], [[0.52, 0.5], [0.3, 0.15]]];
+      for (const face of [F.front, F.right, F.back, F.left]) onFace(g, face, lambda);
+    },
+    // database: three stacked disks
+    database(g, n, [x, y, z]) {
+      const r = n.spec.w / 2 * 0.9, disk = n.spec.h / 3;
+      for (let i = 0; i < 3; i++) {
+        cylinder(g, x, y, z + i * disk, r, disk - 0.07);
+        frontArc(g, x, y, z + i * disk + (disk - 0.07) * 0.45, r);
+      }
+    },
+    // memory chip with pins: caches
+    chip(g, n, [x, y, z]) {
+      const { w, d, h } = n.spec, pins = 6, zp = z + 0.12;
+      for (let i = 0; i < pins; i++) {
+        const t = -0.4 + (0.8 * (i + 0.5)) / pins;
+        for (const [px, py, ox, oy] of [[x + t * w, y - d * 0.4, 0, -1], [x + t * w, y + d * 0.4, 0, 1], [x - w * 0.4, y + t * d, -1, 0], [x + w * 0.4, y + t * d, 1, 0]]) {
+          el('polyline', { class: 'detail', points: pts([[px, py, zp], [px + ox * w * 0.12, py + oy * d * 0.12, zp], [px + ox * w * 0.12, py + oy * d * 0.12, z]]) }, g);
+        }
+      }
+      const F = box(g, x, y, z + 0.08, w * 0.8, d * 0.8, h);
+      rectOn(g, F.top, 0.25, 0.25, 0.75, 0.75);
+      const dot = at(F.top, 0.12, 0.12); sphere(g, dot[0], dot[1], dot[2], 0.05, 'led');
+    },
+    // bucket: open-topped, wider at the rim, with two hoops
+    bucket(g, n, [x, y, z]) {
+      const r = n.spec.w / 2 * 0.85, h = n.spec.h;
+      cylinder(g, x, y, z, r * 0.78, h, r, true);
+      frontArc(g, x, y, z + h * 0.8, r * 0.96);
+      frontArc(g, x, y, z + h * 0.2, r * 0.83);
+    },
+    // message queue: a tray carrying envelopes in a line
+    queue(g, n, [x, y, z]) {
+      const { w, d } = n.spec;
+      const F = box(g, x, y, z, w, d, 0.16);
+      onFace(g, F.top, [[[0.02, 0.15], [0.98, 0.15]], [[0.02, 0.85], [0.98, 0.85]]]);
+      const k = 4, ew = (w * 0.8) / k, order = [0, 1, 2, 3];
+      if (vx < 0) order.reverse();
+      for (const i of order) {
+        const E = box(g, x - w * 0.4 + ew * (i + 0.5), y, z + 0.16, ew * 0.75, d * 0.6, 0.45);
+        for (const face of [E.front, E.back]) onFace(g, face, [[[0, 1], [0.5, 0.45], [1, 1]]]);
+      }
+    },
+    // third-party service: a cloud
+    cloud(g, n, [x, y, z]) {
+      const s = n.spec.w / 2;
+      const puffs = [[-0.55, 0, 0.42, 0.38], [0.55, 0, 0.42, 0.38], [0, 0.15, 0.62, 0.52], [-0.2, -0.25, 0.5, 0.4], [0.25, -0.2, 0.48, 0.36]]
+        .map(([dx, dy, dz, r]) => [x + dx * s, y + dy * s, z + dz * s * 1.2, r * s]);
+      puffs.sort((a, b) => depth(a) - depth(b));
+      for (const [px, py, pz, r] of puffs) sphere(g, px, py, pz, r);
+    },
+    // internal package: a taped cardboard box
+    package(g, n, [x, y, z]) {
+      const { w, d, h } = n.spec;
+      const F = box(g, x, y, z, w, d, h);
+      onFace(g, F.top, [[[0.42, 0], [0.42, 1]], [[0.58, 0], [0.58, 1]]]);
+      for (const face of [F.front, F.back]) onFace(g, face, [[[0.42, 1], [0.42, 0.7]], [[0.58, 1], [0.58, 0.7]]]);
+      for (const face of [F.right, F.left]) rectOn(g, face, 0.2, 0.2, 0.55, 0.45);
+    },
   };
 
   // ---------- link routing ----------
-  // Rise from the source, run Manhattan-style on a bus above the higher of the two layers,
-  // then drop into the target. A per-link lane offset keeps parallel cables apart.
   const route = (l) => {
-    const a = nodeById.get(l.from), b = nodeById.get(l.to);
-    const za = nodeTop(a), zb = nodeTop(b);
-    const busZ = Math.max(layerZ(layerById.get(a.layer)), layerZ(layerById.get(b.layer))) + BUS + ((l.i % 5) - 2) * 0.09;
-    const off = ((l.i % 3) - 1) * 0.18;
-    const p = [za, [a.x + off, a.y + off, busZ], [b.x + off, a.y + off, busZ], [b.x + off, b.y + off, busZ], zb];
-    return p.filter((q, i) => i === 0 || Math.hypot(q[0] - p[i - 1][0], q[1] - p[i - 1][1], q[2] - p[i - 1][2]) > 1e-6);
+    const pa = nodeTop(nodeById.get(l.from)), pb = nodeTop(nodeById.get(l.to));
+    const lane = ((l.i % 5) - 2) * 0.08;
+    if (S.cables === 'straight') return [pa, pb];
+    if (S.cables === 'ortho') {
+      const busZ = Math.max(pa[2], pb[2]) + 0.9 + lane;
+      const p = [pa, [pa[0], pa[1], busZ], [pa[0], pb[1], busZ], [pb[0], pb[1], busZ], pb];
+      return p.filter((q, i) => i === 0 || Math.hypot(q[0] - p[i - 1][0], q[1] - p[i - 1][1], q[2] - p[i - 1][2]) > 1e-6);
+    }
+    const dist = Math.hypot(pb[0] - pa[0], pb[1] - pa[1]);
+    const c = [(pa[0] + pb[0]) / 2 + lane, (pa[1] + pb[1]) / 2 - lane, Math.max(pa[2], pb[2]) + 0.6 + dist * 0.18 + lane];
+    return Array.from({ length: 21 }, (_, i) => {
+      const t = i / 20, u = 1 - t;
+      return [0, 1, 2].map((k) => u * u * pa[k] + 2 * u * t * c[k] + t * t * pb[k]);
+    });
   };
   const pathLen = (p) => { let s = 0; for (let i = 1; i < p.length; i++) s += Math.hypot(p[i][0] - p[i - 1][0], p[i][1] - p[i - 1][1], p[i][2] - p[i - 1][2]); return s; };
   const pointAt = (p, t) => {
@@ -567,6 +869,8 @@ details.textview.show { display: block; }
     }
     return p[p.length - 1];
   };
+  const dPath = (p) => 'M' + p.map((q) => { const s = project(...q); return s[0].toFixed(1) + ',' + s[1].toFixed(1); }).join(' L');
+  const stepPath = (s) => linkPaths.get(s.from + '->' + s.to) || (linkPaths.get(s.to + '->' + s.from) || []).slice().reverse();
 
   // ---------- power state ----------
   const power = new Map(nodes.map((n) => [n.id, n.state0 !== 'off']));
@@ -584,8 +888,7 @@ details.textview.show { display: block; }
         if (l.critical === false) continue;
         const [dep, on] = dependsOn(l);
         if (dep !== id) continue;
-        const t = visit(on, seen);
-        if (t !== 'ok') { s = 'degraded'; break; }
+        if (visit(on, seen) !== 'ok') { s = 'degraded'; break; }
       }
       seen.delete(id);
       status.set(id, s);
@@ -599,185 +902,294 @@ details.textview.show { display: block; }
     const s = status.get(n.id);
     if (s === 'off') return 'off';
     if (s === 'degraded') return 'degraded';
-    if (n.state0 === 'external') return 'external';
-    if (n.state0 === 'idle') return 'idle';
-    return 'on';
+    return n.state0 === 'external' ? 'external' : n.state0 === 'idle' ? 'idle' : 'on';
   };
   const linkLive = (l) => status.get(l.from) !== 'off' && status.get(l.to) !== 'off';
 
+  // ---------- focus & highlight ----------
+  let selected = null, hovered = null, flowRun = null, activeFlow = null;
+  const flowNodes = (f) => new Set(f.steps.flatMap((s) => [s.from, s.to]));
+  const flowLinks = (f) => new Set(f.steps.map((s) => linkByKey.has(s.from + '->' + s.to) ? s.from + '->' + s.to : s.to + '->' + s.from));
+  const zoneHas = (zid, nid) => (scene.zones || []).some((z) => z.id === zid && (z.nodes || []).includes(nid));
+  const focusSet = () => {
+    const ns = new Set(), ls = new Set();
+    const focus = hovered || selected;
+    if (focus && focus.type === 'node') {
+      ns.add(focus.id);
+      links.forEach((l) => { if (l.from === focus.id || l.to === focus.id) { ls.add(l.key); ns.add(l.from); ns.add(l.to); } });
+    } else if (focus && focus.type === 'link') {
+      const l = linkByKey.get(focus.id); if (l) { ls.add(l.key); ns.add(l.from); ns.add(l.to); }
+    } else if (activeFlow) {
+      flowNodes(activeFlow).forEach((id) => ns.add(id)); flowLinks(activeFlow).forEach((k) => ls.add(k));
+    } else if (S.highlight.length) {
+      for (const h of S.highlight) {
+        const i = h.indexOf(':'), type = h.slice(0, i), val = h.slice(i + 1);
+        nodes.forEach((n) => {
+          if ((type === 'layer' && n.layer === val) || (type === 'kind' && n.kind === val)
+            || (type === 'tag' && (n.tags || []).includes(val)) || (type === 'state' && nodeClass(n) === val)
+            || (type === 'zone' && zoneHas(val, n.id))) ns.add(n.id);
+        });
+      }
+      links.forEach((l) => { if (ns.has(l.from) && ns.has(l.to)) ls.add(l.key); });
+    } else return null;
+    return { nodes: ns, links: ls };
+  };
+
   // ---------- render ----------
   const svg = $('scene'), world = $('world');
-  const G = { platforms: $('g-platforms'), zones: $('g-zones'), nodes: $('g-nodes'), links: $('g-links'), packets: $('g-packets'), labels: $('g-labels') };
-  let selected = null, hovered = null, flowRun = null;
+  const G = { platforms: $('g-platforms'), zones: $('g-zones'), links: $('g-links'), nodes: $('g-nodes'), flows: $('g-flows'), packets: $('g-packets'), labels: $('g-labels') };
   const linkPaths = new Map();
+  const labelOf = (id) => { const n = nodeById.get(id); return n ? (n.label || n.id) : id; };
+  const linkText = (l) => ((l.protocol || '') + (l.port ? ':' + l.port : '') + (l.async ? ' (async)' : '')).trim() || 'link';
+  const shown = (id) => visibleNodes.some((n) => n.id === id);
 
   const render = () => {
     updateCam();
     Object.values(G).forEach((g) => g.replaceChildren());
-    // platforms, bottom layer first
-    for (const layer of layers) {
-      const b = layer.bounds, z = layerZ(layer);
-      const g = el('g', { class: 'platform' }, G.platforms);
-      drawFaces(g, prism(rect((b.x0 + b.x1) / 2, (b.y0 + b.y1) / 2, b.x1 - b.x0, b.y1 - b.y0), z, PLATFORM_H), [(b.x0 + b.x1) / 2, (b.y0 + b.y1) / 2, z]);
-      for (let gx = Math.ceil(b.x0); gx <= b.x1; gx += 1) el('polyline', { class: 'grid', points: pts([[gx, b.y0, z + PLATFORM_H], [gx, b.y1, z + PLATFORM_H]]) }, g);
-      for (let gy = Math.ceil(b.y0); gy <= b.y1; gy += 1) el('polyline', { class: 'grid', points: pts([[b.x0, gy, z + PLATFORM_H], [b.x1, gy, z + PLATFORM_H]]) }, g);
-      // label on the corner nearest the viewer
-      const corners = [[b.x0, b.y0], [b.x1, b.y0], [b.x1, b.y1], [b.x0, b.y1]].map(([x, y]) => project(x, y, z));
-      const left = corners.reduce((m, c) => (c[0] < m[0] ? c : m), corners[0]);
-      const t = el('text', { class: 'platform-label', x: left[0] - 10, y: left[1] + 4, 'text-anchor': 'end' }, g);
-      t.textContent = layer.label || layer.id;
+    const vis = new Set(visibleNodes.map((n) => n.id));
+    const focus = focusSet();
+    const flat = S.layout === 'flat';
+
+    // platforms: one per tier, or one shared slate with tier bands in flat mode
+    if (S.platforms && visibleLayers.length) {
+      const rects = visibleLayers.map((l) => ({ l, x0: l.cur.ox - l.w / 2, x1: l.cur.ox + l.w / 2, y0: l.cur.oy - l.d / 2, y1: l.cur.oy + l.d / 2, z: l.cur.oz }));
+      const drawPlate = (x0, x1, y0, y1, z, cls) => {
+        const g = el('g', { class: 'platform ' + cls }, G.platforms);
+        box(g, (x0 + x1) / 2, (y0 + y1) / 2, z, x1 - x0, y1 - y0, PLATFORM_H);
+        for (let gx = Math.ceil(x0); gx <= x1; gx += 1) line3(g, [gx, y0, z + PLATFORM_H], [gx, y1, z + PLATFORM_H], 'grid');
+        for (let gy = Math.ceil(y0); gy <= y1; gy += 1) line3(g, [x0, gy, z + PLATFORM_H], [x1, gy, z + PLATFORM_H], 'grid');
+        return g;
+      };
+      if (flat) {
+        const x0 = Math.min(...rects.map((r) => r.x0)), x1 = Math.max(...rects.map((r) => r.x1));
+        const y0 = Math.min(...rects.map((r) => r.y0)), y1 = Math.max(...rects.map((r) => r.y1));
+        const z = Math.min(...rects.map((r) => r.z));
+        const g = drawPlate(x0, x1, y0, y1, z, 'slate');
+        rects.slice(1).forEach((r) => line3(g, [x0, r.y1 + 0.3, z + PLATFORM_H], [x1, r.y1 + 0.3, z + PLATFORM_H], 'band'));
+        rects.forEach((r) => { r.x0 = x0; r.x1 = x1; });
+      } else {
+        rects.forEach((r) => drawPlate(r.x0, r.x1, r.y0, r.y1, r.z, ''));
+      }
+      for (const r of rects) {
+        // the middle of the platform edge furthest left on screen, so the name sits outside the content
+        const xm = (r.x0 + r.x1) / 2, ym = (r.y0 + r.y1) / 2;
+        const mids = [[r.x0, ym], [r.x1, ym], [xm, r.y0], [xm, r.y1]].map(([x, y]) => project(x, y, r.z));
+        const left = mids.reduce((m, c) => (c[0] < m[0] ? c : m), mids[0]);
+        const t = el('text', { class: 'platform-label', x: left[0] - 10, y: left[1] + 4, 'text-anchor': 'end' }, G.platforms);
+        t.textContent = r.l.label || r.l.id;
+      }
     }
-    // zones: dashed wireframe volumes around their member nodes
-    for (const zone of scene.zones || []) {
-      const ms = (zone.nodes || []).map((id) => nodeById.get(id)).filter(Boolean);
+
+    // zones
+    if (S.zones) for (const zone of scene.zones || []) {
+      const ms = (zone.nodes || []).filter((id) => vis.has(id)).map((id) => nodeById.get(id));
       if (!ms.length) continue;
-      const r = (n) => (n.spec.r || Math.max(n.spec.w, n.spec.d) / 2) + 0.55;
-      const x0 = Math.min(...ms.map((n) => n.x - r(n))), x1 = Math.max(...ms.map((n) => n.x + r(n)));
-      const y0 = Math.min(...ms.map((n) => n.y - r(n))), y1 = Math.max(...ms.map((n) => n.y + r(n)));
-      const z0 = Math.min(...ms.map((n) => layerZ(layerById.get(n.layer)))) + PLATFORM_H + 0.02;
-      const z1 = Math.max(...ms.map((n) => nodeTop(n)[2])) + 0.45;
-      const box = [[x0, y0], [x1, y0], [x1, y1], [x0, y1]];
+      const bs = ms.map(base), r = (n) => n.half + 0.5;
+      const x0 = Math.min(...ms.map((n, i) => bs[i][0] - r(n))), x1 = Math.max(...ms.map((n, i) => bs[i][0] + r(n)));
+      const y0 = Math.min(...ms.map((n, i) => bs[i][1] - r(n))), y1 = Math.max(...ms.map((n, i) => bs[i][1] + r(n)));
+      const z0 = Math.min(...bs.map((b) => b[2])) + 0.02, z1 = Math.max(...ms.map((n) => nodeTop(n)[2])) + 0.4;
+      const sq = [[x0, y0], [x1, y0], [x1, y1], [x0, y1]];
       const g = el('g', null, G.zones);
-      el('polygon', { class: 'zone', points: pts(box.map(([x, y]) => [x, y, z0])) }, g);
-      el('polygon', { class: 'zone', points: pts(box.map(([x, y]) => [x, y, z1])) }, g);
-      box.forEach(([x, y]) => el('polyline', { class: 'zone', points: pts([[x, y, z0], [x, y, z1]]) }, g));
-      const right = box.map(([x, y]) => project(x, y, z1)).sort((a, b) => b[0] - a[0])[0];
-      const t = el('text', { class: 'zone-label', x: right[0] + 8, y: right[1] + 4, 'text-anchor': 'start' }, g);
+      el('polygon', { class: 'zone', points: pts(sq.map(([x, y]) => [x, y, z0])) }, g);
+      el('polygon', { class: 'zone', points: pts(sq.map(([x, y]) => [x, y, z1])) }, g);
+      sq.forEach(([x, y]) => line3(g, [x, y, z0], [x, y, z1], 'zone'));
+      const right = sq.map(([x, y]) => project(x, y, z1)).sort((a, b) => b[0] - a[0])[0];
+      const t = el('text', { class: 'zone-label', x: right[0] + 8, y: right[1] + 4 }, g);
       t.textContent = zone.label || zone.id;
     }
-    // nodes: by layer, then back to front
-    const sorted = [...nodes].sort((a, b) => {
-      const la = layerById.get(a.layer).index, lb = layerById.get(b.layer).index;
-      if (la !== lb) return la - lb;
-      return project(a.x, a.y, 0)[2] - project(b.x, b.y, 0)[2];
-    });
-    const rel = relatedSet();
-    for (const n of sorted) {
-      const g = el('g', { class: 'node ' + nodeClass(n), tabindex: 0, role: 'button', 'data-id': n.id, 'aria-label': `${n.label || n.id}, ${n.kind || 'service'}, ${status.get(n.id)}` }, G.nodes);
-      if (selected && selected.type === 'node' && selected.id === n.id) g.classList.add('selected');
-      if (rel && rel.nodes.has(n.id)) g.classList.add('related');
-      const glow = el('g', { class: 'glow-layer' }, g);
-      drawNodeShape(glow, n);
-      const tt = el('title', null, g); tt.textContent = (n.label || n.id) + (n.tech ? ' · ' + n.tech.join(', ') : '');
-    }
-    // links
+
+    // links (under the nodes so cables plug into them)
     linkPaths.clear();
     for (const l of links) {
+      if (!vis.has(l.from) || !vis.has(l.to)) continue;
       const p = route(l);
       linkPaths.set(l.key, p);
-      const live = linkLive(l);
-      const cls = ['link', l.async ? 'async' : '', live ? (status.get(l.from) === 'ok' ? 'live' : '') : 'broken'];
-      if (rel && rel.links.has(l.key)) cls.push('related');
+      const cls = ['link', l.async ? 'async' : '', linkLive(l) ? (status.get(l.from) === 'ok' ? 'live' : '') : 'broken'];
+      if (focus && focus.links.has(l.key)) cls.push('related');
       if (selected && selected.type === 'link' && selected.id === l.key) cls.push('selected');
       const g = el('g', { class: cls.join(' '), 'data-link': l.key }, G.links);
-      const d = 'M' + p.map((q) => { const s = project(...q); return s[0].toFixed(1) + ',' + s[1].toFixed(1); }).join(' L');
+      const d = dPath(p);
       el('path', { class: 'wire', d }, g);
       el('path', { class: 'hit', d }, g);
       const tt = el('title', null, g); tt.textContent = `${labelOf(l.from)} → ${labelOf(l.to)} · ${linkText(l)}`;
-      if (rel && rel.links.has(l.key)) {
+      if (S.linkLabels || (focus && focus.links.has(l.key) && (hovered || selected))) {
         const mid = project(...pointAt(p, 0.5));
         const t = el('text', { class: 'link-label', x: mid[0], y: mid[1] - 5, 'text-anchor': 'middle' }, G.labels);
         t.textContent = linkText(l);
       }
     }
-    // labels above each node
-    for (const n of sorted) {
-      const top = nodeTop(n), a = project(top[0], top[1], top[2]), b = project(top[0], top[1], top[2] + 0.9);
-      const g = el('g', { class: 'label' + (rel && rel.nodes.has(n.id) ? ' related' : '') }, G.labels);
-      el('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1] + 4 }, g);
-      const t = el('text', { x: b[0], y: b[1], 'text-anchor': 'middle' }, g); t.textContent = n.label || n.id;
-      if (n.tech && n.tech.length) { const s = el('text', { class: 'sub', x: b[0], y: b[1] + 12, 'text-anchor': 'middle' }, g); s.textContent = n.tech[0]; }
-    }
-    svg.classList.toggle('dim', !!rel);
-    applyView();
-  };
-  const labelOf = (id) => { const n = nodeById.get(id); return n ? (n.label || n.id) : id; };
-  const linkText = (l) => [l.protocol, l.port ? ':' + l.port : '', l.async ? '(async)' : ''].filter(Boolean).join(' ').replace(' :', ':') || 'link';
 
-  const relatedSet = () => {
-    const focus = hovered || selected;
-    if (!focus) return null;
-    const ns = new Set(), ls = new Set();
-    if (focus.type === 'node') {
-      ns.add(focus.id);
-      links.forEach((l) => { if (l.from === focus.id || l.to === focus.id) { ls.add(l.key); ns.add(l.from); ns.add(l.to); } });
-    } else {
-      const l = linkByKey.get(focus.id); if (l) { ls.add(l.key); ns.add(l.from); ns.add(l.to); }
+    // nodes, back to front
+    const sorted = [...visibleNodes].sort((a, b) => depth(base(a)) - depth(base(b)));
+    for (const n of sorted) {
+      const g = el('g', { class: 'node ' + nodeClass(n), tabindex: 0, role: 'button', 'data-id': n.id, 'aria-label': `${n.label || n.id}, ${n.kind}, ${status.get(n.id)}` }, G.nodes);
+      if (selected && selected.type === 'node' && selected.id === n.id) g.classList.add('selected');
+      if (focus && focus.nodes.has(n.id)) g.classList.add('related');
+      (GLYPH[n.spec.shape] || GLYPH.server)(el('g', { class: 'glow-layer' }, g), n, base(n));
+      const tt = el('title', null, g); tt.textContent = (n.label || n.id) + (n.tech ? ' · ' + n.tech.join(', ') : '');
     }
-    return { nodes: ns, links: ls };
+
+    // flow paths: one coloured trace per flow, with numbered steps
+    if (S.flowPaths) {
+      flows.forEach((f, fi) => {
+        if (!S.shownFlows.includes(f.id)) return;
+        const g = el('g', { class: 'flowpath' + (activeFlow === f ? ' related' : '') }, G.flows);
+        const off = (fi - (flows.length - 1) / 2) * 0.14;
+        f.steps.forEach((s, si) => {
+          const p = stepPath(s).map((q) => [q[0] + off, q[1] - off, q[2] + off]);
+          if (!p.length) return;
+          el('path', { class: s.async ? 'async' : '', d: dPath(p), stroke: f.color }, g);
+          const m = project(...pointAt(p, 0.5));
+          el('circle', { cx: m[0].toFixed(1), cy: m[1].toFixed(1), r: 7, fill: f.color }, g);
+          const t = el('text', { x: m[0].toFixed(1), y: (m[1] + 3.3).toFixed(1), 'text-anchor': 'middle' }, g);
+          t.textContent = si + 1;
+        });
+      });
+    }
+
+    // labels with simple collision avoidance: push a label up until it clears the ones below it
+    if (S.labels) {
+      const placed = [];
+      const items = sorted.map((n) => {
+        const top = nodeTop(n), a = project(top[0], top[1], top[2]);
+        const sub = n.tech && n.tech.length ? n.tech[0] : '';
+        return { n, a, sub, w: Math.max((n.label || n.id).length * 7.2, sub.length * 6.2) + 8 };
+      }).sort((p, q) => q.a[1] - p.a[1]);
+      for (const it of items) {
+        const hgt = it.sub ? 27 : 15;
+        let y = it.a[1] - 18 - hgt;
+        for (let k = 0; k < 12; k++) {
+          const hit = placed.find((b) => Math.abs(b.x - it.a[0]) < (b.w + it.w) / 2 && y < b.y + b.h && y + hgt > b.y);
+          if (!hit) break;
+          y = hit.y - hgt - 2;
+        }
+        placed.push({ x: it.a[0], y, w: it.w, h: hgt });
+        const g = el('g', { class: 'label' + (focus && focus.nodes.has(it.n.id) ? ' related' : '') }, G.labels);
+        el('line', { x1: it.a[0], y1: it.a[1], x2: it.a[0], y2: y + hgt }, g);
+        const t = el('text', { x: it.a[0], y: y + 11, 'text-anchor': 'middle' }, g); t.textContent = it.n.label || it.n.id;
+        if (it.sub) { const s = el('text', { class: 'sub', x: it.a[0], y: y + 23, 'text-anchor': 'middle' }, g); s.textContent = it.sub; }
+      }
+    }
+    svg.classList.toggle('dim', !!focus);
+    applyView();
   };
 
   const applyView = () => {
     const r = svg.getBoundingClientRect();
     world.setAttribute('transform', `translate(${(r.width / 2 + cam.panX).toFixed(1)},${(r.height / 2 + cam.panY).toFixed(1)}) scale(${cam.zoom.toFixed(4)})`);
   };
+  const isOpen = (id) => $(id).classList.contains('open');
   const fit = () => {
     updateCam();
     let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
-    for (const layer of layers) {
-      const b = layer.bounds, z = layerZ(layer);
-      for (const [x, y] of [[b.x0, b.y0], [b.x1, b.y0], [b.x1, b.y1], [b.x0, b.y1]]) for (const zz of [z, z + BUS + 1.2]) {
-        const p = project(x, y, zz); x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]);
-      }
+    const add = (x, y, z) => { const p = project(x, y, z); x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); };
+    for (const l of visibleLayers) {
+      const t = l.target;
+      for (const [x, y] of [[-l.w / 2, -l.d / 2], [l.w / 2, -l.d / 2], [l.w / 2, l.d / 2], [-l.w / 2, l.d / 2]]) { add(t.ox + x, t.oy + y, t.oz); add(t.ox + x, t.oy + y, t.oz + 2.6); }
     }
-    const r = svg.getBoundingClientRect();
-    const topPad = r.width < 720 ? 150 : 100, botPad = 90;
-    const availW = r.width - (r.width < 720 ? 120 : 320), availH = r.height - topPad - botPad;
-    cam.zoom = Math.max(0.15, Math.min(2.2, Math.min(availW / (x1 - x0), availH / (y1 - y0))));
-    cam.panX = -((x0 + x1) / 2) * cam.zoom;
+    if (!isFinite(x0)) return;
+    const r = svg.getBoundingClientRect(), narrow = r.width < 720;
+    const leftPad = narrow ? 70 : (isOpen('settings') ? 360 : 140), rightPad = narrow ? 30 : (isOpen('panel') ? 370 : 60);
+    const topPad = narrow ? 150 : 100, botPad = narrow ? 40 : 60;
+    const availW = r.width - leftPad - rightPad, availH = r.height - topPad - botPad;
+    cam.zoom = Math.max(0.12, Math.min(2.2, Math.min(availW / (x1 - x0), availH / (y1 - y0))));
+    cam.panX = -((x0 + x1) / 2) * cam.zoom + (leftPad - rightPad) / 2;
     cam.panY = -((y0 + y1) / 2) * cam.zoom + (topPad - botPad) / 2;
     applyView();
   };
 
+  // ---------- layout transitions ----------
+  let layoutAnim = null;
+  const relayout = () => {
+    computeLayout();
+    const from = new Map();
+    visibleLayers.forEach((l) => from.set('L' + l.id, { ...l.cur }));
+    visibleNodes.forEach((n) => from.set('N' + n.id, { ...n.pos }));
+    const t0 = performance.now(), dur = 550;
+    fit();
+    cancelAnimationFrame(layoutAnim);
+    if (reducedMotion) { snapLayout(); render(); return; }
+    const step = (now) => {
+      const t = Math.max(0, Math.min(1, (now - t0) / dur)), e = 1 - Math.pow(1 - t, 3);
+      visibleLayers.forEach((l) => { const a = from.get('L' + l.id); l.cur = { ox: a.ox + (l.target.ox - a.ox) * e, oy: a.oy + (l.target.oy - a.oy) * e, oz: a.oz + (l.target.oz - a.oz) * e }; });
+      visibleNodes.forEach((n) => { const a = from.get('N' + n.id); n.pos = { x: a.x + (n.target.x - a.x) * e, y: a.y + (n.target.y - a.y) * e }; });
+      render();
+      if (t < 1) layoutAnim = requestAnimationFrame(step);
+    };
+    layoutAnim = requestAnimationFrame(step);
+  };
+  const snapLayout = () => {
+    computeLayout();
+    visibleLayers.forEach((l) => { l.cur = { ...l.target }; });
+    visibleNodes.forEach((n) => { n.pos = { ...n.target }; });
+  };
+
   // ---------- packets ----------
-  let animOn = !reducedMotion;
-  $('b-flow').setAttribute('aria-pressed', String(animOn));
   let last = performance.now(), clock = 0;
-  const packetEls = [];
+  const dot = (q, attrs) => el('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), ...attrs }, G.packets);
   const tick = (now) => {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
-    if (animOn || flowRun) clock += dt;
+    clock += dt;
     G.packets.replaceChildren();
-    if (animOn) {
+    if (S.traffic) {
       for (const l of links) {
-        if (!linkLive(l) || status.get(l.from) !== 'ok') continue;
         const p = linkPaths.get(l.key); if (!p) continue;
-        const len = pathLen(p), speed = 2.2 * (l.rate || 1), count = l.async ? 1 : Math.max(1, Math.round(len / 6));
-        for (let k = 0; k < count; k++) {
-          const t = ((clock * speed / len) + k / count + (l.i * 0.137)) % 1;
-          const q = project(...pointAt(p, t));
-          el('circle', { class: 'packet', cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: l.async ? 2.6 : 2 }, G.packets);
+        if (linkLive(l) && status.get(l.from) === 'ok') {
+          const len = pathLen(p), speed = 2.2 * (l.rate || 1), count = l.async ? 1 : Math.max(1, Math.round(len / 7));
+          for (let k = 0; k < count; k++) dot(project(...pointAt(p, ((clock * speed / len) + k / count + l.i * 0.137) % 1)), { class: 'packet', r: l.async ? 2.6 : 2 });
+        } else if (!linkLive(l) && status.get(l.from) !== 'off') {
+          const t = (clock * 0.5 + l.i * 0.21) % 1;
+          dot(project(...pointAt(p, t * 0.5)), { class: 'packet', r: 2, opacity: (1 - t).toFixed(2), style: 'fill: var(--alert)' });
         }
       }
-      // links whose target is down: packets stall halfway and fade
-      for (const l of links) {
-        if (linkLive(l) || status.get(l.from) === 'off') continue;
-        const p = linkPaths.get(l.key); if (!p) continue;
-        const t = (clock * 0.5 + l.i * 0.21) % 1;
-        const q = project(...pointAt(p, t * 0.5));
-        el('circle', { class: 'packet', cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 2, opacity: (1 - t).toFixed(2), style: 'fill: var(--degraded)' }, G.packets);
-      }
+      if (S.flowPaths) flows.forEach((f, fi) => {
+        if (!S.shownFlows.includes(f.id)) return;
+        const pos = (clock * 0.7 + fi * 0.37) % f.steps.length, p = stepPath(f.steps[Math.floor(pos)]);
+        if (p.length) dot(project(...pointAt(p, pos % 1)), { r: 4, fill: f.color, filter: 'url(#glow)' });
+      });
     }
     if (flowRun) stepFlow(dt);
     requestAnimationFrame(tick);
   };
 
-  // ---------- flows ----------
+  // ---------- flows & actions ----------
   const caption = $('caption');
-  const flowSel = $('flows');
-  flows.forEach((f) => { const o = html('option', null, f.label || f.id); o.value = f.id; flowSel.appendChild(o); });
-  if (!flows.length) flowSel.style.display = 'none';
-  const startFlow = (id) => {
-    const f = flows.find((x) => x.id === id);
+  const triggersBox = $('triggers');
+  const describeFlow = (f) => {
+    const touched = [...flowNodes(f)].filter((id) => id !== f.actor);
+    const kindOf = (id) => (nodeById.get(id) || {}).kind;
+    return {
+      touched,
+      data: touched.filter((id) => ['database', 'storage', 'queue', 'cache'].includes(kindOf(id))),
+      ext: touched.filter((id) => (nodeById.get(id) || {}).state0 === 'external'),
+      async: f.steps.filter((s) => s.async || (linkByKey.get(s.from + '->' + s.to) || {}).async).map((s) => s.to),
+    };
+  };
+  const showTriggers = (f) => {
+    triggersBox.replaceChildren();
+    if (!f) { triggersBox.classList.remove('show'); return; }
+    const d = describeFlow(f);
+    const list = (ids) => [...new Set(ids)].map(labelOf).join(', ') || '—';
+    triggersBox.append(
+      html('b', null, (f.actor ? labelOf(f.actor) + ' · ' : '') + (f.trigger || f.label || f.id)),
+      html('div', null, `${f.steps.length} steps · touches ${d.touched.length} components`),
+      html('div', 'mono', 'Data touched: ' + list(d.data)),
+      html('div', 'mono', 'Third parties: ' + list(d.ext)),
+      html('div', 'mono', 'Kicks off async: ' + list(d.async)));
+    triggersBox.classList.add('show');
+  };
+  const startFlow = (f) => {
     flowRun = f ? { f, step: 0, t: 0 } : null;
+    activeFlow = f || null;
+    showTriggers(f);
     if (!f) { caption.classList.remove('show'); hovered = null; render(); return; }
     showStep();
   };
   const showStep = () => {
     const { f, step } = flowRun, s = f.steps[step];
     caption.replaceChildren();
-    const b = html('b', null, `${f.label || f.id} · ${step + 1}/${f.steps.length}`);
-    caption.append(b, ' ', html('span', 'mono', `${labelOf(s.from)} → ${labelOf(s.to)}`), html('div', null, s.note || ''));
+    caption.append(html('b', null, `${f.label || f.id} · ${step + 1}/${f.steps.length}`), ' ',
+      html('span', 'mono', `${labelOf(s.from)} → ${labelOf(s.to)}`), html('div', null, s.note || ''));
     if (s.cite) caption.append(citeEl(s.cite));
     caption.classList.add('show');
     const key = s.from + '->' + s.to;
@@ -785,23 +1197,43 @@ details.textview.show { display: block; }
     render();
   };
   const stepFlow = (dt) => {
-    const s = flowRun.f.steps[flowRun.step];
-    const key = s.from + '->' + s.to;
-    const p = linkPaths.get(key) || linkPaths.get(s.to + '->' + s.from);
-    const reverse = !linkPaths.get(key);
-    flowRun.t += dt / (reducedMotion ? 2.4 : 1.6);
-    if (p) {
-      const t = Math.min(flowRun.t, 1);
-      const q = project(...pointAt(p, reverse ? 1 - t : t));
-      el('circle', { class: 'packet flow', cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 4.5 }, G.packets);
-    }
-    if (flowRun.t >= 1.35) {
+    const p = stepPath(flowRun.f.steps[flowRun.step]);
+    flowRun.t += dt / (reducedMotion ? 2.4 : 1.5);
+    if (p.length) dot(project(...pointAt(p, Math.min(flowRun.t, 1))), { r: 5, fill: flowRun.f.color, filter: 'url(#glow)' });
+    if (flowRun.t >= 1.3) {
       flowRun.t = 0; flowRun.step++;
-      if (flowRun.step >= flowRun.f.steps.length) { flowRun = null; flowSel.value = ''; hovered = null; render(); setTimeout(() => caption.classList.remove('show'), 2500); return; }
+      if (flowRun.step >= flowRun.f.steps.length) {
+        flowRun = null; hovered = null; render();
+        setTimeout(() => { if (!flowRun) caption.classList.remove('show'); }, 2500);
+        return;
+      }
       showStep();
     }
   };
-  flowSel.addEventListener('change', () => startFlow(flowSel.value));
+  const buildFlowList = () => {
+    const list = $('flow-list'); list.replaceChildren();
+    if (!flows.length) { list.appendChild(html('p', 'mono', 'This scene has no flows.')); return; }
+    flows.forEach((f) => {
+      const row = html('div', 'flow-row');
+      const lab = html('label', 'check');
+      const cb = html('input'); cb.type = 'checkbox'; cb.checked = S.shownFlows.includes(f.id); cb.setAttribute('aria-label', 'Draw ' + (f.label || f.id));
+      cb.onchange = () => {
+        S.shownFlows = cb.checked ? [...S.shownFlows, f.id] : S.shownFlows.filter((x) => x !== f.id);
+        if (cb.checked && !S.flowPaths) { S.flowPaths = true; syncControls(); }
+        save(); render();
+      };
+      const swatch = html('span', 'swatch'); swatch.style.background = f.color;
+      lab.append(cb, swatch);
+      const info = html('div');
+      const name = html('button', 'linkish', f.label || f.id);
+      name.onclick = () => { activeFlow = activeFlow === f ? null : f; showTriggers(activeFlow); render(); };
+      info.append(name, html('div', 'who', (f.actor ? labelOf(f.actor) + ' → ' : '') + (f.trigger || `${f.steps.length} steps`)));
+      const play = html('button', null, '▶'); play.setAttribute('aria-label', 'Play ' + (f.label || f.id));
+      play.onclick = () => startFlow(f);
+      row.append(lab, info, play);
+      list.appendChild(row);
+    });
+  };
 
   // ---------- panel ----------
   const panel = $('panel');
@@ -813,20 +1245,19 @@ details.textview.show { display: block; }
     else li.textContent = text;
     return li;
   };
-  const stateColor = { ok: 'var(--glow)', degraded: 'var(--degraded)', off: 'var(--down)' };
+  const stateColor = { ok: 'var(--glow)', degraded: 'var(--alert)', off: 'var(--down)' };
+  const closeBtn = (fn) => { const b = html('button', 'close', '×'); b.setAttribute('aria-label', 'Close'); b.onclick = fn; return b; };
   const openNode = (id) => {
     const n = nodeById.get(id); if (!n) return;
     selected = { type: 'node', id };
     panel.replaceChildren();
-    const close = html('button', 'close', '×'); close.setAttribute('aria-label', 'Close'); close.onclick = deselect;
     const st = status.get(id);
     const meta = html('div');
-    const dot = html('span', 'state-dot'); dot.style.background = stateColor[st];
-    meta.append(dot, html('span', 'mono', `${n.kind || 'service'} · ${st === 'ok' ? n.state0 : st}${n.port ? ' · :' + n.port : ''}`));
-    panel.append(close, html('h2', null, n.label || n.id), meta);
+    const sd = html('span', 'state-dot'); sd.style.background = stateColor[st];
+    meta.append(sd, html('span', 'mono', `${n.kind} · ${st === 'ok' ? n.state0 : st}${n.port ? ' · :' + n.port : ''}`));
+    panel.append(closeBtn(deselect), html('h2', null, n.label || n.id), meta);
     if (n.tech && n.tech.length) { const t = html('div'); n.tech.forEach((x) => t.appendChild(html('span', 'chip', x))); panel.appendChild(t); }
     if (n.desc) panel.appendChild(html('p', null, n.desc));
-
     const sw = html('div', 'switch');
     sw.appendChild(html('span', null, power.get(id) ? 'Powered on' : 'Powered off'));
     const tb = html('button', null, power.get(id) ? 'Switch off' : 'Switch on');
@@ -834,11 +1265,7 @@ details.textview.show { display: block; }
     sw.appendChild(tb);
     panel.appendChild(sw);
     const impact = blastRadius(id);
-    if (impact.length) {
-      const p = html('p', 'impact', `If this goes down: ${impact.length} component${impact.length > 1 ? 's' : ''} degrade — `);
-      p.appendChild(document.createTextNode(impact.map(labelOf).join(', ')));
-      panel.appendChild(p);
-    }
+    if (impact.length) panel.appendChild(html('p', 'impact', `If this goes down: ${impact.length} component${impact.length > 1 ? 's' : ''} degrade — ${impact.map(labelOf).join(', ')}`));
     const section = (title, items) => {
       if (!items.length) return;
       panel.appendChild(html('h3', null, title));
@@ -847,13 +1274,24 @@ details.textview.show { display: block; }
         const other = l.from === id ? l.to : l.from;
         const li = html('li');
         const b = html('button', 'linkish', labelOf(other)); b.onclick = () => { openNode(other); render(); };
-        li.append(b, html('span', 'mono', '  ' + linkText(l) + (l.critical === false ? ' · optional' : '')));
+        li.append(b, html('span', 'mono', '  ' + linkText(l) + (l.critical === false ? ' · optional' : '') + (shown(other) ? '' : ' · hidden')));
         ul.appendChild(li);
       });
       panel.appendChild(ul);
     };
     section('Calls', links.filter((l) => l.from === id));
     section('Called by', links.filter((l) => l.to === id));
+    const inFlows = flows.filter((f) => flowNodes(f).has(id));
+    if (inFlows.length) {
+      panel.appendChild(html('h3', null, 'Part of'));
+      inFlows.forEach((f) => {
+        const steps = f.steps.map((s, i) => (s.from === id || s.to === id ? i + 1 : 0)).filter(Boolean);
+        const li = html('div');
+        const b = html('button', 'linkish', f.label || f.id); b.onclick = () => startFlow(f);
+        li.append(b, html('span', 'mono', `  step ${steps.join(', ')}`));
+        panel.appendChild(li);
+      });
+    }
     if (n.cite && n.cite.length) { panel.appendChild(html('h3', null, 'Evidence')); n.cite.forEach((c) => panel.appendChild(citeEl(c))); }
     panel.classList.add('open');
   };
@@ -861,8 +1299,7 @@ details.textview.show { display: block; }
     const l = linkByKey.get(key); if (!l) return;
     selected = { type: 'link', id: key };
     panel.replaceChildren();
-    const close = html('button', 'close', '×'); close.setAttribute('aria-label', 'Close'); close.onclick = deselect;
-    panel.append(close, html('h2', null, `${labelOf(l.from)} → ${labelOf(l.to)}`), html('div', 'mono', linkText(l) + (l.critical === false ? ' · optional' : '')));
+    panel.append(closeBtn(deselect), html('h2', null, `${labelOf(l.from)} → ${labelOf(l.to)}`), html('div', 'mono', linkText(l) + (l.critical === false ? ' · optional' : '')));
     if (l.desc) panel.appendChild(html('p', null, l.desc));
     const row = html('p');
     [l.from, l.to].forEach((id, i) => { const b = html('button', 'linkish', labelOf(id)); b.onclick = () => { openNode(id); render(); }; row.append(i ? '  →  ' : '', b); });
@@ -886,13 +1323,143 @@ details.textview.show { display: block; }
       nodes.filter((n) => n.layer === layer.id).forEach((n) => {
         const li = html('li');
         const b = html('button', 'linkish', n.label || n.id); b.onclick = () => { openNode(n.id); render(); };
-        li.append(b, ` — ${n.kind || 'service'}${n.tech ? ' · ' + n.tech.join(', ') : ''}`);
+        li.append(b, ` — ${n.kind}${n.tech ? ' · ' + n.tech.join(', ') : ''}`);
         const out = links.filter((l) => l.from === n.id);
         if (out.length) li.append(html('div', 'mono', '→ ' + out.map((l) => `${labelOf(l.to)} (${linkText(l)})`).join(', ')));
         ul.appendChild(li);
       });
       body.appendChild(ul);
     }
+    if (flows.length) {
+      body.appendChild(html('h4', null, 'Flows'));
+      flows.forEach((f) => body.appendChild(html('p', null, `${f.label || f.id}${f.trigger ? ' (' + f.trigger + ')' : ''}: ` + f.steps.map((s) => `${labelOf(s.from)} → ${labelOf(s.to)}`).join('; '))));
+    }
+  };
+
+  // ---------- themes ----------
+  const THEMES = {
+    blueprint: { name: 'Blueprint', scheme: 'dark', bg: '#0a1622', ink: '#cfe3f5', glow: '#4ff0ff', accent: '#7cc7ff', alert: '#ff8a3d' },
+    paper:     { name: 'Paper', scheme: 'light', bg: '#f4f1e8', ink: '#1d2329', glow: '#ff9f1c', accent: '#1f7a8c', alert: '#d9480f' },
+    neon:      { name: 'Neon', scheme: 'dark', bg: '#120a1f', ink: '#e9dcff', glow: '#ff4fd8', accent: '#7af3ff', alert: '#ffb347' },
+    terminal:  { name: 'Terminal', scheme: 'dark', bg: '#050a05', ink: '#b6f5b6', glow: '#39ff6a', accent: '#c4ff4f', alert: '#ff5f56' },
+    arctic:    { name: 'Arctic', scheme: 'light', bg: '#eef4fa', ink: '#13253a', glow: '#2f80ff', accent: '#0a9396', alert: '#e63946' },
+    ember:     { name: 'Ember', scheme: 'dark', bg: '#17110d', ink: '#f1e3d3', glow: '#ffb454', accent: '#ff7a59', alert: '#ff4d4d' },
+  };
+  const VARS = ['bg', 'ink', 'glow', 'accent', 'alert'];
+  const luminance = (hex) => { const v = parseInt(hex.slice(1), 16); return (0.299 * (v >> 16) + 0.587 * ((v >> 8) & 255) + 0.114 * (v & 255)) / 255; };
+  const applyTheme = () => {
+    const root = document.documentElement;
+    VARS.concat('shadow').forEach((k) => root.style.removeProperty('--' + k));
+    let t = THEMES[S.theme];
+    if (S.theme === 'custom' && S.custom) t = { ...S.custom, scheme: luminance(safeColor(S.custom.bg) || '#000000') < 0.5 ? 'dark' : 'light' };
+    if (!t) delete root.dataset.theme;
+    else {
+      root.dataset.theme = t.scheme;
+      VARS.forEach((k) => { const v = safeColor(t[k]); if (v) root.style.setProperty('--' + k, v); });
+      root.style.setProperty('--shadow', t.scheme === 'dark' ? '0 10px 30px rgba(0,0,0,.5)' : '0 10px 30px rgba(28,34,41,.12)');
+    }
+    document.querySelectorAll('#themes button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.theme === S.theme)));
+    $('custom-theme').classList.toggle('show', S.theme === 'custom');
+    const cur = getComputedStyle(root);
+    VARS.forEach((k) => { const v = cur.getPropertyValue('--' + k).trim(); if (safeColor(v)) $('c-' + k).value = v; });
+  };
+  const buildThemes = () => {
+    const wrapEl = $('themes'); wrapEl.replaceChildren();
+    const opts = [['auto', 'Auto', ['#f4f1e8', '#0a1622', '#ff9f1c', '#4ff0ff']],
+      ...Object.entries(THEMES).map(([id, t]) => [id, t.name, [t.bg, t.ink, t.glow, t.accent]]),
+      ['custom', 'Custom', S.custom ? VARS.slice(0, 4).map((k) => S.custom[k]) : ['#888888', '#bbbbbb', '#dddddd', '#ffffff']]];
+    for (const [id, name, colors] of opts) {
+      const b = html('button'); b.dataset.theme = id;
+      const dots = html('span', 'dots');
+      colors.forEach((c) => { const s = html('span'); s.style.background = safeColor(c) || '#888888'; dots.appendChild(s); });
+      b.append(dots, html('span', null, name));
+      b.onclick = () => {
+        if (id === 'custom' && !S.custom) {
+          const cur = getComputedStyle(document.documentElement);
+          S.custom = Object.fromEntries(VARS.map((k) => [k, cur.getPropertyValue('--' + k).trim()]));
+        }
+        S.theme = id; save(); applyTheme();
+      };
+      wrapEl.appendChild(b);
+    }
+  };
+  document.querySelectorAll('#custom-theme input').forEach((inp) => inp.addEventListener('input', () => {
+    S.custom = { ...(S.custom || {}), [inp.dataset.var]: inp.value }; S.theme = 'custom'; save(); applyTheme();
+  }));
+  document.querySelectorAll('#custom-theme input').forEach((inp) => inp.addEventListener('change', buildThemes));
+
+  // ---------- settings UI ----------
+  const settingsEl = $('settings');
+  const checkbox = (parent, label, checked, onchange) => {
+    const l = html('label', 'check'); const i = html('input'); i.type = 'checkbox'; i.checked = checked;
+    i.onchange = () => onchange(i.checked); l.append(i, ' ' + label); parent.appendChild(l); return i;
+  };
+  const buildVisibility = () => {
+    const vl = $('vis-layers'); vl.replaceChildren();
+    [...layers].reverse().forEach((l) => checkbox(vl, l.label || l.id, !S.hiddenLayers.includes(l.id), (on) => {
+      S.hiddenLayers = on ? S.hiddenLayers.filter((x) => x !== l.id) : [...S.hiddenLayers, l.id]; save(); relayout();
+    }));
+    const vk = $('vis-kinds'); vk.replaceChildren();
+    kindsPresent.forEach((k) => checkbox(vk, KIND[k].label, !S.hiddenKinds.includes(k), (on) => {
+      S.hiddenKinds = on ? S.hiddenKinds.filter((x) => x !== k) : [...S.hiddenKinds, k]; save(); relayout();
+    }));
+  };
+  const buildHighlights = () => {
+    const wrapEl = $('hl-chips'); wrapEl.replaceChildren();
+    const group = (title, items) => {
+      if (!items.length) return;
+      wrapEl.appendChild(html('h3', null, title));
+      items.forEach(([key, label]) => {
+        const b = html('button', 'chip', label); b.setAttribute('aria-pressed', String(S.highlight.includes(key)));
+        b.onclick = () => {
+          S.highlight = S.highlight.includes(key) ? S.highlight.filter((x) => x !== key) : [...S.highlight, key];
+          b.setAttribute('aria-pressed', String(S.highlight.includes(key))); save(); render();
+        };
+        wrapEl.appendChild(b);
+      });
+    };
+    group('Layers', [...layers].reverse().map((l) => ['layer:' + l.id, l.label || l.id]));
+    group('Kinds', kindsPresent.map((k) => ['kind:' + k, KIND[k].label]));
+    group('Tags', tagsPresent.map((t) => ['tag:' + t, '#' + t]));
+    group('Zones', (scene.zones || []).map((z) => ['zone:' + z.id, z.label || z.id]));
+    group('Status', [['state:on', 'Running'], ['state:degraded', 'Degraded'], ['state:off', 'Off'], ['state:external', 'External'], ['state:idle', 'Idle']]);
+  };
+  const BOOLS = { 'v-external': 'external', 'v-idle': 'idle', 'v-zones': 'zones', 'v-labels': 'labels', 'v-linklabels': 'linkLabels', 'v-traffic': 'traffic', 'v-platforms': 'platforms', 'v-clients': 'clients', 'v-flowpaths': 'flowPaths' };
+  const RELAYOUT = new Set(['external', 'idle', 'clients']);
+  const SLIDERS = { 's-spacing': 'spacing', 's-gap': 'gap', 's-stagger': 'stagger' };
+  const syncControls = () => {
+    for (const [id, key] of Object.entries(BOOLS)) $(id).checked = !!S[key];
+    for (const [id, key] of Object.entries(SLIDERS)) { $(id).value = S[key]; $('o-' + id.slice(2)).textContent = Number(S[key]).toFixed(1); }
+    document.querySelectorAll('[data-layout]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.layout === S.layout)));
+    document.querySelectorAll('[data-cables]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.cables === S.cables)));
+    $('s-gap').disabled = S.layout === 'flat';
+    $('s-stagger').disabled = S.layout !== 'staircase';
+  };
+  for (const [id, key] of Object.entries(BOOLS)) $(id).addEventListener('change', (e) => {
+    S[key] = e.target.checked; save();
+    if (RELAYOUT.has(key)) relayout(); else render();
+  });
+  for (const [id, key] of Object.entries(SLIDERS)) {
+    $(id).addEventListener('input', (e) => {
+      S[key] = parseFloat(e.target.value); $('o-' + id.slice(2)).textContent = S[key].toFixed(1); save();
+      snapLayout(); render();
+    });
+    $(id).addEventListener('change', () => { fit(); render(); });
+  }
+  document.querySelectorAll('[data-layout]').forEach((b) => b.addEventListener('click', () => { S.layout = b.dataset.layout; save(); syncControls(); relayout(); }));
+  document.querySelectorAll('[data-cables]').forEach((b) => b.addEventListener('click', () => { S.cables = b.dataset.cables; save(); syncControls(); render(); }));
+  $('hl-clear').onclick = () => { S.highlight = []; activeFlow = null; showTriggers(null); save(); buildHighlights(); render(); };
+  const toggleSettings = (force) => {
+    const open = force ?? !settingsEl.classList.contains('open');
+    settingsEl.classList.toggle('open', open);
+    $('b-settings').setAttribute('aria-pressed', String(open));
+    if (open) { $('textview').classList.remove('show'); $('b-text').setAttribute('aria-pressed', 'false'); }
+    fit(); render();
+  };
+  $('b-settings').onclick = () => toggleSettings();
+  $('settings-close').onclick = () => toggleSettings(false);
+  $('settings-reset').onclick = () => {
+    S = { ...DEFAULTS }; save(); buildThemes(); applyTheme(); syncControls(); buildVisibility(); buildHighlights(); buildFlowList(); relayout();
   };
 
   // ---------- interaction ----------
@@ -920,16 +1487,14 @@ details.textview.show { display: block; }
     if (pointers.has(e.pointerId)) pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pinch && pointers.size === 2) {
       const [a, b] = [...pointers.values()];
-      const d = Math.hypot(a.x - b.x, a.y - b.y);
-      cam.zoom = Math.max(0.15, Math.min(4, pinch.zoom * d / pinch.d));
+      cam.zoom = Math.max(0.12, Math.min(4, pinch.zoom * Math.hypot(a.x - b.x, a.y - b.y) / pinch.d));
       cam.panX = pinch.panX + ((a.x + b.x) / 2 - pinch.mx);
       cam.panY = pinch.panY + ((a.y + b.y) / 2 - pinch.my);
       applyView(); return;
     }
     if (!drag) {
       const t = hitTarget(e);
-      const changed = JSON.stringify(t) !== JSON.stringify(hovered);
-      if (changed && !flowRun) { hovered = t; render(); }
+      if (JSON.stringify(t) !== JSON.stringify(hovered) && !flowRun) { hovered = t; render(); }
       return;
     }
     const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
@@ -949,7 +1514,7 @@ details.textview.show { display: block; }
     stage.classList.remove('dragging');
     if (drag && !drag.moved) {
       const t = drag.target;
-      if (!t) deselect();
+      if (!t) { if (activeFlow && !flowRun) { activeFlow = null; showTriggers(null); } deselect(); }
       else if (t.type === 'node') { openNode(t.id); render(); }
       else { openLink(t.id); render(); }
     }
@@ -963,8 +1528,7 @@ details.textview.show { display: block; }
     e.preventDefault();
     const r = svg.getBoundingClientRect();
     const mx = e.clientX - r.left - r.width / 2 - cam.panX, my = e.clientY - r.top - r.height / 2 - cam.panY;
-    const k = Math.exp(-e.deltaY * 0.0015);
-    const z = Math.max(0.15, Math.min(4, cam.zoom * k));
+    const z = Math.max(0.12, Math.min(4, cam.zoom * Math.exp(-e.deltaY * 0.0015)));
     cam.panX -= mx * (z / cam.zoom - 1); cam.panY -= my * (z / cam.zoom - 1);
     cam.zoom = z; applyView();
   }, { passive: false });
@@ -975,12 +1539,14 @@ details.textview.show { display: block; }
 
   // animated camera moves
   let tween = null;
+  const wrap = (a) => { while (a <= -Math.PI) a += 2 * Math.PI; while (a > Math.PI) a -= 2 * Math.PI; return a; };
   const animateTo = (yaw, pitch) => {
-    const from = { yaw: cam.yaw, pitch: cam.pitch }, t0 = performance.now(), dur = reducedMotion ? 1 : 520;
+    const from = { yaw: cam.yaw, pitch: cam.pitch }, t0 = performance.now(), dur = 520;
     const dy = wrap(yaw - from.yaw);
     cancelAnimationFrame(tween);
+    if (reducedMotion) { cam.yaw = from.yaw + dy; cam.pitch = pitch; render(); return; }
     const step = (now) => {
-      const t = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - t, 3);
+      const t = Math.max(0, Math.min(1, (now - t0) / dur)), e = 1 - Math.pow(1 - t, 3);
       cam.yaw = from.yaw + dy * e; cam.pitch = from.pitch + (pitch - from.pitch) * e;
       render();
       if (t < 1) tween = requestAnimationFrame(step);
@@ -993,23 +1559,17 @@ details.textview.show { display: block; }
   $('b-rot-r').onclick = () => animateTo(cam.yaw - Math.PI / 2, cam.pitch);
   $('b-top').onclick = () => animateTo(Math.round(cam.yaw / (Math.PI / 2)) * (Math.PI / 2), Math.PI / 2);
   $('b-fit').onclick = () => { fit(); render(); };
-  $('b-labels').onclick = (e) => { const on = svg.classList.toggle('labels-off'); e.currentTarget.setAttribute('aria-pressed', String(!on)); };
-  $('b-flow').onclick = (e) => { animOn = !animOn; e.currentTarget.setAttribute('aria-pressed', String(animOn)); };
-  $('b-text').onclick = (e) => { const on = $('textview').classList.toggle('show'); e.currentTarget.setAttribute('aria-pressed', String(on)); };
-  $('b-theme').onclick = () => {
-    const root = document.documentElement;
-    const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-    root.dataset.theme = dark ? 'light' : 'dark';
-    try { localStorage.setItem('stack-map-theme', root.dataset.theme); } catch {}
+  $('b-text').onclick = (e) => {
+    const on = $('textview').classList.toggle('show');
+    e.currentTarget.setAttribute('aria-pressed', String(on));
+    if (on && settingsEl.classList.contains('open')) toggleSettings(false);
   };
-  try { const t = localStorage.getItem('stack-map-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch {}
   $('b-reset').onclick = () => { nodes.forEach((n) => power.set(n.id, n.state0 !== 'off')); status = computeStatus(); if (selected && selected.type === 'node') openNode(selected.id); render(); };
-  $('explode').addEventListener('input', (e) => { cam.gap = parseFloat(e.target.value); render(); });
   const search = $('search');
   search.addEventListener('input', () => {
     const q = search.value.trim().toLowerCase();
     if (!q) { hovered = null; render(); return; }
-    const n = nodes.find((x) => (x.label || x.id).toLowerCase().includes(q) || (x.tech || []).some((t) => t.toLowerCase().includes(q)));
+    const n = visibleNodes.find((x) => (x.label || x.id).toLowerCase().includes(q) || (x.tech || []).some((t) => t.toLowerCase().includes(q)));
     hovered = n ? { type: 'node', id: n.id } : null; render();
   });
   search.addEventListener('keydown', (e) => { if (e.key === 'Enter' && hovered) { openNode(hovered.id); render(); } });
@@ -1017,16 +1577,15 @@ details.textview.show { display: block; }
     if (e.target.matches('input, select, textarea')) { if (e.key === 'Escape') e.target.blur(); return; }
     const k = e.key;
     if (k === '/') { e.preventDefault(); search.focus(); }
-    else if (k === 'Escape') { if (flowRun) startFlow(''); deselect(); }
+    else if (k === 'Escape') { if (flowRun) startFlow(null); deselect(); }
     else if (k === 'ArrowLeft') $('b-rot-l').click();
     else if (k === 'ArrowRight') $('b-rot-r').click();
     else if (k === 'i' || k === 'I') snapIso();
     else if (k === 't' || k === 'T') $('b-top').click();
     else if (k === 'f' || k === 'F') $('b-fit').click();
-    else if (k === 'l' || k === 'L') $('b-labels').click();
-    else if (k === ' ' && !e.target.closest('.node, button')) { e.preventDefault(); $('b-flow').click(); }
+    else if (k === 's' || k === 'S') toggleSettings();
   });
-  window.addEventListener('resize', () => { fit(); });
+  window.addEventListener('resize', () => { fit(); render(); });
 
   // ---------- boot ----------
   $('t-title').textContent = scene.title || 'Stack map';
@@ -1039,7 +1598,10 @@ details.textview.show { display: block; }
     const a = html('a', null, scene.commit ? '@' + String(scene.commit).slice(0, 7) : 'repo');
     a.href = repo; a.target = '_blank'; a.rel = 'noopener noreferrer'; sub.appendChild(a);
   }
-  buildTextView();
+  if (!flows.length) $('flowpaths-toggle').style.display = 'none';
+  buildThemes(); applyTheme();
+  buildVisibility(); buildHighlights(); buildFlowList(); syncControls(); buildTextView();
+  snapLayout();
   fit();
   render();
   requestAnimationFrame(tick);
