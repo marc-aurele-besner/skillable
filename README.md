@@ -6,7 +6,7 @@
 
 A curated, community-driven collection of [Agent Skills](https://agentskills.io) — plain-markdown playbooks that turn "explain it to the agent again" into a single slash command. Built on the open `SKILL.md` format, so they work with Cursor, Claude Code, and [any skills-capable agent](https://agentskills.io/clients).
 
-[![Skills](https://img.shields.io/badge/skills-26-blueviolet)](#available-skills)
+[![Skills](https://img.shields.io/badge/skills-27-blueviolet)](#available-skills)
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-black.svg)](https://skills.sh)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -109,6 +109,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [fix-renovate-pr](skills/fix-renovate-pr/) | 🤖 Take over a Renovate bump PR and push commits until CI passes |
 | [fleet-health-dashboard](skills/fleet-health-dashboard/) | 🧭 One live dashboard for **every repo you own** (orgs included): bot PRs, alerts, red CI, stale PRs, Node pins — each row names the skill that fixes it; refreshable on a schedule |
 | [isometric-stack-map](skills/isometric-stack-map/) | 🧭 Turn a project into a single-file 3D isometric map of its network and tech stack — tiers as floating platforms, glowing running components, animated traffic with protocol and port, VPC/cluster zones; click to inspect, switch parts off to see the blast radius, play key flows |
+| [ledger-tasks-yylo](skills/ledger-tasks-yylo/) | 🚑 Retrieve any YYLO Ledger Record by ID and operate tasks, dependencies and source-of-truth boundaries — durable Kanban state for coding-agent projects, with ready/order dependency planning |
 | [nudge-stale-prs](skills/nudge-stale-prs/) | 🚑 Find open PRs older than 2 days across every repo you can write to and have Cursor/Claude/Codex's GitHub user tag you to review/merge — self-mentions do not notify |
 | [optimize-all-github-actions](skills/optimize-all-github-actions/) | 🚑 Find every repo you own with Actions (orgs included) and fan out optimize-github-actions — one PR per repo |
 | [optimize-github-actions](skills/optimize-github-actions/) | 🚑 Analyze workflows, cut wasted Actions minutes (duplicate runs, redundant jobs, matrix bloat), open a PR — without weakening security |
