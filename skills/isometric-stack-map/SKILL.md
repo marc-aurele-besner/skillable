@@ -2,25 +2,28 @@
 name: isometric-stack-map
 description: >-
   Look at a project and build a single-file, fine-line 3D isometric map of its
-  network and tech stack: each tier (data, services, apps and edge, clients)
-  floats as its own platform, every component is drawn as a glyph for its kind
-  (database cylinder, queue bar, gateway, worker, function, external SaaS),
-  network boundaries such as VPCs, subnets, clusters, and Docker networks are
-  wireframe zones, and links carry animated packets labeled with protocol and
-  port. Running components glow. Click any part to inspect it and its
-  evidence, switch it off to see failures spread, play key
-  request flows step by step, and orbit, zoom, or explode the layers. It can
-  also clean up an existing docker-compose, Kubernetes, Terraform, Mermaid, or
-  C4 model into the same view. Use whenever the user wants to visualize,
-  diagram, or show off a project's architecture, infrastructure, network
-  topology, service map, or tech stack as an interactive 3D or isometric
-  picture. Also triggers on /isometric-stack-map with an optional focus.
+  network and tech stack. Tiers (data, services, apps and edge, users and
+  clients) step up as a staircase, stack as a tower, or flatten onto one
+  slate. Components look like real objects: servers, disk-stack databases,
+  chip caches, envelope queues, factories, globes, clouds, monitors, phones,
+  and people. VPCs, subnets, and clusters are wireframe
+  zones, and links carry animated packets labeled with protocol and port.
+  Running parts glow; click one to inspect it or switch it off to see the
+  blast radius. Play user actions to see what each triggers.
+  Settings control spacing, show/hide, highlights, and six themes plus a
+  custom one. It can also redraw an existing docker-compose, Kubernetes,
+  Terraform, Mermaid, or C4 model. Use when the user wants to visualize a
+  project's architecture, infrastructure, network topology, service map, or
+  stack as an interactive 3D or isometric picture. Also triggers on
+  /isometric-stack-map with an optional focus.
 argument-hint: "[focus=<area>] [from=<compose|k8s|terraform|mermaid file>]"
 ---
 
 # Isometric Stack Map
 
-Goal: one HTML file that shows what the system is made of and how it talks, in a picture people want to poke at. It is a fine-line isometric model where whatever runs glows, every cable carries traffic, and every part you press does something. Each component and link in the scene comes from a file in the repo.
+Goal: one HTML file that shows what the system is made of and how it talks, in a picture people want to poke at. It is a fine-line isometric model where each component looks like the real-world object it stands for, whatever runs glows, every cable carries traffic, and every part you press does something. Each component and link in the scene comes from a file in the repo.
+
+The page also has a settings drawer. Viewers can switch between staircase, tower, and flat-slate layouts, adjust spacing, show or hide layers and kinds, highlight any slice, play user actions, and pick a theme. That part is built in, so your job is to give it accurate data.
 
 The renderer is fixed and already written: [assets/stack-map.html](assets/stack-map.html). Your job is the **scene JSON**: which components exist, which tier each sits on, how they connect, and the proof. Never hand-write SVG or edit the renderer per project.
 
@@ -63,7 +66,8 @@ Pick 3–5 **layers** (bottom → top) that match the project's real tiers. See 
 - **Links:** who initiates → who receives, with protocol and port. Mark queues and events `async`. Mark links the caller survives without as `critical: false`. Use `kind: "consume"` for queue → worker so failure propagation is correct.
 - **Zones:** at most 3 network or trust boundaries that the config actually declares (VPC, subnet, cluster, namespace, Docker network).
 - **State:** `on` / `idle` / `off` / `external` per the heuristics in the discovery reference. Glow means "runs by default", so be honest.
-- **Flows:** 2–4 key paths (a typical request, a write, a background job, auth), each step citing the code that does it.
+- **Users and actions:** put the people who use the system on the top layer as `user` nodes, linked to the clients they use. Model each important action as a flow with an `actor` and a `trigger`, e.g. "Shopper clicks “Pay now”" or "Stripe sends a webhook". Each step cites the code that does it, and steps the action only kicks off are marked `async`. Aim for 2–5 flows: a typical read, a write, a background job, auth, and an inbound webhook.
+- **Tags:** add `tags` to group components across layers by feature or concern (`checkout`, `pci`, `search`), so viewers can highlight that slice.
 
 ## 3. Write and build the scene
 
@@ -79,11 +83,12 @@ The script validates ids, layers, link references, flow steps, URL schemes, and 
 
 Open the built file in a browser. A headless screenshot works well (`--headless=new --screenshot --window-size=1400,900`, plus a 390px-wide pass). Check that:
 
-- Nothing important hides behind a taller neighbour. Reorder nodes or set `x`/`y` for the few that collide.
+- In the default staircase, no tier covers another and nothing important hides behind a taller neighbour. Reorder nodes or set `x`/`y` for the few that collide.
+- Flat slate and tower still read well. Very wide layers (more than 8 components) may need splitting.
 - Labels don't pile up. Shorten `label`, keep one `tech` chip visible, and split crowded layers.
 - The glow tells the truth: only default-runtime components glow.
 - Switching off the main database degrades what it should, and nothing else.
-- Each flow plays end to end.
+- Each flow plays end to end. With **Draw flow paths** on, the numbered steps follow the real order, and the trigger summary names the right data stores, third parties, and async work.
 
 ## 5. Publish
 
@@ -113,5 +118,6 @@ Open the built file in a browser. A headless screenshot works well (`--headless=
 - [ ] Layers follow the project's real tiers. Zones exist only where the config declares a boundary
 - [ ] The glow (`state`) and failure propagation (`critical`, `kind: "consume"`) reflect the code, not guesses
 - [ ] The scene was built with `scripts/build_scene.py` and passed with no errors
-- [ ] Checked in light and dark themes and at phone width
+- [ ] Checked in staircase and flat-slate layouts, in a light and a dark theme, and at phone width
+- [ ] User-triggered flows start at a `user` node with a `trigger`, and their `async` steps are marked
 - [ ] No secrets, env values, credentials, or production IPs anywhere in the file

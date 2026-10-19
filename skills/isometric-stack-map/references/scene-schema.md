@@ -18,7 +18,7 @@ The renderer in [../assets/stack-map.html](../assets/stack-map.html) draws whate
 
 ## Layers: the tech stack, bottom first
 
-Each layer is one floating platform. Order is **bottom → top**, so the data tier sits at the bottom and clients sit at the top:
+Each layer is one platform. Order is **bottom → top**, so the data tier sits at the bottom and users and clients sit at the top. The viewer lays the layers out as a staircase by default: each tier rises and steps back, so none of them hides another. It can also show them as a straight tower, or flatten them onto one isometric slate with a band per tier.
 
 ```json
 [{ "id": "data", "label": "Data" }, { "id": "services", "label": "Services" },
@@ -29,7 +29,7 @@ Use 3–5 layers. Typical sets:
 
 | Project shape | Layers (bottom → top) |
 |---|---|
-| Web app + API + DB | Data · Services · Apps & edge · Clients |
+| Web app + API + DB | Data · Services · Apps & edge · Users & clients |
 | Kubernetes platform | Infra (cluster, ingress, mesh) · Data · Services · Edge · Clients |
 | Serverless | Data & storage · Functions · Gateway · Clients |
 | Library / monorepo with no runtime | Foundation packages · Core · Adapters · Apps / CLIs |
@@ -55,25 +55,31 @@ Use 3–5 layers. Typical sets:
 | `port` | Listening port when known. |
 | `desc` | One sentence. |
 | `cite` | Files that prove the component exists: `{path, line?, url?}` or a plain `"path:line"` string. |
-| `x`, `y`, `size` | Optional overrides. Leave them out and the renderer lays out each layer by neighbour barycenter. `size` can override `w`, `d`, `h`, `r`. |
+| `tags` | Optional cross-cutting groups (`["checkout", "pci"]`). Each tag becomes a highlight chip in the viewer. |
+| `x`, `y`, `size` | Optional overrides. Leave them out and the renderer lays out each layer by neighbour barycenter. `x`/`y` are in grid units (4 ≈ one slot) and scale with the spacing slider. `size` can override `w`, `d`, `h`. |
 
 ### Kinds → glyphs
 
-| kind | glyph | use for |
+Each kind is drawn as the real-world object people already associate with it:
+
+| kind | drawn as | use for |
 |---|---|---|
-| `service` | box | APIs, backends, monolith processes |
-| `frontend` | slab + screen | SSR/SPA web apps, admin UIs |
-| `client` | small slab + screen | browsers, mobile apps, CLIs used by people |
-| `gateway` | truncated pyramid | load balancers, ingress, API gateways, CDNs, reverse proxies |
-| `worker` | hexagonal prism | queue consumers, cron jobs, schedulers |
-| `function` | small cube | lambdas, edge functions, cloud functions |
-| `database` | tall cylinder with rings | SQL/NoSQL databases, search indexes |
-| `cache` | short cylinder | Redis, Memcached, in-memory stores |
-| `storage` | open-top cylinder | S3/GCS/blob storage, volumes |
-| `queue` | long slotted bar | SQS, Kafka topics, RabbitMQ, BullMQ, Pub/Sub |
-| `external` | box (use `state: "external"`) | Stripe, Auth0, OpenAI, Twilio, SaaS APIs |
-| `library` | flat box | internal packages, when mapping a monorepo's package graph |
-| `infra` | wide flat box | cluster, service mesh, observability stack |
+| `user` | a person | the humans who trigger flows: shoppers, admins, operators |
+| `client` | monitor on a stand, terminal on screen | browsers, desktop apps, CLIs |
+| `mobile` | smartphone | iOS, Android, React Native and Expo apps |
+| `frontend` | monitor showing a web page | SSR/SPA web apps, admin UIs |
+| `cdn` | globe on a pedestal | CDNs, DNS, edge networks |
+| `gateway` | network switch with ports and antennas | load balancers, ingress, API gateways, reverse proxies |
+| `service` | rack-mount server with blade units and LEDs | APIs, backends, monolith processes |
+| `worker` | saw-tooth-roof factory with a chimney | queue consumers, cron jobs, schedulers |
+| `function` | cube marked with λ | lambdas, edge functions, cloud functions |
+| `database` | three stacked disks | SQL/NoSQL databases, search indexes |
+| `cache` | memory chip with pins | Redis, Memcached, in-memory stores |
+| `storage` | open bucket with hoops | S3/GCS/blob storage, volumes |
+| `queue` | tray carrying envelopes | SQS, Kafka topics, RabbitMQ, BullMQ, Pub/Sub |
+| `external` | cloud (use `state: "external"`) | Stripe, Auth0, OpenAI, Twilio, SaaS APIs |
+| `library` | taped cardboard package | internal packages, when mapping a monorepo's package graph |
+| `infra` | full-height rack cabinet | cluster, service mesh, observability stack |
 
 ## Links: the network
 
@@ -100,12 +106,34 @@ Dashed wireframe volumes drawn around their member nodes, across layers:
 
 Use them for VPCs, subnets, Kubernetes clusters and namespaces, Docker networks, and trust boundaries ("PCI scope"). Keep to 3 or fewer. Overlapping zones get hard to read.
 
-## Flows: key request paths
+## Flows: user actions and what they trigger
+
+A flow is one action and everything it sets off, in order:
 
 ```json
-{ "id": "checkout", "label": "Checkout", "steps": [
-  { "from": "browser", "to": "web", "note": "POST /checkout", "cite": { "path": "apps/web/app/checkout/actions.ts", "line": 18 } }
-] }
+{ "id": "checkout", "label": "Checkout", "actor": "shopper", "trigger": "Clicks “Pay now”",
+  "steps": [
+    { "from": "shopper", "to": "browser", "note": "Submits the checkout form" },
+    { "from": "browser", "to": "web", "note": "POST /checkout", "cite": { "path": "apps/web/app/checkout/actions.ts", "line": 18 } },
+    { "from": "api", "to": "orders-queue", "note": "Enqueues fulfilment", "async": true }
+  ] }
 ```
 
-Every step must match a link (either direction). Use 2–4 flows of 4–10 steps each, for the paths that matter most: a typical read, a write, a background job, auth.
+| Field | Notes |
+|---|---|
+| `actor` | Optional node id, usually a `user` node, of who starts the flow. |
+| `trigger` | Optional short phrase for the action ("Clicks “Pay now”", "Nightly cron at 02:00", "Stripe sends a webhook"). |
+| `color` | Optional `#rrggbb`. The viewer picks a distinct colour when it is omitted. |
+| `steps[].async` | Marks a step that the action *kicks off* rather than waits for. The viewer lists these under "Kicks off async". |
+
+Every step must match a link (either direction). Use 2–5 flows of 4–12 steps each, for the actions that matter most: a typical read, a write, a background job, auth, an inbound webhook. To let users trigger flows, give them `user` nodes on the top layer, link them to the clients they use (`"protocol": "uses"`), and start each flow at the user.
+
+## What the viewer lets people change
+
+These are runtime settings in the page. Don't encode them in the scene. Mention them when you hand the map over:
+
+- **Layout:** staircase, tower, or flat slate. Sliders control component spacing, layer height, and layer step-back. Cables can be arcs, right-angle, or straight.
+- **Show and hide:** individual layers, component kinds, external and idle components, users and clients, zones, labels, protocol labels, traffic animation, and platforms.
+- **Highlight:** any mix of layers, kinds, tags, zones, and statuses. Everything else fades.
+- **User flows and actions:** draw each flow as a numbered coloured path, play it step by step, or select it to see what it touches, which third parties it calls, and what async work it kicks off.
+- **Themes:** Auto (follows the system), Blueprint, Paper, Neon, Terminal, Arctic, Ember, and Custom (five colour pickers). Settings are saved per scene in the viewer's browser.
