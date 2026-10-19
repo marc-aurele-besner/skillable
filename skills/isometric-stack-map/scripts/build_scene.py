@@ -20,12 +20,14 @@ import sys
 from pathlib import Path
 
 KINDS = {
-    "service", "frontend", "client", "gateway", "worker", "function", "database",
-    "cache", "storage", "queue", "external", "library", "infra",
+    "service", "frontend", "client", "mobile", "user", "gateway", "cdn", "worker",
+    "function", "database", "cache", "storage", "queue", "external", "library", "infra",
 }
+CLIENT_KINDS = {"client", "mobile", "user"}
 STATES = {"on", "idle", "off", "external"}
 LINK_KINDS = {"call", "consume", "subscribe"}
 MAX_NODES = 80
+COLOR_RE = re.compile(r"^#[0-9a-fA-F]{6}$")
 
 SECRET_RES = (
     re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"),
@@ -81,7 +83,10 @@ def validate(scene: dict) -> tuple[list[str], list[str]]:
             errors.append(f"{where} ({node['id']}): kind must be one of {sorted(KINDS)}")
         if node.get("state", "on") not in STATES:
             errors.append(f"{where} ({node['id']}): state must be one of {sorted(STATES)}")
-        if not node.get("cite") and node.get("kind") != "client":
+        tags = node.get("tags", [])
+        if not isinstance(tags, list) or not all(isinstance(t, str) for t in tags):
+            errors.append(f"{where} ({node['id']}): tags must be a list of strings")
+        if not node.get("cite") and node.get("kind") not in CLIENT_KINDS:
             warnings.append(f"{where} ({node['id']}): no cite — every component should point at the file that proves it")
     if len(set(node_ids)) != len(node_ids):
         errors.append("nodes: ids must be unique")
@@ -110,7 +115,17 @@ def validate(scene: dict) -> tuple[list[str], list[str]]:
             if member not in known:
                 errors.append(f"zones[{i}]: member {member!r} is not a node id")
 
+    flow_ids = set()
     for i, flow in enumerate(scene.get("flows") or []):
+        if flow.get("id") in flow_ids:
+            errors.append(f"flows[{i}]: duplicate id {flow.get('id')!r}")
+        flow_ids.add(flow.get("id"))
+        if "actor" in flow and flow["actor"] not in known:
+            errors.append(f"flows[{i}]: actor {flow['actor']!r} is not a node id")
+        if "color" in flow and not COLOR_RE.match(str(flow["color"])):
+            errors.append(f"flows[{i}]: color must be a #rrggbb hex value")
+        if not flow.get("steps"):
+            errors.append(f"flows[{i}]: needs at least one step")
         for j, step in enumerate(flow.get("steps") or []):
             if (step.get("from"), step.get("to")) not in link_keys and (step.get("to"), step.get("from")) not in link_keys:
                 errors.append(f"flows[{i}].steps[{j}]: {step.get('from')} -> {step.get('to')} has no matching link")
