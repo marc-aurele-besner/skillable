@@ -119,7 +119,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [sweep-dependency-prs](skills/sweep-dependency-prs/) | 🤖 Approve & merge every green Dependabot/Renovate PR in a repo; dispatch fixes for the red ones |
 | [upgrade-node-across-org](skills/upgrade-node-across-org/) | 🛠 Find every repo you own that pins Node (orgs included) and fan out upgrade-node-version — one PR per repo |
 | [upgrade-node-version](skills/upgrade-node-version/) | 🛠 Bump Node across `.nvmrc`, `engines`, CI workflows, and Dockerfiles — then fix the fallout |
-| [wireframe-feature](skills/wireframe-feature/) | 🎲 Turn a complex feature idea into several interactive, responsive wireframe artifacts that reuse your app's layout, tokens, and light/dark themes — then iterate on the one you pick |
+| [wireframe-feature](skills/wireframe-feature/) | 🎲 Turn a complex feature idea into several interactive, responsive wireframe variants, side by side in one artifact, that reuse your app's layout, tokens, and light/dark themes — then iterate on the one you pick |
 
 ## 🔍 Anatomy of a skill
 

@@ -2,7 +2,7 @@
 name: wireframe-feature
 description: >-
   Turn a complex feature idea into one or more interactive, responsive wireframes
-  published as artifacts (self-contained HTML pages) that reuse the current
+  published together in a single artifact (one artboard or tab per variant) that reuse the current
   project's layout shell, design tokens, typography, and light/dark themes, and
   behave like the real app — working navigation, forms, modals, and loading,
   empty, and error states. Generates several distinct variants on the first pass
@@ -71,12 +71,12 @@ Give each variant a short name ("A · Inline drawer", "B · Guided wizard", "C �
 
 ## 4. Build each wireframe
 
-One self-contained HTML page per variant. Requirements:
+One self-contained screen per variant — an artboard on a design canvas, or a section of a single page (see step 5). All variants of a pass ship in the same artifact. Requirements:
 
 **Fidelity to the project**
 - Recreate the app shell (nav, header, real nav labels) around the feature so it reads as "this app, plus the feature". Show neighboring nav items as inert but present.
 - Define the extracted tokens as CSS custom properties on `:root` using the project's own token names, with the second theme's values under the same mechanism the project uses (e.g. `.dark { … }` or `[data-theme="dark"] { … }`), and also follow `prefers-color-scheme` by default.
-- Add a small floating **prototype toolbar** (clearly outside the app chrome) with a theme toggle and, when useful, a state switcher (empty / loading / error / populated). Keep it collapsible so it does not hide the design.
+- Add a small floating **prototype toolbar** (clearly outside the app chrome) with a theme toggle and, when useful, a state switcher (empty / loading / error / populated). Keep it collapsible so it does not hide the design. On a design canvas, use the canvas's own theme and tweak controls where they exist instead of duplicating them.
 - Use the project's fonts when they are loadable from a public CDN or Google Fonts; otherwise pick the closest available match and say so.
 
 **Behaves like the app**
@@ -90,13 +90,19 @@ One self-contained HTML page per variant. Requirements:
 - Use the project's breakpoints and reproduce its responsive behavior at each: test mentally at ~375 px, ~768 px, and ≥1280 px. No horizontal page scroll on mobile; touch targets ≥ 40 px.
 
 **Wireframe, not production**
-- Plain HTML/CSS/vanilla JS (or a pinned CDN library the project already uses, e.g. React + Tailwind via CDN) in one file. No build step.
+- Plain HTML/CSS/vanilla JS (or a pinned CDN library the project already uses, e.g. React + Tailwind via CDN) in one file — or the artboard format a design canvas prescribes. No build step.
 - Keep it honest: mark anything invented (an endpoint, a permission, a metric) with a subtle dotted underline or a `?` tooltip so it is not mistaken for an existing capability.
 
-## 5. Publish
+## 5. Publish — every variant in one artifact
 
-- **Artifact-capable agent** (e.g. Claude Code with an artifact tool): publish each variant as its own artifact so each has a URL to compare, share, and comment on. Title them `<Feature> <letter>` (e.g. "Bulk Edit A"), with the thesis as the description.
-- **Otherwise:** write the files outside the project's tracked tree (a scratch/temp directory) as `wireframe-<feature>-<letter>.html` and open them locally (`open` / `xdg-open`).
+Publish all variants of a pass together in **one** artifact, so they sit side by side, share one link, and collect comments in one place. Never publish one artifact per variant.
+
+- **Design canvas (preferred)** — when the artifact tool offers a Design / canvas Artifact type (ask it with a `quickstart` for a design, or list the available types), create one canvas titled `<Feature>` and follow that type's instructions for its file format. Put each variant on its own artboard:
+  - titled `<letter> · <name>` (e.g. "A · Inline drawer"), sized like a desktop page (≈1440 × 960), fluid/fill-width and marked interactive so it can be clicked through;
+  - laid out in a grid — one row for 2–3 variants, two per row for 4–5 — with the type's spacing between frames;
+  - with a title note above the grid naming the pass (e.g. "Bulk edit: four takes"). Put the theses in the report, not on the artboards.
+- **Single page (fallback)** — when no canvas type is available, publish one HTML page that holds every variant behind a **variant switcher** in the prototype toolbar (`A · Inline drawer`, `B · Guided wizard`, …) showing the active variant's thesis. Use hash routing so each variant and screen is deep-linkable (`#a`, `#b/review`), keep each variant's state separate, and at desktop width offer a side-by-side compare view. Title it `<Feature> wireframes`, with the variant names in the description.
+- **No artifact tool:** write that same single page outside the project's tracked tree (a scratch/temp directory) as `wireframe-<feature>.html` and open it locally (`open` / `xdg-open`).
 - Never commit wireframes to the project, create branches, or open PRs for them unless the user explicitly asks.
 
 ## 6. Report the first pass
@@ -104,9 +110,11 @@ One self-contained HTML page per variant. Requirements:
 ```markdown
 **<Feature>** · <N> variants · themes: light + dark · breakpoints: <list>
 
-| Variant | Thesis | Best for | Trade-off | Link |
-| --- | --- | --- | --- | --- |
-| A · Inline drawer | … | … | … | <url or path> |
+**Open:** <the one artifact URL or file path>
+
+| Variant | Thesis | Best for | Trade-off |
+| --- | --- | --- | --- |
+| A · Inline drawer | … | … | … |
 
 **Try:** <the 2–3 interactions that best show the difference between variants>
 **Assumptions:** <bullets — things guessed about the feature or the design system>
@@ -115,9 +123,11 @@ One self-contained HTML page per variant. Requirements:
 
 ## 7. Iterate
 
-- **"Go with B" / "refine B"** → keep improving variant B in place (republish to the same artifact URL or overwrite the same file) instead of creating a new one, so links stay stable.
-- **"Mix A and C"** → a new variant D that names what it took from each.
-- **"More ideas" / "another round"** → N fresh variants that explicitly avoid concepts already shown.
+Every iteration goes into the **same** artifact, so its link stays stable and the history of ideas stays visible.
+
+- **"Go with B" / "refine B"** → improve variant B in place (its artboard or its section of the page), leaving the other variants untouched.
+- **"Mix A and C"** → a new variant (e.g. "A2 · Drawer + C's shortcuts") that names what it took from each. On a canvas, add it as a new row under a title note such as "Iteration 2: A + C's shortcuts"; on a single page, add it to the switcher.
+- **"More ideas" / "another round"** → N fresh variants that explicitly avoid concepts already shown, added as a new titled row (or new switcher entries) in the same artifact.
 - **Feedback on details** (copy, a state, a breakpoint) → apply it to the chosen variant and list what changed in one or two lines.
 - When the user is happy, offer a short **handoff note**: screens and states, which existing components each part maps to, new components needed, and open questions — so the implementation can start from it.
 
@@ -128,4 +138,5 @@ One self-contained HTML page per variant. Requirements:
 - [ ] Every state listed in step 2 is reachable by clicking or via the state switcher
 - [ ] Works at mobile, tablet, and desktop widths with the project's responsive patterns
 - [ ] Variants differ in concept, not just styling
+- [ ] All variants are in one artifact, each labeled and reachable (artboard or switcher tab)
 - [ ] No network calls, secrets, or real user data in the pages
