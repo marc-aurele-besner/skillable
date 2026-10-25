@@ -6,7 +6,7 @@
 
 A curated, community-driven collection of [Agent Skills](https://agentskills.io) — plain-markdown playbooks that turn "explain it to the agent again" into a single slash command. Built on the open `SKILL.md` format, so they work with Cursor, Claude Code, and [any skills-capable agent](https://agentskills.io/clients).
 
-[![Skills](https://img.shields.io/badge/skills-26-blueviolet)](#available-skills)
+[![Skills](https://img.shields.io/badge/skills-27-blueviolet)](#available-skills)
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-black.svg)](https://skills.sh)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -120,6 +120,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [upgrade-node-across-org](skills/upgrade-node-across-org/) | 🛠 Find every repo you own that pins Node (orgs included) and fan out upgrade-node-version — one PR per repo |
 | [upgrade-node-version](skills/upgrade-node-version/) | 🛠 Bump Node across `.nvmrc`, `engines`, CI workflows, and Dockerfiles — then fix the fallout |
 | [wireframe-feature](skills/wireframe-feature/) | 🎲 Turn a complex feature idea into several interactive, responsive wireframe variants, side by side in one artifact, that reuse your app's layout, tokens, and light/dark themes — then iterate on the one you pick |
+| [wireframe-redesign](skills/wireframe-redesign/) | 🎲 Redesign your **whole** site or app — every route, feature, role, and state, with real content — in several directions inside one artifact: switch variant on any page, force loading/empty/error, jump anywhere from the sitemap, compare the same page across variants |
 
 ## 🔍 Anatomy of a skill
 
