@@ -129,7 +129,7 @@ Every iteration goes into the **same** artifact, so its link stays stable and th
 - **"Mix A and C"** → a new variant (e.g. "A2 · Drawer + C's shortcuts") that names what it took from each. On a canvas, add it as a new row under a title note such as "Iteration 2: A + C's shortcuts"; on a single page, add it to the switcher.
 - **"More ideas" / "another round"** → N fresh variants that explicitly avoid concepts already shown, added as a new titled row (or new switcher entries) in the same artifact.
 - **Feedback on details** (copy, a state, a breakpoint) → apply it to the chosen variant and list what changed in one or two lines.
-- When the user is happy, offer a short **handoff note**: screens and states, which existing components each part maps to, new components needed, and open questions — so the implementation can start from it.
+- When the user is happy, offer a short **handoff note**: screens and states, which existing components each part maps to, new components needed, and open questions — so the implementation can start from it. To keep the chosen wireframe in the repo as a standalone vanilla site, use `save-wireframe`.
 
 ## Quality bar before reporting
 

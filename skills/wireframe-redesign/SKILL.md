@@ -147,7 +147,7 @@ Every iteration republishes the **same** artifact so the link and the history of
 - **"Mix A and D"** → add a new variant letter (e.g. "E · D's shell + A's omnibox") naming what it took from each, with full route coverage.
 - **"More ideas"** → new letters whose theses explicitly avoid the concepts already shown.
 - **Page or feature feedback** → apply it to the chosen variant, list what changed in a line or two.
-- **Handoff** when the user is happy: per route, the screens and states, which existing components each part maps to, new components and token changes needed, features moved between pages, and open questions — so implementation can start from it (e.g. via `spike-variants`).
+- **Handoff** when the user is happy: per route, the screens and states, which existing components each part maps to, new components and token changes needed, features moved between pages, and open questions — so implementation can start from it (e.g. via `spike-variants`). To keep the prototype in the repo as a standalone vanilla site under `.wireframe/`, use `save-wireframe`.
 
 ## Quality bar
 
