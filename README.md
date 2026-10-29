@@ -122,6 +122,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [upgrade-node-version](skills/upgrade-node-version/) | 🛠 Bump Node across `.nvmrc`, `engines`, CI workflows, and Dockerfiles — then fix the fallout |
 | [wireframe-feature](skills/wireframe-feature/) | 🎲 Turn a complex feature idea into several interactive, responsive wireframe variants, side by side in one artifact, that reuse your app's layout, tokens, and light/dark themes — then iterate on the one you pick |
 | [wireframe-logo-design](skills/wireframe-logo-design/) | 🎲 Turn a logo idea into several directions, each 8 logos shown as marks and lockups in your app's own colors and fonts, side by side in one artifact — pick by number and refine |
+| [wireframe-og-design](skills/wireframe-og-design/) | 🎲 Find your current og:image / twitter:image and redesign the social card in several 1200 × 630 variants in your app's own colors, fonts, and layout — each shown in X, LinkedIn, Slack, Discord, and iMessage previews, side by side in one artifact |
 | [wireframe-redesign](skills/wireframe-redesign/) | 🎲 Redesign your **whole** site or app — every route, feature, role, and state, with real content — in several directions inside one artifact: switch variant on any page, force loading/empty/error, jump anywhere from the sitemap, compare the same page across variants |
 
 ## 🔍 Anatomy of a skill
