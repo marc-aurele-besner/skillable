@@ -6,7 +6,7 @@
 
 A curated, community-driven collection of [Agent Skills](https://agentskills.io) — plain-markdown playbooks that turn "explain it to the agent again" into a single slash command. Built on the open `SKILL.md` format, so they work with Cursor, Claude Code, and [any skills-capable agent](https://agentskills.io/clients).
 
-[![Skills](https://img.shields.io/badge/skills-29-blueviolet)](#available-skills)
+[![Skills](https://img.shields.io/badge/skills-31-blueviolet)](#available-skills)
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-black.svg)](https://skills.sh)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -112,6 +112,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [nudge-stale-prs](skills/nudge-stale-prs/) | 🚑 Find open PRs older than 2 days across every repo you can write to and have Cursor/Claude/Codex's GitHub user tag you to review/merge — self-mentions do not notify |
 | [optimize-all-github-actions](skills/optimize-all-github-actions/) | 🚑 Find every repo you own with Actions (orgs included) and fan out optimize-github-actions — one PR per repo |
 | [optimize-github-actions](skills/optimize-github-actions/) | 🚑 Analyze workflows, cut wasted Actions minutes (duplicate runs, redundant jobs, matrix bloat), open a PR — without weakening security |
+| [optimize-seo-aeo](skills/optimize-seo-aeo/) | 🛠 Audit what search engines and AI answer engines actually see, then ship one PR with the fixes that matter — titles, descriptions, canonicals, OG tags, sitemap, robots.txt (AI search bots included), JSON-LD, llms.txt, and server-rendered content — using your framework's own APIs |
 | [prune-deps-across-org](skills/prune-deps-across-org/) | 🤖 Find every JS repo you own (orgs included) and fan out dedupe-and-prune-deps — one hygiene PR per repo |
 | [save-wireframe](skills/save-wireframe/) | 🎲 Save a wireframe artifact into `.wireframe/<name>/` as a plain vanilla static site — split HTML/CSS/JS/data, no build, opens from disk, verified to behave like the original, with a manifest and an index of every saved wireframe |
 | [spike-variants](skills/spike-variants/) | 🎲 Build a feature N ways in parallel worktrees against one acceptance contract, compare them with real metrics, ship the winner as a PR |
