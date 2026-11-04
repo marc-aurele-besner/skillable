@@ -96,6 +96,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 |-------|--------------|
 | [align-minimum-release-age](skills/align-minimum-release-age/) | 🤖 Sync the dependency cooldown between pnpm/npm/Poetry and Renovate to the most conservative value — one repo or your whole fleet |
 | [architecture-map](skills/architecture-map/) | 🧭 Parallel subagents map your codebase into an interactive explainer — module graph from real imports, key-flow sequence diagrams, guided tour with line permalinks, hotspots from git history |
+| [audit-web-vitals](skills/audit-web-vitals/) | 🛠 Measure Core Web Vitals with field and lab data, turn them into a CI budget that blocks regressions, and fix the biggest offenders — LCP, INP, CLS, TTFB — in one PR |
 | [build-landing-page](skills/build-landing-page/) | 🛠 Idea → scaffolded, designed, analytics-wired, **deployed** landing page with a live URL |
 | [claim-all-unassigned-prs](skills/claim-all-unassigned-prs/) | 🚑 Find unassigned PRs opened by others across **every repo you can write to** (orgs included) and fan out claim-unassigned-prs |
 | [claim-unassigned-prs](skills/claim-unassigned-prs/) | 🚑 Request your review on every open PR in a repo that has no assignee, reviewer, or review yet and was opened by someone else |
