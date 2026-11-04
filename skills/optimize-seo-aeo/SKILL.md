@@ -87,7 +87,7 @@ Read [references/checklist.md](references/checklist.md) and score every finding 
 | **P1 — undescribed** | Missing/duplicate titles and descriptions, no canonical, no sitemap or a stale one, no `lang`, no OG/Twitter basics, no `Organization`/`WebSite` JSON-LD | Fix |
 | **P2 — machine-readable** | Page-type JSON-LD (`Article`, `SoftwareApplication`, `Product`, `BreadcrumbList`, `FAQPage`), `llms.txt`, heading hierarchy, image alt, `lastmod` dates, internal link gaps | Fix when the data exists in the repo |
 | **P3 — answerable content** | Answer-first intros, question headings, definitions, visible dates/authors, comparison tables | Small, factual edits only; list the rest as suggestions |
-| **Report only** | Core Web Vitals, hosting/redirect config outside the repo, backlinks, Search Console / Bing Webmaster setup, IndexNow keys | List as follow-ups |
+| **Report only** | Core Web Vitals, hosting/redirect config outside the repo, backlinks, Search Console / Bing Webmaster setup, IndexNow keys | List as follow-ups (the `setup-seo` skill implements IndexNow, sitemap submission, and verification tags) |
 
 AEO specifics (crawler list, `llms.txt`, content patterns, what is proven vs. speculative) are in [references/aeo-playbook.md](references/aeo-playbook.md). Read it before touching `robots.txt` or writing `llms.txt`.
 

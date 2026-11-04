@@ -84,5 +84,5 @@ Small, factual edits the skill may apply; anything bigger goes in the report as 
 ## Outside the repo (report as follow-ups)
 
 - Verify in Google Search Console and Bing Webmaster Tools and submit the sitemap. Bing matters for ChatGPT search and Copilot.
-- IndexNow (Bing, Yandex, others) for fast re-crawl after deploys — needs a key file and a deploy hook; offer it, do not set it up silently.
+- IndexNow (Bing, Yandex, others) for fast re-crawl after deploys — needs a key file and a deploy hook; offer it, do not set it up silently. The `setup-seo` skill sets up the key file, the deploy ping, and the Google/Bing channels IndexNow does not cover.
 - Get listed where assistants look: official docs, GitHub README, package registries, Wikipedia/Wikidata (if notable), reputable directories and comparisons.
