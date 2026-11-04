@@ -94,6 +94,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 
 | Skill | What it does |
 |-------|--------------|
+| [add-i18n](skills/add-i18n/) | 🛠 Internationalize a site in one PR — locale routing and catalogs, per-locale metadata, reciprocal hreflang with `x-default`, RTL layouts, and `Intl` formatting — using your framework's own i18n tooling |
 | [align-minimum-release-age](skills/align-minimum-release-age/) | 🤖 Sync the dependency cooldown between pnpm/npm/Poetry and Renovate to the most conservative value — one repo or your whole fleet |
 | [architecture-map](skills/architecture-map/) | 🧭 Parallel subagents map your codebase into an interactive explainer — module graph from real imports, key-flow sequence diagrams, guided tour with line permalinks, hotspots from git history |
 | [build-landing-page](skills/build-landing-page/) | 🛠 Idea → scaffolded, designed, analytics-wired, **deployed** landing page with a live URL |
