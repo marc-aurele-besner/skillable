@@ -106,6 +106,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [fix-dependabot-alert](skills/fix-dependabot-alert/) | 🤖 Remediate a Dependabot **security alert** end-to-end: bump/override, branch, PR |
 | [fix-dependabot-pr](skills/fix-dependabot-pr/) | 🤖 Take over a Dependabot bump PR — grouped updates and major migrations included — and push commits until CI passes |
 | [fix-failing-ci](skills/fix-failing-ci/) | 🚑 Paste a red Actions run URL; get diagnosis, a fix on the built branch, and a green build |
+| [fix-flaky-tests](skills/fix-flaky-tests/) | 🚑 Prove a test is flaky, find the real cause (shared state, timing, environment, randomness, resource leaks, unmocked externals), fix it at the source, and open a PR — quarantine as a tracked last resort, never a blanket retry |
 | [fix-issue](skills/fix-issue/) | 🚑 Pick an open GitHub issue, implement it on a fresh branch, open the PR |
 | [fix-renovate-pr](skills/fix-renovate-pr/) | 🤖 Take over a Renovate bump PR and push commits until CI passes |
 | [fleet-health-dashboard](skills/fleet-health-dashboard/) | 🧭 One live dashboard for **every repo you own** (orgs included): bot PRs, alerts, red CI, stale PRs, Node pins — each row names the skill that fixes it; refreshable on a schedule |
