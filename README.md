@@ -94,6 +94,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 
 | Skill | What it does |
 |-------|--------------|
+| [add-missing-tests](skills/add-missing-tests/) | 🛠 Find the code that has no real test coverage, write behavior-level tests for it with the repo's own framework, and open one PR with the coverage delta |
 | [align-minimum-release-age](skills/align-minimum-release-age/) | 🤖 Sync the dependency cooldown between pnpm/npm/Poetry and Renovate to the most conservative value — one repo or your whole fleet |
 | [architecture-map](skills/architecture-map/) | 🧭 Parallel subagents map your codebase into an interactive explainer — module graph from real imports, key-flow sequence diagrams, guided tour with line permalinks, hotspots from git history |
 | [build-landing-page](skills/build-landing-page/) | 🛠 Idea → scaffolded, designed, analytics-wired, **deployed** landing page with a live URL |
