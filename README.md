@@ -99,6 +99,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [align-minimum-release-age](skills/align-minimum-release-age/) | 🤖 Sync the dependency cooldown between pnpm/npm/Poetry and Renovate to the most conservative value — one repo or your whole fleet |
 | [architecture-map](skills/architecture-map/) | 🧭 Parallel subagents map your codebase into an interactive explainer — module graph from real imports, key-flow sequence diagrams, guided tour with line permalinks, hotspots from git history |
 | [audit-licenses](skills/audit-licenses/) | 🧭 Inventory every dependency license (direct and transitive), check it against a committed policy, generate the NOTICE / THIRD_PARTY_LICENSES artifacts the obligations require, and fail CI on a forbidden license |
+| [audit-vulnerabilities](skills/audit-vulnerabilities/) | 🤖 Audit the **whole** dependency tree for known vulnerabilities, judge real reachability in your code, fix what is fixable, and open one PR with the residual risk stated |
 | [audit-web-vitals](skills/audit-web-vitals/) | 🛠 Measure Core Web Vitals with field and lab data, turn them into a CI budget that blocks regressions, and fix the biggest offenders — LCP, INP, CLS, TTFB — in one PR |
 | [build-landing-page](skills/build-landing-page/) | 🛠 Idea → scaffolded, designed, analytics-wired, **deployed** landing page with a live URL |
 | [claim-all-unassigned-prs](skills/claim-all-unassigned-prs/) | 🚑 Find unassigned PRs opened by others across **every repo you can write to** (orgs included) and fan out claim-unassigned-prs |
