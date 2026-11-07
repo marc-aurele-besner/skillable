@@ -6,7 +6,7 @@
 
 A curated, community-driven collection of [Agent Skills](https://agentskills.io) — plain-markdown playbooks that turn "explain it to the agent again" into a single slash command. Built on the open `SKILL.md` format, so they work with Cursor, Claude Code, and [any skills-capable agent](https://agentskills.io/clients).
 
-[![Skills](https://img.shields.io/badge/skills-34-blueviolet)](#available-skills)
+[![Skills](https://img.shields.io/badge/skills-44-blueviolet)](#available-skills)
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-black.svg)](https://skills.sh)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -94,8 +94,11 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 
 | Skill | What it does |
 |-------|--------------|
+| [add-i18n](skills/add-i18n/) | 🛠 Internationalize a site in one PR — locale routing and catalogs, per-locale metadata, reciprocal hreflang with `x-default`, RTL layouts, and `Intl` formatting — using your framework's own i18n tooling |
+| [add-missing-tests](skills/add-missing-tests/) | 🛠 Find the code that has no real test coverage, write behavior-level tests for it with the repo's own framework, and open one PR with the coverage delta |
 | [align-minimum-release-age](skills/align-minimum-release-age/) | 🤖 Sync the dependency cooldown between pnpm/npm/Poetry and Renovate to the most conservative value — one repo or your whole fleet |
 | [architecture-map](skills/architecture-map/) | 🧭 Parallel subagents map your codebase into an interactive explainer — module graph from real imports, key-flow sequence diagrams, guided tour with line permalinks, hotspots from git history |
+| [audit-licenses](skills/audit-licenses/) | 🧭 Inventory every dependency license (direct and transitive), check it against a committed policy, generate the NOTICE / THIRD_PARTY_LICENSES artifacts the obligations require, and fail CI on a forbidden license |
 | [audit-web-vitals](skills/audit-web-vitals/) | 🛠 Measure Core Web Vitals with field and lab data, turn them into a CI budget that blocks regressions, and fix the biggest offenders — LCP, INP, CLS, TTFB — in one PR |
 | [build-landing-page](skills/build-landing-page/) | 🛠 Idea → scaffolded, designed, analytics-wired, **deployed** landing page with a live URL |
 | [claim-all-unassigned-prs](skills/claim-all-unassigned-prs/) | 🚑 Find unassigned PRs opened by others across **every repo you can write to** (orgs included) and fan out claim-unassigned-prs |
@@ -107,6 +110,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [fix-dependabot-alert](skills/fix-dependabot-alert/) | 🤖 Remediate a Dependabot **security alert** end-to-end: bump/override, branch, PR |
 | [fix-dependabot-pr](skills/fix-dependabot-pr/) | 🤖 Take over a Dependabot bump PR — grouped updates and major migrations included — and push commits until CI passes |
 | [fix-failing-ci](skills/fix-failing-ci/) | 🚑 Paste a red Actions run URL; get diagnosis, a fix on the built branch, and a green build |
+| [fix-flaky-tests](skills/fix-flaky-tests/) | 🚑 Prove a test is flaky, find the real cause (shared state, timing, environment, randomness, resource leaks, unmocked externals), fix it at the source, and open a PR — quarantine as a tracked last resort, never a blanket retry |
 | [fix-issue](skills/fix-issue/) | 🚑 Pick an open GitHub issue, implement it on a fresh branch, open the PR |
 | [fix-renovate-pr](skills/fix-renovate-pr/) | 🤖 Take over a Renovate bump PR and push commits until CI passes |
 | [fleet-health-dashboard](skills/fleet-health-dashboard/) | 🧭 One live dashboard for **every repo you own** (orgs included): bot PRs, alerts, red CI, stale PRs, Node pins — each row names the skill that fixes it; refreshable on a schedule |
@@ -114,12 +118,16 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [nudge-stale-prs](skills/nudge-stale-prs/) | 🚑 Find open PRs older than 2 days across every repo you can write to and have Cursor/Claude/Codex's GitHub user tag you to review/merge — self-mentions do not notify |
 | [optimize-all-github-actions](skills/optimize-all-github-actions/) | 🚑 Find every repo you own with Actions (orgs included) and fan out optimize-github-actions — one PR per repo |
 | [optimize-github-actions](skills/optimize-github-actions/) | 🚑 Analyze workflows, cut wasted Actions minutes (duplicate runs, redundant jobs, matrix bloat), open a PR — without weakening security |
+| [optimize-images](skills/optimize-images/) | 🛠 Cut image weight and layout shift in one PR — responsive srcset, AVIF/WebP with a fallback, explicit dimensions, correct LCP priority, SVG for icons, and a byte budget enforced in CI — using the project's own image tooling |
 | [optimize-pwa](skills/optimize-pwa/) | 🛠 Make your web app installable and native-feeling on phones in one PR — manifest with real-size and maskable icons, a safe service worker with offline fallback and update prompt, install UX for Android and iOS, plus mobile fixes for zoom, notches, `100dvh`, tap targets, and mobile keyboards — using your framework's own PWA tooling |
 | [optimize-seo-aeo](skills/optimize-seo-aeo/) | 🛠 Audit what search engines and AI answer engines actually see, then ship one PR with the fixes that matter — titles, descriptions, canonicals, OG tags, sitemap, robots.txt (AI search bots included), JSON-LD, llms.txt, and server-rendered content — using your framework's own APIs |
+| [prune-dead-code](skills/prune-dead-code/) | 🛠 Find and remove dead code in one reviewable PR — unused exports, orphan files, dead feature flags, unreachable routes, stale assets — proving each candidate is not referenced dynamically before deleting it |
 | [prune-deps-across-org](skills/prune-deps-across-org/) | 🤖 Find every JS repo you own (orgs included) and fan out dedupe-and-prune-deps — one hygiene PR per repo |
+| [review-pull-request](skills/review-pull-request/) | 🚑 Review a PR the way a careful senior reviewer would — read the repo's rules first, classify the risk, then verify every finding (correctness, tests, security, migrations, API contracts, performance) before reporting it, ranked by severity, optionally posted to GitHub |
 | [save-wireframe](skills/save-wireframe/) | 🎲 Save a wireframe artifact into `.wireframe/<name>/` as a plain vanilla static site — split HTML/CSS/JS/data, no build, opens from disk, verified to behave like the original, with a manifest and an index of every saved wireframe |
 | [setup-seo](skills/setup-seo/) | 🛠 Wire up search-indexing channels in one PR — an IndexNow key file at the site root, an automatic post-deploy ping for changed URLs (Bing, Yandex, Seznam, Naver, Yep, Amazonbot), plus the Google and Bing channels IndexNow does not cover: sitemap.xml, robots.txt, webmaster verification, and sitemap submission |
 | [spike-variants](skills/spike-variants/) | 🎲 Build a feature N ways in parallel worktrees against one acceptance contract, compare them with real metrics, ship the winner as a PR |
+| [standardize-repo-hygiene](skills/standardize-repo-hygiene/) | 🛠 Bring a repo up to professional standard for outside contributors and coding agents — LICENSE, README, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, CODEOWNERS, issue/PR templates, .editorconfig, .gitignore, .env.example, AGENTS.md, dependency bots — every file filled from the repo's real facts, never placeholders |
 | [sweep-all-dependabot-alerts](skills/sweep-all-dependabot-alerts/) | 🤖 Find open Dependabot **security alerts** across every repo you own (orgs included) and fan out fix-dependabot-alert |
 | [sweep-all-dependency-prs](skills/sweep-all-dependency-prs/) | 🤖 Fan out across **every repo you own** (orgs included) and sweep their bot PRs in parallel |
 | [sweep-dependency-prs](skills/sweep-dependency-prs/) | 🤖 Approve & merge every green Dependabot/Renovate PR in a repo; dispatch fixes for the red ones |
