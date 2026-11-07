@@ -6,7 +6,7 @@
 
 A curated, community-driven collection of [Agent Skills](https://agentskills.io) — plain-markdown playbooks that turn "explain it to the agent again" into a single slash command. Built on the open `SKILL.md` format, so they work with Cursor, Claude Code, and [any skills-capable agent](https://agentskills.io/clients).
 
-[![Skills](https://img.shields.io/badge/skills-34-blueviolet)](#available-skills)
+[![Skills](https://img.shields.io/badge/skills-44-blueviolet)](#available-skills)
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-black.svg)](https://skills.sh)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
