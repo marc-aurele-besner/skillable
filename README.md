@@ -95,6 +95,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | Skill | What it does |
 |-------|--------------|
 | [add-i18n](skills/add-i18n/) | 🛠 Internationalize a site in one PR — locale routing and catalogs, per-locale metadata, reciprocal hreflang with `x-default`, RTL layouts, and `Intl` formatting — using your framework's own i18n tooling |
+| [add-missing-tests](skills/add-missing-tests/) | 🛠 Find the code that has no real test coverage, write behavior-level tests for it with the repo's own framework, and open one PR with the coverage delta |
 | [align-minimum-release-age](skills/align-minimum-release-age/) | 🤖 Sync the dependency cooldown between pnpm/npm/Poetry and Renovate to the most conservative value — one repo or your whole fleet |
 | [architecture-map](skills/architecture-map/) | 🧭 Parallel subagents map your codebase into an interactive explainer — module graph from real imports, key-flow sequence diagrams, guided tour with line permalinks, hotspots from git history |
 | [audit-licenses](skills/audit-licenses/) | 🧭 Inventory every dependency license (direct and transitive), check it against a committed policy, generate the NOTICE / THIRD_PARTY_LICENSES artifacts the obligations require, and fail CI on a forbidden license |
