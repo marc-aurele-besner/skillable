@@ -1,10 +1,10 @@
 <div align="center">
 
-# ⚡ Skillable
+# ⚡ Skillable — Agent Skills for Claude Code, Cursor, Codex & GitHub Copilot
 
-**Teach your AI agent the workflows you're tired of repeating.**
+**Teach your AI coding agent the workflows you're tired of repeating.**
 
-A curated, community-driven collection of [Agent Skills](https://agentskills.io) — plain-markdown playbooks that turn "explain it to the agent again" into a single slash command. Built on the open `SKILL.md` format, so they work with Cursor, Claude Code, and [any skills-capable agent](https://agentskills.io/clients).
+Skillable is a free, open-source library of **68 Agent Skills** — plain-markdown `SKILL.md` playbooks that let AI coding agents such as Claude Code, Cursor, GitHub Copilot, OpenAI Codex, and Cline merge dependency PRs, fix failing CI, ship GitHub issues, review code like a senior specialist, test your product through user personas, and prototype UI — in one slash command.
 
 [![Skills](https://img.shields.io/badge/skills-68-blueviolet)](#available-skills)
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-black.svg)](https://skills.sh)
@@ -12,11 +12,35 @@ A curated, community-driven collection of [Agent Skills](https://agentskills.io)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Format: Agent Skills](https://img.shields.io/badge/format-open%20Agent%20Skills-black)](https://agentskills.io)
 
+[Quick start](#-quick-start) · [What's inside](#-whats-inside) · [How to use](#-how-to-use-a-skill) · [All skills](#available-skills) · [FAQ](#-faq) · [Contributing](#-contributing)
+
 </div>
 
 ---
 
+```bash
+npx skills add -g marc-aurele-besner/skillable
+```
+
 Your agent is smart. It just doesn't know *your* routines: how you triage Dependabot PRs, what "fix CI" actually means in your world, which steps a Node upgrade always forgets. Skills fix that. Each one is a self-contained folder of markdown instructions the agent discovers automatically — no prompt copy-pasting, no re-explaining, no drift between sessions.
+
+## 🧩 What is Skillable?
+
+- **What it is:** a curated collection of [Agent Skills](https://agentskills.io) for software developers, maintained on GitHub and installable with the [`skills` CLI](https://skills.sh).
+- **Who it is for:** developers, maintainers, and small teams who use an AI coding agent and want it to run real, multi-step engineering workflows the same way every time.
+- **What a skill is:** a folder with a `SKILL.md` file — YAML frontmatter (`name`, `description`) plus step-by-step instructions — and optional `scripts/`, `references/`, and `assets/`. The format is an open standard, so the same skill works in any [skills-capable agent](https://agentskills.io/clients).
+- **How it works:** the agent keeps only each skill's short `description` in context. When your request matches one, or you type `/skill-name`, it loads the full playbook and follows it — running your tools (`git`, `gh`, your package manager, your test runner) in your repo.
+- **What it costs:** nothing. MIT licensed, no account, no hosted service — skills are text files your agent reads.
+
+### Scope: what these skills do — and don't
+
+| ✅ In scope | 🚫 Out of scope |
+|-------------|-----------------|
+| Repeatable developer workflows across GitHub, CI, dependencies, testing, SEO, performance, security, and design | Generic prompt libraries or "act as" one-liners |
+| Changes delivered as a branch and a pull request you review | Pushing straight to your default branch |
+| Read-only reviews (`expert-*`, `persona-*`) that report findings with exact locations and fixes | Silently editing code during a review |
+| Fleet skills that fan out across every repo you own, with guardrails (only green PRs from verified bots get merged; `nudge-stale-prs` is a dry run until you confirm) | Hosted services, background daemons, or anything that runs without your agent |
+| Working with the stack the repo already uses (pnpm, npm, Bun, Poetry, Next.js, Astro, Foundry, …) | Forcing a new framework or toolchain on your project |
 
 ## ☕ The morning routine, automated
 
@@ -38,7 +62,7 @@ agent:  Listing every repo you own (and your orgs') …
 
 ## 🚀 Quick start
 
-Install with the [skills CLI](https://vercel.com/docs/agent-resources/skills). It detects which agents you have (Cursor, Claude Code, GitHub Copilot, Cline, and [18+ others](https://agentskills.io/clients)) and puts the skills where they look.
+Install with the [skills CLI](https://vercel.com/docs/agent-resources/skills). It detects which agents you have (Cursor, Claude Code, GitHub Copilot, Codex, Cline, and [many others](https://agentskills.io/clients)) and puts the skills where they look. You need Node.js for `npx`; skills that touch GitHub also expect an authenticated [GitHub CLI](https://cli.github.com/) (`gh auth login`).
 
 **Every skill, on every project on this machine:**
 
@@ -58,14 +82,16 @@ npx skills add marc-aurele-besner/skillable
 npx skills add marc-aurele-besner/skillable --skill sweep-dependency-prs
 ```
 
-Useful extras:
+**Keep them current, or remove them:**
 
 ```bash
 npx skills add marc-aurele-besner/skillable --list   # preview without installing
+npx skills update                                    # pull the latest versions
+npx skills remove sweep-dependency-prs               # uninstall one skill
 npx skills find skillable                            # search the public directory
 ```
 
-Start a **new agent session** after installing. Skills load from their `description` when the task matches, or you can invoke one directly as `/skill-name`.
+Start a **new agent session** after installing so the agent picks the skills up.
 
 <details>
 <summary>Manual install (clone and copy)</summary>
@@ -87,6 +113,38 @@ cp -r skillable/skills/<skill-name> .cursor/skills/   # or .claude/skills/, etc.
 Using a different agent? Same idea — see the [client list](https://agentskills.io/clients) for its skills path.
 
 </details>
+
+## 🎯 How to use a skill
+
+There are two ways to run one, and both work in every supported agent:
+
+1. **Just ask.** Describe the job in plain words; the agent matches it to a skill's description and loads it on its own.
+2. **Call it by name.** Type `/skill-name`, optionally followed by arguments — a URL, a repo, a count, or a focus.
+
+| You want to… | Say or type |
+|--------------|-------------|
+| Merge every green Dependabot/Renovate PR in a repo | `/sweep-dependency-prs owner/repo` |
+| Fix a red GitHub Actions build | `/fix-failing-ci https://github.com/owner/repo/actions/runs/123` |
+| Ship a GitHub issue as a pull request | `/fix-issue 42` |
+| Get a senior security review of your web app | "Review this app for OWASP Top 10 issues" → `expert-appsec` |
+| See your site through a first-time, non-technical user | `/persona-grandma https://example.com` |
+| Improve how Google and ChatGPT/Perplexity see your site | "Improve the SEO and AEO of this site" → `optimize-seo-aeo` |
+| Explore several UX directions before building a feature | `/wireframe-feature team invites with roles` |
+| Understand an unfamiliar codebase | `/architecture-map` |
+
+Skills that change code work on a new branch and open a pull request for you to review. Review skills (`expert-*`, `persona-*`) are read-only and end with a ranked list of findings. Each skill's `SKILL.md` states exactly what it will and won't touch — read it before you point a fleet skill at every repo you own.
+
+## 📦 What's inside
+
+68 skills in seven families. Each links to its folder; the [full catalog](#available-skills) below has a one-line summary of every skill.
+
+- **🤖 Dependency autopilot (10)** — merge, fix, and secure dependency updates: [sweep-dependency-prs](skills/sweep-dependency-prs/), [sweep-all-dependency-prs](skills/sweep-all-dependency-prs/), [fix-renovate-pr](skills/fix-renovate-pr/), [fix-dependabot-pr](skills/fix-dependabot-pr/), [fix-dependabot-alert](skills/fix-dependabot-alert/), [sweep-all-dependabot-alerts](skills/sweep-all-dependabot-alerts/), [audit-vulnerabilities](skills/audit-vulnerabilities/), [dedupe-and-prune-deps](skills/dedupe-and-prune-deps/), [prune-deps-across-org](skills/prune-deps-across-org/), [align-minimum-release-age](skills/align-minimum-release-age/).
+- **🚑 CI, issues & pull requests (10)** — keep the pipeline green and nothing stale: [fix-failing-ci](skills/fix-failing-ci/), [fix-flaky-tests](skills/fix-flaky-tests/), [fix-issue](skills/fix-issue/), [fix-all-issues](skills/fix-all-issues/), [review-pull-request](skills/review-pull-request/), [claim-unassigned-prs](skills/claim-unassigned-prs/), [claim-all-unassigned-prs](skills/claim-all-unassigned-prs/), [nudge-stale-prs](skills/nudge-stale-prs/), [optimize-github-actions](skills/optimize-github-actions/), [optimize-all-github-actions](skills/optimize-all-github-actions/).
+- **🛠 Upgrades & building (12)** — ship improvements as one PR each: [optimize-seo-aeo](skills/optimize-seo-aeo/), [setup-seo](skills/setup-seo/), [optimize-pwa](skills/optimize-pwa/), [optimize-images](skills/optimize-images/), [audit-web-vitals](skills/audit-web-vitals/), [add-i18n](skills/add-i18n/), [add-missing-tests](skills/add-missing-tests/), [prune-dead-code](skills/prune-dead-code/), [standardize-repo-hygiene](skills/standardize-repo-hygiene/), [upgrade-node-version](skills/upgrade-node-version/), [upgrade-node-across-org](skills/upgrade-node-across-org/), [build-landing-page](skills/build-landing-page/).
+- **🎲 Ideation & prototyping (8)** — see ideas before you build them: [wireframe-feature](skills/wireframe-feature/), [wireframe-redesign](skills/wireframe-redesign/), [wireframe-logo-design](skills/wireframe-logo-design/), [wireframe-og-design](skills/wireframe-og-design/), [save-wireframe](skills/save-wireframe/), [extract-design-system](skills/extract-design-system/), [spike-variants](skills/spike-variants/), [drift](skills/drift/).
+- **🧭 Visibility & understanding (4)** — map code, stacks, licenses, and repos: [architecture-map](skills/architecture-map/), [isometric-stack-map](skills/isometric-stack-map/), [fleet-health-dashboard](skills/fleet-health-dashboard/), [audit-licenses](skills/audit-licenses/).
+- **🎓 Expert review (12)** — a read-only senior specialist on your code: [expert-appsec](skills/expert-appsec/), [expert-accessibility](skills/expert-accessibility/), [expert-backend](skills/expert-backend/), [expert-frontend-performance](skills/expert-frontend-performance/), [expert-ui](skills/expert-ui/), [expert-ux](skills/expert-ux/), [expert-dx](skills/expert-dx/), [expert-qa](skills/expert-qa/), [expert-smart-contract-security](skills/expert-smart-contract-security/), [expert-gas-optimization](skills/expert-gas-optimization/), [expert-tokenomics](skills/expert-tokenomics/), [expert-web3-dapp](skills/expert-web3-dapp/).
+- **👥 Persona review (12)** — a real-feeling user walks your product and reports in their own voice: [persona-grandma](skills/persona-grandma/), [persona-gen-z](skills/persona-gen-z/), [persona-mobile-commuter](skills/persona-mobile-commuter/), [persona-power-user](skills/persona-power-user/), [persona-accessibility-user](skills/persona-accessibility-user/), [persona-developer](skills/persona-developer/), [persona-designer](skills/persona-designer/), [persona-growth-hacker](skills/persona-growth-hacker/), [persona-investor](skills/persona-investor/), [persona-security-skeptic](skills/persona-security-skeptic/), [persona-crypto-newcomer](skills/persona-crypto-newcomer/), [persona-web3-degen](skills/persona-web3-degen/).
 
 ## Available skills
 
@@ -180,11 +238,49 @@ A good skill has four traits:
 - **A concise body** — assume the agent is smart; only add what it wouldn't know
 - **Progressive disclosure** — keep `SKILL.md` under 500 lines; push depth into `references/`
 
-Authoring a new one? Copy [`templates/skill/`](templates/skill/) into `skills/<your-skill-name>/` — it lives outside `skills/` so the CLI does not install the placeholder.
+Authoring a new one? Copy [`templates/skill/`](templates/skill/) into `skills/<your-skill-name>/` — it lives outside `skills/` so the CLI does not install the placeholder. Persona skills start from [`templates/persona/`](templates/persona/).
+
+## ❓ FAQ
+
+### What are Agent Skills?
+
+Agent Skills are folders of instructions that an AI agent loads when a task needs them. Each one has a `SKILL.md` file with a `name`, a `description` that says when to use it, and the steps to follow. The format is an open standard documented at [agentskills.io](https://agentskills.io), so one skill works across many agents.
+
+### Which AI agents does Skillable work with?
+
+Any agent that supports the open `SKILL.md` format — including Claude Code, Cursor, GitHub Copilot, OpenAI Codex, and Cline. See the [client list](https://agentskills.io/clients) for the full set and where each one looks for skills. The `npx skills add` command detects the agents you have installed.
+
+### How is a skill different from a prompt, a Cursor rule, or an MCP server?
+
+A prompt is something you paste every time. A rule is always in context, whether it's relevant or not. An MCP server gives the agent new tools. A skill is a reusable *procedure*: it costs almost nothing until the agent needs it, then teaches the agent how to combine the tools it already has (`git`, `gh`, your package manager, MCP servers) into a complete workflow.
+
+### Do the skills change my code or push to GitHub on their own?
+
+Skills that change code create a branch, commit, and open a pull request. Merging is up to you, except in the dependency sweep skills, which only merge Dependabot/Renovate PRs from verified bots whose CI is green. Review skills (`expert-*`, `persona-*`) are read-only. Your agent's own permission settings still apply to every command.
+
+### What do I need installed?
+
+Node.js to run `npx skills`, and Git. Skills that work with GitHub need the [GitHub CLI](https://cli.github.com/) signed in (`gh auth login`). Each skill's `SKILL.md` lists any other tools it uses, such as Foundry or Slither for smart contract audits, and says what to do when they're missing.
+
+### Some skills publish interactive pages. Do I need Claude for those?
+
+The wireframe, dashboard, and map skills publish an interactive page as an Artifact when the agent supports it. Without that, they write the same page as a local HTML file and open it in your browser.
+
+### How do I update or remove skills?
+
+Run `npx skills update` to pull the latest versions and `npx skills remove <skill-name>` to uninstall one. If you copied folders manually, `git pull` the clone and copy them again.
+
+### Can I write my own skill or suggest one?
+
+Yes. If you've explained a workflow to an agent more than twice, it's a skill waiting to be written. Start from [`templates/skill/`](templates/skill/), run `python3 scripts/validate_skills.py`, and open a PR — see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+### Is Skillable free?
+
+Yes. Every skill is MIT licensed, with no account or paid tier.
 
 ## 🤝 Contributing
 
-Got a workflow you've explained to an agent more than twice? That's a skill waiting to be written. Read [CONTRIBUTING.md](CONTRIBUTING.md) for naming conventions, review criteria, and the submission process — then open a PR.
+Got a workflow you've explained to an agent more than twice? That's a skill waiting to be written. Read [CONTRIBUTING.md](CONTRIBUTING.md) for naming conventions, review criteria, and the submission process — then open a PR. CI runs `python3 scripts/validate_skills.py` on every change to check structure, formatting, and this README's catalog.
 
 ## ⭐ Support the project
 
