@@ -6,7 +6,7 @@
 
 A curated, community-driven collection of [Agent Skills](https://agentskills.io) — plain-markdown playbooks that turn "explain it to the agent again" into a single slash command. Built on the open `SKILL.md` format, so they work with Cursor, Claude Code, and [any skills-capable agent](https://agentskills.io/clients).
 
-[![Skills](https://img.shields.io/badge/skills-47-blueviolet)](#available-skills)
+[![Skills](https://img.shields.io/badge/skills-48-blueviolet)](#available-skills)
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-black.svg)](https://skills.sh)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -108,6 +108,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [drift](skills/drift/) | 🎲 One prompt, every possibility — k distinct answers with self-assessed probabilities, ranked from conventional to wild (verbalized sampling) |
 | [expert-dx](skills/expert-dx/) | 🎓 Review a repo, library, SDK, CLI, or API as a developer adopting it — walk the quickstart literally and time it, then judge setup and scripts, error messages, API naming, typing, examples, changelog and migration notes, and the local dev loop; read-only findings ranked by severity with file:line and a concrete fix |
 | [expert-qa](skills/expert-qa/) | 🎓 A senior QA engineer on your PR, feature, or release — risk-based test plan, the edge cases that break real products (empty, huge, unicode, timezones, concurrency, offline, permissions), exploratory checks when the app runs, verified coverage gaps, and a ship / ship-with-conditions / do-not-ship call. Read-only |
+| [expert-smart-contract-security](skills/expert-smart-contract-security/) | 🎓 Audit Solidity/EVM contracts like a professional auditor — scope and threat model, Slither/Aderyn/Foundry/Echidna/Medusa when installed, a manual pass over reentrancy, access control, precision, oracles, flash loans, MEV, signature replay, and upgradeability — every finding ranked Critical to Informational with an exploit scenario, a fix, and an optional local-fork Foundry PoC |
 | [expert-ux](skills/expert-ux/) | 🎓 Senior UX designer review of a feature, flow, or whole app — journeys, dead ends, navigation, forms, loading/empty/error states, onboarding, feedback, and microcopy — ranked by severity with exact locations and concrete fixes; read-only, and says so when the experience is sound |
 | [extract-design-system](skills/extract-design-system/) | 🎲 Extract tokens, themes, typography, and components from source into a living design-system artifact — plus a drift report of hard-coded values — that wireframes reuse |
 | [fix-all-issues](skills/fix-all-issues/) | 🚑 Fix a list of issues — or every open, unclaimed issue in the repo — with one subagent, one worktree, and one PR per issue, in parallel |
