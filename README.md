@@ -106,6 +106,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [claim-unassigned-prs](skills/claim-unassigned-prs/) | 🚑 Request your review on every open PR in a repo that has no assignee, reviewer, or review yet and was opened by someone else |
 | [dedupe-and-prune-deps](skills/dedupe-and-prune-deps/) | 🤖 Collapse duplicate versions, declare phantom imports, remove unused dependencies |
 | [drift](skills/drift/) | 🎲 One prompt, every possibility — k distinct answers with self-assessed probabilities, ranked from conventional to wild (verbalized sampling) |
+| [expert-ui](skills/expert-ui/) | 🎓 Senior visual design review of a UI, page, or PR — hierarchy, spacing rhythm, type scale, computed contrast, token and component consistency, breakpoints, light/dark parity, icons, and motion — verified findings ranked by severity with exact references and fixes, read-only |
 | [extract-design-system](skills/extract-design-system/) | 🎲 Extract tokens, themes, typography, and components from source into a living design-system artifact — plus a drift report of hard-coded values — that wireframes reuse |
 | [fix-all-issues](skills/fix-all-issues/) | 🚑 Fix a list of issues — or every open, unclaimed issue in the repo — with one subagent, one worktree, and one PR per issue, in parallel |
 | [fix-dependabot-alert](skills/fix-dependabot-alert/) | 🤖 Remediate a Dependabot **security alert** end-to-end: bump/override, branch, PR |
