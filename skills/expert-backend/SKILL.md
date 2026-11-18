@@ -24,7 +24,7 @@ Goal: tell the owner of a backend, with evidence, what will break, corrupt data,
 
 The order that matters: **detect the stack → map the request and data paths → walk the dimensions → verify each candidate → report only what survives.** Five verified findings with numbers beat twenty "consider adding caching" bullets. If the backend is sound, say so in one line and offer few or no suggestions — an empty, honest review is a valid and valuable outcome.
 
-Not this skill: a line-by-line PR review for general correctness (use `review-pull-request`), dependency CVEs (`audit-vulnerabilities`), frontend performance (`audit-web-vitals`), a visual map of the codebase (`architecture-map`), or implementing the fixes (`fix-issue` or a normal branch-and-PR flow, only when asked). This skill goes deeper than `review-pull-request` on architecture, data, and scale.
+Not this skill: a line-by-line PR review for general correctness (use `review-pull-request`), dependency CVEs (`audit-vulnerabilities`), a full application security audit (`expert-appsec`), frontend performance (`expert-frontend-performance`, `audit-web-vitals`), a visual map of the codebase (`architecture-map`), or implementing the fixes (`fix-issue` or a normal branch-and-PR flow, only when asked). This skill goes deeper than `review-pull-request` on architecture, data, and scale.
 
 ## Inputs
 
@@ -82,7 +82,7 @@ Walk each dimension in scope (all, unless a focus was given). The deep checklist
 13. **Observability** — structured logs with a request or trace ID propagated across services and into jobs; errors logged once, with context, at the boundary; no secrets or PII in logs; RED metrics (rate, errors, duration) per endpoint and per job; health checks that distinguish liveness from readiness and do not hammer dependencies; slow-query logging or APM spans on DB calls; alerts tied to user impact, not CPU.
 14. **Failure modes** — for each external dependency on a hot path, answer: what happens when it is slow, down, or returns garbage? Partial failure of a multi-step workflow leaves a recoverable state (saga, compensation, or a reconciler); errors are surfaced, not swallowed (`catch {}` returning success); startup does not hard-fail on a non-critical dependency; a single tenant or user cannot exhaust shared capacity.
 
-Security overlaps (authorization on every route, injection, mass assignment, SSRF) are in scope when they sit on a path you are reviewing — report them, but for a full security audit point to `review-pull-request` or `/security-review`.
+Security overlaps (authorization on every route, injection, mass assignment, SSRF) are in scope when they sit on a path you are reviewing — report them, but for a full security audit point to `expert-appsec`.
 
 For each dimension, ask one question: **what input, load, or failure produces a wrong or unavailable outcome?** No concrete answer, no finding.
 
@@ -91,7 +91,7 @@ For each dimension, ask one question: **what input, load, or failure produces a 
 Every candidate goes through this gate. A candidate that fails is dropped, not softened.
 
 1. **Read the surrounding code** — callers, middleware, base classes, decorators, ORM model definitions, migrations, and the schema. An N+1 is not an N+1 if the queryset already has `prefetch_related`; a missing index is not missing if an earlier migration or a composite index covers it.
-2. **Check the framework default.** Many "missing" things are defaults: Rails wraps each request's `save` in a transaction, Django's `ATOMIC_REQUESTS` may be on, Prisma's `$transaction`, NestJS global pipes and filters, FastAPI response models. See [references/stack-traps.md](references/stack-traps.md).
+2. **Check the framework default.** Many "missing" things are defaults: Rails wraps each `save`/`destroy` (with its callbacks) in a transaction, but not the whole request; Django's `ATOMIC_REQUESTS` may be on, Prisma's `$transaction`, NestJS global pipes and filters, FastAPI response models. See [references/stack-traps.md](references/stack-traps.md).
 3. **Size it.** A finding about scale needs a size: rows in the table (from migrations, seeds, docs, or the user), calls per request, requests per second. "Full scan on `audit_logs` (append-only, ~1M rows/month per the README)" is a finding; "full scan on `countries`" is not.
 4. **Write the failure scenario**: concrete input, load, or dependency state → concrete wrong outcome (double charge, 30 s p99, pool exhaustion, lost update, 500 for all tenants). If it cannot be written concretely, drop it.
 5. **Write the fix** in the project's own idiom — the actual ORM call, migration statement, or config key, not "add caching".
