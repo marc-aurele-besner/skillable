@@ -1,0 +1,15 @@
+{
+  "token": "EXAMPLE",
+  "max_supply": 1000000000,
+  "horizon_months": 48,
+  "allocations": [
+    {"name": "Team", "category": "insider", "amount": 180000000, "tge_pct": 0, "cliff_months": 12, "cliff_pct": 0.25, "vesting_months": 36},
+    {"name": "Investors", "category": "insider", "amount": 170000000, "tge_pct": 0.05, "cliff_months": 6, "cliff_pct": 0, "vesting_months": 18},
+    {"name": "Advisors", "category": "insider", "amount": 20000000, "cliff_months": 12, "vesting_months": 12},
+    {"name": "Liquidity mining", "category": "community", "type": "emission", "amount": 300000000, "rate_per_month": 12500000, "start_month": 1, "halving_months": 12},
+    {"name": "Airdrop", "category": "community", "type": "custom", "unlocks": {"0": 40000000, "3": 20000000}},
+    {"name": "DEX liquidity", "category": "liquidity", "type": "custom", "unlocks": {"0": 30000000}},
+    {"name": "Treasury", "category": "treasury", "amount": 240000000, "tge_pct": 0.05, "cliff_months": 0, "vesting_months": 48}
+  ],
+  "burns": [{"name": "Fee burn", "per_month": 250000, "from_month": 1}]
+}
