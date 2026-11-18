@@ -276,12 +276,79 @@ def dependency_tokens(path: Path) -> set[str]:
                 tokens.update(k.lower() for k in section)
         return tokens
     tokens = set()
-    for raw in DEP_TOKEN_RE.findall(text):
+    for raw in DEP_TOKEN_RE.findall(dependency_text(path.name, text)):
         token = raw.lower().strip("./")
         tokens.add(token)
         # python extras / version pins: "sqlalchemy[asyncio]>=2" -> sqlalchemy
         tokens.add(re.split(r"[\[<>=~!;]", token)[0])
     return tokens
+
+
+def _toml_dependency_names(text: str) -> list[str] | None:
+    """Dependency names from pyproject.toml / Pipfile / Cargo.toml, or None without tomllib."""
+    try:
+        import tomllib  # Python 3.11+
+    except ImportError:
+        return None
+    try:
+        data = tomllib.loads(text)
+    except tomllib.TOMLDecodeError:
+        return []
+    names: list[str] = []
+
+    def add_specs(specs) -> None:
+        if isinstance(specs, list):
+            names.extend(x for x in specs if isinstance(x, str))
+        elif isinstance(specs, dict):
+            names.extend(str(k) for k in specs)
+
+    project = data.get("project") or {}
+    add_specs(project.get("dependencies"))
+    for group in (project.get("optional-dependencies") or {}).values():
+        add_specs(group)
+    for group in (data.get("dependency-groups") or {}).values():
+        add_specs(group)
+    poetry = (data.get("tool") or {}).get("poetry") or {}
+    add_specs(poetry.get("dependencies"))
+    add_specs(poetry.get("dev-dependencies"))
+    for group in (poetry.get("group") or {}).values():
+        if isinstance(group, dict):
+            add_specs(group.get("dependencies"))
+    for key in ("packages", "dev-packages", "dependencies", "dev-dependencies", "build-dependencies"):
+        add_specs(data.get(key))  # Pipfile and Cargo.toml
+    return names
+
+
+def dependency_text(name: str, text: str) -> str:
+    """Keep only the parts of a manifest that name dependencies.
+
+    Matching every word of a manifest turns prose (descriptions, project
+    names, comments) into false framework hits, so each format is narrowed
+    to its dependency declarations.
+    """
+    if name in {"pyproject.toml", "Pipfile", "Cargo.toml"}:
+        names = _toml_dependency_names(text)
+        return text if names is None else "\n".join(names)
+    if name == "setup.py":
+        return "\n".join(re.findall(r"""['"]([A-Za-z0-9_.\-\[\]]+\s*(?:[<>=~!][^'"]*)?)['"]""", text))
+    if name.startswith("requirements"):
+        lines = []
+        for line in text.splitlines():
+            line = line.split("#", 1)[0].strip()
+            if line and not line.startswith("-"):
+                lines.append(line.split()[0])
+        return "\n".join(lines)
+    if name == "Gemfile":
+        return "\n".join(re.findall(r"""^\s*gem\s+['"]([^'"]+)['"]""", text, re.M))
+    if name == "go.mod":
+        return "\n".join(re.findall(r"^\s*(?:require\s+)?([\w.\-]+\.[a-z]{2,}/\S+)\s+v\d", text, re.M))
+    if name == "pom.xml":
+        return "\n".join(re.findall(r"<(?:artifactId|groupId)>\s*([^<\s]+)\s*</", text))
+    if name.startswith("build.gradle"):
+        return "\n".join(re.findall(r"""['"]([\w.\-]+:[\w.\-]+)(?::[^'"]*)?['"]""", text))
+    if name == "mix.exs":
+        return "\n".join(re.findall(r"\{:(\w+)\s*,", text))
+    return text
 
 
 def match_signatures(tokens: set[str]) -> dict[str, set[str]]:
