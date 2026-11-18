@@ -128,7 +128,7 @@ LINE_RULES = [
      "'use client' at the top of a layout/page/template moves the whole subtree to the client bundle"),
     ("effect-fetch", re.compile(r"""\buseEffect\s*\(|\bonMounted\s*\(|\$effect\s*\(|\bonMount\s*\("""), None,
      "effect/mount hook; check for fetch inside it (client waterfall, no SSR data)"),
-    ("google-fonts-css", re.compile(r"""fonts\.googleapis\.com|@import\s+url\(['"]?https?://"""), None,
+    ("google-fonts-css", re.compile(r"""<link\b[^>]*fonts\.googleapis\.com/css|@import\s+(?:url\(\s*)?['"]?https?://"""), None,
      "remote font/CSS @import or Google Fonts link is render-blocking and costs extra connections"),
     ("sync-third-party-script", re.compile(r"""<script\b(?![^>]*\b(?:async|defer|type\s*=\s*['"]module['"])\b)[^>]*\bsrc\s*=\s*['"]https?://"""), None,
      "third-party script without async/defer blocks parsing"),
@@ -251,6 +251,16 @@ def scan_sources(root: Path) -> dict:
                     continue
                 if rule == "use-client-layout" and not (idx <= 3 and LAYOUT_FILE_RE.search(rel)):
                     continue
+                if rule == "layout-thrash":
+                    # Only a read near a style write is a thrash candidate.
+                    near = "\n".join(lines[max(0, idx - 6): idx + 5])
+                    if not re.search(r"\.style\.\w+\s*=|\.style\.setProperty\(|classList\.(?:add|remove|toggle)\(", near):
+                        continue
+                if rule == "sync-storage-in-render":
+                    # Only flag storage calls near hot handlers or render loops.
+                    near = "\n".join(lines[max(0, idx - 9): idx + 8])
+                    if not re.search(r"['\"](?:scroll|resize|input|mousemove|pointermove|keydown|keyup|wheel|touchmove)['\"]|\bon(?:Scroll|Input|Change|KeyDown|MouseMove|PointerMove)\b|requestAnimationFrame", near):
+                        continue
                 if rule == "effect-fetch":
                     window = "\n".join(lines[idx - 1: idx + 12])
                     if not re.search(r"\bfetch\(|axios\.|\$fetch\(|\.get\(\s*['\"`/]", window):
@@ -258,7 +268,14 @@ def scan_sources(root: Path) -> dict:
                 add(rule, rel, idx, note, line)
         for opener, closer, note in PAIRS:
             if opener in text and closer not in text:
-                first = next((i for i, l in enumerate(lines, 1) if opener in l), 1)
+                openers = [i for i, l in enumerate(lines, 1) if opener in l]
+                if opener == ".subscribe(":
+                    # `const stop = store.subscribe(...)` / `return x.subscribe(...)` keeps the
+                    # unsubscribe function (Zustand, Svelte, Redux style); not a leak lead.
+                    openers = [i for i in openers if not re.search(r"(?:=|\breturn)\s*[\w.$]*\.subscribe\(", lines[i - 1])]
+                    if not openers:
+                        continue
+                first = openers[0] if openers else 1
                 add("unpaired-" + opener.strip(".( ").replace("new ", "").lower(), rel, first, note, lines[first - 1])
     return {"files_scanned": files_scanned, "dynamic_imports": dynamic_imports, "candidates": hits}
 
