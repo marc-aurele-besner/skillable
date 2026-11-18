@@ -9,7 +9,7 @@ Load this during step 4 of the workflow. Each entry gives the **signal** to look
 | `SLOAD` cold / warm | 2 100 / 100 |
 | `SSTORE` zero → non-zero (cold) | 22 100 |
 | `SSTORE` non-zero → non-zero (cold / warm) | 5 000 / 2 900 |
-| `SSTORE` no-op (same value, warm) | 100 |
+| `SSTORE` no-op (same value, warm) / to an already-dirty slot | 100 / 100 |
 | Refund for clearing a slot to zero | 4 800 (capped at 1/5 of tx gas, EIP-3529) |
 | `TLOAD` / `TSTORE` (EIP-1153) | 100 / 100 |
 | Cold account access (`CALL`, `BALANCE`, `EXTCODE*`) / warm | 2 600 / 100 |
@@ -30,7 +30,7 @@ Load this during step 4 of the workflow. Each entry gives the **signal** to look
 ### S2 — Cache storage reads in a local variable
 - **Signal:** the same storage slot read more than once in a function, especially inside a loop (`for (...; i < arr.length; ...)` on a storage array, `s.total += x` in a loop).
 - **Fix:** read once into a stack/memory variable, operate on it, write back once.
-- **Typical saving:** ~100 per repeated warm read; ~2 900+ per avoided repeated write in a loop.
+- **Typical saving:** ~100 per repeated warm read and ~100 per repeated write (after the first write the slot is dirty, so later `SSTORE`s to it cost 100, EIP-2200), plus per-access overhead. Large only in long loops; the first read (2 100 cold) and first write are paid either way.
 - **Unsafe:** when an external call in between can change the slot (reentrancy or callback re-reading stale state), or when the write-back is skipped on an early-return path.
 
 ### S3 — `constant` and `immutable`
@@ -42,13 +42,13 @@ Load this during step 4 of the workflow. Each entry gives the **signal** to look
 ### S4 — Avoid zero → non-zero writes for flags and counters
 - **Signal:** a boolean or status slot toggled between `0` and `1` repeatedly (lock flags, per-epoch markers).
 - **Fix:** use `1`/`2` (as OpenZeppelin `ReentrancyGuard` does), or transient storage for intra-transaction flags (S5).
-- **Typical saving:** ~17 100 per toggle (22 100 → 5 000).
+- **Typical saving:** for flags set in one transaction and cleared in a later one, ~17 100 on each set (22 100 → 5 000), minus the 4 800 refund the clear no longer earns — ~12 000 per cycle. For a flag set and reset **within one** transaction (a lock), both schemes net ~2 300 before the refund cap; the 1/2 scheme wins only when the 1/5 refund cap would bite.
 - **Unsafe:** when other code checks `== 0` / `!= 0` semantics or default-initialized state.
 
 ### S5 — Transient storage for intra-transaction state
 - **Signal:** reentrancy locks, temporary approvals, or callback context written and cleared within one transaction.
 - **Fix:** `transient` state variables (Solidity ≥ 0.8.28 for value types) or `tstore`/`tload` in assembly; OpenZeppelin `ReentrancyGuardTransient`.
-- **Typical saving:** ~2 000–20 000 per lock cycle.
+- **Typical saving:** ~2 000 per lock cycle against a 1/2 storage guard (2 × `TSTORE` + `TLOAD` ≈ 300 vs ~2 300 net), more when refunds would be capped.
 - **Unsafe:** target chain lacks Cancun (check `evm_version` and the chain). Transient values persist across calls **within the same transaction** — a value not cleared at the end of a call leaks into later calls in a multicall or bundle. Never use it for state that must survive the transaction.
 
 ### S6 — Bitmaps for many booleans
