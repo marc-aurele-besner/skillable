@@ -19,9 +19,11 @@ surrounding code, and confirm a concrete failure before reporting it.
 Usage:
     python3 -I scan_dapp.py <project-root>
     python3 -I scan_dapp.py <project-root> --max-per-pattern 20
-    python3 -I scan_dapp.py <project-root> --json leads.json
+    python3 -I scan_dapp.py <project-root> --json /tmp/leads.json
 
-Exit codes: 0 success, 1 error (bad path).
+--json must point outside the scanned project, so the target is never written.
+
+Exit codes: 0 success, 1 error (bad path, or --json inside the project).
 """
 
 from __future__ import annotations
@@ -187,6 +189,22 @@ def scan_manifests(root: Path) -> tuple[list[dict], list[dict]]:
     return manifests, deprecated
 
 
+HEX_KEY_RE = re.compile(r"(0x)?[A-Fa-f0-9]{64}\b")
+LONG_TOKEN_RE = re.compile(r"(0x)?[A-Fa-f0-9]{32,}|[A-Za-z0-9_-]{24,}")
+STRING_LITERAL_RE = re.compile(r"([\"'`])(?:\\.|(?!\1).)+\1")
+
+
+def redact(snippet: str, pid: str) -> str:
+    """Never echo what may be a key, a mnemonic, or a keyed RPC URL."""
+    snippet = HEX_KEY_RE.sub("<redacted>", snippet)
+    if pid == "client-secret":
+        # A mnemonic is plain words, so hide every string literal on the line.
+        snippet = STRING_LITERAL_RE.sub(lambda m: f"{m.group(1)}<redacted>{m.group(1)}", snippet)
+    if pid in {"client-secret", "hardcoded-rpc"}:
+        snippet = LONG_TOKEN_RE.sub("<redacted>", snippet)
+    return snippet
+
+
 def scan_sources(root: Path, max_per_pattern: int) -> tuple[list[dict], dict[str, int]]:
     leads: list[dict] = []
     counts: dict[str, int] = {}
@@ -210,10 +228,7 @@ def scan_sources(root: Path, max_per_pattern: int) -> tuple[list[dict], dict[str
                 counts[pid] = counts.get(pid, 0) + 1
                 if counts[pid] > max_per_pattern:
                     continue
-                snippet = line.strip()
-                # Never echo what may be a key or a keyed RPC URL in full.
-                if pid in {"client-secret", "hardcoded-rpc"}:
-                    snippet = re.sub(r"(0x)?[A-Fa-f0-9]{32,}|[A-Za-z0-9_-]{24,}", "<redacted>", snippet)
+                snippet = redact(line.strip(), pid)
                 leads.append({"id": pid, "file": rel, "line": line_no, "test_file": is_test,
                               "positive_signal": pid in POSITIVE, "text": snippet[:200], "hint": hint})
     return leads, counts
@@ -230,6 +245,11 @@ def main() -> int:
     if not root.is_dir():
         print(f"error: not a directory: {root}", file=sys.stderr)
         return 1
+    if args.out:
+        out = Path(args.out).resolve()
+        if out == root or root in out.parents:
+            print(f"error: --json path is inside the scanned project; write it elsewhere: {out}", file=sys.stderr)
+            return 1
 
     manifests, deprecated = scan_manifests(root)
     leads, counts = scan_sources(root, max(1, args.max_per_pattern))
@@ -243,6 +263,10 @@ def main() -> int:
         "leads": leads,
         "note": "Leads are not findings. Open each file and confirm a concrete failure before reporting.",
     }
+    if not manifests:
+        result["warning"] = ("No web3 library declared in any package.json: this may not be a dApp, "
+                             "or it talks to JSON-RPC directly. Treat generic leads (raw-error-message, "
+                             "float-amount) with extra suspicion.")
     payload = json.dumps(result, indent=2)
     print(payload)
     if args.out:
