@@ -6,7 +6,7 @@
 
 A curated, community-driven collection of [Agent Skills](https://agentskills.io) — plain-markdown playbooks that turn "explain it to the agent again" into a single slash command. Built on the open `SKILL.md` format, so they work with Cursor, Claude Code, and [any skills-capable agent](https://agentskills.io/clients).
 
-[![Skills](https://img.shields.io/badge/skills-52-blueviolet)](#available-skills)
+[![Skills](https://img.shields.io/badge/skills-53-blueviolet)](#available-skills)
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-black.svg)](https://skills.sh)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -106,6 +106,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [claim-unassigned-prs](skills/claim-unassigned-prs/) | 🚑 Request your review on every open PR in a repo that has no assignee, reviewer, or review yet and was opened by someone else |
 | [dedupe-and-prune-deps](skills/dedupe-and-prune-deps/) | 🤖 Collapse duplicate versions, declare phantom imports, remove unused dependencies |
 | [drift](skills/drift/) | 🎲 One prompt, every possibility — k distinct answers with self-assessed probabilities, ranked from conventional to wild (verbalized sampling) |
+| [expert-accessibility](skills/expert-accessibility/) | 🎓 Audit a web app against WCAG 2.2 AA like an accessibility specialist — semantics and landmarks, keyboard and focus, ARIA misuse, forms and errors, contrast, alt text, motion, screen-reader announcements, and target size — every finding verified, ranked by severity, and tied to the success criterion it fails, with an exact location and a concrete fix; read-only |
 | [expert-dx](skills/expert-dx/) | 🎓 Review a repo, library, SDK, CLI, or API as a developer adopting it — walk the quickstart literally and time it, then judge setup and scripts, error messages, API naming, typing, examples, changelog and migration notes, and the local dev loop; read-only findings ranked by severity with file:line and a concrete fix |
 | [expert-gas-optimization](skills/expert-gas-optimization/) | 🎓 Review smart contracts for gas and onchain efficiency the measure-first way — baseline `forge snapshot`, prove every saving by re-measuring, rank by gas saved on real hot paths (storage packing, SLOAD/SSTORE, calldata, loops, events, custom errors, optimizer runs, L2 data costs) with trade-offs — security always wins, and sound code gets "no findings" |
 | [expert-qa](skills/expert-qa/) | 🎓 A senior QA engineer on your PR, feature, or release — risk-based test plan, the edge cases that break real products (empty, huge, unicode, timezones, concurrency, offline, permissions), exploratory checks when the app runs, verified coverage gaps, and a ship / ship-with-conditions / do-not-ship call. Read-only |
