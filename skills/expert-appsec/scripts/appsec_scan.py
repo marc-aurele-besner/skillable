@@ -45,6 +45,7 @@ SKIP_DIRS = {
     "__pycache__", ".venv", "venv", "env", "target", ".gradle", ".idea",
     ".pytest_cache", ".mypy_cache", "bower_components", "public/build",
 }
+KEEP_DOT_DIRS = {".github"}
 SOURCE_EXT = {
     ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".vue", ".svelte", ".astro",
     ".py", ".rb", ".erb", ".php", ".go", ".java", ".kt", ".cs", ".html",
@@ -63,7 +64,7 @@ MAX_HITS_PER_RULE = 40
 RULES = [
     # Injection
     ("injection", "sql-interpolation",
-     r"""(?i)\b(select|insert|update|delete)\b[^;\n]{0,120}(\$\{|"\s*\+\s*\w|'\s*\+\s*\w|%s|\{\w+\}|#\{)""",
+     r"""(?i)\b(select\b[^;\n]{0,80}\bfrom|insert\s+into|update\s+[\w."`]+\s+set|delete\s+from)\b[^;\n]{0,120}(\$\{|"\s*\+\s*\w|'\s*\+\s*\w|%s['"]+\s*%|\{\w+\}|#\{|['"]\s*\.format\()""",
      "SQL built from strings; confirm parameterization"),
     ("injection", "orm-raw",
      r"""\$queryRawUnsafe|\$executeRawUnsafe|Prisma\.raw\(|sequelize\.literal|\.raw\(|\.extra\(|RawSQL\(|\btext\(\s*f["']|whereRaw|orderByRaw|DB::raw|createNativeQuery|\.query\(\s*`""",
@@ -72,7 +73,7 @@ RULES = [
      r"""\$where|\.find(One)?\(\s*req\.(body|query)""",
      "Mongo query from request object; check type casting"),
     ("injection", "shell",
-     r"""child_process|\bexec(Sync)?\(\s*[`'"]?[^)]*(\$\{|\+)|shell\s*=\s*True|os\.system\(|os\.popen\(|subprocess\.(call|run|Popen)\([^)]*shell|Runtime\.getRuntime\(\)\.exec|exec\.Command\(\s*"(ba)?sh"\s*,\s*"-c\"""",
+     r"""\bexec(Sync)?\(\s*[`'"]?[^)]*(\$\{|\+)|shell\s*=\s*True|\bshell\s*:\s*true|os\.system\(|os\.popen\(|subprocess\.(call|run|Popen)\([^)]*shell|Runtime\.getRuntime\(\)\.exec|exec\.Command\(\s*"(ba)?sh"\s*,\s*"-c\"""",
      "Process execution; confirm no shell and argument arrays"),
     ("injection", "eval",
      r"""\beval\(|new Function\(|vm\.run(InNewContext|InContext|InThisContext)|setTimeout\(\s*["'`]|\bexec\(\s*(request|req|params|input)""",
@@ -256,9 +257,14 @@ def redact(value: str) -> str:
 def iter_files(root: Path):
     for dirpath, dirnames, filenames in os.walk(root):
         rel_dir = Path(dirpath).relative_to(root).as_posix()
+        # Prune dependency, build, and dot-directories (.claude/worktrees,
+        # .idea, caches) so the walk stays on the project's own source.
+        # .github is kept: CI files are in scope for secret exposure.
         dirnames[:] = [
             d for d in dirnames
-            if d not in SKIP_DIRS and f"{rel_dir}/{d}".lstrip("./") not in SKIP_DIRS
+            if d not in SKIP_DIRS
+            and f"{rel_dir}/{d}".lstrip("./") not in SKIP_DIRS
+            and (not d.startswith(".") or d in KEEP_DOT_DIRS)
         ]
         for name in filenames:
             if name in SKIP_FILES or name.endswith((".min.js", ".map")):
@@ -365,7 +371,7 @@ SECURITY_HEADERS = [
     "strict-transport-security", "content-security-policy", "content-security-policy-report-only",
     "x-content-type-options", "x-frame-options", "referrer-policy", "permissions-policy",
     "cross-origin-opener-policy", "cross-origin-resource-policy", "access-control-allow-origin",
-    "access-control-allow-credentials", "server", "x-powered-by",
+    "access-control-allow-credentials", "server", "x-powered-by", "location",
 ]
 
 
@@ -373,8 +379,15 @@ def check_headers(url: str) -> dict:
     if not re.match(r"^https?://[^\s/$.?#].[^\s]*$", url):
         raise ValueError("--headers needs an http(s) URL")
     req = urllib.request.Request(url, method="GET", headers={"User-Agent": "appsec-header-check/1.0"})
+
+    class _NoRedirect(urllib.request.HTTPRedirectHandler):
+        # Keep it to ONE request: a redirect may point at a host the user does not own.
+        def redirect_request(self, *args, **kwargs):
+            return None
+
+    opener = urllib.request.build_opener(_NoRedirect)
     try:
-        resp = urllib.request.urlopen(req, timeout=15)  # noqa: S310 - user-owned URL, GET only
+        resp = opener.open(req, timeout=15)  # noqa: S310 - user-owned URL, GET only
         status, headers, final = resp.status, resp.headers, resp.geturl()
     except urllib.error.HTTPError as exc:
         status, headers, final = exc.code, exc.headers, url
@@ -449,6 +462,10 @@ def main() -> int:
             print(f"not a directory: {root}", file=sys.stderr)
             return 1
         focus = {f.strip() for f in args.focus.split(",") if f.strip() and f.strip() != "all"}
+        unknown = focus - {c for c, *_ in RULES}
+        if unknown:
+            print(f"unknown --focus categories: {', '.join(sorted(unknown))}", file=sys.stderr)
+            return 1
         out["scan"] = scan(root, focus)
 
     if args.json:
