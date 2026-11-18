@@ -50,14 +50,14 @@ PATTERNS = {
         r"font-?size\s*[:=]\s*['\"]?(\d+(?:\.\d+)?px)", re.IGNORECASE
     ),
     "spacing_px": re.compile(
-        r"(?:margin|padding|gap|inset|top|left|right|bottom)"
+        r"(?<![\w-])(?:margin|padding|gap|inset|top|left|right|bottom)"
         r"(?:-?(?:top|left|right|bottom|inline|block|x|y))?\s*[:=]\s*['\"]?"
         r"(-?\d+(?:\.\d+)?px)",
         re.IGNORECASE,
     ),
     "z_index": re.compile(r"z-?index\s*[:=]\s*['\"]?(-?\d+)", re.IGNORECASE),
     "tw_arbitrary": re.compile(
-        r"(?<![\w-])(?:[a-z]+:)*-?[a-z][a-z0-9-]*-\[[^\]\s]+\]"
+        r"(?<![\w-])(?:[a-z]+:)*-?[a-z][a-z0-9-]*-\[[^\]\s\\]+\]"
     ),
     "inline_style": re.compile(r"style=\{\{|style=\"[^\"]*:"),
     "important": re.compile(r"!important"),
@@ -207,6 +207,10 @@ def main() -> int:
                 print(f"{r['fg']} on {r['bg']}: {r['ratio']}:1  {flags}")
         return 0
 
+    missing = [p for p in args.paths if not Path(p).exists()]
+    if missing:
+        print(f"error: path not found: {', '.join(missing)}", file=sys.stderr)
+        return 2
     result = scan(args.paths, args.top)
     if args.json:
         print(json.dumps(result, indent=2))
