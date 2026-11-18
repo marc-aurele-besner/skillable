@@ -24,7 +24,7 @@ The order that matters: **detect scope → read the app's own patterns → colle
 
 This skill is **read-only and advisory**. Never edit, commit, push, merge, or comment on the target unless the user asks. At the end you may offer to post the findings as a PR review or to open a separate fix PR.
 
-Not this skill: implementing the fixes without being asked (normal branch-and-PR work), general UX or visual design critique, SEO alt-text optimization (`optimize-seo-aeo`), or performance (`audit-web-vitals`). A legal compliance opinion is out of scope: report WCAG conformance findings, not legal advice.
+Not this skill: implementing the fixes without being asked (normal branch-and-PR work), flow and task-logic critique (`expert-ux`), visual design critique beyond contrast, focus visibility, and target size (`expert-ui`), SEO alt-text optimization (`optimize-seo-aeo`), or performance (`expert-frontend-performance`, `audit-web-vitals`). A legal compliance opinion is out of scope: report WCAG conformance findings, not legal advice.
 
 ## Inputs and scope detection
 
@@ -63,7 +63,7 @@ Record: the framework, the component library (headless libraries such as Radix o
 Run the bundled scanner for a fast candidate list. It is stdlib-only and read-only:
 
 ```bash
-python3 -I scripts/a11y_scan.py <path> [--json]
+python3 -I scripts/a11y_scan.py <path> [--json] [--include-tests]
 ```
 
 It flags patterns such as images without `alt`, click handlers on non-interactive elements, positive `tabindex`, `outline: none` without a replacement, disabled zoom, `aria-hidden` on focusable content, inputs without an obvious label, and animations without a `prefers-reduced-motion` guard. **Its output is candidates, not findings.** Every hit goes through step 4.
