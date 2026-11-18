@@ -59,7 +59,8 @@ Semantics worth knowing (they are the usual source of mismatch with a whitepaper
     slightly more by mid-month. The difference is under one month of emissions.
   - "Circulating" here means "unlocked". Unlocked tokens held by the treasury or
     a staking contract may not be liquid; categorize them and read the
-    per-category columns instead of trusting one headline number.
+    per-category cum_<category> columns (--json / --csv) instead of trusting
+    one headline number.
 
 Flags raised:
   ALLOCATION_MISMATCH  sum of capped allocations differs from max_supply
@@ -67,7 +68,7 @@ Flags raised:
   UNCAPPED_EMISSION    an emission has no budget cap
   UNLOCK_CLIFF         a single month adds more than --cliff-threshold of circulating
   LOW_FLOAT            TGE circulating is under --low-float of max (or total) supply
-  INSIDER_MAJORITY     insiders hold more than half of circulating supply in some month
+  INSIDER_MAJORITY     insider unlocks exceed half of all unlocked supply in some month
   HIGH_INFLATION       annualized inflation above --inflation-threshold after month 12
 
 Exit codes:
@@ -96,8 +97,8 @@ def _num(value, field: str, name: str, default=None, minimum=0.0):
         if default is None:
             raise ScheduleError(f"{name}: '{field}' is required")
         return default
-    if isinstance(value, bool) or not isinstance(value, (int, float)) or math.isnan(value):
-        raise ScheduleError(f"{name}: '{field}' must be a number")
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+        raise ScheduleError(f"{name}: '{field}' must be a finite number")
     if minimum is not None and value < minimum:
         raise ScheduleError(f"{name}: '{field}' must be >= {minimum}")
     return float(value)
@@ -167,8 +168,9 @@ def custom_releases(a: dict, horizon: int) -> list[float]:
             raise ScheduleError(f"{name}: unlock month '{month}' is not an integer") from exc
         if m < 0:
             raise ScheduleError(f"{name}: unlock month must be >= 0")
+        amt = _num(amt, f"unlocks[{month}]", name)
         if m <= horizon:
-            out[m] += _num(amt, f"unlocks[{month}]", name)
+            out[m] += amt
     return out
 
 
@@ -187,7 +189,10 @@ def project(schedule: dict, horizon_override: int | None):
     allocations = schedule.get("allocations")
     if not isinstance(allocations, list) or not allocations:
         raise ScheduleError("'allocations' must be a non-empty list")
-    horizon = horizon_override or int(schedule.get("horizon_months") or 48)
+    if horizon_override is not None:
+        horizon = horizon_override
+    else:
+        horizon = int(_num(schedule.get("horizon_months"), "horizon_months", "schedule", 48.0))
     if horizon < 1 or horizon > 1200:
         raise ScheduleError("horizon must be between 1 and 1200 months")
     max_supply = schedule.get("max_supply")
@@ -219,7 +224,12 @@ def project(schedule: dict, horizon_override: int | None):
             per_cat[cat][m] += v
 
     burns = [0.0] * (horizon + 1)
-    for b in schedule.get("burns") or []:
+    burn_list = schedule.get("burns") or []
+    if not isinstance(burn_list, list):
+        raise ScheduleError("'burns' must be a list")
+    for b in burn_list:
+        if not isinstance(b, dict):
+            raise ScheduleError("each burn must be an object")
         name = b.get("name", "burn")
         rate = _num(b.get("per_month"), "per_month", name)
         start = int(_num(b.get("from_month"), "from_month", name, 1.0))
@@ -283,9 +293,11 @@ def build_flags(schedule, rows, max_supply, uncapped, args):
             flags.append(("UNLOCK_CLIFF", f"month {r['month']}: +{r['unlocked_this_month']:,.0f} "
                           f"= {r['unlocked_this_month'] / prev['circulating']:.1%} of prior circulating"))
     ref = max_supply or rows[-1]["circulating"]
-    if ref and rows[0]["circulating"] / ref < args.low_float:
-        flags.append(("LOW_FLOAT", f"TGE circulating is {rows[0]['circulating'] / ref:.1%} of "
-                      f"{'max' if max_supply else 'horizon'} supply (FDV/MC ~ {ref / max(rows[0]['circulating'], 1):.1f}x)"))
+    tge = rows[0]["circulating"]
+    if ref and tge / ref < args.low_float:
+        ratio = f"FDV/MC ~ {ref / tge:.1f}x" if tge > 0 else "nothing circulates at TGE"
+        flags.append(("LOW_FLOAT", f"TGE circulating is {tge / ref:.1%} of "
+                      f"{'max' if max_supply else 'horizon'} supply ({ratio})"))
     maj = [r["month"] for r in rows if r["insider_share"] and r["insider_share"] > 0.5]
     if maj:
         flags.append(("INSIDER_MAJORITY", f"insiders hold >50% of unlocked supply in months {_ranges(maj)}"))
@@ -367,6 +379,9 @@ def main(argv=None) -> int:
         flags = build_flags(schedule, rows, max_supply, uncapped, args)
     except FileNotFoundError:
         print(f"error: {args.schedule} not found", file=sys.stderr)
+        return 2
+    except (OSError, UnicodeDecodeError) as exc:
+        print(f"error: cannot read {args.schedule}: {exc}", file=sys.stderr)
         return 2
     except json.JSONDecodeError as exc:
         print(f"error: invalid JSON in {args.schedule}: {exc}", file=sys.stderr)
