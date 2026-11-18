@@ -156,7 +156,7 @@ Order by severity, then by gas saved × call frequency. For each finding give: `
 
 ## Gotchas
 
-- **Measure the state users hit.** A test that reads a slot already warmed by setup reports 100 gas where users pay 2 100. Use fresh calls (`vm.snapshotGasLastCall`, or isolate setup) and realistic non-zero balances; zero → non-zero writes in tests can overstate costs users never pay.
+- **Measure the state users hit.** Without isolation, every call in one test function shares one transaction, so a slot touched earlier in the test reads at 100 gas where users pay 2 100. Run with `--isolate` (each top-level call becomes its own transaction) or `vm.snapshotGasLastCall`, and use realistic non-zero balances; zero → non-zero writes in tests can overstate costs users never pay.
 - **Gas reports include test overhead.** Compare deltas, not absolute numbers, and compare like with like (same Foundry version, same `--fuzz-seed` for fuzz tests).
 - **Optimizer runs move numbers both ways.** Raising `runs` can cut call cost and raise deploy cost; report both and the break-even call count.
 - **`via_ir` is a different compiler pipeline.** It can change gas a lot in either direction and has small semantic differences; recommending it means "re-run every test and re-audit".
@@ -185,15 +185,13 @@ Order by severity, then by gas saved × call frequency. For each finding give: `
 | `Vault` | — | 1 912 044 / 8 731 |
 
 ## Findings
-1. **[High]** `src/Vault.sol:118` — `totalAssets` is read from storage on each loop iteration in `_harvest`.
-   - Fix: cache in a local before the loop and write back once.
+1. **[High]** `src/Vault.sol:118` — `_harvest` copies each 5-slot `Strategy` struct to memory but uses only `debt` and `lastReport`.
+   - Fix: read through a storage pointer so only the two slots used are loaded.
      ```solidity
-     uint256 assets = totalAssets;
-     for (...) { assets += ...; }
-     totalAssets = assets;
+     Strategy storage s = strategies[i];   // was: Strategy memory s = strategies[i];
      ```
-   - Measured: `test_harvest_10Strategies` 412 880 → 381 120 (−31 760, −7.7 %); `forge snapshot` diff attached below.
-   - Trade-off: none; no external call between read and write (checked lines 118–140).
+   - Measured: `test_harvest_10Strategies` 412 880 → 349 520 (−63 360, −15.3 %); `forge snapshot` diff attached below.
+   - Trade-off: none; nothing writes `strategies[i]` between the reads (checked lines 118–140).
 2. …
 
 ## Rejected for security
@@ -211,5 +209,19 @@ Order by severity, then by gas saved × call frequency. For each finding give: `
 ```
 
 When there are no material findings, keep the report short: scope, toolchain, baseline table, the verdict line, and at most two Info items.
+
+```markdown
+# Gas review — <project or contract>
+
+**Scope:** <…>  **Chain:** <…>  **Toolchain:** <…>
+**Hot paths:** <…>
+**Verdict:** No material gas findings — the code is already efficient.
+
+## Baseline
+<table as above>
+
+Why: <one or two lines, e.g. hot structs packed, storage reads cached, custom errors, runs tuned for a hot singleton>.
+- **[Info]** <optional, at most two>
+```
 </content>
 </invoke>
