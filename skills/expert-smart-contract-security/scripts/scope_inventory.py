@@ -12,7 +12,7 @@ For each in-scope .sol file it reports:
   nsloc       normalized source lines (no blank lines, no comments)
   pragma      the `pragma solidity` constraint
   contracts   contract/library/interface/abstract names with their parents
-  entry       count of external/public functions (non-view, non-pure)
+  entry       count of implemented external/public functions (non-view, non-pure)
   flags       risky constructs worth a closer look: delegatecall, assembly,
               selfdestruct, ecrecover, unchecked, tx.origin, low-level call,
               upgradeable base, initializer, permit, oracle reads
@@ -68,12 +68,34 @@ CONTRACT_RE = re.compile(
     r"(?:\s+is\s+([^{]+))?\s*\{",
     re.MULTILINE,
 )
-FUNC_RE = re.compile(r"\bfunction\s+\w+\s*\([^)]*\)([^{;]*)[{;]", re.DOTALL)
+# Only functions with a body count; interface and abstract declarations end in ";".
+FUNC_RE = re.compile(r"\bfunction\s+\w+\s*\([^)]*\)([^{;]*)\{", re.DOTALL)
 
 
 def strip_comments(src: str) -> str:
-    src = re.sub(r"/\*.*?\*/", "", src, flags=re.DOTALL)
-    return re.sub(r"//[^\n]*", "", src)
+    """Remove // and /* */ comments while leaving string literals (URLs, "/*") intact."""
+    out = []
+    i, n = 0, len(src)
+    while i < n:
+        ch = src[i]
+        if ch in "\"'":
+            j = i + 1
+            while j < n and src[j] != ch and src[j] != "\n":
+                j += 2 if src[j] == "\\" else 1
+            out.append(src[i:j + 1])
+            i = j + 1
+        elif src.startswith("//", i):
+            j = src.find("\n", i)
+            i = n if j == -1 else j
+        elif src.startswith("/*", i):
+            j = src.find("*/", i + 2)
+            end = n if j == -1 else j
+            out.append("\n" * src.count("\n", i, end))
+            i = n if j == -1 else j + 2
+        else:
+            out.append(ch)
+            i += 1
+    return "".join(out)
 
 
 def nsloc(code: str) -> int:
@@ -105,8 +127,12 @@ def in_scope(path: Path, root: Path, include_tests: bool) -> bool:
     return True
 
 
-def scan_file(path: Path, root: Path) -> dict:
-    raw = path.read_text(encoding="utf-8", errors="replace")
+def scan_file(path: Path, root: Path) -> dict | None:
+    try:
+        raw = path.read_text(encoding="utf-8", errors="replace")
+    except OSError as exc:
+        print(f"warning: cannot read {path}: {exc}", file=sys.stderr)
+        return None
     code = strip_comments(raw)
     pragma = PRAGMA_RE.search(code)
     contracts = []
@@ -158,12 +184,18 @@ def main() -> int:
 
     files = []
     for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS and not d.startswith(".")]
+        dirnames[:] = [
+            d for d in dirnames
+            if d not in SKIP_DIRS and not d.startswith(".")
+            and (args.include_tests or (d not in TEST_DIRS and not MOCK_RE.search(d)))
+        ]
         for filename in filenames:
             if filename.endswith(".sol"):
                 path = Path(dirpath) / filename
                 if in_scope(path, root, args.include_tests):
-                    files.append(scan_file(path, root))
+                    entry = scan_file(path, root)
+                    if entry is not None:
+                        files.append(entry)
     files.sort(key=lambda f: f["file"])
 
     tools = {tool: bool(shutil.which(tool)) for tool in TOOLS}
@@ -185,6 +217,9 @@ def main() -> int:
     print("Tools: " + ", ".join(f"{t}={'yes' if ok else 'no'}" for t, ok in tools.items()))
     print(f"Pragmas: {', '.join(result['pragmas']) or 'none'}")
     print(f"Files: {len(files)}  Total nSLOC: {result['total_nsloc']}\n")
+    if not files:
+        print("No in-scope .sol files found (lib/, node_modules/, tests, scripts, and mocks are skipped; try --include-tests).")
+        return 0
     width = max((len(f["file"]) for f in files), default=4)
     print(f"{'file'.ljust(width)}  nsloc  entry  flags")
     for f in files:
