@@ -20,7 +20,7 @@ outlier inputs. Invariant lines carry no gas figure and are skipped.
 
 Exit codes:
   0  comparison printed
-  2  usage error (missing or unreadable file)
+  2  usage error (missing, unreadable, or non-snapshot file)
 """
 
 from __future__ import annotations
@@ -65,9 +65,13 @@ def main() -> int:
     try:
         base = parse_snapshot(args.baseline)
         after = parse_snapshot(args.after)
-    except OSError as exc:
+    except (OSError, UnicodeDecodeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
+    for path, parsed in ((args.baseline, base), (args.after, after)):
+        if not parsed:
+            print(f"error: no gas lines found in {path}; is it a forge snapshot file?", file=sys.stderr)
+            return 2
 
     rows = []
     for name in sorted(base.keys() & after.keys()):
@@ -80,12 +84,13 @@ def main() -> int:
     total_after = sum(r["after"] for r in rows)
     only_base = sorted(base.keys() - after.keys())
     only_after = sorted(after.keys() - base.keys())
+    shown = [r for r in rows if abs(r["delta"]) >= args.min_delta]
 
     if args.json:
         print(
             json.dumps(
                 {
-                    "rows": rows,
+                    "rows": shown,
                     "total": {"before": total_before, "after": total_after, "delta": total_after - total_before},
                     "only_in_baseline": only_base,
                     "only_in_after": only_after,
@@ -98,9 +103,7 @@ def main() -> int:
 
     print("| Test | Before | After | Δ gas | Δ % |")
     print("|------|-------:|------:|------:|----:|")
-    for r in rows:
-        if abs(r["delta"]) < args.min_delta:
-            continue
+    for r in shown:
         print(f"| `{r['test']}` | {r['before']:,} | {r['after']:,} | {r['delta']:+,} | {r['pct']:+.2f}% |")
     print()
     print(f"Total over {len(rows)} shared tests: {total_before:,} → {total_after:,} ({total_after - total_before:+,})")
