@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -125,14 +126,18 @@ def scan_file(path: Path, rel: str) -> dict | None:
 
 
 def walk(root: Path, sub: Path):
-    for path in sorted(sub.rglob("*")):
-        if any(part in SKIP_DIRS for part in path.relative_to(root).parts):
-            continue
-        if not path.is_file() or path.is_symlink():
-            continue
-        if path.suffix.lower() not in UI_EXTENSIONS or SKIP_FILE_PATTERNS.search(path.name):
-            continue
-        yield path
+    # Prune skipped and hidden directories before descending: rglob would
+    # enter node_modules and nested worktrees (.claude/worktrees, .git),
+    # which takes minutes on real apps.
+    for dirpath, dirnames, filenames in os.walk(sub):
+        dirnames[:] = sorted(d for d in dirnames if d not in SKIP_DIRS and not d.startswith("."))
+        for name in sorted(filenames):
+            path = Path(dirpath) / name
+            if not path.is_file() or path.is_symlink():
+                continue
+            if path.suffix.lower() not in UI_EXTENSIONS or SKIP_FILE_PATTERNS.search(name):
+                continue
+            yield path
 
 
 def main() -> int:
