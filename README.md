@@ -106,6 +106,7 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [claim-unassigned-prs](skills/claim-unassigned-prs/) | 🚑 Request your review on every open PR in a repo that has no assignee, reviewer, or review yet and was opened by someone else |
 | [dedupe-and-prune-deps](skills/dedupe-and-prune-deps/) | 🤖 Collapse duplicate versions, declare phantom imports, remove unused dependencies |
 | [drift](skills/drift/) | 🎲 One prompt, every possibility — k distinct answers with self-assessed probabilities, ranked from conventional to wild (verbalized sampling) |
+| [expert-accessibility](skills/expert-accessibility/) | 🎓 Audit a web app against WCAG 2.2 AA like an accessibility specialist — semantics and landmarks, keyboard and focus, ARIA misuse, forms and errors, contrast, alt text, motion, screen-reader announcements, and target size — every finding verified, ranked by severity, and tied to the success criterion it fails, with an exact location and a concrete fix; read-only |
 | [extract-design-system](skills/extract-design-system/) | 🎲 Extract tokens, themes, typography, and components from source into a living design-system artifact — plus a drift report of hard-coded values — that wireframes reuse |
 | [fix-all-issues](skills/fix-all-issues/) | 🚑 Fix a list of issues — or every open, unclaimed issue in the repo — with one subagent, one worktree, and one PR per issue, in parallel |
 | [fix-dependabot-alert](skills/fix-dependabot-alert/) | 🤖 Remediate a Dependabot **security alert** end-to-end: bump/override, branch, PR |
