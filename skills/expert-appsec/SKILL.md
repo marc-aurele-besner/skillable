@@ -63,7 +63,7 @@ python3 -I scripts/appsec_scan.py <repo-root> --json --focus injection,xss,secre
 python3 -I scripts/appsec_scan.py --headers https://app.example.com   # only a URL the user owns
 ```
 
-It is stdlib-only and read-only: it walks source files (skipping `node_modules`, `.git`, build output, and lockfiles), prints the detected stack, the route and entry-point inventory it can find, and **candidate** sinks, secrets (redacted), and risky config grouped by category. `--headers` sends one GET with no credentials and reports security headers and cookie flags. Every hit is a lead, not a finding: most will be safe once traced. Run it from the skill directory or pass the script's full path.
+It is stdlib-only and read-only: it walks source files (skipping `node_modules`, build output, lockfiles, and dot-directories other than `.github`), prints the detected stack, the route and entry-point inventory it can find, and **candidate** sinks, secrets (redacted), and risky config grouped by category. `--headers` sends one GET with no credentials, does not follow redirects (it reports the `Location` instead), and reports security headers and cookie flags. Every hit is a lead, not a finding: most will be safe once traced. Run it from the skill directory or pass the script's full path.
 
 ## 2. Map the attack surface
 

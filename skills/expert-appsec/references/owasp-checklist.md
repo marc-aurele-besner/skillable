@@ -1,6 +1,6 @@
 # OWASP review checklist
 
-Deep checklist behind step 3 of the skill. Each category lists the sources and sinks to trace, what makes a control effective, the classic ways a control fails, and what not to report. Map each finding to its OWASP Top 10 (2021) category and, where useful, the OWASP ASVS 4.0 chapter. Every candidate still goes through the validation gate in SKILL.md step 4.
+Deep checklist behind step 3 of the skill. Each category lists the sources and sinks to trace, what makes a control effective, the classic ways a control fails, and what not to report. Map each finding to its OWASP Top 10 (2021) category and, where useful, the OWASP ASVS 4.0 chapter. OWASP Top 10 2025 and ASVS 5.0 renumber several of these (for example, SSRF folds into A01 and injection moves to A05 in the 2025 list; ASVS 5.0 restructures the chapters), so if the team tracks those editions, say which edition each id comes from instead of mixing them. Every candidate still goes through the validation gate in SKILL.md step 4.
 
 | Category | OWASP Top 10 | ASVS |
 |----------|--------------|------|
