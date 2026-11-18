@@ -90,7 +90,7 @@ Using a different agent? Same idea — see the [client list](https://agentskills
 
 ## Available skills
 
-Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & building · 🎲 ideation & prototyping · 🧭 visibility & understanding · 🎓 expert review
+Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & building · 🎲 ideation & prototyping · 🧭 visibility & understanding · 🎓 expert review · 👥 persona review
 
 | Skill | What it does |
 |-------|--------------|
