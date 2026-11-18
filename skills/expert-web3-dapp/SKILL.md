@@ -21,7 +21,7 @@ argument-hint: "[path|pr-number|url] [focus: wallet|chain|tx|signing|errors|gas|
 
 Goal: tell the team, with evidence, where their dApp will lose users' funds, trust, or transactions, and how to fix each spot in code. Every finding names a wallet state or input, the wrong outcome the user sees, a `file:line`, and a fix that fits the libraries already in use.
 
-The order that matters: **detect the stack and versions → map the web3 surface → walk the flows a user actually takes → verify each candidate against the installed library behavior → report only what survives.** Library behavior differs by version: wagmi's receipt hook throws on revert while raw viem returns the reverted receipt. A finding built on the wrong version is worse than no finding.
+The order that matters: **detect the stack and versions → map the web3 surface → walk the flows a user actually takes → verify each candidate against the installed library behavior → report only what survives.** Library behavior differs by version: wagmi's receipt action throws on revert (the hook reports `isError`) while raw viem returns the reverted receipt. A finding built on the wrong version is worse than no finding.
 
 This skill is **advisory and read-only**. It never edits, commits, pushes, merges, signs, or sends a transaction. It may offer to post the findings as a PR review comment, or to open a separate fix PR, and does either only after the user says yes.
 
@@ -59,7 +59,7 @@ Leads are not findings. They tell you where to read first.
 
 If Python is unavailable, fall back to reading `package.json` and the lockfile, and grep for the same signals (`maxUint256`, `eth_sign`, `waitForTransactionReceipt`, `getLogs`, `gasLimit`, `http()`, `window.ethereum`).
 
-Then pin the versions that change behavior: wagmi 1 vs 2, viem 1 vs 2, ethers 5 vs 6, RainbowKit 1 vs 2, WalletConnect v1 vs v2/Reown. Read [references/library-gotchas.md](references/library-gotchas.md) for the detected libraries now; it decides what counts as a bug in this stack.
+Then pin the versions that change behavior: wagmi 1 vs 2 vs 3, viem 1 vs 2, ethers 5 vs 6, RainbowKit 1 vs 2, WalletConnect v1 vs v2/Reown. Read [references/library-gotchas.md](references/library-gotchas.md) for the detected libraries now; it decides what counts as a bug in this stack.
 
 **Gate:** you can state, in one line, the client library and version, the React bindings (if any), the wallet UI, the chains configured, and whether smart accounts are in play. If not, read the config file (`createConfig`, `getDefaultConfig`, `createAppKit`, provider setup) until you can.
 
@@ -126,7 +126,7 @@ For each candidate, ask one question: **what wallet state or input makes the use
 Every candidate passes this gate or is dropped, not softened:
 
 1. **Open the file** and read the whole component or hook, plus its callers. The guard is often in a parent, a wrapper hook, or a shared `useTx` helper.
-2. **Check the installed library behavior.** Confirm the behavior you rely on in [references/library-gotchas.md](references/library-gotchas.md) and, when it matters, in the library source under `node_modules`. "wagmi does not check revert status" is false for the 2.x receipt action; "viem does" is false for the raw action.
+2. **Check the installed library behavior.** Confirm the behavior you rely on in [references/library-gotchas.md](references/library-gotchas.md) and, when it matters, in the library source under `node_modules`. "wagmi does not check revert status" is false for the 2.x and 3.x receipt action; "viem does" is false for the raw action.
 3. **Check for a project-wide handler**: an error boundary, a toast wrapper that maps errors, a transaction manager that already handles replacement.
 4. **Write the scenario**: the wallet state or input, the steps, and the wrong outcome. If you cannot write it concretely, drop it.
 5. **Rate confidence**: high (reachable in the code as written), medium (reachable under a plausible but unverified condition, such as a wallet that behaves a certain way). Low-confidence candidates go to "Worth checking", labeled unverified.
@@ -199,7 +199,7 @@ Keep the flow coverage table only when it carries information (two or more flows
 
 - **`isSuccess` is not success.** `useWriteContract().isSuccess` means a hash came back. Only a receipt with success status means the action happened.
 - **Raw viem returns reverted receipts; wagmi's action throws; ethers `wait()` throws.** Check which one the code calls before reporting "revert not handled".
-- **`useChainId()` is not the wallet's chain.** It is the config's current chain. Gate writes on `useAccount().chainId`, and treat `useAccount().chain === undefined` as unsupported.
+- **`useChainId()` is not the wallet's chain.** It is the config's current chain. Gate writes on `useAccount().chainId` (`useConnection()` in wagmi 3), and treat `useAccount().chain === undefined` as unsupported.
 - **`error.message` from viem is a multi-line dump.** User copy comes from `shortMessage` or the decoded revert.
 - **Custom errors decode only if their ABI fragments are present**, including errors declared in inherited contracts and libraries the call reaches.
 - **USDC is 6 decimals, WBTC 8**, and some bridged tokens differ per chain. `parseEther` on an ERC-20 amount is a bug unless the token is 18 decimals on every chain in config.

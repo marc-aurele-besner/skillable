@@ -112,7 +112,7 @@ Every write should move through visible, distinct states: **idle → preparing (
 | Unbounded log range | `getLogs({ fromBlock: 0n })` / `queryFilter(filter, 0)` | Provider rejects ranges over its limit (often 500 to 10k blocks or 10k results); the history view is empty | Start at the deploy block; paginate in chunks; handle "range too large" by halving |
 | Reorg removal ignored | Live watcher appends every log; no check of `log.removed` | Events from orphaned blocks stay in the UI or get credited | Drop or revert on `removed: true`; treat logs as tentative until `safe`/`finalized` |
 | Duplicates | Merge of polled and pushed logs without a key | Activity feed shows the same transfer twice | Dedupe by `(transactionHash, logIndex)` |
-| Filter expiry | `watchContractEvent` / `eth_newFilter` on a load-balanced RPC | Filters expire or hit another node: "filter not found", silent stop | viem `poll: true` with `getLogs` fallback; restart on error |
+| Filter expiry | `watchContractEvent`, hand-rolled `eth_newFilter` / `eth_getFilterChanges`, or ethers filters on a load-balanced RPC | Filters expire or hit another node: "filter not found", silent stop | Handle `onError`; re-read a bounded `getLogs` range after a filter is recreated (viem `watchContractEvent` recreates it but does not backfill); or poll `getLogs` directly |
 | Indexer lag hidden | Subgraph / Ponder / Envio data shown as current | After a confirmed tx, the user's position is missing; they resend | Compare indexer head (`_meta { block { number } }`) to chain head; show "syncing" and optimistically merge the confirmed tx |
 | Indexed vs non-indexed filtering | Filtering on a non-indexed arg via `args` | Returns everything or nothing depending on the client | Filter only on indexed params; post-filter the rest |
 | Event-sourced balances | Balance derived by summing Transfer events client-side | Drifts with fee-on-transfer, rebasing tokens, missed blocks | Read `balanceOf`; use events for history only |
@@ -168,6 +168,6 @@ Every write should move through visible, distinct states: **idle → preparing (
 - A public WalletConnect `projectId` or a public RPC key that is origin-restricted: not a secret.
 - `maxUint256` used as a sentinel in comparisons, or in tests and scripts that never reach users.
 - Absence of a feature the dApp does not need (no ERC-4337 checks for a dApp with no smart-account support; no Permit2 for a dApp with no approvals).
-- Library defaults that already do the right thing (wagmi `writeContract` with `chainId` already asserts the chain; wagmi's `waitForTransactionReceipt` action already throws on reverted receipts in v2; ethers `wait()` already throws on status 0).
+- Library defaults that already do the right thing (wagmi `writeContract` with `chainId` already asserts the chain; wagmi's `waitForTransactionReceipt` action already throws on reverted receipts in v2 and v3; ethers `wait()` already throws on status 0).
 - Style, naming, or component structure. That is not this skill.
 - Contract-level vulnerabilities (reentrancy, access control in Solidity). Mention them once as out of scope, at most.
