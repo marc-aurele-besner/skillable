@@ -84,8 +84,10 @@ All experiments happen outside the user's working tree:
 
 ```bash
 git worktree add <scratch>/gas-exp HEAD --detach
-cd <scratch>/gas-exp && forge install 2>/dev/null; git submodule update --init --recursive
+cd <scratch>/gas-exp && git submodule update --init --recursive
 ```
+
+Dependencies usually come from submodules already checked out in the user's tree. Run `forge install` (or `npm ci` for Hardhat) only when they are missing: it uses the network, so say so first, and stop to report any error instead of hiding it.
 
 Never commit there, never push from it, and remove it at the end (`git worktree remove <scratch>/gas-exp --force`). If worktrees are not possible, copy the project to a scratch directory instead.
 
@@ -118,7 +120,7 @@ For each candidate, one at a time, in the throwaway worktree:
 
    `forge snapshot --diff <file>` works too; the script adds a sorted table, percentages, and totals ready to paste.
 5. Record: tests affected, Δ gas per affected function (median), Δ deploy gas and Δ bytes, and the L1 data Δ for L2 targets.
-6. Revert the change (`git checkout -- .`) before the next candidate, so each number is attributable. Measure interacting changes (e.g. packing + caching on the same struct) both separately and combined.
+6. Revert the change in the throwaway worktree (`git checkout -- . && git clean -fd`) before the next candidate, so each number is attributable and new files such as a benchmark test do not leak into the next measurement. Measure interacting changes (e.g. packing + caching on the same struct) both separately and combined.
 
 Validation gate per finding: a measured saving on at least one hot-path test, all tests green, and no regression elsewhere above the saving. If the saving is within noise (< ~0.5 % or < 20 gas) or another path gets worse by more, drop it or report the trade-off honestly.
 
