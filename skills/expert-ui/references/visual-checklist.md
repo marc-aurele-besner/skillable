@@ -136,7 +136,7 @@ Look for:
 - **Size and alignment.** Icons not on the type's optical size (16 px icon next to 14 px text is fine; 24 px next to 12 px is not); icons not vertically centered with their label.
 - **Meaning.** Icon-only buttons with ambiguous glyphs and no visible label or tooltip; the same icon meaning two things in different places.
 - **Color.** Icons that do not inherit text color (`currentColor`) and so break in dark mode or hover states.
-- **Accessibility of the visual.** Decorative icons not hidden from assistive tech, meaningful icon-only buttons without an accessible name (report the visual issue here; deep a11y belongs to a dedicated audit).
+- **Accessibility of the visual.** Decorative icons not hidden from assistive tech, meaningful icon-only buttons without an accessible name (report the visual issue here; deep a11y belongs to `expert-accessibility`).
 
 Confirm: list the icon imports (`lucide-react`, `@heroicons/*`, `react-icons/*`, local SVGs) and see whether more than one set is in use.
 
@@ -179,6 +179,6 @@ Look for:
 - Personal taste with no user-visible cost ("I would use a warmer gray").
 - Re-designs. A finding fixes a defect in the current design language; it does not propose a new one. If the whole direction is the problem, say so once in the summary and point at `wireframe-redesign`.
 - Flow and task logic (wrong step order, confusing copy, missing confirmation) — that is `expert-ux`.
-- Performance metrics beyond what a visual issue causes (that is `audit-web-vitals`), SEO metadata (`optimize-seo-aeo`), and full accessibility audits beyond contrast, focus visibility, and target size.
+- Performance metrics beyond what a visual issue causes (that is `expert-frontend-performance` or `audit-web-vitals`), SEO metadata (`optimize-seo-aeo`), and full accessibility audits beyond contrast, focus visibility, and target size (`expert-accessibility`).
 - Rules the project's linter or stylelint config already enforces.
 - Values the project's own design system sanctions, even if you would pick differently.

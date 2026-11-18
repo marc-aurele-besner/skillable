@@ -23,7 +23,7 @@ Goal: tell the team, precisely and briefly, what in the **visual layer** of thei
 
 The order that matters: **learn the design language → see the real screens → find candidate defects → verify each one → report only what survives, most severe first.** Five verified findings with exact references beat twenty "consider…" bullets. A sound UI gets a short review.
 
-Not this skill: flows, task logic, copy, and information architecture (`expert-ux`); producing the design system itself (`extract-design-system` — its drift report is a useful input here); redesigning (`wireframe-redesign`); performance (`audit-web-vitals`); general code review (`review-pull-request`). This skill reads and reports; it does not change the product.
+Not this skill: flows, task logic, copy, and information architecture (`expert-ux`); producing the design system itself (`extract-design-system` — its drift report is a useful input here); redesigning (`wireframe-redesign`); full accessibility audits beyond contrast, focus visibility, and target size (`expert-accessibility`); performance (`expert-frontend-performance`, `audit-web-vitals`); general code review (`review-pull-request`). This skill reads and reports; it does not change the product.
 
 ## Read-only by default
 
