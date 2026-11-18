@@ -45,9 +45,9 @@ rg -n -e 'coin::mint' -e 'MintCapability' -e 'TreasuryCap' -e 'burn' sources
 |--------------------|------|----------------|
 | ERC-20 (any) | `totalSupply()`, `decimals()`, every reachable `_mint` | Real supply and who can grow it |
 | `ERC20Capped` | `cap()` | Hard cap is enforced only here, not by a `MAX_SUPPLY` comment |
-| `Ownable` / `AccessControl` | `owner()`, `hasRole(MINTER_ROLE, x)`, `getRoleMember` | Who controls mint, fees, pause |
+| `Ownable` / `AccessControl` | `owner()`, `hasRole(MINTER_ROLE, x)`, `getRoleMember` (only with `AccessControlEnumerable`; otherwise read `RoleGranted`/`RoleRevoked` events) | Who controls mint, fees, pause |
 | Proxy (UUPS / Transparent) | EIP-1967 admin slot, implementation slot | Upgrades can rewrite every rule |
-| OZ `VestingWallet` | `start()`, `duration()`, `cliff()` (only on `VestingWalletCliff`, OZ v5.1+), `owner()` (beneficiary), token balance of the wallet | Vesting is real only if the wallet holds the tokens |
+| OZ `VestingWallet` | `start()`, `duration()`, `cliff()` (only on `VestingWalletCliff`, OZ v5.1+), beneficiary via `owner()` (v5) or `beneficiary()` (v4), token balance of the wallet | Vesting is real only if the wallet holds the tokens |
 | Sablier / Hedgey / Superfluid streams | stream id, `startTime`, `cliffTime`, `endTime`, `cancelable` | Cancelable streams are revocable vesting |
 | Staking / MasterChef / `StakingRewards` | `rewardRate`, `rewardsDuration`, `periodFinish`, `rewardPerToken`, who calls `notifyRewardAmount` | Emission rate and whether it is pre-funded or minted |
 | ve-token (Curve-style) | `MAXTIME`, boost formula, gauge weights, `smart_wallet_checker` | Governance concentration, bribe surface |
@@ -68,8 +68,8 @@ cast call  <token> "decimals()(uint8)" --rpc-url "$RPC"
 cast call  <token> "owner()(address)" --rpc-url "$RPC"
 cast call  <token> "cap()(uint256)" --rpc-url "$RPC"
 cast call  <token> "balanceOf(address)(uint256)" <vesting-wallet> --rpc-url "$RPC"
-cast call  <vesting> "start()(uint64)" --rpc-url "$RPC"
-cast call  <vesting> "duration()(uint64)" --rpc-url "$RPC"
+cast call  <vesting> "start()(uint256)" --rpc-url "$RPC"
+cast call  <vesting> "duration()(uint256)" --rpc-url "$RPC"
 cast call  <timelock> "getMinDelay()(uint256)" --rpc-url "$RPC"
 cast call  <safe> "getThreshold()(uint256)" --rpc-url "$RPC"
 cast call  <safe> "getOwners()(address[])" --rpc-url "$RPC"
