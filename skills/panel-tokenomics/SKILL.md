@@ -12,8 +12,8 @@ description: >-
   a file:line, contract address, or doc URL. Read-only
   and advisory; not financial or legal advice. Use whenever the user asks to
   review my tokenomics, a token design, an emission schedule, an incentive
-  model, a points or airdrop program, wants several expert opinions or a
-  second opinion on a token launch, or asks "will this token survive when the
+  model, a points or airdrop program, wants a second opinion on a token
+  launch, or asks "will this token survive when the
   rewards stop?". Also triggers on /panel-tokenomics with an optional target
   (path, URL, PR, or chain:address).
 argument-hint: "[target: path | url | pr | chain:address] [focus: economics|mechanism|compliance|all]"
