@@ -43,9 +43,9 @@ Not this skill:
 
 | Seat | Who | Lens | Asks |
 |------|-----|------|------|
-| **Ngozi Okonkwo-Reyes** | QA lead with 14 years of release sign-offs across payments, booking, and B2B SaaS products, the last six running go or no-go meetings | Risk and release criteria: what changed, who it can hurt, what must be true before shipping, and how to back out | "If this goes wrong at 3 a.m., who notices, and how do we undo it?" |
-| **Tomasz Lindqvist** | Test automation engineer with 11 years building unit, integration, and e2e suites and the CI pipelines that gate them, including two rewrites of suites nobody trusted | The automated safety net: which layer tests what, what the assertions really prove, flakiness, and which checks actually block a merge | "Which test goes red if this breaks, and does anyone have to look at it?" |
-| **Mei-Ling Castellanos** | Exploratory tester with 12 years of breaking web and mobile apps by hand, from bank onboarding flows to offline-first field tools | Behaviour outside the happy path: odd inputs, devices, interruptions, concurrency, and partial failure | "What happens if I do this twice, slowly, on a bad connection?" |
+| **Yasmin Haddad** | QA lead with 14 years of release sign-offs across payments, booking, and B2B SaaS products, the last six running go or no-go meetings | Risk and release criteria: what changed, who it can hurt, what must be true before shipping, and how to back out | "If this goes wrong at 3 a.m., who notices, and how do we undo it?" |
+| **Rafael Monteiro** | Test automation engineer with 11 years building unit, integration, and e2e suites and the CI pipelines that gate them, including two rewrites of suites nobody trusted | The automated safety net: which layer tests what, what the assertions really prove, flakiness, and which checks actually block a merge | "Which test goes red if this breaks, and does anyone have to look at it?" |
+| **Mei-Ling Zhao** | Exploratory tester with 12 years of breaking web and mobile apps by hand, from bank onboarding flows to offline-first field tools | Behaviour outside the happy path: odd inputs, devices, interruptions, concurrency, and partial failure | "What happens if I do this twice, slowly, on a bad connection?" |
 
 Read `references/seats.md` before step 3: it holds each seat's full background, checklist, and the things that seat refuses to let slide.
 
@@ -67,7 +67,7 @@ Running the project's own test command, a local build, or the app on localhost w
 | Path or route | One feature, package, or contract | Read it, then its entry points and callers |
 | Nothing | The current branch against the default branch | Inventory first (step 1), propose the scope, and confirm before going deep |
 
-A focus word runs one seat only (`risk` is Ngozi, `automation` is Tomasz, `exploratory` is Mei-Ling). Say in the report that the other two seats did not sit.
+A focus word runs one seat only (`risk` is Yasmin, `automation` is Rafael, `exploratory` is Mei-Ling). Say in the report that the other two seats did not sit.
 
 Ask only when the target is ambiguous or too large to review in one pass. For a release with dozens of PRs, propose the riskiest features first and confirm.
 
@@ -123,7 +123,7 @@ Each seat returns:
 - its own minimum list: the fewest tests or checks that would turn its answer into a yes,
 - what it could not judge.
 
-### Ngozi Okonkwo-Reyes: risk and release criteria
+### Yasmin Haddad: risk and release criteria
 
 - Is the intended behaviour written down somewhere a tester could check against (PR body, linked issue, acceptance criteria), or is "done" a matter of opinion?
 - Which changed areas are Critical (money, auth, data writes, deletion, anything irreversible), and does each one have at least one check that would catch it breaking?
@@ -134,7 +134,7 @@ Each seat returns:
 - After shipping, how would the team know it broke: a log, a metric, an alert, or a customer email?
 - Is the scope of the release what it claims to be, or did unrelated changes ride along?
 
-### Tomasz Lindqvist: the automated safety net
+### Rafael Monteiro: the automated safety net
 
 - For each risky path, which test fails if the behaviour breaks? Open the test and read the assertion: "renders", "does not throw", and snapshot-only do not count.
 - Is each test at the cheapest layer that can prove the point? Business rules in unit tests, contracts and database behaviour in integration tests, and e2e only for the few journeys that need the whole stack.
@@ -145,7 +145,7 @@ Each seat returns:
 - Is the negative path tested: invalid input, permission denied, upstream failure, timeout?
 - Would the suggested tests fit the existing framework, fixtures, and CI time budget, or does the fix need a new harness?
 
-### Mei-Ling Castellanos: edge cases and failure modes
+### Mei-Ling Zhao: edge cases and failure modes
 
 - Inputs at the edges: empty, whitespace only, the maximum length, one past it, unicode and emoji, right-to-left text, leading zeros, negative and huge numbers, pasted content.
 - Doing it twice: double click, double submit, retry after a timeout, the same action in two tabs or on two devices.
@@ -202,9 +202,9 @@ ALWAYS use this template. Keep each seat's voice in its own summary line; keep f
 ## Where each expert landed
 | Seat | Answer | In one line |
 |------|--------|-------------|
-| Ngozi Okonkwo-Reyes, risk and release criteria | <Yes / With fixes / No> | "<their summary, in their voice>" |
-| Tomasz Lindqvist, automated safety net | ... | ... |
-| Mei-Ling Castellanos, edge cases and failure modes | ... | ... |
+| Yasmin Haddad, risk and release criteria | <Yes / With fixes / No> | "<their summary, in their voice>" |
+| Rafael Monteiro, automated safety net | ... | ... |
+| Mei-Ling Zhao, edge cases and failure modes | ... | ... |
 
 ## Findings
 | # | Severity | Finding | Where | Raised by | Fix |
@@ -245,15 +245,15 @@ When the answer is a clean yes, drop the empty sections and keep the report to t
 
 ## 9. Offer next steps (ask first)
 
-Offer, and do only on a yes: post the report as a PR comment (a plain comment, never an approval or a change request), file the "Do this first" list as issues, run `expert-qa` for a deep pass with the full risk model and edge-case catalog, run `add-missing-tests` on the "Minimum to ship" list, or run `fix-flaky-tests` on the tests Tomasz flagged.
+Offer, and do only on a yes: post the report as a PR comment (a plain comment, never an approval or a change request), file the "Do this first" list as issues, run `expert-qa` for a deep pass with the full risk model and edge-case catalog, run `add-missing-tests` on the "Minimum to ship" list, or run `fix-flaky-tests` on the tests Rafael flagged.
 
 ## Gotchas
 
-- **Coverage is not proof.** A line that runs under test with no assertion on the outcome is untested for this panel's purpose. Tomasz reads the test body before calling anything covered.
+- **Coverage is not proof.** A line that runs under test with no assertion on the outcome is untested for this panel's purpose. Rafael reads the test body before calling anything covered.
 - **Green CI can be an empty signal.** Path filters, `continue-on-error`, non-required jobs, and newly skipped tests all produce a green tick that proves nothing about the change. Check which jobs ran on these files.
 - **The diff is not the blast radius.** A changed helper, default, or shared component breaks screens the diff never names. Search the callers before any seat says "low risk".
 - **Do not let one seat set the whole verdict.** A clean exploratory session does not cancel an uncovered Critical path, and a full test suite does not cancel a failure Mei-Ling reproduced twice. Each lens can block on its own.
-- **A manual check is a real answer.** Tomasz will want everything automated and Ngozi will accept a ten-minute checklist for a one-off migration. Record it as a split if they disagree; do not default to "write an e2e test".
+- **A manual check is a real answer.** Rafael will want everything automated and Yasmin will accept a ten-minute checklist for a one-off migration. Record it as a split if they disagree; do not default to "write an e2e test".
 - **The dev server lies about caching, bundling, service workers, and env config.** If the change touches those and only the dev build was explored, say so under "Not reviewed".
 - **Feature flags double the matrix.** Both states ship, and so does the moment the flag flips mid-session. A flag that defaults off lowers the risk of shipping, not the risk of turning it on.
 - **CI runs in UTC on clean data.** Date logic and migrations that pass there can still fail for a user in another timezone or on a table with ten years of rows. Ask what real data looks like.
