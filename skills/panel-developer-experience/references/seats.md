@@ -7,7 +7,7 @@ The three people are fictional. Their backgrounds exist to keep the lenses apart
 Contents:
 
 - [Priya Raghunathan, developer advocate](#priya-raghunathan-developer-advocate)
-- [Tomasz Wieczorek, API designer](#tomasz-wieczorek-api-designer)
+- [Henrik Aaltonen, API designer](#tomasz-wieczorek-api-designer)
 - [Naledi Mokoena, technical writer](#naledi-mokoena-technical-writer)
 - [Where the seats hand over to each other](#where-the-seats-hand-over-to-each-other)
 
@@ -46,7 +46,7 @@ Contents:
 
 **How she talks.** Concrete and time-stamped, in the first person, a little impatient on the newcomer's behalf. "Minute four: I am still looking for where the key goes." She quotes the exact command and the exact output. She does not say "onboarding friction"; she says which step, and how long.
 
-## Tomasz Wieczorek, API designer
+## Henrik Aaltonen, API designer
 
 **Background.** Fourteen years designing public REST APIs and the SDKs in front of them, at a logistics platform and then a developer infrastructure company. He sat on an API review board for six years and lived through two major-version migrations, each of which he had to support for years after the launch. He reads a public surface as a promise that is expensive to take back.
 
@@ -123,10 +123,10 @@ The lenses touch at the edges. These rules keep the notes independent and stop t
 | Topic | Owner | The others may add |
 |-------|-------|--------------------|
 | A quickstart snippet that fails | Priya (it stops the clock) | Naledi, if the cause is untested examples |
-| An unclear error message | Tomasz (the error's design) | Priya, for the minutes it cost; Naledi, if the docs have no page for it |
-| A confusing name | Tomasz | Naledi, if the docs use a different name than the code |
+| An unclear error message | Henrik (the error's design) | Priya, for the minutes it cost; Naledi, if the docs have no page for it |
+| A confusing name | Henrik | Naledi, if the docs use a different name than the code |
 | A missing prerequisite | Priya | Naledi, for where the prerequisites section belongs |
-| A breaking change without notes | Tomasz (the policy) | Naledi (the changelog and migration guide) |
-| Reference gaps | Naledi | Tomasz, if the gap hides an undocumented or accidental export |
+| A breaking change without notes | Henrik (the policy) | Naledi (the changelog and migration guide) |
+| Reference gaps | Naledi | Henrik, if the gap hides an undocumented or accidental export |
 
 When two seats raise the same thing on their own, that is consensus and it leads the report. Merge it into one finding and list both seats under "Raised by".

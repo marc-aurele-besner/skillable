@@ -41,7 +41,7 @@ Not this skill:
 | Seat | Who | Lens | Asks |
 |------|-----|------|------|
 | **Priya Raghunathan** | Developer advocate with 9 years running quickstart workshops and hackathon support desks for a payments API and an open-source database client | Onboarding: the path from landing on the README to a first working result, and the minutes it costs | "Where does the clock stop, and what was I doing when it stopped?" |
-| **Tomasz Wieczorek** | API designer with 14 years on public REST and SDK surfaces, including two major-version migrations he had to support for years afterwards | The surface itself: naming, consistency, versioning, typed interfaces, and error design | "Could I guess the second call after seeing the first?" |
+| **Henrik Aaltonen** | API designer with 14 years on public REST and SDK surfaces, including two major-version migrations he had to support for years afterwards | The surface itself: naming, consistency, versioning, typed interfaces, and error design | "Could I guess the second call after seeing the first?" |
 | **Naledi Mokoena** | Technical writer with 11 years of docs for developer tools, who rebuilt two docs sites around what support tickets were asking | Documentation: structure, examples, and whether reference and guides each do their own job | "Which page answers this, and how would a newcomer find it?" |
 
 Read `references/seats.md` before step 3: it holds each seat's full background, checklist, and the things that seat refuses to let slide.
@@ -64,7 +64,7 @@ Two additions for this domain. Never publish a package, create an account, reque
 | Package name | A published library | Read the registry page and metadata (`npm view <pkg>`, the PyPI JSON API, `cargo info <crate>`), then the linked repo |
 | Nothing | The whole project | Inventory first (step 1), propose the scope, and confirm before going deep |
 
-A focus word runs one seat only: `onboarding` is Priya, `api` is Tomasz, `docs` is Naledi. Say in the report that the other two seats did not sit.
+A focus word runs one seat only: `onboarding` is Priya, `api` is Henrik, `docs` is Naledi. Say in the report that the other two seats did not sit.
 
 Ask only when the target is ambiguous or too large to review in one pass. In a monorepo, default to the package the root README leads with and name the others under "Not reviewed".
 
@@ -122,7 +122,7 @@ Each seat returns:
 - When the first step fails, does the failure tell the newcomer what to do next, or do they leave?
 - What is the next step after hello world, and is it linked from where the quickstart ends?
 
-### Tomasz Wieczorek: API design and errors
+### Henrik Aaltonen: API design and errors
 
 - After seeing one call, can a developer predict the name, argument order, and return shape of its siblings?
 - Does the common case take one or two calls with safe defaults, or does it need a builder, a config object, and three required options?
@@ -152,7 +152,7 @@ Lay the three sets of notes side by side.
 - **Solo findings:** raised by one seat. Let the other two challenge each one: is it real, is it in scope, is the severity right?
 - **Splits:** where seats disagree on a finding or on the fix. Record each position in one line, and name the fact, measurement, or decision that would settle it.
 
-Splits this panel often produces, so you recognise them: fix a confusing name with a rename (Tomasz) or with better docs (Naledi); a shorter quickstart that hides configuration (Priya) against one honest about what production needs (Tomasz); one long README (Priya) against a structured docs site (Naledi).
+Splits this panel often produces, so you recognise them: fix a confusing name with a rename (Henrik) or with better docs (Naledi); a shorter quickstart that hides configuration (Priya) against one honest about what production needs (Henrik); one long README (Priya) against a structured docs site (Naledi).
 
 ## 5. Verify before reporting
 
@@ -189,7 +189,7 @@ ALWAYS use this template. Keep each seat's voice in its own summary line; keep f
 | Seat | Answer | In one line |
 |------|--------|-------------|
 | Priya Raghunathan, onboarding | <Yes / With fixes / No> | "<her summary, in her voice>" |
-| Tomasz Wieczorek, API design | ... | ... |
+| Henrik Aaltonen, API design | ... | ... |
 | Naledi Mokoena, documentation | ... | ... |
 
 ## Findings
@@ -234,7 +234,7 @@ Offer, and do only on a yes: post the report as a PR comment, file the "Do this 
 - **`main` is not what adopters install.** The README on the default branch can describe unreleased APIs. Check snippets against the latest published version, and report the drift when adopters install from a registry.
 - **A desk walk is an estimate.** If nothing was executed, say so next to the time and do not let the verdict read as measured.
 - **Fifteen minutes excludes what the project cannot control,** such as a slow network or a toolchain's normal compile time. It does include account approval waits, because a newcomer sits through those.
-- **Do not let the API seat's ideal design outvote a working path.** A rename that breaks every existing user is a cost. Tomasz must state the migration, or the finding is a Note.
+- **Do not let the API seat's ideal design outvote a working path.** A rename that breaks every existing user is a cost. Henrik must state the migration, or the finding is a Note.
 - **Do not grade docs by volume.** A short README that gets someone running in two minutes beats a large site. A missing page is a finding only when a newcomer needs it.
 - **Judge by the ecosystem's norms.** Go, Rust, Python, and npm each have their own conventions for naming, errors, and docs. A snake_case Python SDK wrapping a camelCase API is right, not inconsistent.
 - **Missing governance files belong elsewhere.** A missing `CONTRIBUTING.md` or LICENSE is a `standardize-repo-hygiene` matter unless it blocks the first integration. Mention it once under next steps.
