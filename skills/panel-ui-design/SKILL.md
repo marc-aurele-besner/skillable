@@ -40,8 +40,8 @@ Not this skill:
 
 | Seat | Who | Lens | Asks |
 |------|-----|------|------|
-| **Ingrid Solberg** | Senior product designer, 14 years shipping B2B dashboards and consumer mobile apps, the last five leading design critique for a 30-person product team | Visual hierarchy, layout, typography, spacing rhythm, color used as emphasis | "Where does my eye land first, and is that the thing that matters most on this screen?" |
-| **Kwame Mensah** | Design-systems lead, 11 years, built and maintained a token and component library used by more than 40 product squads across web and native | Token use, component consistency, drift, theme and dark mode parity, measured contrast of color pairs | "Is this value a decision, or an accident that will be copied forty times?" |
+| **Camille Rousseau** | Senior product designer, 14 years shipping B2B dashboards and consumer mobile apps, the last five leading design critique for a 30-person product team | Visual hierarchy, layout, typography, spacing rhythm, color used as emphasis | "Where does my eye land first, and is that the thing that matters most on this screen?" |
+| **Babajide Olatunji** | Design-systems lead, 11 years, built and maintained a token and component library used by more than 40 product squads across web and native | Token use, component consistency, drift, theme and dark mode parity, measured contrast of color pairs | "Is this value a decision, or an accident that will be copied forty times?" |
 | **Lucía Ferrante** | Brand designer, 12 years between an identity studio and in-house brand teams, has taken three startups from a stock template to a look people recognise | Look and feel, distinctiveness, tone carried by visuals, generic or templated UI | "If I cover the logo, could this be anyone's product?" |
 
 Read `references/seats.md` before step 3: it holds each seat's full background, what they have seen go wrong, a deeper checklist, the things that seat refuses to let slide, and how they talk. Pass each seat only its own card.
@@ -64,7 +64,7 @@ Starting the app with the project's own `dev` or `preview` script to look at it 
 | Screenshot or image | That image only | Locations are regions of the screen ("top-right toolbar"), not file:line |
 | Nothing | The whole project | Inventory first (step 1), propose the scope, and confirm before going deep |
 
-A focus word runs one seat only: `hierarchy` is Ingrid, `system` is Kwame, `brand` is Lucía. Say in the report that the other two seats did not sit.
+A focus word runs one seat only: `hierarchy` is Camille, `system` is Babajide, `brand` is Lucía. Say in the report that the other two seats did not sit.
 
 Ask only when the target is ambiguous or too large to review in one pass.
 
@@ -140,7 +140,7 @@ Each seat returns:
 - its findings, each with a location, the evidence, the impact, and a concrete fix,
 - what it could not judge.
 
-### Ingrid Solberg: hierarchy, layout, typography
+### Camille Rousseau: hierarchy, layout, typography
 
 - Squint at each screen, or blur the screenshot. Is there one focal point, and is it the primary action or the key piece of information?
 - How many things on the screen use the strongest visual treatment (filled accent button, largest type, heaviest weight)? More than one per view means none of them wins.
@@ -151,7 +151,7 @@ Each seat returns:
 - Does the layout hold at 375 px: no cramped tap targets, no orphaned single words in headings, no table forced into a sliver?
 - Do numbers that are compared (prices, balances, table columns) align and use tabular figures?
 
-### Kwame Mensah: tokens, components, drift, themes
+### Babajide Olatunji: tokens, components, drift, themes
 
 - Which values on screen come from tokens, and which are literals? For each frequent literal from step 2, is it a duplicate of a token, a near miss (`#6b7281` beside `#6b7280`), or a value the system does not have?
 - How many versions of the same component exist? Compare every button, input, card, modal, and badge in scope for radius, height, padding, border, and shadow.
@@ -217,8 +217,8 @@ ALWAYS use this template. Keep each seat's voice in its own summary line; keep f
 ## Where each expert landed
 | Seat | Answer | In one line |
 |------|--------|-------------|
-| Ingrid Solberg, hierarchy and type | <Yes / With fixes / No> | "<their summary, in their voice>" |
-| Kwame Mensah, system and themes | ... | ... |
+| Camille Rousseau, hierarchy and type | <Yes / With fixes / No> | "<their summary, in their voice>" |
+| Babajide Olatunji, system and themes | ... | ... |
 | Lucía Ferrante, brand and character | ... | ... |
 
 ## Findings
@@ -266,5 +266,5 @@ Offer, and do only on a yes: post the report as a PR comment, file the "Do this 
 - **Screenshots lie about color.** Browser extensions such as Dark Reader, forced colors, and color profiles change what is captured. Take values from computed styles.
 - **Literal counts over-report.** Hex values in tests, stories, email templates, chart configs, SVG artwork, and the token file itself are not drift. Check each lead on the rendered screen.
 - **A PR review covers the diff's visual impact.** Pre-existing problems go in as Notes, so the author is not held to the whole app's history.
-- **One seat, one lens.** If Ingrid starts auditing tokens or Kwame starts judging tone, the seats converge and the panel loses the cross-check. Hand the observation to the right seat during step 4.
+- **One seat, one lens.** If Camille starts auditing tokens or Babajide starts judging tone, the seats converge and the panel loses the cross-check. Hand the observation to the right seat during step 4.
 - **Flow and copy problems are real but not this panel's.** Mention them once as a Note and point to `expert-ux`.
