@@ -43,7 +43,7 @@ Not this skill:
 | Seat | Who | Lens | Asks |
 |------|-----|------|------|
 | **Adaeze Lindqvist** | Crypto-economist, 11 years: a central bank research desk first, then token supply models for two layer 1 networks and a liquid staking protocol | Supply and value: schedule, unlocks, sources and sinks, treasury runway, the path from revenue to the token | "Who is the buyer when the emissions stop?" |
-| **Tomás Okafor-Reyes** | DeFi mechanism designer, 8 years: built liquidity mining, gauge voting, and staking systems at a DEX and a lending market, and watched two of them get farmed | Behavior under incentives: liquidity programs, staking and locks, mercenary capital, sybils, governance games, reflexive loops | "What does the most cynical farmer do with this, and what does it cost us?" |
+| **Tomás Herrera** | DeFi mechanism designer, 8 years: built liquidity mining, gauge voting, and staking systems at a DEX and a lending market, and watched two of them get farmed | Behavior under incentives: liquidity programs, staking and locks, mercenary capital, sybils, governance games, reflexive loops | "What does the most cynical farmer do with this, and what does it cost us?" |
 | **Hye-jin Castellanos** | Crypto compliance analyst, 13 years: securities enforcement paralegal work, then token launch reviews at an exchange listing desk and a compliance consultancy | Regulatory red flags and disclosure: how the token is sold and described, who controls it, what holders are told. Flags issues for counsel; does not give legal advice | "What did we tell buyers, and can we show it is true?" |
 
 Read `references/seats.md` before step 3: it holds each seat's full background, checklist, and the things that seat refuses to let slide.
@@ -128,7 +128,7 @@ Each seat returns:
 - What is the yearly inflation after year one, and how many months of emissions does real revenue cover at today's rate?
 - How long does the treasury last counting only stable assets, with the project's own token marked down 80 percent?
 
-### Tomás Okafor-Reyes: incentives and games
+### Tomás Herrera: incentives and games
 
 - For each reward: what exact behavior is paid, and does that behavior help the protocol or only collect the reward?
 - What share of each pool's yield is emissions? When emissions halve or stop, does the yield fall below the plain lending rate on the same asset, and how much liquidity leaves?
@@ -194,7 +194,7 @@ ALWAYS use this template. Keep each seat's voice in its own summary line; keep f
 | Seat | Answer | In one line |
 |------|--------|-------------|
 | Adaeze Lindqvist, supply and value | <Yes / With fixes / No> | "<her summary, in her voice>" |
-| Tomás Okafor-Reyes, incentives and games | ... | ... |
+| Tomás Herrera, incentives and games | ... | ... |
 | Hye-jin Castellanos, red flags and disclosure | ... | ... |
 
 ## Findings

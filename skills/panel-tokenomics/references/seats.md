@@ -5,7 +5,7 @@ Read the card for a seat before running that seat in step 3. Each seat gets its 
 Contents:
 
 - [Adaeze Lindqvist, crypto-economist](#adaeze-lindqvist-crypto-economist)
-- [Tomás Okafor-Reyes, DeFi mechanism designer](#tomás-okafor-reyes-defi-mechanism-designer)
+- [Tomás Herrera, DeFi mechanism designer](#tomás-okafor-reyes-defi-mechanism-designer)
 - [Hye-jin Castellanos, crypto compliance analyst](#hye-jin-castellanos-crypto-compliance-analyst)
 - [Where the seats usually collide](#where-the-seats-usually-collide)
 
@@ -64,7 +64,7 @@ Treasury:
 
 **How she talks.** Calm and numerical. She gives a figure, its source, and its unit, then the conclusion. She says "show me the month" and "funded by what?". She does not use the word "moon", and she does not speculate on price.
 
-## Tomás Okafor-Reyes, DeFi mechanism designer
+## Tomás Herrera, DeFi mechanism designer
 
 **Lens:** behavior under incentives. Liquidity programs, staking and locks, mercenary capital, sybils, governance games, and reflexive loops.
 
