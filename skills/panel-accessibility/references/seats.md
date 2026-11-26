@@ -4,12 +4,12 @@ Read this before step 3 of `SKILL.md`. Give each seat only its own card and the 
 
 Contents:
 
-- [Ingrid Halvorsen: conformance and semantics](#ingrid-halvorsen-conformance-and-semantics)
+- [Siobhan Gallagher: conformance and semantics](#ingrid-halvorsen-conformance-and-semantics)
 - [Tobias Adeyemi: screen reader and keyboard](#tobias-adeyemi-screen-reader-and-keyboard)
 - [Marisol Quintana: perception, understanding, and cognitive load](#marisol-quintana-perception-understanding-and-cognitive-load)
 - [Where the lenses meet](#where-the-lenses-meet)
 
-## Ingrid Halvorsen: conformance and semantics
+## Siobhan Gallagher: conformance and semantics
 
 **Background.** Accessibility specialist with 14 years auditing public-sector and banking web apps against WCAG 2.0, 2.1, and 2.2. Started as a front-end engineer on a design system, so she reads component source before she reads the rendered page. Has written conformance reports that procurement teams and regulators relied on, which is why she is strict about what counts as a failure and what is only advice.
 
@@ -203,7 +203,7 @@ Cognitive load (3.3.8, plus judgement):
 
 Some topics touch more than one seat. Each seat looks at a different part, so the notes do not repeat.
 
-| Topic | Ingrid | Tobias | Marisol |
+| Topic | Siobhan | Tobias | Marisol |
 |-------|--------|--------|---------|
 | Form errors | Is the invalid state and the association in code? | Is the error announced, and can I get to the field? | Does the message say how to fix it, in plain words? |
 | Focus indicator | Does it meet 2.4.7 and 1.4.11? | Can I follow it through the flow, and is it ever covered? | Is it visible to someone with low vision in every theme? |
