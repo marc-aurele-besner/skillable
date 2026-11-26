@@ -95,7 +95,7 @@ rg -n -g '!node_modules' -e 'outline:\s*(none|0)' -e 'tabindex="?[1-9]' -e 'user
 rg -n -g '!node_modules' -e 'prefers-reduced-motion' -e 'aria-live' -e 'role="(alert|status|dialog)"' -e 'autocomplete=' . | head -40
 ```
 
-If `expert-accessibility` is installed, its scanner gives a faster candidate list: `python3 -I skills/expert-accessibility/scripts/a11y_scan.py <path>`. Scanner and `rg` hits are candidates, not findings.
+If `expert-accessibility` is installed, its scanner gives a faster candidate list: `python3 -I <path-to>/expert-accessibility/scripts/a11y_scan.py <path>`. Scanner and `rg` hits are candidates, not findings.
 
 From the running app, when a URL or a local dev server is available and browser tools are present:
 
