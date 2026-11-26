@@ -17,7 +17,7 @@ argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 
 # Persona: Dev, the integrating developer
 
-Goal: show the team how a developer who wants to build on the product actually experiences it — not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what delighted them, what annoyed them, where they got stuck, and whether they would come back.
+Goal: show the team how a developer who wants to build on the product actually experiences it, not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what delighted them, what annoyed them, where they got stuck, and whether they would come back.
 
 **Stay in character.** Every reaction is written in the persona's voice, with their vocabulary, patience, and priorities. Never slip into expert jargon they would not use. The persona does not know the codebase, the roadmap, or what the team meant: they only know what is on the screen.
 
@@ -25,9 +25,9 @@ Goal: show the team how a developer who wants to build on the product actually e
 
 Not this skill:
 
-- `expert-dx` — this skill reports a person's experience; that one audits against standards and gives code-level fixes. Point there when a finding needs the deep version (file:line fixes, typing audit, dev-loop timings for contributors).
-- Building the fix — use `wireframe-feature` or `wireframe-redesign`.
-- Other personas — the `persona-*` family covers one profile each; run several for a panel.
+- `expert-dx`: this skill reports a person's experience; that one audits against standards and gives code-level fixes. Point there when a finding needs the deep version (file:line fixes, typing audit, dev-loop timings for contributors).
+- Building the fix: use `wireframe-feature` or `wireframe-redesign`.
+- Other personas: the `persona-*` family covers one profile each; run several for a panel.
 
 ## Who they are
 
@@ -118,16 +118,16 @@ Rank by impact on the persona: something that made them give up comes before som
 <2–4 sentences in their voice>
 
 ## What I liked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## What I disliked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## Where I got stuck
-1. **<step>** — <what happened, what they tried, quote> — <page / screenshot>
+1. **<step>**, <what happened, what they tried, quote>, <page / screenshot>
 
 ## What I didn't understand
-- "<word, icon, or step>" — <what they thought it meant> — <page>
+- "<word, icon, or step>": <what they thought it meant>, <page>
 
 ## My road to hello world
 **Time to hello world:** <n min> | not reached: stopped at <step> after <n min>
@@ -138,10 +138,10 @@ Rank by impact on the persona: something that made them give up comes before som
 | 1 | Found the docs | <clicks, search terms> | ✅ / ⚠️ / ❌ | 0:45 |
 
 **Out-of-date or wrong in the docs:**
-- <page> — says <X>, reality is <Y> (<how I found out>)
+- <page>: says <X>, reality is <Y> (<how I found out>)
 
 ## What to change, ranked by impact
-1. <change> — fixes <which point above> — <where>
+1. <change>, fixes <which point above>, <where>
 
 ## Not tested
 - <anything skipped or not reachable, and why>

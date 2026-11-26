@@ -72,7 +72,7 @@ Trap: judging the IA by the folder structure. Users see the nav and the labels, 
 
 Where to look: the shared form component and schema (zod/yup/react-hook-form/Formik), server-side validation messages, the submit handler's pending flag.
 
-Trap: client and server validation disagreeing — the client accepts, the server rejects with a raw message.
+Trap: client and server validation disagreeing: the client accepts, the server rejects with a raw message.
 
 ## 5. Loading, empty, and error states
 
@@ -90,7 +90,7 @@ For **every** view that fetches data, check all three. A missing one is a findin
 
 Where to look: `isLoading`/`isError`/`data?.length === 0` branches, Suspense boundaries, error boundaries (`error.tsx`, `ErrorBoundary`), query library defaults, skeleton components.
 
-Trap: a global error boundary exists, so every error "is handled" — but it replaces the whole page and loses the user's input. Handled is not the same as helpful.
+Trap: a global error boundary exists, so every error "is handled", but it replaces the whole page and loses the user's input. Handled is not the same as helpful.
 
 ## 6. Onboarding
 
@@ -140,5 +140,5 @@ Load `references/microcopy.md` for the full guide. Quick checks:
 - WCAG checkpoints as compliance: contrast ratios, ARIA roles, focus order as conformance (route to `expert-accessibility`). Report the *usability* impact only when it hurts all users.
 - Code quality with no user-visible effect.
 - A pattern you prefer when the app consistently uses another that works.
-- Problems on screens outside the target, unless they break the journey you are walking — put those under Notes.
+- Problems on screens outside the target, unless they break the journey you are walking, put those under Notes.
 - Speculative issues with no reachable path.

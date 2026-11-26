@@ -36,8 +36,8 @@ var STORE_KEY = '<product>-redesign-v1';
 var S = {theme: 'system', v: 'a', user: null, force: 'live', failNext: false, proto: false /* + product state: history, favorites, usage… */};
 try { Object.assign(S, JSON.parse(localStorage.getItem(STORE_KEY) || 'null') || {}); } catch (e) {}
 function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch (e) {} }
-var UI = {};   // open menus, drawers, palette, dialogs — reset on route change
-var PAGE = {}; // per-page transient state — reset on route change
+var UI = {};   // open menus, drawers, palette, dialogs, reset on route change
+var PAGE = {}; // per-page transient state, reset on route change
 ```
 
 Product state is shared by all variants, so a favorite added in A shows on B's dashboard; that keeps the comparison fair.

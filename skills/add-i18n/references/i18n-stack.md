@@ -1,6 +1,6 @@
 # Per-stack i18n recipes
 
-Concrete file layouts, routing, and string extraction for the stacks this skill is likely to meet. **Prefer what the project already uses.** Check the installed version first (`npm ls <pkg>`, or the lockfile) — the APIs below move between majors.
+Concrete file layouts, routing, and string extraction for the stacks this skill is likely to meet. **Prefer what the project already uses.** Check the installed version first (`npm ls <pkg>`, or the lockfile), the APIs below move between majors.
 
 ```bash
 rg -n -g '!node_modules' -e 'i18n' -e 'locale' -e 'lang' package.json next.config.* astro.config.* nuxt.config.* svelte.config.* remix.config.* vite.config.* 2>/dev/null | head -40
@@ -24,7 +24,7 @@ rg --files -g '!node_modules' -g 'locales/**' -g 'messages/**' -g 'i18n/**' -g '
 
 ---
 
-## Next.js — App Router
+## Next.js: App Router
 
 Next has i18n built in since v13.4 (the App Router's `[locale]` segment, `i18n` config in `next.config`, and `middleware.ts`). Use it; do not add `next-intl` unless the project already uses it.
 
@@ -59,9 +59,9 @@ const nextConfig = {
 export default nextConfig;
 ```
 
-### Middleware — detection and redirect
+### Middleware: detection and redirect
 
-Detect the locale **once**, redirect, then remember the choice. Do not rewrite every request from `Accept-Language` — the URL must be stable for crawlers and caches.
+Detect the locale **once**, redirect, then remember the choice. Do not rewrite every request from `Accept-Language`, the URL must be stable for crawlers and caches.
 
 ```ts
 // middleware.ts
@@ -97,7 +97,7 @@ export const config = {
 };
 ```
 
-### `app/[locale]/layout.tsx` — `lang` and `dir`
+### `app/[locale]/layout.tsx`: `lang` and `dir`
 
 ```tsx
 import { notFound } from "next/navigation";
@@ -312,13 +312,13 @@ useHead(() => ({ htmlAttrs: { lang: locale.value, dir: dir.value }, link: head.v
 </template>
 ```
 
-`useLocaleHead` emits the `hreflang` alternates and `x-default` automatically. Verify them anyway — the bundled auditor exists for exactly this.
+`useLocaleHead` emits the `hreflang` alternates and `x-default` automatically. Verify them anyway, the bundled auditor exists for exactly this.
 
 ---
 
 ## SvelteKit
 
-SvelteKit has no i18n built in. The idiomatic approach is a `[lang]` route parameter plus a `handle` hook that validates it. (A route group `(lang)` groups files but adds no URL segment — use `[lang]` when the locale must be in the URL.)
+SvelteKit has no i18n built in. The idiomatic approach is a `[lang]` route parameter plus a `handle` hook that validates it. (A route group `(lang)` groups files but adds no URL segment, use `[lang]` when the locale must be in the URL.)
 
 ### Layout
 
@@ -338,7 +338,7 @@ src/lib/i18n/
   ar.json
 ```
 
-### `handle` — validate the locale
+### `handle`: validate the locale
 
 ```ts
 // src/hooks.server.ts
@@ -370,7 +370,7 @@ declare global {
 }
 ```
 
-### Layout — `lang` and `dir`
+### Layout: `lang` and `dir`
 
 ```svelte
 <!-- src/routes/[lang]/+layout.svelte -->
@@ -393,7 +393,7 @@ declare global {
 </html>
 ```
 
-The alternates must point at the *same page* in each locale. Build them from the current route's path, not from a fixed string — a layout that hardcodes `/` produces `/fr/` alternates on every page, which breaks reciprocity.
+The alternates must point at the *same page* in each locale. Build them from the current route's path, not from a fixed string, a layout that hardcodes `/` produces `/fr/` alternates on every page, which breaks reciprocity.
 
 The `lang` param comes from the group directory name in the URL; make the group's segment configurable via `+layout.ts` `entries` if you need `/en/` and `/fr/` rather than a bare group.
 
@@ -523,7 +523,7 @@ Use the tool the stack or the installed library expects. Do not hand-copy string
 The check must fail the build. Pick the one the project can support:
 
 ```bash
-# 1. FormatJS / Lingui already fail on a missing message at compile time — verify it
+# 1. FormatJS / Lingui already fail on a missing message at compile time, verify it
 npx lingui compile --strict
 
 # 2. i18next: compare the extracted catalog against the locale catalogs

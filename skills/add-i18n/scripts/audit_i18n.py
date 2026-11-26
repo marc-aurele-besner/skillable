@@ -271,11 +271,11 @@ def audit(root: Path, base_netloc: str | None) -> dict:
 
 
 def print_markdown(report: dict) -> None:
-    print(f"# i18n / hreflang audit — {report['root']}\n")
+    print(f"# i18n / hreflang audit: {report['root']}\n")
     print(
         f"Pages: {report['pages']}  "
         f"Pages with hreflang alternates: {report['pages_with_alternates']}  "
-        f"Base URL: {report['base_url'] or '(none — same-host links assumed)'}\n"
+        f"Base URL: {report['base_url'] or '(none: same-host links assumed)'}\n"
     )
     print("## Issue counts (pages affected)\n")
     print("| Issue | Pages |\n|-------|-------|")
@@ -292,9 +292,9 @@ def print_markdown(report: dict) -> None:
             + ")"
         )
         if page["issues"]:
-            print(detail + " — " + "; ".join(page["issues"]))
+            print(detail + ": " + "; ".join(page["issues"]))
         else:
-            print(detail + " — ok")
+            print(detail + ": ok")
 
 
 def main() -> int:

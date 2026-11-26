@@ -156,7 +156,7 @@ mod tests {
 
 - Unit tests live in a `#[cfg(test)] mod tests` block; integration tests live in `tests/` and use only the public API.
 - Prefer asserting on `Result`/`Option` variants (`matches!`, `unwrap_err`) over matching on error strings.
-- `tempfile::TempDir` for files — only if the crate is already a dependency.
+- `tempfile::TempDir` for files: only if the crate is already a dependency.
 - `cargo test -- --nocapture` when a test's output matters.
 
 ## RSpec
@@ -267,12 +267,12 @@ Mock at the boundary you do not own, never at the boundary you are testing.
 - Network and third-party APIs (HTTP, email, payment gateways, cloud SDKs).
 - The system clock, randomness, and the filesystem in narrow cases.
 - Slow or expensive collaborators (a search index, a report generator).
-- A collaborator whose only contract is "it returns this" — a repository returning a fixture.
+- A collaborator whose only contract is "it returns this", a repository returning a fixture.
 
 **Never mock:**
 
 - The unit under test, or anything inside it.
-- Pure functions — a mocked pure function is a worse stub.
+- Pure functions: a mocked pure function is a worse stub.
 - The standard library (except the clock).
 - The thing whose behavior the test exists to verify. If the test verifies pricing, do not mock pricing.
 - Everything. If a test needs six mocks, the unit is doing too much.
@@ -295,11 +295,11 @@ Prefer a hand-written fake over a mock framework when the fake is small and the 
 Use a contract test when two sides of an interface are owned by different teams or deployed independently: an HTTP API and its client, a message producer and consumer, a plugin and its host.
 
 - Write the contract **once**, from the consumer's point of view, and run it against both the real provider and the fake.
-- Assert on the wire format the consumer actually parses — status code, headers, body shape — not on internal calls.
+- Assert on the wire format the consumer actually parses, status code, headers, body shape, not on internal calls.
 - Keep the contract file small and versioned with the interface. A contract that changes with every release is not a contract.
 - In Go and Rust, prefer a shared testdata file (golden file) both sides read, so the contract has exactly one source of truth.
 
-Do not add contract tests to a project that has no consumer/producer split — they add maintenance without adding safety.
+Do not add contract tests to a project that has no consumer/producer split, they add maintenance without adding safety.
 
 ## Anti-pattern catalog
 

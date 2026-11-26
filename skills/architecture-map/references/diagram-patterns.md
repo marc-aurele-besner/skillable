@@ -1,6 +1,6 @@
 # Diagram patterns
 
-Diagrams earn their place only when they show the real mechanism — boxes and arrows that match the code. If a diagram would be a list with borders, write the list instead.
+Diagrams earn their place only when they show the real mechanism, boxes and arrows that match the code. If a diagram would be a list with borders, write the list instead.
 
 ## General rules
 

@@ -178,7 +178,7 @@ Look for:
 
 - Personal taste with no user-visible cost ("I would use a warmer gray").
 - Re-designs. A finding fixes a defect in the current design language; it does not propose a new one. If the whole direction is the problem, say so once in the summary and point at `wireframe-redesign`.
-- Flow and task logic (wrong step order, confusing copy, missing confirmation) — that is `expert-ux`.
+- Flow and task logic (wrong step order, confusing copy, missing confirmation), that is `expert-ux`.
 - Performance metrics beyond what a visual issue causes (that is `expert-frontend-performance` or `audit-web-vitals`), SEO metadata (`optimize-seo-aeo`), and full accessibility audits beyond contrast, focus visibility, and target size (`expert-accessibility`).
 - Rules the project's linter or stylelint config already enforces.
 - Values the project's own design system sanctions, even if you would pick differently.

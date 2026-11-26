@@ -19,9 +19,9 @@ argument-hint: "[path-or-module] [focus: business-logic|errors|security|recent|a
 
 Goal: find behavior in the repo that genuinely has no test, write real tests for it, prove the suite stays green, and open one PR that shows the coverage delta. Do not merge.
 
-Tests that only make the coverage number move are worse than no tests: they freeze the implementation and cost more to maintain than they buy. Write the tests you would defend in review — assert observable behavior, keep them deterministic, and make each one fail when the behavior breaks.
+Tests that only make the coverage number move are worse than no tests: they freeze the implementation and cost more to maintain than they buy. Write the tests you would defend in review, assert observable behavior, keep them deterministic, and make each one fail when the behavior breaks.
 
-Not this skill: fixing a red suite (use `fix-failing-ci`), turning up the coverage percentage without writing meaningful assertions, benchmarking or load testing, end-to-end UI automation when the gap is in a pure function, or test-writing for a codebase with no test harness at all (report that first — introducing a framework is a decision, not a side effect).
+Not this skill: fixing a red suite (use `fix-failing-ci`), turning up the coverage percentage without writing meaningful assertions, benchmarking or load testing, end-to-end UI automation when the gap is in a pure function, or test-writing for a codebase with no test harness at all (report that first, introducing a framework is a decision, not a side effect).
 
 ## Inputs
 
@@ -57,14 +57,14 @@ Look for:
 | Rust | `Cargo.toml` | `cargo test`, existing `#[test]` and `#[cfg(test)]` layout |
 | Ruby | `Gemfile`, `spec/` vs `test/` | RSpec (`rspec`) or Minitest, factory/Fixture usage |
 | Java/Kotlin | `pom.xml`, `build.gradle` | JUnit 5, TestNG, Maven/Gradle test task |
-| CI | `.github/workflows/*.yml` | The command CI actually runs — that is the contract |
+| CI | `.github/workflows/*.yml` | The command CI actually runs, that is the contract |
 
 Then read two or three existing test files and note:
 
-- **Naming** — `test_*.py`, `*.test.ts`, `*_test.go`, `*_spec.rb`, `*Test.java`; where they live.
-- **Style** — `describe`/`it` vs plain functions; `@pytest.mark.parametrize` vs loops; `test.each` vs `for`; Go table tests; RSpec `describe`/`context`/`it`.
-- **Fixtures and helpers** — conftest fixtures, factories, builders, `testdata/` files, custom matchers, setup/teardown hooks. Reuse them; never re-create them.
-- **Determinism helpers already present** — fake clocks, seeded RNG, recorded HTTP fixtures, `tmp_path`-style temp dirs.
+- **Naming**: `test_*.py`, `*.test.ts`, `*_test.go`, `*_spec.rb`, `*Test.java`; where they live.
+- **Style**: `describe`/`it` vs plain functions; `@pytest.mark.parametrize` vs loops; `test.each` vs `for`; Go table tests; RSpec `describe`/`context`/`it`.
+- **Fixtures and helpers**: conftest fixtures, factories, builders, `testdata/` files, custom matchers, setup/teardown hooks. Reuse them; never re-create them.
+- **Determinism helpers already present**: fake clocks, seeded RNG, recorded HTTP fixtures, `tmp_path`-style temp dirs.
 
 ## 2. Baseline before you touch anything
 
@@ -80,7 +80,7 @@ cargo test
 
 Record: pass count, fail count, skip count, and wall-clock duration.
 
-**If the suite is already red, stop.** Do not add tests on top of a broken baseline — the failure will be indistinguishable from your change. Report the failing tests and point at `fix-failing-ci` (or the repo's own issue tracker) instead. A suite that is red *only because of flakiness or environment* (missing local service, network) needs the environment fixed first, not a workaround in the new tests.
+**If the suite is already red, stop.** Do not add tests on top of a broken baseline, the failure will be indistinguishable from your change. Report the failing tests and point at `fix-failing-ci` (or the repo's own issue tracker) instead. A suite that is red *only because of flakiness or environment* (missing local service, network) needs the environment fixed first, not a workaround in the new tests.
 
 Save the baseline coverage number when the project has coverage tooling (step 3). It is the "before" column of the PR.
 
@@ -110,12 +110,12 @@ It is stdlib-only and read-only. It understands Python, JavaScript/TypeScript, G
 
 Then rank the candidates. Priority order:
 
-1. **Business logic** — pricing, permissions, state machines, validation rules, migrations.
-2. **Error and edge paths** — the `except` branches, the empty-collection guards, the boundary values, the off-by-one.
-3. **Security-sensitive code** — authentication, authorization, input validation, secret handling, path traversal, injection.
-4. **Recently changed code** — `git log --since='6 months ago' --name-only --pretty=format: | sort -u` and the diff on the default branch. New code arrives untested.
-5. **Code a past bug touched** — `git log --grep='fix' --name-only` on the hot files; a regression test belongs where the bug lived.
-6. **Deliberately untested code** — if the repo has a `# pragma: no cover`, a `// istanbul ignore` marker, or a documented "integration-only" module, respect it and skip it.
+1. **Business logic**, pricing, permissions, state machines, validation rules, migrations.
+2. **Error and edge paths**, the `except` branches, the empty-collection guards, the boundary values, the off-by-one.
+3. **Security-sensitive code**, authentication, authorization, input validation, secret handling, path traversal, injection.
+4. **Recently changed code**, `git log --since='6 months ago' --name-only --pretty=format: | sort -u` and the diff on the default branch. New code arrives untested.
+5. **Code a past bug touched**, `git log --grep='fix' --name-only` on the hot files; a regression test belongs where the bug lived.
+6. **Deliberately untested code**, if the repo has a `# pragma: no cover`, a `// istanbul ignore` marker, or a documented "integration-only" module, respect it and skip it.
 
 Also note what is **not** worth testing: pure getters with no logic, generated code, type declarations, and framework glue.
 
@@ -123,10 +123,10 @@ Score each candidate with its tier:
 
 | Tier | Meaning | Action |
 |------|---------|--------|
-| **P0 — money, security, data loss** | Auth/authz, pricing, billing, input validation, serialization of untrusted data, anything whose bug corrupts state | Fix first; cover both the allow and the deny path |
-| **P1 — core behavior** | Business rules, state transitions, error handling, boundary and edge cases of core paths | Fix |
-| **P2 — supporting code** | Helpers, adapters, formatting, configuration logic, integration glue | Fix when cheap and stable |
-| **P3 — nice to have** | Cosmetic branches, rarely hit fallbacks, convenience wrappers | Fix only when the file is small and stable |
+| **P0: money, security, data loss** | Auth/authz, pricing, billing, input validation, serialization of untrusted data, anything whose bug corrupts state | Fix first; cover both the allow and the deny path |
+| **P1: core behavior** | Business rules, state transitions, error handling, boundary and edge cases of core paths | Fix |
+| **P2: supporting code** | Helpers, adapters, formatting, configuration logic, integration glue | Fix when cheap and stable |
+| **P3: nice to have** | Cosmetic branches, rarely hit fallbacks, convenience wrappers | Fix only when the file is small and stable |
 | **Report only** | Generated code, vendored code, framework glue, code with an explicit coverage-ignore marker, performance-critical paths where a unit test would be misleading | List as follow-ups; do not write a test |
 
 ## 4. Write real tests
@@ -134,11 +134,11 @@ Score each candidate with its tier:
 Assert **observable behavior**, not implementation details. The test must fail when the behavior breaks and must not fail when the implementation is rewritten.
 
 - **One behavior per test.** The name says what broke: `test_divide_by_zero_raises_value_error`, not `test_divide`.
-- **Assert on outputs, state, and effects** — return values, raised exceptions, emitted events, persisted records, the HTTP request that was made. Not on internal variables or call order.
+- **Assert on outputs, state, and effects**, return values, raised exceptions, emitted events, persisted records, the HTTP request that was made. Not on internal variables or call order.
 - **Happy path plus at least one failure or edge path per target.** A target with only a happy-path test is not covered in any meaningful sense.
 - **Deterministic.** No network, no wall-clock, no real randomness, no sleeping, no writes outside a temp dir, no dependency on test execution order, no dependence on a previous test's leftovers. Use the project's existing fake clock / seeded RNG / temp-dir fixture when it has one.
 - **Reuse the repo's fixtures and helpers.** Put shared setup in the repo's existing fixture mechanism (pytest `conftest.py`, RSpec factories, Go helper packages, Go `t.TempDir()`, Jest setup files), not in a new bespoke helper.
-- **Match the surrounding style** — naming, structure, assertion library, `expect` vs `assert`, error-message style, table-test layout.
+- **Match the surrounding style**: naming, structure, assertion library, `expect` vs `assert`, error-message style, table-test layout.
 
 Never do these:
 
@@ -153,7 +153,7 @@ Per-framework patterns (pytest, Jest/Vitest, Go, Rust, RSpec, JUnit, table-drive
 
 ## 5. Do not invent requirements
 
-Expectations come from the code, its types and signatures, its docstrings and comments, the README, the API docs, and the conventions of the existing test suite. If the code says "raise `ValidationError` when the amount is negative", the test asserts `ValidationError` — not `ValueError`, and not a message you made up.
+Expectations come from the code, its types and signatures, its docstrings and comments, the README, the API docs, and the conventions of the existing test suite. If the code says "raise `ValidationError` when the amount is negative", the test asserts `ValidationError`, not `ValueError`, and not a message you made up.
 
 **Ask once, don't guess:**
 
@@ -163,7 +163,7 @@ Expectations come from the code, its types and signatures, its docstrings and co
 - A security rule has no documented expectation (what counts as a valid token, what the rate limit is).
 - The repo has two plausible "correct" behaviors and no test decides between them.
 
-Ask a single, concrete question with the two candidate assertions spelled out. Never encode a guess as an expectation, and never write a test that asserts whatever the code currently does if the code looks wrong — that freezes the bug.
+Ask a single, concrete question with the two candidate assertions spelled out. Never encode a guess as an expectation, and never write a test that asserts whatever the code currently does if the code looks wrong, that freezes the bug.
 
 ## 6. Run and prove
 
@@ -182,7 +182,7 @@ pytest -q
 
 Requirements:
 
-- The new tests pass, on purpose and for the right reason. A test that passes because of an early `return` or a swallowed exception is a broken test — check the failure path actually runs by temporarily inverting the expectation locally, then revert.
+- The new tests pass, on purpose and for the right reason. A test that passes because of an early `return` or a swallowed exception is a broken test, check the failure path actually runs by temporarily inverting the expectation locally, then revert.
 - The full suite is **as green as the baseline, or greener**. Same pass count or more, same fail count or fewer, no new skips.
 - The suite duration has not ballooned. A suite that goes from 10 s to 90 s is a problem; look for accidental real I/O, sleeps, or per-test setup that should be shared.
 - Coverage after is not worse than before, and the delta is reported per file and per project.
@@ -200,7 +200,7 @@ When the project has real coverage tooling, use its report for the "before → a
 A test that breaks on every refactor is a liability, and it teaches the team to delete tests. Before writing, check:
 
 - Does the test assert only on the **public** API? Public-API-level tests survive internal refactors.
-- Would the test still make sense if the implementation were rewritten from scratch? If not, it is an implementation test — rewrite it.
+- Would the test still make sense if the implementation were rewritten from scratch? If not, it is an implementation test, rewrite it.
 - Is the setup shared through the repo's fixture mechanism, or copy-pasted in every file?
 - Is every assertion necessary? Remove assertions that cannot fail for a wrong implementation.
 - Does the test name explain the behavior, so a future reader can search for it?
@@ -211,10 +211,10 @@ Prefer a small number of table-driven cases over many near-duplicate functions. 
 ## Ask, don't assume
 
 - **Introducing a test framework** into a repo that has none (or a second framework alongside an existing one) is an architecture decision. Propose it, do not just add it.
-- **Changing production code** to make a test pass. If the source is wrong, that is a bug fix — separate PR, separate discussion, explicit note in this PR body.
+- **Changing production code** to make a test pass. If the source is wrong, that is a bug fix, separate PR, separate discussion, explicit note in this PR body.
 - **Adding a new dev dependency** (a coverage plugin, a mocking library, a time-freezing library). Only if the project already uses the same one; otherwise list it as a proposal.
 - **Slowing the suite** past a threshold the repo cares about. Ask, or keep the new tests out of the default path and say why.
-- **Deleting or rewriting existing tests** to make them consistent with the new ones. Out of scope — unless the existing test encodes the bug, in which case say so and let the user decide.
+- **Deleting or rewriting existing tests** to make them consistent with the new ones. Out of scope, unless the existing test encodes the bug, in which case say so and let the user decide.
 - **Testing private helpers.** If the only way to reach the behavior is through a private function, test it through the public path instead.
 
 ## Verify
@@ -238,10 +238,10 @@ git checkout -b feat/add-missing-tests origin/<default-branch>
 
 Commit in small logical steps, one target area per commit, in this order:
 
-1. **Test helpers and fixtures** — shared setup the new tests need, in the repo's existing fixture mechanism.
-2. **P0 targets** — business, security, and error paths, one commit per module.
-3. **P1 targets** — core behavior and edge cases, one commit per module.
-4. **P2 targets** — supporting code, only if cheap and stable.
+1. **Test helpers and fixtures**, shared setup the new tests need, in the repo's existing fixture mechanism.
+2. **P0 targets**, business, security, and error paths, one commit per module.
+3. **P1 targets**, core behavior and edge cases, one commit per module.
+4. **P2 targets**, supporting code, only if cheap and stable.
 
 Follow the repo's commit convention. Example messages:
 
@@ -258,7 +258,7 @@ Watch CI (`gh pr checks --watch`). Fix failures caused by this change; record un
 ## Report
 
 ```markdown
-# Missing tests — <project>
+# Missing tests: <project>
 
 **Harness:** <framework> (`<command>`)  **Coverage tool:** <tool or "none installed">
 **PR:** <url> | nothing worth testing found, no PR
@@ -273,14 +273,14 @@ Watch CI (`gh pr checks --watch`). Fix failures caused by this change; record un
 | Unreferenced public symbols | 37 | 21 |
 
 ## Added
-- P0 `src/billing/proration.py` — rounding boundary, zero-amount rejection (6 tests)
-- P1 `src/auth/tokens.py` — expired, malformed, wrong-audience tokens (5 tests)
+- P0 `src/billing/proration.py`: rounding boundary, zero-amount rejection (6 tests)
+- P1 `src/auth/tokens.py`: expired, malformed, wrong-audience tokens (5 tests)
 - P2 …
 
 ## Needs your decision
 - `src/legacy/importer.py`: no test exists for the CSV path, and the expected column order is not documented anywhere. Which order is correct?
 
 ## Not tested (and why)
-- `src/generated/` — generated code
-- `src/auth/tokens.py:refresh()` — covered by an integration test, not a unit test
+- `src/generated/`: generated code
+- `src/auth/tokens.py:refresh()`: covered by an integration test, not a unit test
 ```

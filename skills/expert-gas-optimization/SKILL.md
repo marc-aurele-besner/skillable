@@ -18,7 +18,7 @@ argument-hint: "[path|Contract|pr-url] [--chain mainnet|optimism|base|arbitrum|.
 
 # Expert Gas Optimization
 
-Goal: tell the user which changes make their contracts measurably cheaper on the paths their users actually call, how much each saves, and what each costs in safety, readability, or flexibility — and nothing else. Every number in the report comes from a measurement, not from a rule of thumb.
+Goal: tell the user which changes make their contracts measurably cheaper on the paths their users actually call, how much each saves, and what each costs in safety, readability, or flexibility, and nothing else. Every number in the report comes from a measurement, not from a rule of thumb.
 
 The order that matters: **scope the hot paths → measure a baseline → find candidates → prove each saving by re-measuring → reject anything that weakens security → report what survives.** Three measured findings worth 15 % on `swap()` beat thirty "use `++i`" nits. If the code is already efficient, say so and stop.
 
@@ -67,14 +67,14 @@ forge inspect <Contract> storage-layout               # slots, offsets, and type
 
 Hardhat: `REPORT_GAS=true npx hardhat test` with `hardhat-gas-reporter` if it is already configured; otherwise note that runtime numbers come from a static read.
 
-Validation gate — do not continue until all hold:
+Validation gate: do not continue until all hold:
 
 - The build passes and the test suite is green at baseline. If tests fail, report that first; numbers from a broken suite mean nothing.
 - Each hot path has at least one test that exercises it with realistic state (warm vs cold slots, non-zero balances). If a hot path has no gas-relevant test, write a minimal benchmark test **in the throwaway worktree only** and say so in the report.
 - Fuzz-test gas varies with inputs: compare medians (`~`), not means (`μ`).
 - Record the Foundry version (`forge --version`): gas output can shift between versions.
 
-If the project uses in-test gas snapshots (`vm.snapshotGasLastCall`, `vm.startSnapshotGas` writing to `snapshots/`), use those for the hot paths — they isolate the call from test setup.
+If the project uses in-test gas snapshots (`vm.snapshotGasLastCall`, `vm.startSnapshotGas` writing to `snapshots/`), use those for the hot paths, they isolate the call from test setup.
 
 ## 3. Set up the throwaway worktree
 
@@ -91,7 +91,7 @@ Never commit there, never push from it, and remove it at the end (`git worktree 
 
 ## 4. Find candidates
 
-Walk the hot paths first, then deploy cost, then L2 data cost if the chain is a rollup. The catalog of patterns — signal, fix, typical saving, and when each is unsafe — is in [references/patterns.md](references/patterns.md); load it now. Load [references/compiler-and-l2.md](references/compiler-and-l2.md) when compiler settings, contract size, or an L2 target are in scope.
+Walk the hot paths first, then deploy cost, then L2 data cost if the chain is a rollup. The catalog of patterns, signal, fix, typical saving, and when each is unsafe, is in [references/patterns.md](references/patterns.md); load it now. Load [references/compiler-and-l2.md](references/compiler-and-l2.md) when compiler settings, contract size, or an L2 target are in scope.
 
 For each hot function, read it top to bottom and list:
 
@@ -108,7 +108,7 @@ Candidates are hypotheses until step 5 measures them. Skip micro-optimizations t
 For each candidate, one at a time, in the throwaway worktree:
 
 1. Apply the smallest change that implements it.
-2. `forge build` and run the **full** test suite (`forge test`, including fuzz and invariant tests). A change that breaks or alters any test's behavior is dropped or reported with that caveat — never by editing the test to pass.
+2. `forge build` and run the **full** test suite (`forge test`, including fuzz and invariant tests). A change that breaks or alters any test's behavior is dropped or reported with that caveat, never by editing the test to pass.
 3. Re-measure: `forge snapshot --snap <scratch>/after-<id>.gas-snapshot`, plus `forge test --gas-report` for per-function numbers and `forge build --sizes` for deploy impact.
 4. Compare with the bundled diff script (stdlib-only, read-only):
 
@@ -152,7 +152,7 @@ Order by severity, then by gas saved × call frequency. For each finding give: `
 ## 8. Clean up and offer next steps
 
 - Remove the throwaway worktree and scratch snapshots; confirm the user's tree is unchanged (`git status` shows nothing new from this run).
-- Offer, do not do: "Post this as a PR review?" (`gh pr review <n> --comment --body-file <file>`, never `--approve`/`--request-changes`), or "Open a fix PR with findings 1–3?" — only on an explicit yes, on a new branch from the default branch, one commit per finding with the measured delta in the message, the `.gas-snapshot` updated in the same commit, never force-push, never merge.
+- Offer, do not do: "Post this as a PR review?" (`gh pr review <n> --comment --body-file <file>`, never `--approve`/`--request-changes`), or "Open a fix PR with findings 1–3?", only on an explicit yes, on a new branch from the default branch, one commit per finding with the measured delta in the message, the `.gas-snapshot` updated in the same commit, never force-push, never merge.
 
 ## Gotchas
 
@@ -172,20 +172,20 @@ Order by severity, then by gas saved × call frequency. For each finding give: `
 ## Output format
 
 ```markdown
-# Gas review — <project or contract>
+# Gas review: <project or contract>
 
 **Scope:** <paths / contracts / PR>  **Chain:** <chain (assumed?)>  **Toolchain:** <forge x.y.z, solc 0.8.x, optimizer runs N, via_ir on/off, evm_version>
-**Hot paths:** <function — why (usage source)>, …
-**Verdict:** <n material findings, ~X gas (Y %) saved on <top path> | No material gas findings — the code is already efficient>
+**Hot paths:** <function: why (usage source)>, …
+**Verdict:** <n material findings, ~X gas (Y %) saved on <top path> | No material gas findings, the code is already efficient>
 
 ## Baseline
 | Function / test | Median gas | Deploy (gas / bytes) |
 |-----------------|-----------:|---------------------:|
-| `Vault.deposit` | 84 210 | — |
-| `Vault` | — | 1 912 044 / 8 731 |
+| `Vault.deposit` | 84 210 |: |
+| `Vault` |: | 1 912 044 / 8 731 |
 
 ## Findings
-1. **[High]** `src/Vault.sol:118` — `_harvest` copies each 5-slot `Strategy` struct to memory but uses only `debt` and `lastReport`.
+1. **[High]** `src/Vault.sol:118`, `_harvest` copies each 5-slot `Strategy` struct to memory but uses only `debt` and `lastReport`.
    - Fix: read through a storage pointer so only the two slots used are loaded.
      ```solidity
      Strategy storage s = strategies[i];   // was: Strategy memory s = strategies[i];
@@ -195,7 +195,7 @@ Order by severity, then by gas saved × call frequency. For each finding give: `
 2. …
 
 ## Rejected for security
-- `src/Vault.sol:72` — dropping `nonReentrant` on `withdraw` would save ~2 300 gas; the function makes an external call before updating shares. Not proposed.
+- `src/Vault.sol:72`: dropping `nonReentrant` on `withdraw` would save ~2 300 gas; the function makes an external call before updating shares. Not proposed.
 
 ## Needs your decision
 - Raising `optimizer_runs` 200 → 1 000 000: −1.9 % on `deposit`/`withdraw`, +6.4 % deploy (+38 211 gas). Break-even ≈ 2 400 calls.
@@ -211,11 +211,11 @@ Order by severity, then by gas saved × call frequency. For each finding give: `
 When there are no material findings, keep the report short: scope, toolchain, baseline table, the verdict line, and at most two Info items.
 
 ```markdown
-# Gas review — <project or contract>
+# Gas review: <project or contract>
 
 **Scope:** <…>  **Chain:** <…>  **Toolchain:** <…>
 **Hot paths:** <…>
-**Verdict:** No material gas findings — the code is already efficient.
+**Verdict:** No material gas findings: the code is already efficient.
 
 ## Baseline
 <table as above>

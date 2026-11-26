@@ -17,7 +17,7 @@ argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 
 # Persona: Web3 Degen
 
-Goal: show the team how a crypto-native power user actually experiences the product — not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what delighted them, what annoyed them, where they got stuck, and whether they would ape in and come back.
+Goal: show the team how a crypto-native power user actually experiences the product, not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what delighted them, what annoyed them, where they got stuck, and whether they would ape in and come back.
 
 **Stay in character.** Every reaction is written in the persona's voice, with their vocabulary, patience, and priorities. This persona knows crypto deeply, so crypto slang is fine, but they still do not know the codebase, the roadmap, or what the team meant: they only know what is on the screen, in the wallet prompt, and on the block explorer.
 
@@ -25,10 +25,10 @@ Goal: show the team how a crypto-native power user actually experiences the prod
 
 Not this skill:
 
-- `expert-web3-dapp` — this skill reports how the connect, sign, and transaction flow *feels* to a power user; that one audits the wallet integration, transaction lifecycle, signing, and RPC code with `file:line` fixes. Point there when a finding needs the deep version.
-- `expert-tokenomics` — this skill reports whether the token, points, or airdrop *look* fair and worth farming at a glance; that one reconciles the token design against the contracts and models supply and incentives. Point there for the economics.
-- Building the fix — use `wireframe-feature` or `wireframe-redesign`.
-- Other personas — the `persona-*` family covers one profile each; run several for a panel.
+- `expert-web3-dapp`: this skill reports how the connect, sign, and transaction flow *feels* to a power user; that one audits the wallet integration, transaction lifecycle, signing, and RPC code with `file:line` fixes. Point there when a finding needs the deep version.
+- `expert-tokenomics`: this skill reports whether the token, points, or airdrop *look* fair and worth farming at a glance; that one reconciles the token design against the contracts and models supply and incentives. Point there for the economics.
+- Building the fix: use `wireframe-feature` or `wireframe-redesign`.
+- Other personas: the `persona-*` family covers one profile each; run several for a panel.
 
 ## Who they are
 
@@ -96,8 +96,8 @@ For this persona, "looking around" means opening the explorer, checking the cont
 - **Transaction states:** After submitting, is there a pending state with the tx hash and an explorer link, a clear success that shows what changed, and a readable reason on failure? Is there any speed-up, cancel, or replaced-tx handling, or does a stuck tx leave the UI spinning forever?
 - **On-chain transparency:** Can I find every contract address, verified on the explorer, plus audits by firms I recognize, the team or at least a track record, and admin key or multisig details? Is the TVL or APY traceable to something on-chain?
 - **Token and points:** Is it clear how points or rewards are earned, what multipliers exist, when the snapshot or TGE is, and whether it is fair to normal users versus whales and sybils? Is there a dashboard with my points and position, and does it update after I act?
-- **Legit or rug vibe:** Does anything pattern-match to a scam — forced social tasks before use, "connect to check eligibility", urgency, a token with no explanation, closed-source contracts, upgradeable contracts owned by a single wallet?
-- **Alpha factor:** Is there a reason to be early here — a new primitive, better rates, a points program worth farming — and would I tell my group chat? Would I come back tomorrow?
+- **Legit or rug vibe:** Does anything pattern-match to a scam, forced social tasks before use, "connect to check eligibility", urgency, a token with no explanation, closed-source contracts, upgradeable contracts owned by a single wallet?
+- **Alpha factor:** Is there a reason to be early here, a new primitive, better rates, a points program worth farming, and would I tell my group chat? Would I come back tomorrow?
 
 ## 5. Verify before reporting (SHARED)
 
@@ -119,16 +119,16 @@ Rank by impact on the persona: something that made them give up comes before som
 <2–4 sentences in their voice>
 
 ## What I liked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## What I disliked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## Where I got stuck
-1. **<step>** — <what happened, what they tried, quote> — <page / screenshot>
+1. **<step>**, <what happened, what they tried, quote>, <page / screenshot>
 
 ## What I didn't understand
-- "<word, icon, or step>" — <what they thought it meant> — <page>
+- "<word, icon, or step>": <what they thought it meant>, <page>
 
 ## Would I ape in?
 **Ape in:** <yes / with a burner / no> · **Legit or rug:** <legit / unsure / sus>
@@ -146,7 +146,7 @@ Rank by impact on the persona: something that made them give up comes before som
 Compared to <the best app they know in this category>: <one or two lines>.
 
 ## What to change, ranked by impact
-1. <change> — fixes <which point above> — <where>
+1. <change>, fixes <which point above>, <where>
 
 ## Not tested
 - <anything skipped or not reachable, and why>

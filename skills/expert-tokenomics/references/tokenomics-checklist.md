@@ -1,6 +1,6 @@
 # Tokenomics checklist
 
-Load this in step 5. Walk only the sections the target touches. Each item is a question; a "no" or "unknown" is a candidate finding that still has to pass the verification gate in SKILL.md. Rough thresholds are heuristics from common practice, not rules — say so when you use one.
+Load this in step 5. Walk only the sections the target touches. Each item is a question; a "no" or "unknown" is a candidate finding that still has to pass the verification gate in SKILL.md. Rough thresholds are heuristics from common practice, not rules, say so when you use one.
 
 ## Contents
 

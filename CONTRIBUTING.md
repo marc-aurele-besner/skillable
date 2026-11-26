@@ -39,7 +39,7 @@ Before submitting, verify:
 - [ ] `name` is lowercase with hyphens only and matches the directory
 - [ ] `description` is under 1024 characters and written in third person
 - [ ] `SKILL.md` is under 500 lines
-- [ ] Instructions are actionable — steps, not essays
+- [ ] Instructions are actionable: steps, not essays
 - [ ] No secrets, API keys, or environment-specific paths hardcoded
 - [ ] Scripts (if any) are documented and safe to run
 - [ ] Terminology is consistent throughout the skill

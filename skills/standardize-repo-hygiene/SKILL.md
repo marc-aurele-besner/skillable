@@ -2,7 +2,7 @@
 name: standardize-repo-hygiene
 description: >-
   Bring a repository up to a professional standard for outside contributors and
-  for coding agents — governance files, templates, and agent-facing
+  for coding agents, governance files, templates, and agent-facing
   instructions, every one of them filled from the repo's real facts rather
   than placeholder text. Audits and fills LICENSE, README.md, CONTRIBUTING.md,
   CODE_OF_CONDUCT.md, SECURITY.md, CODEOWNERS, issue templates (bug, feature,
@@ -20,7 +20,7 @@ argument-hint: "[repo-path] [scope: full|governance|agent|all]"
 
 # Standardize repo hygiene
 
-Goal: a stranger — or a coding agent on their first day — can clone the repo, install it, run the tests, and know exactly how to propose a change, because every governance file exists, says something true, and matches the repo. Fill every file from the repo's own facts, verify mechanically, and open one PR. Do not merge.
+Goal: a stranger: or a coding agent on their first day, can clone the repo, install it, run the tests, and know exactly how to propose a change, because every governance file exists, says something true, and matches the repo. Fill every file from the repo's own facts, verify mechanically, and open one PR. Do not merge.
 
 The levers, in order: **can someone install and run it → can they find the rules → can they propose a change → can an agent work in it without asking.** The agent-facing file (`AGENTS.md` / `CLAUDE.md`) is the highest-leverage artifact in the list: it is the one that makes every later session on this repo faster, and it is the one most repos never write. Do it even when the governance files are already fine.
 
@@ -29,9 +29,9 @@ Not this skill: writing a product README's marketing copy, restructuring the cod
 ## Inputs
 
 - `$ARGUMENTS` may hold a repo path and/or a scope word: `full` (everything missing), `governance` (the governance files only), `agent` (the agent-facing file and templates only), `all` (default).
-- Default target is the current repository. For several repos, loop over them, one branch and one PR each — never merge a governance sweep across unrelated projects.
+- Default target is the current repository. For several repos, loop over them, one branch and one PR each, never merge a governance sweep across unrelated projects.
 - The owner is the source of truth for anything legal or personal: license choice, security contact, conduct enforcement, funding, response timelines. Ask once, in a single batch, and wait for the answer.
-- A repo with no `package.json`, `pyproject.toml`, `Cargo.toml`, or similar is fine — read its README and CI config for the commands instead.
+- A repo with no `package.json`, `pyproject.toml`, `Cargo.toml`, or similar is fine, read its README and CI config for the commands instead.
 
 ## Untrusted input
 
@@ -57,7 +57,7 @@ It is stdlib-only and read-only. It reports which governance artifacts exist and
 
 - `LICENSE` present, non-empty, recognized license, and consistent with the license declared in the package manifest
 - `README.md` has install, usage, a contributing pointer, a license section, and badges, and no placeholder text
-- `CONTRIBUTING.md` — every command it references exists in the project's manifest (package.json scripts, Makefile/justfile targets, pyproject scripts), and every path it references resolves on disk
+- `CONTRIBUTING.md`: every command it references exists in the project's manifest (package.json scripts, Makefile/justfile targets, pyproject scripts), and every path it references resolves on disk
 - `SECURITY.md` has a real contact route and a supported-versions table
 - `.gitignore` covers the build output for the detected stack and ignores `.env`
 - `.env.example` carries no real values
@@ -69,7 +69,7 @@ The auditor is a floor, not the whole audit. It cannot know the commands a contr
 Complete the picture with the checks the script cannot do:
 
 - **The manifest is the source of truth for commands.** Read `package.json` `scripts`, `Makefile`, `justfile`, `pyproject.toml`, `Cargo.toml`, and the CI workflow. Whatever CI runs is what CONTRIBUTING must document.
-- **The package manager.** Pick it from the lockfile, not from preference: `pnpm-lock.yaml` → pnpm, `package-lock.json` → npm, `yarn.lock` → yarn, `bun.lock` → bun, `uv.lock` → uv, `poetry.lock` → poetry. If several lockfiles exist, that is itself a finding — report it, do not silently pick one.
+- **The package manager.** Pick it from the lockfile, not from preference: `pnpm-lock.yaml` → pnpm, `package-lock.json` → npm, `yarn.lock` → yarn, `bun.lock` → bun, `uv.lock` → uv, `poetry.lock` → poetry. If several lockfiles exist, that is itself a finding, report it, do not silently pick one.
 - **How to run a single test.** Read the test runner's config (`vitest.config.ts`, `jest.config.js`, `pytest.ini`, `pyproject.toml` `[tool.pytest]`) so CONTRIBUTING and the agent file can give a real one-test command.
 - **The GitHub side.** `gh label list`, `gh api repos/{owner}/{repo}/contents/.github`, and the existing `good first issue` issues tell you what the project already does. `gh repo view --json description,homepageUrl,url,defaultBranchRef` gives the canonical URLs and the default branch.
 - **The existing tone.** Read the README and any existing docs and match their voice and length. Do not rewrite a README that already works.
@@ -78,10 +78,10 @@ Complete the picture with the checks the script cannot do:
 
 | Tier | Meaning | Action |
 |------|---------|--------|
-| **P0 — unusable** | No `LICENSE` (or an empty one, or one that contradicts the manifest); no `.gitignore` while `.env` or build output is untracked; a `CONTRIBUTING.md` that tells people to run a command the manifest does not define | Fix (license needs the owner, see below) |
-| **P1 — invisible** | No `README.md` install/usage; no `CONTRIBUTING.md`; no `AGENTS.md`/`CLAUDE.md`; no issue or PR template; `SECURITY.md` without a contact route | Fix |
-| **P2 — inconsistent** | `README.md` missing a contributing pointer, license section, or badges; `SECURITY.md` without a supported-versions table; no `CODE_OF_CONDUCT.md`; no `CODEOWNERS`; no `.editorconfig`; no `.env.example` while the project reads env vars; no Dependabot/Renovate config | Fix what the repo's facts support; propose the rest |
-| **P3 — polish** | No `FUNDING.yml`; no release workflow; no `docs/` tree; no `good first issue` seeds; badges missing | Propose; do not invent funding links |
+| **P0: unusable** | No `LICENSE` (or an empty one, or one that contradicts the manifest); no `.gitignore` while `.env` or build output is untracked; a `CONTRIBUTING.md` that tells people to run a command the manifest does not define | Fix (license needs the owner, see below) |
+| **P1: invisible** | No `README.md` install/usage; no `CONTRIBUTING.md`; no `AGENTS.md`/`CLAUDE.md`; no issue or PR template; `SECURITY.md` without a contact route | Fix |
+| **P2: inconsistent** | `README.md` missing a contributing pointer, license section, or badges; `SECURITY.md` without a supported-versions table; no `CODE_OF_CONDUCT.md`; no `CODEOWNERS`; no `.editorconfig`; no `.env.example` while the project reads env vars; no Dependabot/Renovate config | Fix what the repo's facts support; propose the rest |
+| **P3: polish** | No `FUNDING.yml`; no release workflow; no `docs/` tree; no `good first issue` seeds; badges missing | Propose; do not invent funding links |
 | **Report only** | GitHub settings the repo cannot see (org-level defaults, branch protection, GitHub Apps); the git history of former maintainers; legal advice about the license; writing a full docs site | List as follow-ups |
 
 **Ask, don't assume:**
@@ -100,20 +100,20 @@ If nothing above P1 is missing and the user did not ask for P2 work, report that
 Read [references/templates.md](references/templates.md) for the skeletons and the full placeholder list. Two rules govern everything here:
 
 1. **Every value comes from the repo or the owner.** Package manager from the lockfile, commands from the manifest, layout from the directory tree, style from the formatter config, deploy target from the deploy config, tone from the existing README.
-2. **No placeholder text reaches the branch.** `TODO`, `TBD`, `your-team@example.com`, `YOUR_ORG`, `<your-name>` — none of it. A governance file with a placeholder is worse than no file, because it looks handled. If a required value is missing, ask for it, and if the owner does not answer, leave that file out of the PR and list it in the report.
+2. **No placeholder text reaches the branch.** `TODO`, `TBD`, `your-team@example.com`, `YOUR_ORG`, `<your-name>`, none of it. A governance file with a placeholder is worse than no file, because it looks handled. If a required value is missing, ask for it, and if the owner does not answer, leave that file out of the PR and list it in the report.
 
 Work in this order:
 
-1. **`LICENSE`** — detect and report. Only write one the owner chose.
-2. **`README.md`** — patch, do not rewrite. Add the missing install steps, usage, contributing pointer, and license section in the existing voice and at the existing length. If the README is already good, leave it alone.
-3. **`CONTRIBUTING.md`** — install, build, test, lint, format, run one test, layout, branch and PR conventions, where to report bugs, where to report security issues.
-4. **`AGENTS.md` (or `CLAUDE.md`)** — the highest-leverage file. Commands table (including how to run a single test), a layout map in a few lines, the conventions an agent must follow, how branches and PRs are expected to look, and a "things that will bite you" section (required env vars, generated files that must not be hand-edited, tests that need a service running). Write `AGENTS.md` — it is the cross-tool convention — and, if the repo already uses `CLAUDE.md`, add a one-line pointer there instead of duplicating the content.
-5. **Issue templates** — bug, feature, and a `config.yml` chooser. Use YAML issue forms (`name`, `description`, `body` are required) unless the project prefers markdown templates; then use markdown with YAML frontmatter.
-6. **PR template** — summary, related issue, changes, testing checklist.
-7. **`SECURITY.md`** — a real contact route and a supported-versions table with the versions the project actually patches.
-8. **`CODE_OF_CONDUCT.md`** — propose it; write it only with the owner's OK.
-9. **`CODEOWNERS`**, **`.editorconfig`**, **`.gitignore` additions**, **`.env.example`**, **`.github/FUNDING.yml`** — fill from the repo; ask where the repo has no answer.
-10. **Dependabot or Renovate**, **release workflow**, **`docs/`** — only where the project warrants them. Never add a second dependency bot to a repo that already has one.
+1. **`LICENSE`**, detect and report. Only write one the owner chose.
+2. **`README.md`**, patch, do not rewrite. Add the missing install steps, usage, contributing pointer, and license section in the existing voice and at the existing length. If the README is already good, leave it alone.
+3. **`CONTRIBUTING.md`**, install, build, test, lint, format, run one test, layout, branch and PR conventions, where to report bugs, where to report security issues.
+4. **`AGENTS.md` (or `CLAUDE.md`)**, the highest-leverage file. Commands table (including how to run a single test), a layout map in a few lines, the conventions an agent must follow, how branches and PRs are expected to look, and a "things that will bite you" section (required env vars, generated files that must not be hand-edited, tests that need a service running). Write `AGENTS.md`, it is the cross-tool convention, and, if the repo already uses `CLAUDE.md`, add a one-line pointer there instead of duplicating the content.
+5. **Issue templates**, bug, feature, and a `config.yml` chooser. Use YAML issue forms (`name`, `description`, `body` are required) unless the project prefers markdown templates; then use markdown with YAML frontmatter.
+6. **PR template**, summary, related issue, changes, testing checklist.
+7. **`SECURITY.md`**, a real contact route and a supported-versions table with the versions the project actually patches.
+8. **`CODE_OF_CONDUCT.md`**, propose it; write it only with the owner's OK.
+9. **`CODEOWNERS`**, **`.editorconfig`**, **`.gitignore` additions**, **`.env.example`**, **`.github/FUNDING.yml`**, fill from the repo; ask where the repo has no answer.
+10. **Dependabot or Renovate**, **release workflow**, **`docs/`**, only where the project warrants them. Never add a second dependency bot to a repo that already has one.
 
 Match the repo: same Markdown heading style, same tone, same naming conventions. If the project uses tabs, use tabs. If the existing README is a single paragraph, do not deliver a twelve-section README.
 
@@ -145,13 +145,13 @@ python3 -I scripts/audit_repo_hygiene.py <repo-root> --json > "$TMPDIR/hygiene-a
 
 Every P0 and P1 finding must be gone from the after-report. Then check by hand:
 
-- **Every command in CONTRIBUTING exists in the manifest.** Not "looks right" — the script name is in `package.json` `scripts`, or the target is in the `Makefile`. A contributor who types a command that errors has learned the project is unmaintained.
-- **Every path referenced in the new files resolves** — relative links in markdown, and the paths in the layout section.
+- **Every command in CONTRIBUTING exists in the manifest.** Not "looks right", the script name is in `package.json` `scripts`, or the target is in the `Makefile`. A contributor who types a command that errors has learned the project is unmaintained.
+- **Every path referenced in the new files resolves**, relative links in markdown, and the paths in the layout section.
 - **Every relative link in every new or edited markdown file resolves.** Read each one; the auditor only checks paths inside code spans and link targets, not prose.
-- **The YAML templates parse.** The auditor checks them; also render one in GitHub's own preview (`gh pr edit --body-file` is not enough — open the "New issue" page, or use the API) if you can.
+- **The YAML templates parse.** The auditor checks them; also render one in GitHub's own preview (`gh pr edit --body-file` is not enough, open the "New issue" page, or use the API) if you can.
 - **No placeholders and no secrets.** Grep the diff for `TODO`, `TBD`, `example.com`, `your-`, `XXX`, and for anything that looks like a key or a token.
 - **The install and test commands still work.** Run them. A CONTRIBUTING that says `pnpm install` in a repo with a `bun.lock` is a bug, and running it is the only way to know.
-- **The agent file's commands are correct.** An agent file with a wrong test command is worse than none — it teaches every later session to fail.
+- **The agent file's commands are correct.** An agent file with a wrong test command is worse than none, it teaches every later session to fail.
 
 ## 6. Commit, push, PR
 
@@ -170,26 +170,26 @@ Do not merge.
 ## 7. Report
 
 ```markdown
-# Repo hygiene — <project>
+# Repo hygiene: <project>
 
 **PR:** <url> | already in good shape, no PR
 **Auditor:** <n> issues before → <n> after
 
 ## Created
-- `CONTRIBUTING.md` — install/build/test/lint from `package.json`
-- `AGENTS.md` — commands, layout, conventions
+- `CONTRIBUTING.md`: install/build/test/lint from `package.json`
+- `AGENTS.md`: commands, layout, conventions
 - `.github/ISSUE_TEMPLATE/bug_report.yml`, `feature_request.yml`, `config.yml`
 - `.github/pull_request_template.md`
-- `SECURITY.md` — supported versions 1.x, contact via GitHub advisories
+- `SECURITY.md`: supported versions 1.x, contact via GitHub advisories
 
 ## Updated
-- `README.md` — added a contributing pointer and license section (existing content untouched)
-- `.gitignore` — added `dist/` and `.env.*`
+- `README.md`: added a contributing pointer and license section (existing content untouched)
+- `.gitignore`: added `dist/` and `.env.*`
 
 ## Left alone (and why)
-- `LICENSE` — MIT, matches the manifest; no change needed
-- `CODE_OF_CONDUCT.md` — exists; not rewritten
-- `docs/` — not created, the README covers the whole surface
+- `LICENSE`: MIT, matches the manifest; no change needed
+- `CODE_OF_CONDUCT.md`: exists; not rewritten
+- `docs/`: not created, the README covers the whole surface
 
 ## Needs your decision
 - Security contact: GitHub private advisories only, or also a `security@` inbox?

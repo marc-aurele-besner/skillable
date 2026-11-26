@@ -69,7 +69,7 @@ Then read, in this order: `README*`, the quickstart or getting-started doc, `CON
 Follow the README exactly as a newcomer would, with no knowledge from the source. Record every step, every assumption the docs skip, and the wall-clock time.
 
 - **Local target you may run:** in a scratch copy, run install, the quickstart snippet, the test command, and the dev command. Note timings and every error. Never run the target's commands in the user's working tree if they would write files there; copy first.
-- **Cannot run** (untrusted repo, needs paid credentials, needs hardware, user said not to): do a desk walk — trace each command and snippet against the manifest and source, and mark the result "desk-checked, not executed".
+- **Cannot run** (untrusted repo, needs paid credentials, needs hardware, user said not to): do a desk walk, trace each command and snippet against the manifest and source, and mark the result "desk-checked, not executed".
 - **Snippets:** check every import path, function name, argument, and option in README code blocks against the actual exports and signatures. A quickstart that calls a renamed function is a Critical finding.
 
 Measure time-to-first-success (TTFS): minutes from clone/install to the first meaningful result. Note what dominated it.
@@ -80,14 +80,14 @@ Measure time-to-first-success (TTFS): minutes from clone/install to the first me
 
 Load [references/dx-checklist.md](references/dx-checklist.md) now: it holds the per-dimension checks, concrete examples of real findings, and the "do not report" list. Walk only the dimensions the target type and focus touch:
 
-1. **Time-to-first-success and quickstart accuracy** — does the documented path work, and how long does it take?
-2. **Setup, prerequisites, and scripts** — runtime pins, system deps, env vars, script naming, one-command setup.
-3. **Error messages** — do failures say what went wrong, why, and what to do? Probe the obvious mistakes (missing config, wrong argument, bad credentials).
-4. **API naming and ergonomics** — consistency, discoverability, safe defaults, number of steps for the common case.
-5. **Typing and editor support** — shipped types, accurate signatures, no `any` leaks on the public surface, useful docstrings.
-6. **Examples** — runnable, current, covering the common cases, pinned to the version they document.
-7. **Changelog, versioning, and migration notes** — can an upgrader tell what broke and how to move?
-8. **Local dev loop** — install, build, test, and rebuild times; watch mode; how fast a contributor sees a change.
+1. **Time-to-first-success and quickstart accuracy**, does the documented path work, and how long does it take?
+2. **Setup, prerequisites, and scripts**, runtime pins, system deps, env vars, script naming, one-command setup.
+3. **Error messages**, do failures say what went wrong, why, and what to do? Probe the obvious mistakes (missing config, wrong argument, bad credentials).
+4. **API naming and ergonomics**, consistency, discoverability, safe defaults, number of steps for the common case.
+5. **Typing and editor support**, shipped types, accurate signatures, no `any` leaks on the public surface, useful docstrings.
+6. **Examples**, runnable, current, covering the common cases, pinned to the version they document.
+7. **Changelog, versioning, and migration notes**, can an upgrader tell what broke and how to move?
+8. **Local dev loop**, install, build, test, and rebuild times; watch mode; how fast a contributor sees a change.
 
 For each dimension ask: **what does an adopter try, and where do they lose time or get a wrong result?** No concrete scenario, no finding.
 
@@ -113,21 +113,21 @@ Rank by severity, most severe first, then by how many adopters hit it. Use the o
 | **High** | Most adopters lose significant time (≥15 min) or need to read the source to proceed | Required env var undocumented; error says `undefined` with no cause; breaking release with no migration note |
 | **Medium** | A common path is confusing or slow, with a workaround | Inconsistent naming across sibling functions; no types for one entry point; test suite takes 6 min with no focused-run script |
 | **Low** | Polish that helps but does not block | Missing `--help` example; changelog entries not linked to PRs |
-| **Report only** | Not a defect: strengths worth keeping, questions for the maintainer, follow-ups outside scope | — |
+| **Report only** | Not a defect: strengths worth keeping, questions for the maintainer, follow-ups outside scope |, |
 
 Every finding needs a location: `file:line` in the target, a URL, a command with its output, or a CLI screen. No location, no finding.
 
 ## Output
 
 ```markdown
-# DX review — <target> (<type>)
+# DX review: <target> (<type>)
 
 **Adopter:** <persona> · **Path walked:** <executed | desk-checked> · **Focus:** <focus>
 **Time to first success:** <n min> (<what dominated it>) | not reached: <where it stopped>
 **Verdict:** <one line: sound / good with fixes / blocks adoption>
 
 ## Findings
-1. **[Critical]** `README.md:42` — <one-sentence claim>
+1. **[Critical]** `README.md:42`, <one-sentence claim>
    - Scenario: <adopter does X> → <what happens> → <cost>
    - Evidence: <command + output excerpt, or code reference>
    - Fix: <exact change>
@@ -150,7 +150,7 @@ Every finding needs a location: `file:line` in the target, a URL, a command with
 When the target is sound, keep it short:
 
 ```markdown
-# DX review — <target> (<type>)
+# DX review: <target> (<type>)
 
 **Time to first success:** <n min> · **Verdict:** sound
 

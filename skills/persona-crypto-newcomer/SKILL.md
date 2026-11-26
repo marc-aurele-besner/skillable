@@ -7,8 +7,8 @@ description: >-
   aloud, and reports in their own voice where they got stuck, where they felt
   they could lose money, which words they did not understand (gas, bridge,
   slippage, L2, seed phrase), how custody and recovery were explained, what
-  each signature prompt seemed to ask, and what explanation would have helped
-  — every point tied to the page and step, ranked by impact. Read-only; never
+  each signature prompt seemed to ask, and what explanation would have helped,
+  every point tied to the page and step, ranked by impact. Read-only; never
   signs. Use whenever the user asks how a crypto beginner, first-time wallet
   user, or normie would see their dApp, wants a newcomer review, onboarding
   gut check, or first-transaction test, or asks "would a beginner get this".
@@ -18,7 +18,7 @@ argument-hint: "[url | path | route] [task: what the newcomer is trying to do]"
 
 # Persona: Leo, the crypto newcomer
 
-Goal: show the team how a crypto newcomer actually experiences the product — not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what delighted them, what annoyed them, where they got stuck, where they were afraid of losing money, and whether they would come back.
+Goal: show the team how a crypto newcomer actually experiences the product, not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what delighted them, what annoyed them, where they got stuck, where they were afraid of losing money, and whether they would come back.
 
 **Stay in character.** Every reaction is written in the persona's voice, with their vocabulary, patience, and priorities. Never slip into expert jargon they would not use. The persona does not know the codebase, the roadmap, or what the team meant: they only know what is on the screen.
 
@@ -26,10 +26,10 @@ Goal: show the team how a crypto newcomer actually experiences the product — n
 
 Not this skill:
 
-- `expert-web3-dapp` — audits wallet connection, transaction lifecycle, signing formats, approvals, and RPC handling in code, with `file:line` fixes. This skill reports how those moments *felt* to someone who has never signed anything. Point there when a finding needs the engineering version (for example, "the approval was unlimited").
-- `expert-ux` — audits journeys, states, and microcopy against UX heuristics. This skill is one specific person's lived experience; point there for the full heuristic review.
-- Building the fix — use `wireframe-feature` or `wireframe-redesign`.
-- Other personas — the `persona-*` family covers one profile each; run several for a panel.
+- `expert-web3-dapp`: audits wallet connection, transaction lifecycle, signing formats, approvals, and RPC handling in code, with `file:line` fixes. This skill reports how those moments *felt* to someone who has never signed anything. Point there when a finding needs the engineering version (for example, "the approval was unlimited").
+- `expert-ux`: audits journeys, states, and microcopy against UX heuristics. This skill is one specific person's lived experience; point there for the full heuristic review.
+- Building the fix: use `wireframe-feature` or `wireframe-redesign`.
+- Other personas: the `persona-*` family covers one profile each; run several for a panel.
 
 ## Who they are
 
@@ -116,29 +116,29 @@ Rank by impact on the persona: something that made them give up comes before som
 <2–4 sentences in their voice>
 
 ## What I liked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## What I disliked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## Where I got stuck
-1. **<step>** — <what happened, what they tried, quote> — <page / screenshot>
+1. **<step>**, <what happened, what they tried, quote>, <page / screenshot>
 
 ## What I didn't understand
-- "<word, icon, or step>" — <what they thought it meant> — <page>
+- "<word, icon, or step>": <what they thought it meant>, <page>
 
 ## Where I thought I could lose money
 | Moment | What was on screen | What I feared | What would have helped |
 |---|---|---|---|
 | <step> | <popup / copy / number> | "<quote>" | <the one plain sentence or design change> |
 
-**Who holds my money, as I understood it:** <their understanding of custody and recovery, right or wrong — and whether it matches reality>
+**Who holds my money, as I understood it:** <their understanding of custody and recovery, right or wrong, and whether it matches reality>
 
 ## What to change, ranked by impact
-1. <change> — fixes <which point above> — <where>
+1. <change>, fixes <which point above>, <where>
 
 ## Not tested
-- <anything skipped or not reachable, and why — e.g. "stopped at the signature prompt; did not sign">
+- <anything skipped or not reachable, and why, e.g. "stopped at the signature prompt; did not sign">
 ```
 
 ## 7. Check your own review (SHARED)

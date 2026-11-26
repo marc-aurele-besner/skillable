@@ -354,7 +354,7 @@ details.textview.show { display: block; }
 <script type="application/json" id="scene-data">
 {
   "title": "demo-shop",
-  "subtitle": "pnpm monorepo · Next.js · NestJS · Postgres · Redis · SQS · Stripe — demo scene",
+  "subtitle": "pnpm monorepo · Next.js · NestJS · Postgres · Redis · SQS · Stripe, demo scene",
   "repoUrl": "",
   "commit": "",
   "layers": [
@@ -1169,7 +1169,7 @@ details.textview.show { display: block; }
     triggersBox.replaceChildren();
     if (!f) { triggersBox.classList.remove('show'); return; }
     const d = describeFlow(f);
-    const list = (ids) => [...new Set(ids)].map(labelOf).join(', ') || '—';
+    const list = (ids) => [...new Set(ids)].map(labelOf).join(', ') || ', ';
     triggersBox.append(
       html('b', null, (f.actor ? labelOf(f.actor) + ' · ' : '') + (f.trigger || f.label || f.id)),
       html('div', null, `${f.steps.length} steps · touches ${d.touched.length} components`),
@@ -1265,7 +1265,7 @@ details.textview.show { display: block; }
     sw.appendChild(tb);
     panel.appendChild(sw);
     const impact = blastRadius(id);
-    if (impact.length) panel.appendChild(html('p', 'impact', `If this goes down: ${impact.length} component${impact.length > 1 ? 's' : ''} degrade — ${impact.map(labelOf).join(', ')}`));
+    if (impact.length) panel.appendChild(html('p', 'impact', `If this goes down: ${impact.length} component${impact.length > 1 ? 's' : ''} degrade, ${impact.map(labelOf).join(', ')}`));
     const section = (title, items) => {
       if (!items.length) return;
       panel.appendChild(html('h3', null, title));
@@ -1323,7 +1323,7 @@ details.textview.show { display: block; }
       nodes.filter((n) => n.layer === layer.id).forEach((n) => {
         const li = html('li');
         const b = html('button', 'linkish', n.label || n.id); b.onclick = () => { openNode(n.id); render(); };
-        li.append(b, ` — ${n.kind}${n.tech ? ' · ' + n.tech.join(', ') : ''}`);
+        li.append(b, `, ${n.kind}${n.tech ? ' · ' + n.tech.join(', ') : ''}`);
         const out = links.filter((l) => l.from === n.id);
         if (out.length) li.append(html('div', 'mono', '→ ' + out.map((l) => `${labelOf(l.to)} (${linkText(l)})`).join(', ')));
         ul.appendChild(li);

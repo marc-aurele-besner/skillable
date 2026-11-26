@@ -74,7 +74,7 @@ forge test --match-test test_H01 --fork-url "$MAINNET_RPC_URL" --fork-block-numb
 What makes a PoC convincing:
 
 - Numbered comments mirror the exploit scenario in the report, step for step.
-- Starts from a realistic state: real deployment parameters, a fork of the live protocol, or the project's own deployment fixture — not a contrived owner setup.
+- Starts from a realistic state: real deployment parameters, a fork of the live protocol, or the project's own deployment fixture, not a contrived owner setup.
 - The attacker never uses a privileged prank. If the exploit needs one, the finding is about that role, and the PoC says so.
 - Asserts the damage (profit, frozen funds, broken invariant) with a number, and logs it.
 - Real tokens on forks (USDT, USDC, stETH) where token behavior matters; mocks hide fee-on-transfer and missing-return behavior.

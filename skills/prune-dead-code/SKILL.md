@@ -20,7 +20,7 @@ argument-hint: "[scope: path|package|all]"
 
 Goal: find code that nothing uses any more, prove each candidate is genuinely unreachable, remove it in small reviewable commits, and open a PR that a reviewer can audit line by line. Deleting a live function is a production incident; deleting a dead one is a chore. The whole value of this skill is in the proving step.
 
-Not this skill: pruning unused *dependencies* (use `dedupe-and-prune-deps` — it owns the lockfile and the manifest), general refactoring or renaming, code review of a diff you did not author, or performance work (use the language profiler instead).
+Not this skill: pruning unused *dependencies* (use `dedupe-and-prune-deps`, it owns the lockfile and the manifest), general refactoring or renaming, code review of a diff you did not author, or performance work (use the language profiler instead).
 
 ## Inputs
 
@@ -54,7 +54,7 @@ cat pyproject.toml setup.cfg Cargo.toml go.mod Gemfile pom.xml build.gradle 2>/d
 | Ruby | `rubocop --only Lint/UselessAssignment,Lint/Void` and `vulture` | `bundle exec vulture` respects the bundle |
 | C / C++ / others | `clang-tidy --checks='-Wunused-*'` , `cppcheck --enable=unusedFunction` | Per-translation-unit; often noisy |
 | Whole repo | `depcruise --config .depcruise.js --output-type text` | Dependency-cruiser shows orphans and rule violations |
-| Any | `npx depcheck` / `pnpm dlx depcheck` | Dependencies only — hand the result to `dedupe-and-prune-deps` |
+| Any | `npx depcheck` / `pnpm dlx depcheck` | Dependencies only, hand the result to `dedupe-and-prune-deps` |
 
 Read [references/detection.md](references/detection.md) for the per-language config, the dynamic-reference pitfalls, and the standard false-positive list.
 
@@ -82,7 +82,7 @@ Sort every candidate into one bucket before touching anything:
 | **Stale asset** | An image, font, icon, or bundle chunk no source references | Asset not referenced by any stylesheet, import, or manifest |
 | **Unused i18n key** | A translation key no code reads | Key absent from every source lookup |
 | **Commented-out block** | A run of commented code, usually a disabled feature | Multi-line comment with real syntax |
-| **Unused dependency** | A manifest entry nothing imports | `depcheck`, `knip` — **hand off to `dedupe-and-prune-deps`**, do not duplicate that skill here |
+| **Unused dependency** | A manifest entry nothing imports | `depcheck`, `knip`, **hand off to `dedupe-and-prune-deps`**, do not duplicate that skill here |
 
 For the dependency bucket, list the candidates in the report and note that `dedupe-and-prune-deps` owns the removal. This skill does not touch the lockfile.
 
@@ -104,11 +104,11 @@ Confirm, in order:
 1. **No dynamic reference.** Grep the *string*, not just the symbol: `import()`, `require()`, `importlib.import_module`, `getattr`, `__import__`, `eval`, string-keyed dict lookups, `require.context`, `import.meta.glob`, reflection, `eval` of a config value.
 2. **Not generated at build time.** Codegen templates, protobuf/GraphQL/OpenAPI output, `protoc`, `openapi-generator`, `sqlc`, build plugins, `vite`/`webpack` entry globs, `cargo build.rs`. Regenerate these, never delete them.
 3. **Not an entry point.** `bin` in `package.json`, `console_scripts` / `project.scripts` in `pyproject.toml`, `[[bin]]` in `Cargo.toml`, `main.go`, `cmd/`, `serverless.yml` handlers, `Dockerfile` `CMD`/`ENTRYPOINT`, CI workflow steps, `Makefile` targets, `cron` and `scheduler` config, `netlify.toml`/`vercel.json` build commands, framework file-based routing (`pages/`, `app/`, `routes/`, `src/views`), `__init__.py` re-exports.
-4. **Not public API.** Check `exports`, `files`, `main`, `types` in the manifest and the package's `public/` surface. A published package's exported symbol is a contract, not dead code — see step 5.
+4. **Not public API.** Check `exports`, `files`, `main`, `types` in the manifest and the package's `public/` surface. A published package's exported symbol is a contract, not dead code, see step 5.
 5. **Not referenced by config, docs, or data.** `tsconfig.json` `paths`, bundler aliases, i18n catalogs, JSON fixtures, GraphQL queries, `.md` documentation, `Makefile`, Docker, CI.
 6. **Not registered in a plugin or extension registry.** Django `INSTALLED_APPS`, FastAPI router includes, Spring `@ComponentScan`, Laravel providers, Rails initializers, Terraform module wiring, VS Code / ESLint plugin manifests, MCP server tool registries.
 7. **Not used by a test that runs conditionally.** Check the test's skip conditions, the platform matrix, and the CI job list. A symbol used only by a test that never runs on this platform is still used.
-8. **Not part of a public protocol** — an ORM model, a migration, a database seed or fixture, a protobuf message, a GraphQL schema, an OpenAPI operation, a serialization format. These are data contracts even when no code imports them today.
+8. **Not part of a public protocol**, an ORM model, a migration, a database seed or fixture, a protobuf message, a GraphQL schema, an OpenAPI operation, a serialization format. These are data contracts even when no code imports them today.
 
 Doubt means keep. A wrong deletion costs a revert and a lost afternoon; a missed deletion costs nothing but a stale file.
 
@@ -120,15 +120,15 @@ git checkout -b chore/prune-dead-code origin/<default-branch>
 
 Commit in this order, one category per commit, with the build and the **full** test suite green between commits:
 
-1. **Unused exports** — remove the export keyword or the symbol, smallest diff first.
-2. **Orphan files** — delete the file and every import of it. Delete the file in the same commit as the import cleanup so the tree never breaks.
-3. **Dead feature flags** — remove the flag, its branches, and the now-unreachable code it guarded, in one commit.
-4. **Dead routes and stale assets** — remove the handler and its link; delete the asset and its build entry.
-5. **Unused i18n keys** — remove the key from the source catalog, then from the locale files (never the other way round).
-6. **Commented-out blocks** — delete the block, and replace it with a one-line comment explaining *why* if the reason is not obvious from git history.
-7. **Unused dependencies** — only when the `dedupe-and-prune-deps` skill is not being used; otherwise hand off.
+1. **Unused exports**, remove the export keyword or the symbol, smallest diff first.
+2. **Orphan files**, delete the file and every import of it. Delete the file in the same commit as the import cleanup so the tree never breaks.
+3. **Dead feature flags**, remove the flag, its branches, and the now-unreachable code it guarded, in one commit.
+4. **Dead routes and stale assets**, remove the handler and its link; delete the asset and its build entry.
+5. **Unused i18n keys**, remove the key from the source catalog, then from the locale files (never the other way round).
+6. **Commented-out blocks**, delete the block, and replace it with a one-line comment explaining *why* if the reason is not obvious from git history.
+7. **Unused dependencies**, only when the `dedupe-and-prune-deps` skill is not being used; otherwise hand off.
 
-Keep the diff small and reviewable. No mega-commit: if the change does not fit on one screen per commit, split it further. Never reformat a file you only touched one line in. Never delete a test to make a coverage gate pass — that is the opposite of the skill's purpose.
+Keep the diff small and reviewable. No mega-commit: if the change does not fit on one screen per commit, split it further. Never reformat a file you only touched one line in. Never delete a test to make a coverage gate pass, that is the opposite of the skill's purpose.
 
 ## 5. Protect the public surface
 
@@ -146,7 +146,7 @@ Run the project's own commands, in the order CI runs them. Read `.github/workflo
 
 - The build passes.
 - The **whole** test suite passes, not a subset. A test file that fails to import is a broken removal.
-- The linter and type-checker are as clean as before — no new warnings. A type error after removal means a reference survived somewhere.
+- The linter and type-checker are as clean as before, no new warnings. A type error after removal means a reference survived somewhere.
 - Nothing that used to exist is now missing at runtime: check the built output, the exported surface (`exports`, `main`), and any command-line entry points.
 - Re-run the detector: the candidate list shrinks, and no *new* candidate appears (a removal that uncovers a new orphan is fine; a removal that breaks something is not).
 - If the repo has coverage thresholds, coverage must not drop. Never lower a threshold to make a removal pass.
@@ -171,7 +171,7 @@ Watch CI (`gh pr checks --watch`). Fix failures caused by this change; record un
 ## 8. Report
 
 ```markdown
-# Dead code — <project>
+# Dead code: <project>
 
 **Stack:** <language/runtime>  **Detector:** <tool + version> | bundled heuristic | none
 **Scope:** <path or "whole repo">  **PR:** <url> | nothing to prune, no PR
@@ -187,8 +187,8 @@ Watch CI (`gh pr checks --watch`). Fix failures caused by this change; record un
 **Bytes/lines saved:** <n> files, <n> lines, <n> KB
 
 ## Reviewed and kept
-- `loadUserById` — referenced by string in `src/plugins/registry.ts` (dynamic lookup).
-- `LegacySchema` — part of the published `exports` surface; kept for the next major.
+- `loadUserById`: referenced by string in `src/plugins/registry.ts` (dynamic lookup).
+- `LegacySchema`: part of the published `exports` surface; kept for the next major.
 
 ## Verification
 - build: pass | test: pass | lint: pass | typecheck: pass

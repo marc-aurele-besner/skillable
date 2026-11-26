@@ -20,7 +20,7 @@ Use the repo's real default branch name (`master`, `trunk`, …). Keep `workflow
 
 **Don't.** Drop `push` to the default branch (post-merge CI goes away). Don't replace `pull_request` with `pull_request_target`. Don't remove `merge_group`.
 
-## 2. Concurrency — cancel stale CI, never cancel deploys
+## 2. Concurrency, cancel stale CI, never cancel deploys
 
 **Detect.** No top-level `concurrency:` on a test/lint/build workflow, or `cancel-in-progress: true` on deploy/release/publish/pages.
 
@@ -66,7 +66,7 @@ On deploy/release/publish, set a group so two deploys to the same environment ca
 
 **Do.** Set `timeout-minutes` per job from observed duration: about 3× a healthy run, with a floor of 10 minutes for typical CI and a ceiling well under 6 hours. Hung jobs are how a flake becomes a four-figure minutes bill.
 
-**Don't.** Set a timeout tighter than the slowest successful run in the last 100 plus slack — that flakes CI.
+**Don't.** Set a timeout tighter than the slowest successful run in the last 100 plus slack, that flakes CI.
 
 ## 6. Caching without doubling it
 
@@ -76,7 +76,7 @@ On deploy/release/publish, set a group so two deploys to the same environment ca
 
 **Don't.** Add a new third-party cache action. Don't cache Docker layers unless the workflow already builds images (then `cache-from`/`cache-to` on `docker/build-push-action` is in-scope). Don't share caches across untrusted fork PRs in a privileged workflow.
 
-## 7. Path filters — non-required extra workflows only
+## 7. Path filters, non-required extra workflows only
 
 **Detect.** A heavy extra workflow (e2e, visual regression, benchmark, docker publish) that runs on markdown/docs/issue-template-only PRs, **and** none of its job names appear in required checks / rulesets.
 
@@ -110,7 +110,7 @@ Always include the workflow file itself so workflow edits still run. For docs-on
 
 **Do.** Move non-security timers to daily or weekly (off-peak UTC). If the same tests already run on `push` to default, drop the duplicate `schedule` on that test workflow.
 
-**Don't.** Remove or stretch CodeQL / Scorecard / dependency / vuln-scan schedules past weekly. GitHub's CodeQL starter (`push` + `pull_request` on default + weekly `schedule`) is the floor — you may **scope** `push` to the default branch (play 1), not delete the weekly backup.
+**Don't.** Remove or stretch CodeQL / Scorecard / dependency / vuln-scan schedules past weekly. GitHub's CodeQL starter (`push` + `pull_request` on default + weekly `schedule`) is the floor, you may **scope** `push` to the default branch (play 1), not delete the weekly backup.
 
 ## 10. Artifacts and caches (storage, not minutes)
 

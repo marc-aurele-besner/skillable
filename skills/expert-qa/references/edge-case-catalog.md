@@ -1,6 +1,6 @@
 # Edge-case catalog
 
-Load this at step 4 of the skill. Walk **only** the categories the change touches. For each case you keep, write one line — *input or state → expected behavior* — and drop it if the code already prevents it (check the validator, type, or constraint).
+Load this at step 4 of the skill. Walk **only** the categories the change touches. For each case you keep, write one line, *input or state → expected behavior*, and drop it if the code already prevents it (check the validator, type, or constraint).
 
 ## 1. Empty, null, missing
 
@@ -56,7 +56,7 @@ Load this at step 4 of the skill. Walk **only** the categories the change touche
 
 - Offline, then back online: queued actions, duplicate replay, stale UI.
 - Slow network: spinners, timeouts, user navigating away mid-request.
-- Partial failure: step 2 of 3 fails — is step 1 rolled back or left half-done?
+- Partial failure: step 2 of 3 fails, is step 1 rolled back or left half-done?
 - Third-party down or returning 429/500/malformed JSON.
 - Request cancelled (abort, tab closed) after the server committed.
 - Large response truncated; pagination cursor invalid or expired.
@@ -104,4 +104,4 @@ Load this at step 4 of the skill. Walk **only** the categories the change touche
 
 - Cases the type system, schema validator, or DB constraint already rules out (cite it if useful).
 - Generic platform matrices unrelated to the change.
-- Cases already covered by an existing test — mark them *covered* in the plan with the `file:line` instead.
+- Cases already covered by an existing test, mark them *covered* in the plan with the `file:line` instead.

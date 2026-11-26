@@ -4,14 +4,14 @@ Load the section for each stack `scripts/detect_stack.py` (or a manual manifest 
 
 ---
 
-## Node.js — Express, Fastify, Koa, Hono
+## Node.js: Express, Fastify, Koa, Hono
 
 - **Where**: `app.(get|post|use)`, `router.*`, `fastify.route`, files under `routes/`, `controllers/`, `api/`, `src/server.*`. Next.js route handlers: `app/**/route.ts`, `pages/api/**`.
 - **Defaults to check**: Express has no body size limit beyond `express.json()`'s default `100kb`; no request timeout by default (Node `server.requestTimeout` is 300 s since v18); async errors in Express 4 handlers are **not** caught unless wrapped or using Express 5.
 - **Traps**:
   - Unhandled promise rejection in an Express 4 async handler → request hangs until the client times out.
   - `fetch`/axios with no timeout (see checklist section 10).
-  - `await` inside `for` loops over DB calls (sequential N+1) or `Promise.all` over thousands of items (connection pool stampede) — bound concurrency (`p-limit`).
+  - `await` inside `for` loops over DB calls (sequential N+1) or `Promise.all` over thousands of items (connection pool stampede), bound concurrency (`p-limit`).
   - CPU work on the event loop: `bcrypt` sync variants, big JSON, `zlib` sync, regex on user input (ReDoS).
   - Module-level mutable state used as a per-request store across concurrent requests.
   - `process.on('uncaughtException')` that logs and continues in an undefined state.
@@ -23,7 +23,7 @@ Load the section for each stack `scripts/detect_stack.py` (or a manual manifest 
 - **Defaults to check**: global `ValidationPipe` in `main.ts` (`whitelist`, `forbidNonWhitelisted`, `transform`); global exception filters and interceptors (`app.useGlobal*`); `ClassSerializerInterceptor` with `@Exclude`.
 - **Traps**: DTOs without `class-validator` decorators are not validated even with the pipe; `whitelist: false` enables mass assignment; request-scoped providers (`Scope.REQUEST`) cascade and slow every request; `@Cron` runs on every replica; TypeORM `eager: true` relations load everywhere.
 
-## Python — Django / Django REST Framework
+## Python: Django / Django REST Framework
 
 - **Where**: `urls.py`, `views.py`, `viewsets`, `serializers.py`, `models.py`, `migrations/`, `tasks.py` (Celery), `settings*.py`.
 - **Defaults to check**: `ATOMIC_REQUESTS` (default False); `CONN_MAX_AGE` (default 0 = new connection per request); DRF `DEFAULT_PAGINATION_CLASS` and `PAGE_SIZE` (no pagination by default); `USE_TZ`.
@@ -36,7 +36,7 @@ Load the section for each stack `scripts/detect_stack.py` (or a manual manifest 
   - `len(queryset)` / iterating to count instead of `.count()` / `.exists()`; `.all()` on huge tables instead of `.iterator()`.
   - Signals doing heavy or external work synchronously on save.
 
-## Python — FastAPI / Starlette / Flask
+## Python: FastAPI / Starlette / Flask
 
 - **Where**: `@app.get`, `APIRouter`, `@router.*`, `Depends(...)`; Flask `@app.route`, blueprints.
 - **Defaults to check**: Pydantic models on request bodies and `response_model` (filters output); dependency-injected DB sessions and whether they commit/rollback/close.
@@ -44,11 +44,11 @@ Load the section for each stack `scripts/detect_stack.py` (or a manual manifest 
   - `async def` endpoint using a sync driver (`psycopg2`, sync SQLAlchemy session, `requests`) → blocks the event loop. Plain `def` endpoints run in a threadpool and are fine.
   - SQLAlchemy 2.x async: lazy-loaded relationships raise `MissingGreenlet`; need `selectinload`/`joinedload`; `expire_on_commit=True` causes reload queries after commit.
   - Session per request not closed on error → pool exhaustion (`QueuePool limit ... overflow` errors).
-  - `BackgroundTasks` used for important work — lost on crash or deploy; use a real queue.
+  - `BackgroundTasks` used for important work: lost on crash or deploy; use a real queue.
   - Flask global state (`g` misuse, module-level clients not thread-safe under gunicorn threads).
   - Alembic autogenerate migrations reviewed as-is: index creation without `postgresql_concurrently=True` and outside a transaction.
 
-## Go — net/http, chi, gin, echo, fiber
+## Go: net/http, chi, gin, echo, fiber
 
 - **Where**: `http.HandleFunc`, `r.Get(...)`, `router.GET`, `e.GET`; `cmd/*/main.go` for wiring; `internal/` for services.
 - **Defaults to check**: `http.Server` timeouts (none by default); `sql.DB` pool settings (`SetMaxOpenConns` default unlimited, `SetMaxIdleConns` default 2, `SetConnMaxLifetime`).
@@ -66,25 +66,25 @@ Load the section for each stack `scripts/detect_stack.py` (or a manual manifest 
 - **Where**: `config/routes.rb`, `app/controllers`, `app/models`, `app/serializers` or `app/views/**/*.jbuilder`, `db/migrate`, `db/schema.rb` or `structure.sql`, `app/jobs`, `app/sidekiq`.
 - **Defaults to check**: each `save`/`create` is its own transaction; callbacks run inside it; strong params (`permit`); `config.active_record.default_timezone`.
 - **Traps**:
-  - N+1 in views and serializers — `includes`/`preload`/`eager_load` on the controller query; `strict_loading` or Bullet may already guard.
+  - N+1 in views and serializers: `includes`/`preload`/`eager_load` on the controller query; `strict_loading` or Bullet may already guard.
   - `after_save` callbacks enqueuing jobs or calling APIs → use `after_commit` (or `after_create_commit`); jobs can run before commit otherwise.
   - `validates :email, uniqueness: true` without a unique index → duplicates under concurrency.
   - `find_each` vs `each` on large scopes; `update_all`/`delete_all` skip callbacks and validations (sometimes intentional).
-  - Migrations: `add_index` without `algorithm: :concurrently` + `disable_ddl_transaction!`; `remove_column` without `ignored_columns` first; `change_column_null` on large tables. `strong_migrations` gem may already enforce these — check the Gemfile.
+  - Migrations: `add_index` without `algorithm: :concurrently` + `disable_ddl_transaction!`; `remove_column` without `ignored_columns` first; `change_column_null` on large tables. `strong_migrations` gem may already enforce these, check the Gemfile.
   - `default_scope` hiding soft-deleted rows and surprising joins.
   - Sidekiq: arguments must be simple JSON (IDs); `sidekiq_options retry:` defaults to 25 retries over ~21 days.
 
-## Java / Kotlin — Spring Boot
+## Java / Kotlin: Spring Boot
 
 - **Where**: `@RestController`, `@RequestMapping`, `@Service`, `@Repository`, `@Entity`, `@Transactional`, `@Scheduled`, `@KafkaListener`; Flyway `db/migration/V*.sql` or Liquibase changelogs.
 - **Traps**: JPA `FetchType.EAGER` and lazy collections in serialized entities (N+1 or `LazyInitializationException`); open-session-in-view (`spring.jpa.open-in-view` default true) hiding N+1s in the view layer; `@Transactional` on private methods or self-invocation (no proxy, no transaction); `@Scheduled` on every replica (ShedLock?); `RestTemplate`/`WebClient` without timeouts; HikariCP pool vs DB max connections.
 
-## PHP — Laravel
+## PHP: Laravel
 
 - **Where**: `routes/api.php`, `app/Http/Controllers`, `app/Models`, `database/migrations`, `app/Jobs`.
 - **Traps**: missing `with()` eager loading (N+1; `Model::preventLazyLoading()` may guard); `$guarded = []` mass assignment; jobs dispatched inside DB transactions without `afterCommit`; `Http::` client without `timeout()`; `->get()` on large tables instead of `chunkById`/`lazy`.
 
-## ORMs and query builders — quick reference
+## ORMs and query builders: quick reference
 
 | ORM | Eager load | Transaction | Row lock | Raw / escape hatch | Index declared in |
 |-----|-----------|-------------|----------|--------------------|-------------------|
@@ -93,16 +93,16 @@ Load the section for each stack `scripts/detect_stack.py` (or a manual manifest 
 | Drizzle | `with` in relational queries, joins | `db.transaction(...)` | `.for("update")` | `sql` template | schema `index()`, `drizzle/` migrations |
 | Sequelize | `include` | `sequelize.transaction(...)` | `lock: t.LOCK.UPDATE` | `sequelize.query` | model `indexes`, migrations |
 | Knex | joins | `knex.transaction(...)` | `.forUpdate()` | `knex.raw` | migrations |
-| Mongoose | `populate` (separate queries) | sessions + `withTransaction` (replica set required) | — | aggregation | `schema.index()`; `autoIndex` in prod is a trap |
+| Mongoose | `populate` (separate queries) | sessions + `withTransaction` (replica set required) |, | aggregation | `schema.index()`; `autoIndex` in prod is a trap |
 | SQLAlchemy | `selectinload`, `joinedload`, `subqueryload` | `session.begin()` / `with Session() as s, s.begin()` | `.with_for_update()` | `text()` with bound params | `Index(...)`, `index=True`, Alembic |
 | Django ORM | `select_related`, `prefetch_related` | `transaction.atomic()` | `select_for_update()` | `raw()`, `cursor.execute(sql, params)` | `Meta.indexes`, `db_index=True`, migrations |
 | ActiveRecord | `includes`, `preload`, `eager_load` | `transaction do ... end` | `lock` / `with_lock` | `find_by_sql`, `sanitize_sql` | `db/schema.rb` / migrations |
 | GORM | `Preload`, `Joins` | `db.Transaction(func(tx) ...)` | `Clauses(clause.Locking{Strength: "UPDATE"})` | `Raw` with `?` params | struct tags `gorm:"index"`, migrations |
 | sqlc / sqlx / pgx | explicit SQL | `tx, _ := db.BeginTx(ctx, ...)` | SQL | SQL | SQL migrations (goose, migrate, atlas) |
 
-Prisma specifics: `@relation` fields do not create an index on the FK column in PostgreSQL — add `@@index([fkField])` (Prisma warns about this only with `relationMode = "prisma"`). Interactive transactions hold a connection for their whole callback; external calls inside them exhaust the pool.
+Prisma specifics: `@relation` fields do not create an index on the FK column in PostgreSQL, add `@@index([fkField])` (Prisma warns about this only with `relationMode = "prisma"`). Interactive transactions hold a connection for their whole callback; external calls inside them exhaust the pool.
 
-## Queue and job runners — delivery semantics
+## Queue and job runners: delivery semantics
 
 | Runner | Delivery | Retry default | Things to check |
 |--------|----------|---------------|-----------------|

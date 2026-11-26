@@ -4,7 +4,7 @@ Load this when compiler settings, contract size, or an L2 deployment are in scop
 
 ## Optimizer `runs`
 
-- `runs` is the expected number of times each opcode will execute over the contract's lifetime — not a number of passes.
+- `runs` is the expected number of times each opcode will execute over the contract's lifetime, not a number of passes.
 - Low (`1`–`200`): smaller bytecode, cheaper deploy, slightly dearer calls. Good for factories' children, rarely called contracts, and contracts near the 24 576 B limit.
 - High (`10_000`–`1_000_000`): larger bytecode, cheaper calls. Good for hot singletons (tokens, AMMs, routers).
 - Measure both sides: run `forge build --sizes` and `forge snapshot` at the current value and at the candidate value, and report deploy delta vs per-call delta with a break-even call count: `deploy_delta / per_call_saving`.
@@ -32,7 +32,7 @@ FOUNDRY_OPTIMIZER_RUNS=1000000 forge build --sizes
 ## Contract size
 
 - Limits: 24 576 B runtime (EIP-170), 49 152 B initcode (EIP-3860). Some L2s differ (check the chain's docs); zkSync-family chains compile with their own toolchain and cost model.
-- Levers, cheapest first: custom errors, removing dead code, lower `runs` for that contract, moving logic to external libraries, splitting into modules, diamond/proxy patterns (heavy — only as a design discussion).
+- Levers, cheapest first: custom errors, removing dead code, lower `runs` for that contract, moving logic to external libraries, splitting into modules, diamond/proxy patterns (heavy, only as a design discussion).
 
 ## L2 cost model
 
@@ -50,11 +50,11 @@ On rollups, the user pays **L2 execution gas** plus an **L1 data fee** for posti
 
 ### Levers for L1 data cost
 
-- Fewer bytes: tighter argument types encoded by the caller (e.g. pass `uint96` amounts and IDs packed in a `bytes32`, or a custom compact encoding decoded in the contract) — trade-off: more decoding gas on L2 and a less standard ABI.
+- Fewer bytes: tighter argument types encoded by the caller (e.g. pass `uint96` amounts and IDs packed in a `bytes32`, or a custom compact encoding decoded in the contract), trade-off: more decoding gas on L2 and a less standard ABI.
 - More compressible bytes: zeros and repeated patterns compress well; avoid random-looking padding where a shorter encoding exists.
 - Avoid sending data the contract can derive or already stores (pass an index, not the full struct; use merkle roots with short proofs).
 - Batch many actions per tx to share the fixed overhead.
-- Signature aggregation or offchain data with onchain commitments for very data-heavy flows — design-level, report as Info.
+- Signature aggregation or offchain data with onchain commitments for very data-heavy flows, design-level, report as Info.
 
 When the report targets an L2, give both numbers per finding: `L2 execution Δ` and `L1 data Δ (bytes and estimated fee)`, and say which dominates at current prices.
 

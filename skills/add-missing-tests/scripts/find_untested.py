@@ -415,7 +415,7 @@ def analyse(src_dir: Path, test_dir: Path):
 def render_text(results, summary, show_all: bool) -> str:
     lines = []
     lines.append(
-        "Untested symbols — {source_files} source file(s), {symbols} public symbol(s), "
+        "Untested symbols: {source_files} source file(s), {symbols} public symbol(s), "
         "{untested_symbols} with no test reference".format(**summary)
     )
     lines.append(

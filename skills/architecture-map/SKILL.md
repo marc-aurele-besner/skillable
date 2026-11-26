@@ -1,7 +1,7 @@
 ---
 name: architecture-map
 description: >-
-  Map a codebase into an interactive architecture explainer — split the repo
+  Map a codebase into an interactive architecture explainer, split the repo
   into modules, explore each one with parallel read-only subagents, then
   synthesize a published page with a system context diagram, a module
   dependency graph derived from real imports, sequence diagrams for the key
@@ -17,7 +17,7 @@ argument-hint: "[focus=<area|flow|refactor:<path>>]"
 
 # Architecture Map
 
-Goal: give someone who has never seen this repo an accurate mental model in fifteen minutes — what the pieces are, how a request travels through them, where the data lives, which files matter, and where the dragons are. Every claim is grounded in a file and line they can open.
+Goal: give someone who has never seen this repo an accurate mental model in fifteen minutes, what the pieces are, how a request travels through them, where the data lives, which files matter, and where the dragons are. Every claim is grounded in a file and line they can open.
 
 ## When to use
 
@@ -25,7 +25,7 @@ Goal: give someone who has never seen this repo an accurate mental model in fift
 - Onboarding a new teammate, or returning to a repo after months away
 - "Before we refactor X, show me everything it touches"
 - "Make an architecture overview we can share with the team"
-- `/architecture-map [focus=<area>]` — e.g. `focus=auth`, `focus=checkout flow`, `focus=refactor:src/billing`
+- `/architecture-map [focus=<area>]`: e.g. `focus=auth`, `focus=checkout flow`, `focus=refactor:src/billing`
 - Not for answering one narrow question about a file (just read it).
 
 ## 1. Survey the repo
@@ -42,7 +42,7 @@ Then pick **4–8 modules** of comparable weight that follow the repo's real bou
 
 ## 2. Explore modules in parallel
 
-**Claude Code:** launch one read-only exploring subagent per module **in a single message** so they run concurrently. Other agents: explore the modules one after another. Each brief is self-contained (repo summary from step 1, the module's paths, the focus if any) and asks for this structured result — conclusions with `path:line` citations, not file dumps:
+**Claude Code:** launch one read-only exploring subagent per module **in a single message** so they run concurrently. Other agents: explore the modules one after another. Each brief is self-contained (repo summary from step 1, the module's paths, the focus if any) and asks for this structured result, conclusions with `path:line` citations, not file dumps:
 
 ```text
 module, paths, one-sentence purpose
@@ -60,7 +60,7 @@ open questions the code alone could not answer
 Subagents summarize; the orchestrator checks:
 
 - **Dependency graph from real imports**, not prose. Use the stack's tooling when present (`madge --json`, `depcruise`, `go list -deps`, `cargo metadata`, `pydeps`) or a targeted `rg` over import statements, aggregated to module level. Flag cycles.
-- **Hotspots from git history** — change frequency × size highlights where complexity and risk concentrate:
+- **Hotspots from git history**: change frequency × size highlights where complexity and risk concentrate:
 
 ```bash
 git log --since=12.months --name-only --pretty=format: | rg -v '^$' | sort | uniq -c | sort -rn | head -30
@@ -73,18 +73,18 @@ git log --since=12.months --name-only --pretty=format: | rg -v '^$' | sort | uni
 
 One self-contained page. Diagram rules and SVG patterns are in [references/diagram-patterns.md](references/diagram-patterns.md). Sections, in reading order:
 
-1. **TL;DR** — what the system does, in three sentences, and the stack in one line.
-2. **System context** — the system, its users, and the external systems it talks to.
-3. **Module map** — the module dependency graph (cycles in a warning color), each node clickable to its module card.
-4. **Key flows** — 2–4 sequence diagrams for the flows that matter most (a typical request, a write path, a background job, auth). Each step links to its code.
-5. **Data model** — the core entities and relationships, and which module owns each.
-6. **Module cards** — purpose, public surface, dependencies, "read these first" files, risks.
-7. **Guided tour** — an ordered walk through 8–12 files ("start here, then…") with why each matters.
-8. **Hotspots and risks** — the churn × size table, cycles, untested critical paths, single-owner areas.
-9. **Glossary** — domain terms as the code names them.
-10. **Open questions** — what the code could not answer, for the team to fill in.
+1. **TL;DR**, what the system does, in three sentences, and the stack in one line.
+2. **System context**, the system, its users, and the external systems it talks to.
+3. **Module map**, the module dependency graph (cycles in a warning color), each node clickable to its module card.
+4. **Key flows**, 2–4 sequence diagrams for the flows that matter most (a typical request, a write path, a background job, auth). Each step links to its code.
+5. **Data model**, the core entities and relationships, and which module owns each.
+6. **Module cards**, purpose, public surface, dependencies, "read these first" files, risks.
+7. **Guided tour**, an ordered walk through 8–12 files ("start here, then…") with why each matters.
+8. **Hotspots and risks**, the churn × size table, cycles, untested critical paths, single-owner areas.
+9. **Glossary**, domain terms as the code names them.
+10. **Open questions**, what the code could not answer, for the team to fill in.
 
-**Links:** when the repo has a GitHub remote, link citations as permalinks pinned to the current commit (`https://github.com/<owner>/<repo>/blob/<sha>/<path>#L<start>-L<end>`) so they survive later changes; otherwise show `path:line` as text. Never inline large code blocks — short excerpts (≤ 10 lines) only where a snippet explains a flow.
+**Links:** when the repo has a GitHub remote, link citations as permalinks pinned to the current commit (`https://github.com/<owner>/<repo>/blob/<sha>/<path>#L<start>-L<end>`) so they survive later changes; otherwise show `path:line` as text. Never inline large code blocks, short excerpts (≤ 10 lines) only where a snippet explains a flow.
 
 The page works in light and dark themes, at phone width, with a sticky section nav. No network calls beyond pinned CDN libraries and fonts; no secrets or `.env` values.
 
@@ -102,7 +102,7 @@ The page works in light and dark themes, at phone width, with a sticky section n
 **In one line:** <what it is>
 **Read first:** <3 files>
 **Biggest risks:** <2–3 bullets with paths>
-**Open questions:** <count> — listed at the end of the page
+**Open questions:** <count>: listed at the end of the page
 ```
 
 ## 7. Iterate

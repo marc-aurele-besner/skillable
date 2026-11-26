@@ -5,7 +5,7 @@ Deep checklist behind step 4 of the skill. Each dimension lists what to look for
 ## How to use this file
 
 1. Pick the dimensions the diff touches (SKILL.md step 3 decides the risk level and depth).
-2. Read the changed hunks **with the file open** — the hunk alone hides the context that makes a bug real.
+2. Read the changed hunks **with the file open**, the hunk alone hides the context that makes a bug real.
 3. For each candidate, write the failure scenario: inputs or state → wrong outcome. No scenario, no finding.
 4. Check the "do not report" list at the bottom before writing anything up.
 
@@ -33,7 +33,7 @@ Deep checklist behind step 4 of the skill. Each dimension lists what to look for
 **JavaScript / TypeScript**
 - **Stale closure in React**: an effect or callback that reads a prop/state value from the render it was created in, while the value has since changed. Fix is usually a dependency array or a functional `setState` update (`setCount(c => c + 1)`), not reading `count`.
 - **Missing `key` in a list, or an index as `key`**: index keys make React reuse the wrong DOM node when the list reorders, which corrupts input values and animation state.
-- **Missing `await`**: a promise-returning call not awaited — the code continues before the value exists, and the rejection is swallowed as an unhandled rejection. Look for a `try/catch` around a block where one call is un-awaited.
+- **Missing `await`**: a promise-returning call not awaited, the code continues before the value exists, and the rejection is swallowed as an unhandled rejection. Look for a `try/catch` around a block where one call is un-awaited.
 - **Unsafe `any` / `as` casts**: `as SomeType` silences the compiler. `any` in a public API surface spreads.
 - **`await` inside a loop**: serializes independent network calls; usually a `Promise.all` was intended.
 - **Optional chaining that hides a real error**: `a?.b?.c` returns `undefined` and the caller treats it as a value.
@@ -47,19 +47,19 @@ Deep checklist behind step 4 of the skill. Each dimension lists what to look for
 - `"use client"` added to a whole file to use one hook, dragging the whole tree into the client bundle.
 
 **Python**
-- Mutable default argument (`def f(items=[])`) — the list persists across calls.
+- Mutable default argument (`def f(items=[])`): the list persists across calls.
 - Late-binding closure in a loop (`lambda: i` inside `for i in ...`).
 - Bare `except:` swallows `KeyboardInterrupt` and `SystemExit`.
 - `except Exception` around a block that also does I/O, hiding which call failed.
-- `.get(key)` on a dict that should be `key` — a missing key returns `None` instead of raising.
+- `.get(key)` on a dict that should be `key`, a missing key returns `None` instead of raising.
 - Context manager not used: a file/socket/DB connection closed only on the happy path.
 
 **SQL / database**
-- **String building**: `f"SELECT * FROM users WHERE id = {user_id}"` — injection. Must be a parameterized query.
+- **String building**: `f"SELECT * FROM users WHERE id = {user_id}"`, injection. Must be a parameterized query.
 - Filtering on an unindexed column in a hot query.
 - `SELECT *` when a column is later dropped, or when a payload column holds PII that then leaks into a log or an API response.
-- `LIMIT`/`OFFSET` on a large table without an index on the sort column — the offset scan grows with page number.
-- A join that fans out rows and is then counted with `COUNT(*)` — count the distinct key instead.
+- `LIMIT`/`OFFSET` on a large table without an index on the sort column, the offset scan grows with page number.
+- A join that fans out rows and is then counted with `COUNT(*)`, count the distinct key instead.
 - A write inside a loop instead of a bulk operation.
 - Missing `ON DELETE` behavior, so deleting a parent orphans children or cascades too much.
 
@@ -73,7 +73,7 @@ Deep checklist behind step 4 of the skill. Each dimension lists what to look for
 **Shell / CI**
 - **Shell injection in CI**: `run: ${{ github.event.pull_request.title }}` interpolates untrusted text into a shell. Use an env var and quote it (`env: PR_TITLE: ${{ ... }}` then `"$PR_TITLE"`). The same applies to branch names, PR bodies, and issue titles.
 - `curl … | bash`, `npm install` of an unpinned package, or an action referenced by a mutable tag instead of a SHA.
-- A workflow triggered on `pull_request_target` that checks out and runs the PR's code — it runs with repository secrets.
+- A workflow triggered on `pull_request_target` that checks out and runs the PR's code, it runs with repository secrets.
 - Secrets exposed via `echo "$TOKEN"` in a step, or written to a file inside the workspace that gets uploaded as an artifact.
 - Missing concurrency group, so two runs race on the same environment.
 - A step that runs `continue-on-error: true` and hides a real failure.
@@ -122,7 +122,7 @@ Deep checklist behind step 4 of the skill. Each dimension lists what to look for
 - **Locking**: adding a non-null column with a default, changing a column type, or adding an index without `CONCURRENTLY` (Postgres) takes a table lock and blocks writes on a large table. Large backfills in one transaction time out.
 - **Ordering**: a deploy that runs the new code before the schema exists fails at runtime; the reverse fails at query time.
 - **Index**: does the migration add the index the new query needs? Is it created concurrently?
-- **Foreign keys**: added after the fact on a table with existing orphans — the FK creation fails and takes the table down.
+- **Foreign keys**: added after the fact on a table with existing orphans, the FK creation fails and takes the table down.
 - **Zero-downtime**: a `NOT NULL` add on a big table, or an index build, blocks; use a nullable column + backfill + validation, then add the constraint.
 - **Cross-version**: the ORM version in the repo must be able to express the new schema (a `migrations/` file written for a newer ORM version than the pinned one will not run).
 - **Seed and test fixtures**: are they updated to the new shape, and does the test DB build from the migrations (not just the schema file)?
@@ -131,7 +131,7 @@ Deep checklist behind step 4 of the skill. Each dimension lists what to look for
 
 ## 5. API and contract changes
 
-- Public function signatures, exported types, and default values changed — is that a breaking change for consumers of the library?
+- Public function signatures, exported types, and default values changed, is that a breaking change for consumers of the library?
 - HTTP: status codes, response shape, field names, nullability, pagination semantics, error body format.
 - GraphQL: fields removed or made non-null, enum values removed, input types changed.
 - Events and webhooks: payload shape, ordering guarantees, the `type` string, and the schema version.
@@ -151,14 +151,14 @@ Deep checklist behind step 4 of the skill. Each dimension lists what to look for
 - Payload size: a new field that returns a whole relation or a blob; an API that now returns everything instead of a page.
 - Bundle size: a heavy dependency added to the client bundle; an import that pulls the whole library instead of a subpath.
 - Queries without pagination, or a `LIMIT` that can be overridden by the client to something huge.
-- Missing cache, or a cache with no invalidation on write (stale data) — both are findings.
+- Missing cache, or a cache with no invalidation on write (stale data), both are findings.
 - Memory: an unbounded in-memory buffer, a listener added per request on a long-lived object.
 
 ---
 
 ## 7. Observability and error handling
 
-- A swallowed exception: `catch {}`, `except: pass`, a bare `catch (e) {}` — the failure is invisible.
+- A swallowed exception: `catch {}`, `except: pass`, a bare `catch (e) {}`, the failure is invisible.
 - An error logged without context: no id, no user, no input, no stack.
 - A new failure path with no log, no metric, and no user-visible message.
 - An error message that leaks internals (stack trace, SQL, file path, internal id) to the user.
@@ -186,12 +186,12 @@ Deep checklist behind step 4 of the skill. Each dimension lists what to look for
 
 Reporting these costs the author time and buries the real defects. Leave them out unless the user explicitly asks for style feedback.
 
-- **Style the linter or formatter already enforces** — formatting, import order, trailing whitespace, line length, naming conventions covered by config. If the project's linter would reject it, CI will; that is not a review finding.
-- **Personal preference between two equally valid approaches** — "I would have used a switch", "I prefer early returns". Only a violation of a documented project rule is a finding.
-- **Speculative issues with no failure scenario** — "this might be slow with many records" without a realistic input. If you cannot write the scenario, drop it.
-- **Missing tests for code that is trivially correct** — a one-line getter does not need a unit test.
-- **Refactoring suggestions** — "this could be extracted into a helper", "this function is long". Only report when the length is causing a concrete defect or a documented rule is broken.
-- **Alternative technologies** — "use Postgres instead of Mongo", "you could have used X". The project's stack is its own decision.
+- **Style the linter or formatter already enforces**, formatting, import order, trailing whitespace, line length, naming conventions covered by config. If the project's linter would reject it, CI will; that is not a review finding.
+- **Personal preference between two equally valid approaches**, "I would have used a switch", "I prefer early returns". Only a violation of a documented project rule is a finding.
+- **Speculative issues with no failure scenario**, "this might be slow with many records" without a realistic input. If you cannot write the scenario, drop it.
+- **Missing tests for code that is trivially correct**, a one-line getter does not need a unit test.
+- **Refactoring suggestions**: "this could be extracted into a helper", "this function is long". Only report when the length is causing a concrete defect or a documented rule is broken.
+- **Alternative technologies**: "use Postgres instead of Mongo", "you could have used X". The project's stack is its own decision.
 - **Re-reviewing code the PR did not change**, except where it makes the changed code wrong. Pre-existing problems go in "Report only", never as a blocking finding, and never with the PR's file:line as the anchor.
-- **Unverified speculation about behavior you could not check** — put it in "Worth checking (unverified)" at most, clearly labeled.
-- **Nitpicks on the PR body, commit message grammar, or title casing** — unless the repo has a documented convention.
+- **Unverified speculation about behavior you could not check**, put it in "Worth checking (unverified)" at most, clearly labeled.
+- **Nitpicks on the PR body, commit message grammar, or title casing**, unless the repo has a documented convention.

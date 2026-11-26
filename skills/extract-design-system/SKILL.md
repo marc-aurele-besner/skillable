@@ -1,9 +1,9 @@
 ---
 name: extract-design-system
 description: >-
-  Read a project's design language from source — tokens, light/dark themes,
+  Read a project's design language from source, tokens, light/dark themes,
   typography, spacing, layout shell, breakpoints, component idioms, icons,
-  motion, and copy tone — and publish it once as a living design-system
+  motion, and copy tone, and publish it once as a living design-system
   artifact (a browsable token and component gallery in every theme), plus a
   short drift report of hard-coded values that bypass the tokens. Other skills
   such as wireframe-feature can then reuse the published system instead of
@@ -17,7 +17,7 @@ argument-hint: "[focus=tokens|components|all]"
 
 # Extract Design System
 
-Goal: turn the design language that is scattered across a codebase into one page anyone can open — every token with its value per theme, every component idiom rendered live, and the rules that make the app look like itself. Extract once, reuse everywhere: wireframes, decks, landing pages, and onboarding all read from the same published system.
+Goal: turn the design language that is scattered across a codebase into one page anyone can open, every token with its value per theme, every component idiom rendered live, and the rules that make the app look like itself. Extract once, reuse everywhere: wireframes, decks, landing pages, and onboarding all read from the same published system.
 
 ## When to use
 
@@ -41,12 +41,12 @@ Do not run a questionnaire. Note assumptions in the report.
 
 Read the sources of truth, not compiled CSS. [references/design-extraction.md](references/design-extraction.md) lists where to look per stack.
 
-When the agent can run subagents (e.g. Claude Code's Agent tool), split the reading into parallel read-only passes and merge the results — each returns a structured note, not file dumps:
+When the agent can run subagents (e.g. Claude Code's Agent tool), split the reading into parallel read-only passes and merge the results, each returns a structured note, not file dumps:
 
-1. **Foundations** — color tokens per theme and the theme-switching mechanism, typography (families, sources, scale, weights, line heights), spacing scale, radii, shadows, borders, z-layers, breakpoints, motion (durations, easings).
-2. **Components** — the UI kit directory (`components/ui`, `packages/ui`…): each component's variants, sizes, and states; the icon set; empty, loading, error, and toast idioms.
-3. **Shell and patterns** — root layout, navigation (real labels and order), page header, content width, responsive behavior per breakpoint, forms, tables vs. cards, dialogs and drawers.
-4. **Voice** — copy tone from real UI strings (buttons, empty states, errors): sentence vs. title case, person, terminology for core entities.
+1. **Foundations**, color tokens per theme and the theme-switching mechanism, typography (families, sources, scale, weights, line heights), spacing scale, radii, shadows, borders, z-layers, breakpoints, motion (durations, easings).
+2. **Components**, the UI kit directory (`components/ui`, `packages/ui`…): each component's variants, sizes, and states; the icon set; empty, loading, error, and toast idioms.
+3. **Shell and patterns**, root layout, navigation (real labels and order), page header, content width, responsive behavior per breakpoint, forms, tables vs. cards, dialogs and drawers.
+4. **Voice**, copy tone from real UI strings (buttons, empty states, errors): sentence vs. title case, person, terminology for core entities.
 
 Without subagents, do the same passes one after another.
 
@@ -72,18 +72,18 @@ rg -n -g '!node_modules' -g '!*.svg' -g '!**/tokens*' -e '#[0-9a-fA-F]{3,8}\b' -
 rg -n -g '!node_modules' -e '\[(#|[0-9]+px)' src app components 2>/dev/null
 ```
 
-Report the top offenders (file, count, nearest token) and near-duplicate tokens (two grays within a few ΔE, spacing values off the scale). Do **not** fix them in this skill — list them so the user can decide.
+Report the top offenders (file, count, nearest token) and near-duplicate tokens (two grays within a few ΔE, spacing values off the scale). Do **not** fix them in this skill, list them so the user can decide.
 
 ## 4. Build the design-system page
 
 One self-contained HTML page (no build step, no network calls except fonts and pinned CDN libraries):
 
 - **Tokens on `:root`** with the project's names, second theme under the project's own mechanism (`.dark`, `[data-theme="dark"]`…) and `prefers-color-scheme` by default, plus a visible **theme toggle**.
-- **Foundations** — color swatches (name, value per theme, contrast ratio against its usual background, and a pass/fail flag at WCAG AA), type scale specimens, spacing and radius rulers, shadow tiles, motion demos, breakpoint table.
-- **Components** — each component rendered live in every variant, size, and state (hover/focus/disabled/loading/error), with its source path and usage notes. Recreate them in plain HTML/CSS with the extracted tokens; they must look like the real ones.
-- **Shell and patterns** — the layout shell at mobile and desktop widths, form, table/list, dialog, empty/loading/error patterns, with the real nav labels.
-- **Voice** — tone rules and before/after copy examples.
-- **Drift** — the findings from step 3.
+- **Foundations**: color swatches (name, value per theme, contrast ratio against its usual background, and a pass/fail flag at WCAG AA), type scale specimens, spacing and radius rulers, shadow tiles, motion demos, breakpoint table.
+- **Components**: each component rendered live in every variant, size, and state (hover/focus/disabled/loading/error), with its source path and usage notes. Recreate them in plain HTML/CSS with the extracted tokens; they must look like the real ones.
+- **Shell and patterns**: the layout shell at mobile and desktop widths, form, table/list, dialog, empty/loading/error patterns, with the real nav labels.
+- **Voice**: tone rules and before/after copy examples.
+- **Drift**: the findings from step 3.
 - A sticky in-page nav and a search box that filters tokens and components.
 - Responsive: no horizontal scroll at 375 px.
 
@@ -100,7 +100,7 @@ One self-contained HTML page (no build step, no network calls except fonts and p
 
 **Foundations:** <one line each: palette, type, spacing, radius, motion, breakpoints>
 **Theme mechanism:** <e.g. next-themes, class="dark" on <html>>
-**Drift:** <K> hard-coded values in <F> files — top 3: <file (count) → nearest token>
+**Drift:** <K> hard-coded values in <F> files, top 3: <file (count) → nearest token>
 **Contrast:** <pairs failing WCAG AA, or "all pass">
 **Assumptions:** <bullets>
 **Reuse:** wireframe-feature reads this system when it is recorded in <file>.

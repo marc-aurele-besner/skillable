@@ -377,11 +377,11 @@ def audit_site(root: Path, base: str) -> dict:
 
 
 def print_markdown(r: dict) -> None:
-    print(f"# SEO / AEO audit — {r['root']}\n")
-    print(f"Pages: {r['pages']}  Base URL: {r['base_url'] or '(none — canonical checks limited)'}")
+    print(f"# SEO / AEO audit: {r['root']}\n")
+    print(f"Pages: {r['pages']}  Base URL: {r['base_url'] or '(none, canonical checks limited)'}")
     print(f"Sitemap coverage: {r['sitemap_coverage'] or 'n/a'}\n")
     if r["robots"]:
-        print(f"robots.txt — sitemaps: {r['robots']['sitemaps'] or 'none'}; "
+        print(f"robots.txt: sitemaps: {r['robots']['sitemaps'] or 'none'}; "
               f"blocked AI search bots: {r['robots']['blocked_search_bots'] or 'none'}; "
               f"blocked AI training bots: {r['robots']['blocked_training_bots'] or 'none'}\n")
     print("## Site issues\n")
@@ -394,7 +394,7 @@ def print_markdown(r: dict) -> None:
     print("\n## Pages\n")
     for p in r["page_details"]:
         if p["issues"]:
-            print(f"- `{p['file']}` — " + "; ".join(p["issues"]))
+            print(f"- `{p['file']}`: " + "; ".join(p["issues"]))
 
 
 def main() -> int:

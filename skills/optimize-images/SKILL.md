@@ -1,7 +1,7 @@
 ---
 name: optimize-images
 description: >-
-  Audit and shrink the images a site ships — responsive sources, modern
+  Audit and shrink the images a site ships, responsive sources, modern
   formats (AVIF/WebP), explicit dimensions to kill layout shift, correct
   loading priority for the LCP image, SVG for icons and logos, and a byte
   budget enforced in CI. Detects the stack (Next.js Image, Astro Image,
@@ -16,7 +16,7 @@ argument-hint: "[path] [focus: formats|responsive|dimensions|budget|all]"
 
 # Optimize images
 
-Goal: every page ships the smallest image that still looks right, at the size the visitor's screen actually needs, without shifting the layout while it loads — and a CI budget so it stays that way. Measure what the site ships, fix it with the project's own image tooling, verify the build, and open one PR. Do not merge.
+Goal: every page ships the smallest image that still looks right, at the size the visitor's screen actually needs, without shifting the layout while it loads, and a CI budget so it stays that way. Measure what the site ships, fix it with the project's own image tooling, verify the build, and open one PR. Do not merge.
 
 The levers, in order: **dimensions (no CLS) → the right file for the screen → the right format → the right loading priority → a budget that keeps it.** A 400 KB hero that is not sized for a phone costs more than every other image on the page combined, but a hero that shifts the layout costs trust on every visit.
 
@@ -72,25 +72,25 @@ Also record for each: intrinsic dimensions, format, byte size, and whether a CDN
 
 ## 3. Fix, in impact order
 
-Rank every finding first — the tier decides what goes in the PR:
+Rank every finding first: the tier decides what goes in the PR:
 
 | Tier | Meaning | Action |
 |------|---------|--------|
-| **P0 — layout shift or wrong bytes** | Image without `width`/`height` (or `aspect-ratio`), hero shipped at desktop size on a phone, an image served larger than its intrinsic size (upscale), a referenced file that does not exist | Fix |
-| **P1 — wasted transfer** | No modern format, no `srcset`, no `sizes`, a PNG that WebP or AVIF shrinks by half | Fix |
-| **P2 — wrong priority** | Missing `loading`/`decoding` hints, LCP image without `fetchpriority="high"`, `loading="lazy"` on the LCP image | Fix |
-| **P3 — hygiene** | Raster icons and logos that should be SVG, image files nothing references, missing `alt` | Fix the cheap, contained ones; list the rest |
+| **P0: layout shift or wrong bytes** | Image without `width`/`height` (or `aspect-ratio`), hero shipped at desktop size on a phone, an image served larger than its intrinsic size (upscale), a referenced file that does not exist | Fix |
+| **P1: wasted transfer** | No modern format, no `srcset`, no `sizes`, a PNG that WebP or AVIF shrinks by half | Fix |
+| **P2: wrong priority** | Missing `loading`/`decoding` hints, LCP image without `fetchpriority="high"`, `loading="lazy"` on the LCP image | Fix |
+| **P3: hygiene** | Raster icons and logos that should be SVG, image files nothing references, missing `alt` | Fix the cheap, contained ones; list the rest |
 | **Report only** | CDN and edge configuration outside the repo, CMS image settings, original design exports, choosing the budget policy, brand assets | List as follow-ups |
 
 Then work the list in this order. Each step is independent and committable on its own.
 
 1. **Explicit dimensions on every image.** Add `width` and `height` attributes (CSS pixels, matching the intrinsic ratio) or an `aspect-ratio` style, so the browser reserves the box before the file arrives. This is the single biggest CLS win and it is free. Use the project's own component's `width`/`height` or `aspect-ratio` prop when there is one.
 2. **Responsive sources.** Give every content image a `srcset` with 2–4 widths and a `sizes` attribute that matches the real layout (`sizes="(max-width: 768px) 100vw, 50vw"`). Without `sizes`, browsers assume `100vw` and over-download on wide screens. Concrete recipes are in [references/image-formats.md](references/image-formats.md).
-3. **Modern formats.** Serve AVIF first, then WebP, then the original as fallback — with `<picture>` in plain HTML, or the framework's image component everywhere else. Never delete the PNG/JPEG/GIF original from the repo; keep it as the fallback source. Never re-encode a photo lossily without stating the quality target and looking at the result.
-4. **Loading priority.** `loading="lazy"` below the fold; `loading="eager"` + `fetchpriority="high"` on the LCP image only; `decoding="async"` on everything that is not the LCP image. `loading="lazy"` on the LCP image is worse than no hint at all — it delays the paint.
+3. **Modern formats.** Serve AVIF first, then WebP, then the original as fallback, with `<picture>` in plain HTML, or the framework's image component everywhere else. Never delete the PNG/JPEG/GIF original from the repo; keep it as the fallback source. Never re-encode a photo lossily without stating the quality target and looking at the result.
+4. **Loading priority.** `loading="lazy"` below the fold; `loading="eager"` + `fetchpriority="high"` on the LCP image only; `decoding="async"` on everything that is not the LCP image. `loading="lazy"` on the LCP image is worse than no hint at all, it delays the paint.
 5. **Use the framework's own image component.** If the project already has Next `<Image>`, Astro `<Image>`, Nuxt `<NuxtImg>`, SvelteKit `@sveltejs/enhanced-img`, a Vite image plugin, or a CMS image service, use it. It already generates `srcset`, sizes, dimensions, and modern formats. Hand-rolled `<img>` markup next to an existing image component is a regression. Do not add an image-processing dependency if the project already has one.
 6. **SVG where the artwork allows it.** Icons, logos, and simple illustrations become SVG. Ask before replacing a logo that a designer delivered as a raster.
-7. **Delete what nothing references.** The auditor lists unreferenced image files. Check the CMS and the build output before deleting — a file may be referenced by a config, a CMS record, or a template that the scanner cannot parse.
+7. **Delete what nothing references.** The auditor lists unreferenced image files. Check the CMS and the build output before deleting, a file may be referenced by a config, a CMS record, or a template that the scanner cannot parse.
 
 Guardrails, non-negotiable:
 
@@ -106,7 +106,7 @@ Guardrails, non-negotiable:
 - Replacing a designed logo or illustration with SVG (brand assets are the designer's call).
 - Changing the quality target (it changes the look).
 - Deleting an image that a CMS might still reference.
-- Changing a budget that CI already enforces — budgets are a product decision, not a technical one.
+- Changing a budget that CI already enforces, budgets are a product decision, not a technical one.
 
 ## 4. Budgets
 
@@ -122,9 +122,9 @@ Write a budget file next to the audit script, for example `image-budget.json` in
 }
 ```
 
-- `max_image_bytes` — any single referenced file.
-- `max_total_bytes` — every distinct referenced image.
-- `max_page_bytes` — image bytes per page; `*` is the default limit.
+- `max_image_bytes`: any single referenced file.
+- `max_total_bytes`: every distinct referenced image.
+- `max_page_bytes`: image bytes per page; `*` is the default limit.
 
 Enforce it in CI with the bundled auditor, which exits 1 when a budget is exceeded:
 
@@ -153,7 +153,7 @@ Every P0/P1 finding must be gone from the after-report. Also confirm:
 - The LCP image is eager, `fetchpriority="high"`, and (for a static build) preloaded via `<link rel="preload" as="image" imagesrcset=... imagesizes=...>`.
 - The responsive images actually serve different widths: `curl -sI` the srcset URLs with a mobile User-Agent, or check the CDN log.
 - No image is requested at a size larger than its intrinsic dimensions (that is an upscale bug, and the auditor flags it).
-- If a headless browser is available, take screenshots at 390 px and 1440 px and look at them — a wrong `sizes` value or a bad crop shows up there. If it is not available, say the visual check was skipped.
+- If a headless browser is available, take screenshots at 390 px and 1440 px and look at them, a wrong `sizes` value or a bad crop shows up there. If it is not available, say the visual check was skipped.
 
 ## 6. Commit, push, PR
 
@@ -174,7 +174,7 @@ Watch CI (`gh pr checks --watch`). Fix failures caused by this change; record un
 ## 7. Report
 
 ```markdown
-# Images — <project>
+# Images: <project>
 
 **Stack:** <framework> | **Image pipeline:** <component / CDN / none>
 **PR:** <url> | already in good shape, no PR
@@ -195,7 +195,7 @@ Watch CI (`gh pr checks --watch`). Fix failures caused by this change; record un
 - max_image_bytes: 250 KB · max_total_bytes: 2 MB · max_page_bytes: 1.2 MB
 
 ## Skipped
-- logo.png — brand asset, needs the designer's sign-off
+- logo.png: brand asset, needs the designer's sign-off
 
 ## Follow-ups
 - Run the budget job on pull requests only (currently also on main).

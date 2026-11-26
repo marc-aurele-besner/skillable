@@ -10,11 +10,11 @@ Bot names change; check the vendor docs linked below before editing and prefer t
 |--------|------------------------------------------|----------------------|--------------------------------|------|
 | OpenAI | `OAI-SearchBot` | `ChatGPT-User` | `GPTBot` | https://platform.openai.com/docs/bots |
 | Anthropic | `Claude-SearchBot` | `Claude-User` | `ClaudeBot` | https://support.claude.com/en/articles/8896518 |
-| Perplexity | `PerplexityBot` | `Perplexity-User` | — | https://docs.perplexity.ai/guides/bots |
-| Google | `Googlebot` (AI Overviews use the normal index) | — | `Google-Extended` (token, not a separate crawler) | https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers |
-| Apple | `Applebot` | — | `Applebot-Extended` (token) | https://support.apple.com/en-us/119829 |
-| Microsoft | `Bingbot` (feeds Copilot and ChatGPT search) | — | — | https://www.bing.com/webmasters/help/which-crawlers-does-bing-use-8c184ec0 |
-| Common Crawl | — | — | `CCBot` | https://commoncrawl.org/ccbot |
+| Perplexity | `PerplexityBot` | `Perplexity-User` |, | https://docs.perplexity.ai/guides/bots |
+| Google | `Googlebot` (AI Overviews use the normal index) |, | `Google-Extended` (token, not a separate crawler) | https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers |
+| Apple | `Applebot` |: | `Applebot-Extended` (token) | https://support.apple.com/en-us/119829 |
+| Microsoft | `Bingbot` (feeds Copilot and ChatGPT search) |, |, | https://www.bing.com/webmasters/help/which-crawlers-does-bing-use-8c184ec0 |
+| Common Crawl |: |, | `CCBot` | https://commoncrawl.org/ccbot |
 
 Rules:
 
@@ -84,5 +84,5 @@ Small, factual edits the skill may apply; anything bigger goes in the report as 
 ## Outside the repo (report as follow-ups)
 
 - Verify in Google Search Console and Bing Webmaster Tools and submit the sitemap. Bing matters for ChatGPT search and Copilot.
-- IndexNow (Bing, Yandex, others) for fast re-crawl after deploys — needs a key file and a deploy hook; offer it, do not set it up silently. The `setup-seo` skill sets up the key file, the deploy ping, and the Google/Bing channels IndexNow does not cover.
+- IndexNow (Bing, Yandex, others) for fast re-crawl after deploys, needs a key file and a deploy hook; offer it, do not set it up silently. The `setup-seo` skill sets up the key file, the deploy ping, and the Google/Bing channels IndexNow does not cover.
 - Get listed where assistants look: official docs, GitHub README, package registries, Wikipedia/Wikidata (if notable), reputable directories and comparisons.

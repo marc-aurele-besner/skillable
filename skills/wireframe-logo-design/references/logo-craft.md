@@ -4,12 +4,12 @@ Rules for drawing the 8 logos in each direction so they are comparable, legible,
 
 ## Mark construction
 
-- **Grid** — draw on a `viewBox="0 0 64 64"` grid. Keep a 4-unit safe margin, so the live area is 56 × 56.
-- **Feature size** — no feature thinner than 4 units (about 1 px at 16 px). Strokes are 4–6 units in a single weight per mark.
-- **Shapes** — `rect`, `circle`, `ellipse`, `line`, `polygon`, `path`. No `<image>`, no `<text>` inside the mark, no `<filter>`, no `<mask>` unless the mask is the concept.
-- **Corners** — take the project's radius token as a ratio of its UI element size, then reuse that ratio for the mark's corners. Sharp UI gets sharp corners; soft UI gets rounded ones.
-- **Color** — `fill="currentColor"` or `stroke="currentColor"` on the mark, with the token value set on a wrapper `color`. Two colors at most: ink and accent. Never a gradient, shadow, or opacity fade used as a color.
-- **Negative space** — when the concept uses counters or cut-outs, draw them with `fill-rule="evenodd"` or a path that goes the other way. Do not use a mask.
+- **Grid**: draw on a `viewBox="0 0 64 64"` grid. Keep a 4-unit safe margin, so the live area is 56 × 56.
+- **Feature size**: no feature thinner than 4 units (about 1 px at 16 px). Strokes are 4–6 units in a single weight per mark.
+- **Shapes**: `rect`, `circle`, `ellipse`, `line`, `polygon`, `path`. No `<image>`, no `<text>` inside the mark, no `<filter>`, no `<mask>` unless the mask is the concept.
+- **Corners**: take the project's radius token as a ratio of its UI element size, then reuse that ratio for the mark's corners. Sharp UI gets sharp corners; soft UI gets rounded ones.
+- **Color**: `fill="currentColor"` or `stroke="currentColor"` on the mark, with the token value set on a wrapper `color`. Two colors at most: ink and accent. Never a gradient, shadow, or opacity fade used as a color.
+- **Negative space**: when the concept uses counters or cut-outs, draw them with `fill-rule="evenodd"` or a path that goes the other way. Do not use a mask.
 
 ## Variety inside a direction
 
@@ -30,18 +30,18 @@ Each direction's 8 logos must each use a different construction. Use a checklist
 
 Every mark must pass these before it appears on a card:
 
-- **One color** — all ink, no accent, still reads.
-- **Reversed** — the light version on the dark tile still reads, with no outline added to fake contrast.
-- **16 px** — the mark still reads at favicon size. If it does not, simplify it.
-- **Contrast** — the mark against its tile reaches at least 3:1 (non-text contrast).
+- **One color**: all ink, no accent, still reads.
+- **Reversed**: the light version on the dark tile still reads, with no outline added to fake contrast.
+- **16 px**: the mark still reads at favicon size. If it does not, simplify it.
+- **Contrast**: the mark against its tile reaches at least 3:1 (non-text contrast).
 
 ## Lockups
 
 Measured in units of `H`, the height of the mark.
 
-- **Horizontal** — mark on the left, wordmark on the right. Gap `0.25H`. The wordmark's cap height is about `0.45H`, centered on the mark's optical middle. Left-align to the mark's edge.
-- **Stacked** (added later, in iteration) — mark centered above the wordmark. Gap `0.3H`. The wordmark's width is about `2.5H`–`3H`, centered.
-- **Clear space** — keep at least `0.5H` free on every side of the lockup.
+- **Horizontal**: mark on the left, wordmark on the right. Gap `0.25H`. The wordmark's cap height is about `0.45H`, centered on the mark's optical middle. Left-align to the mark's edge.
+- **Stacked** (added later, in iteration): mark centered above the wordmark. Gap `0.3H`. The wordmark's width is about `2.5H`–`3H`, centered.
+- **Clear space**: keep at least `0.5H` free on every side of the lockup.
 
 The wordmark uses the project's display family and weight. Its case follows the brand's own spelling. Load the font through the project's own link. If a font is not loadable, fall back to the closest system family and name it in the report.
 

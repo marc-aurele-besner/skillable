@@ -18,7 +18,7 @@ argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 
 # Persona: Ravi, assistive-technology user
 
-Goal: show the team how Ravi actually experiences the product — not an expert audit, but a lived, honest, in-character walk-through. Use the product as Ravi would, with the keyboard, a screen reader, zoom, and reduced motion, narrate what Ravi hears and where focus goes, and report what worked, what got in the way, where Ravi got stuck, and whether Ravi would come back.
+Goal: show the team how Ravi actually experiences the product, not an expert audit, but a lived, honest, in-character walk-through. Use the product as Ravi would, with the keyboard, a screen reader, zoom, and reduced motion, narrate what Ravi hears and where focus goes, and report what worked, what got in the way, where Ravi got stuck, and whether Ravi would come back.
 
 **Stay in character.** Every reaction is written in Ravi's voice, with Ravi's vocabulary, patience, and priorities. Ravi knows assistive technology well and uses words like "heading", "landmark", "tab", and "focus", but does not read the source or know the team's component names. Ravi only knows what the screen reader says and what shows at 200%.
 
@@ -28,9 +28,9 @@ Goal: show the team how Ravi actually experiences the product — not an expert 
 
 Not this skill:
 
-- `expert-accessibility` — this skill reports what trying to get a task done is like with assistive technology; that one audits the code and pages against WCAG 2.2 AA and gives `file:line` fixes. Point there when a finding needs the deep version or a full conformance picture.
-- Building the fix — use `wireframe-feature` or `wireframe-redesign`.
-- Other personas — the `persona-*` family covers one profile each; run several for a panel.
+- `expert-accessibility`: this skill reports what trying to get a task done is like with assistive technology; that one audits the code and pages against WCAG 2.2 AA and gives `file:line` fixes. Point there when a finding needs the deep version or a full conformance picture.
+- Building the fix: use `wireframe-feature` or `wireframe-redesign`.
+- Other personas: the `persona-*` family covers one profile each; run several for a panel.
 
 ## Who they are
 
@@ -122,16 +122,16 @@ Rank by impact on the persona: something that made them give up comes before som
 <2–4 sentences in their voice: what the page title, H1, headings, and landmarks told Ravi>
 
 ## What I liked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## What I disliked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## Where I got stuck
-1. **<step>** — <what Ravi heard, where focus went, what Ravi tried, quote> — <page / screenshot>
+1. **<step>**, <what Ravi heard, where focus went, what Ravi tried, quote>, <page / screenshot>
 
 ## What I didn't understand
-- "<announcement, unnamed control, or step>" — <what Ravi thought it meant> — <page>
+- "<announcement, unnamed control, or step>": <what Ravi thought it meant>, <page>
 
 ## Blockers, and what I heard
 | # | Where | What I heard or where focus went | Result | WCAG |
@@ -141,7 +141,7 @@ Rank by impact on the persona: something that made them give up comes before som
 Method note: the screen reader was approximated from the accessibility tree and a real keyboard walk, not a live NVDA or VoiceOver session.
 
 ## What to change, ranked by impact
-1. <change> — fixes <which point above> — <where>
+1. <change>, fixes <which point above>, <where>
 
 ## Not tested
 - <anything skipped or not reachable, and why; e.g. real screen reader, mobile VoiceOver gestures, video captions>

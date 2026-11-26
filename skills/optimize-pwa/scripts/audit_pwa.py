@@ -457,11 +457,11 @@ def audit(root: Path, base_path: str) -> dict:
 
 
 def print_markdown(r: dict) -> None:
-    print(f"# PWA / mobile audit — {r['root']}\n")
+    print(f"# PWA / mobile audit: {r['root']}\n")
     print(f"Pages: {r['pages']}  Installable basics: {'yes' if r['installable_basics'] else 'no'}")
     m = r["manifest"]
     if m:
-        print(f"Manifest: `{m['file']}` — name={m.get('name')!r} short_name={m.get('short_name')!r} "
+        print(f"Manifest: `{m['file']}`: name={m.get('name')!r} short_name={m.get('short_name')!r} "
               f"display={m.get('display')} start_url={m.get('start_url')} id={m.get('id')} "
               f"screenshots={m.get('screenshots')} shortcuts={m.get('shortcuts')}")
         for icon in m.get("icons", []):
@@ -480,7 +480,7 @@ def print_markdown(r: dict) -> None:
     print("\n## Pages\n")
     for p in r["page_details"]:
         if p["issues"]:
-            print(f"- `{p['file']}` — " + "; ".join(p["issues"]))
+            print(f"- `{p['file']}`: " + "; ".join(p["issues"]))
 
 
 def main() -> int:

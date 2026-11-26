@@ -17,13 +17,13 @@ description: >-
 argument-hint: "[url | path | pr-number] [focus: hierarchy|spacing|type|color|tokens|responsive|themes|icons|motion|all] [--comment]"
 ---
 
-# Expert UI — Visual Design Reviewer
+# Expert UI: Visual Design Reviewer
 
-Goal: tell the team, precisely and briefly, what in the **visual layer** of their UI is wrong, where it is, why a user would notice, and how to fix it — and say plainly when nothing needs fixing. Judge against the project's own design language first, then against well-established visual and WCAG rules; never against personal taste.
+Goal: tell the team, precisely and briefly, what in the **visual layer** of their UI is wrong, where it is, why a user would notice, and how to fix it, and say plainly when nothing needs fixing. Judge against the project's own design language first, then against well-established visual and WCAG rules; never against personal taste.
 
 The order that matters: **learn the design language → see the real screens → find candidate defects → verify each one → report only what survives, most severe first.** Five verified findings with exact references beat twenty "consider…" bullets. A sound UI gets a short review.
 
-Not this skill: flows, task logic, copy, and information architecture (`expert-ux`); producing the design system itself (`extract-design-system` — its drift report is a useful input here); redesigning (`wireframe-redesign`); full accessibility audits beyond contrast, focus visibility, and target size (`expert-accessibility`); performance (`expert-frontend-performance`, `audit-web-vitals`); general code review (`review-pull-request`). This skill reads and reports; it does not change the product.
+Not this skill: flows, task logic, copy, and information architecture (`expert-ux`); producing the design system itself (`extract-design-system`, its drift report is a useful input here); redesigning (`wireframe-redesign`); full accessibility audits beyond contrast, focus visibility, and target size (`expert-accessibility`); performance (`expert-frontend-performance`, `audit-web-vitals`); general code review (`review-pull-request`). This skill reads and reports; it does not change the product.
 
 ## Read-only by default
 
@@ -42,7 +42,7 @@ Not this skill: flows, task logic, copy, and information architecture (`expert-u
 | Path | `src/components/`, `app/(dashboard)/`, a `.tsx`/`.vue`/`.css` file | That part of the codebase plus the screens it renders |
 | PR | `42`, a GitHub PR URL | The visual impact of the diff only; context is read, not reviewed |
 | Screenshot or image | An attached image | That image; references are regions of the screen, not file:line |
-| Nothing | — | The current repo's main app; ask which screens matter most if there are more than ~10 routes |
+| Nothing |: | The current repo's main app; ask which screens matter most if there are more than ~10 routes |
 
 Focus word (default `all`) narrows the dimensions walked in step 4. `--comment` or "post it" means post to the PR when the target is a PR; otherwise report in chat.
 
@@ -114,16 +114,16 @@ Run scripts from the skill directory or pass their full path. Both are stdlib-on
 
 Read [references/visual-checklist.md](references/visual-checklist.md) now, before writing any finding. It holds the concrete checks, how to confirm each, framework traps, and what not to report. Walk only the dimensions in the focus:
 
-1. **Visual hierarchy** — one clear primary action and focal point per view; heading levels that read as levels.
-2. **Spacing and alignment rhythm** — values on the scale, consistent gutters, shared edges, baseline alignment.
-3. **Typography scale** — a small set of sizes from a scale, readable body size and line length, tabular numerals where values change.
-4. **Color and contrast** — AA contrast (computed), non-text contrast, color never the only signal, palette discipline.
-5. **Tokens and components** — literals that duplicate or contradict tokens, parallel components that drifted, z-index and elevation order.
-6. **Responsive breakpoints** — no horizontal scroll at 320 px, no broken tablet range, touch targets, images and viewport units.
-7. **Light/dark parity** — every component themed, contrast in both themes, assets and icons that adapt, no wrong-theme flash.
-8. **Iconography** — one set, consistent stroke and size, `currentColor`, labels for ambiguous icon-only buttons.
-9. **Motion** — every animation explains a change, sane durations and easing, `prefers-reduced-motion` respected, transforms over layout properties.
-10. **State styling** — visible focus, no hover-only affordances, distinct disabled/loading/selected, styled empty and error states.
+1. **Visual hierarchy**, one clear primary action and focal point per view; heading levels that read as levels.
+2. **Spacing and alignment rhythm**, values on the scale, consistent gutters, shared edges, baseline alignment.
+3. **Typography scale**, a small set of sizes from a scale, readable body size and line length, tabular numerals where values change.
+4. **Color and contrast**, AA contrast (computed), non-text contrast, color never the only signal, palette discipline.
+5. **Tokens and components**, literals that duplicate or contradict tokens, parallel components that drifted, z-index and elevation order.
+6. **Responsive breakpoints**, no horizontal scroll at 320 px, no broken tablet range, touch targets, images and viewport units.
+7. **Light/dark parity**, every component themed, contrast in both themes, assets and icons that adapt, no wrong-theme flash.
+8. **Iconography**, one set, consistent stroke and size, `currentColor`, labels for ambiguous icon-only buttons.
+9. **Motion**, every animation explains a change, sane durations and easing, `prefers-reduced-motion` respected, transforms over layout properties.
+10. **State styling**, visible focus, no hover-only affordances, distinct disabled/loading/selected, styled empty and error states.
 
 For each candidate, ask: **what does a user see wrong, on which screen, at which size or theme?** If you cannot answer concretely, there is no finding.
 
@@ -133,7 +133,7 @@ Every candidate passes this gate or is dropped (not softened):
 
 1. **Reproduce it** on the rendered screen, or trace it in source to the element it styles. A literal in an unused file is not a finding.
 2. **Check the design language.** Is the value sanctioned by the token file, a documented decision, or the component library's defaults? If so, drop it.
-3. **Check it is not handled elsewhere** — a later override, a theme provider, a `dark:` variant on a parent, a media query in another file.
+3. **Check it is not handled elsewhere**, a later override, a theme provider, a `dark:` variant on a parent, a media query in another file.
 4. **Measure, don't eyeball.** Contrast via the script; sizes and spacing via computed styles or source values.
 5. **Locate it exactly**: `path/to/file.tsx:42` for the line that sets the value (head version for a PR), plus the URL/route and screen size or theme where it shows. For screenshot-only reviews, name the region ("top-right toolbar, second icon").
 6. **Write the fix**: the token, class, or value to use instead, or the specific rule to add. "Improve spacing" is not a fix; "`gap-3` → `gap-4` to match the 16 px card grid in `Grid.tsx:12`" is.
@@ -149,14 +149,14 @@ When many instances share one root cause (forty hard-coded grays), report the ro
 | **High** | A visible defect most users notice on a main screen | Text contrast 3–4.5:1 on body copy, two competing primary buttons, layout broken at tablet width, a component unthemed in dark mode |
 | **Medium** | Inconsistency that erodes polish or will spread | Off-scale spacing and type sizes on key screens, parallel button variants that drifted, mixed icon sets, no reduced-motion handling |
 | **Low** | Small, local polish | One misaligned icon, a slightly long transition, a single hard-coded color equal to a token |
-| **Note** | Not a defect: pre-existing issues out of scope, questions, follow-ups | "Charts use a palette outside the tokens — confirm if intentional" |
+| **Note** | Not a defect: pre-existing issues out of scope, questions, follow-ups | "Charts use a palette outside the tokens, confirm if intentional" |
 
 Notes are not findings; keep them in their own section.
 
 ## 7. Ask, don't assume
 
-- **Which screens**: more than ~10 routes and no focus — ask which matter most.
-- **Intent**: a value looks off but a comment, ADR, or PR description explains it — take it into account.
+- **Which screens**: more than ~10 routes and no focus, ask which matter most.
+- **Intent**: a value looks off but a comment, ADR, or PR description explains it, take it into account.
 - **Direction**: if the whole visual direction seems wrong rather than individual defects, say so once in the summary and ask whether a redesign exploration (`wireframe-redesign`) is wanted. Do not turn the review into one.
 - **Posting or fixing**: only after the user says yes.
 
@@ -169,14 +169,14 @@ If nothing survives verification, or only Low items do, say so in the first line
 - Every finding has a severity, an exact location (file:line and/or URL + screen size/theme), what the user sees, and a concrete fix.
 - Every contrast number came from the script; every size came from source or computed styles.
 - No finding contradicts the project's own tokens or documented decisions.
-- No finding belongs to `expert-ux` (flow, copy, task logic) — move those to Notes or drop them.
+- No finding belongs to `expert-ux` (flow, copy, task logic), move those to Notes or drop them.
 - Repeated issues are grouped under one root cause.
 - Unchecked areas (theme not rendered, no mobile screenshot) are listed under "Not verified."
 
 ## 10. Report
 
 ```markdown
-# UI review — <target>
+# UI review: <target>
 
 **Scope:** <screens / paths / PR #> · **Viewports:** 375, 768, 1440 · **Themes:** light, dark
 **Design language:** <token source, component library, icon set, theme model>
@@ -210,7 +210,7 @@ When posting to a PR (only on request): `gh pr review <n> --comment --body-file 
 - **Screenshots lie about color** when the browser applies forced colors, a color profile, or an extension (Dark Reader). Prefer computed styles for values; use screenshots for layout.
 - **Tailwind classes built from strings** (`` `text-${color}-500` ``) may never be generated; the source looks right and the screen is unstyled. Check the rendered screen.
 - **Dark mode via class strategy** needs the class on `<html>`; emulating `prefers-color-scheme` alone will not show it. Toggle the app's own switch.
-- **Portals** (modals, toasts, popovers) often render outside the theme provider and lose tokens — check them separately in both themes.
+- **Portals** (modals, toasts, popovers) often render outside the theme provider and lose tokens, check them separately in both themes.
 - **The scanner over-counts**: literals in tests, stories, email templates, and chart configs show up too. Verify each lead in the rendered UI before reporting.
 - **Not every literal is drift.** One-off values in third-party embeds, SVG artwork, and the token file itself are not findings.
 - **A PR review covers the diff's visual impact**, not the whole app. Pre-existing issues go to Notes.

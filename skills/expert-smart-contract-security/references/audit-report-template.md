@@ -3,13 +3,13 @@
 Fill every section. Delete a section only when it is genuinely empty, and say "None" rather than leaving a heading with nothing under it. Findings go most severe first; IDs restart per severity (`C-01`, `H-01`, `M-01`, `L-01`, `I-01`).
 
 ~~~markdown
-# Security review — <project>
+# Security review: <project>
 
 **Commit:** `<full sha>` (<repo URL>)
 **Date:** <YYYY-MM-DD>
 **Reviewer:** AI-assisted review (expert-smart-contract-security)
 **Methodology:** threat model → automated analysis → line-by-line manual review → verification → PoC for High/Critical → invariant fuzzing
-**Tools:** <Slither x.y.z, Aderyn x.y.z, Foundry forge x.y.z, Echidna x.y.z, Medusa x.y.z — or "manual only: no tools installed">
+**Tools:** <Slither x.y.z, Aderyn x.y.z, Foundry forge x.y.z, Echidna x.y.z, Medusa x.y.z, or "manual only: no tools installed">
 **Compiler:** solc <version>, optimizer <runs>, via_ir <true|false>
 **Target chains:** <chains>
 
@@ -29,7 +29,7 @@ Known issues excluded: <link or list>.
 <Two to five sentences: what the protocol does and how value flows.>
 
 **Assets:** <what holds value>
-**Actors:** <role — capability — EOA/multisig/timelock>
+**Actors:** <role: capability, EOA/multisig/timelock>
 **Trust assumptions:** <what each privileged role is trusted not to do; external dependencies trusted>
 **Invariants:** <numbered list in plain words>
 
@@ -50,11 +50,11 @@ Known issues excluded: <link or list>.
 
 ## Findings
 
-### H-01 — First depositor can steal subsequent deposits via share inflation
+### H-01: First depositor can steal subsequent deposits via share inflation
 
-**Severity:** High (Impact: High — loss of user deposits · Likelihood: Medium — requires an empty vault, true at launch)
+**Severity:** High (Impact: High: loss of user deposits · Likelihood: Medium, requires an empty vault, true at launch)
 **Location:** `src/Vault.sol:87-104` (`deposit`, `_convertToShares`)
-**Confidence:** Confirmed — PoC `test/audit/PoC_H01.t.sol` passes
+**Confidence:** Confirmed: PoC `test/audit/PoC_H01.t.sol` passes
 
 **Description**
 <What is wrong and why, referencing the exact lines.>
@@ -107,7 +107,7 @@ This is a time-boxed review of the commit above. It does not guarantee the absen
 ## When the code is sound
 
 ~~~markdown
-# Security review — <project>
+# Security review: <project>
 
 **Commit:** `<sha>` · **Scope:** <n> files, <nSLOC> nSLOC · **Tools:** <list>
 
@@ -115,7 +115,7 @@ No Critical, High, or Medium findings at this commit.
 
 **What was checked:** <one line per area from the checklist that applied>
 **Invariants that held:** <list with runs/depth>
-**This result rests on:** <trust assumptions — e.g. owner is a timelocked multisig, only allowlisted tokens>
+**This result rests on:** <trust assumptions: e.g. owner is a timelocked multisig, only allowlisted tokens>
 
 <At most a handful of Low / Informational items that genuinely matter, each with file:line. Or: "No further suggestions.">
 
