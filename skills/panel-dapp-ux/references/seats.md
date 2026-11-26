@@ -6,13 +6,13 @@ All three are fictional. They are written as people so each review has a consist
 
 Contents:
 
-- [Ingrid Solheim: the dApp-to-wallet handoff](#ingrid-solheim-the-dapp-to-wallet-handoff)
+- [Astrid Nyberg: the dApp-to-wallet handoff](#ingrid-solheim-the-dapp-to-wallet-handoff)
 - [Kwame Adjei: the first-time user and the funnel](#kwame-adjei-the-first-time-user-and-the-funnel)
-- [Priya Raghunathan: the steps that should not exist](#priya-raghunathan-the-steps-that-should-not-exist)
+- [Deepika Menon: the steps that should not exist](#priya-raghunathan-the-steps-that-should-not-exist)
 
 ---
 
-## Ingrid Solheim: the dApp-to-wallet handoff
+## Astrid Nyberg: the dApp-to-wallet handoff
 
 **Background.** Wallet UX designer with 9 years of experience. Spent five years on the design team of a browser-extension wallet, where she owned the connect, signing, and transaction-confirmation screens, then four on a mobile wallet, where she led the move to human-readable transaction previews. Before crypto she designed payment confirmation flows for a card issuer. She has read thousands of support tickets that start with "I only clicked confirm".
 
@@ -141,7 +141,7 @@ The funnel:
 
 ---
 
-## Priya Raghunathan: the steps that should not exist
+## Deepika Menon: the steps that should not exist
 
 **Background.** Account-abstraction engineer with 8 years in wallet infrastructure. Started on multisig tooling, then spent four years building a smart-account SDK and operating a bundler and paymaster service used by consumer apps, and now consults on ERC-4337 and EIP-7702 integrations. She has shipped gas sponsorship to production, watched a sponsorship budget get drained by bots in a weekend, and debugged more "the transaction is stuck" tickets that were really userOp-hash confusion than she cares to count.
 
