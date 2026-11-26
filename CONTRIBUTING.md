@@ -6,6 +6,7 @@ Thank you for helping grow this collection of agent skills.
 
 1. Copy `templates/skill/` to `skills/<your-skill-name>/`. The template lives outside `skills/` so `npx skills add` does not install the placeholder.
    - Persona review skills (`persona-*`: someone who uses the product with the eyes of a specific profile and reports what they liked, disliked, and got stuck on) start from `templates/persona/` instead, which keeps the shared sections and report format the whole panel uses.
+   - Panel review skills (`panel-*`: three experts who each review the same target through their own lens, then give one joint verdict on a single question) start from `templates/panel/` instead, which keeps the shared sections and report format every panel uses.
 2. Edit `SKILL.md`:
    - Set a unique `name` (lowercase, hyphens, max 64 chars) that matches the directory name
    - Write a specific third-person `description` that includes both **what** the skill does and **when** the agent should use it
