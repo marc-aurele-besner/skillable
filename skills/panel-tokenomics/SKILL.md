@@ -2,20 +2,17 @@
 name: panel-tokenomics
 description: >-
   Convenes a panel of three experts (a crypto-economist, a DeFi mechanism
-  designer, and a crypto compliance analyst) to stress-test a token or
-  incentive design and answer one question: does it hold up once incentives
-  run out or markets turn, and what should change? Each expert reviews
-  independently (supply, emissions, sinks and value accrual; liquidity
-  incentives, staking, mercenary capital and governance games; securities-risk
-  red flags and disclosure), then the panel records its disagreements and
-  gives one joint verdict with fixes ranked by impact, every finding tied to
-  a file:line, contract address, or doc URL. Read-only
+  designer, and a crypto compliance analyst) to answer one question: does this
+  token or incentive design hold up once incentives run out or markets turn,
+  and what should change? Each expert reviews independently, then the panel
+  records disagreements and gives one joint verdict with fixes ranked by
+  impact, each tied to a file:line, contract address, or doc URL. Read-only
   and advisory; not financial or legal advice. Use whenever the user asks to
-  review my tokenomics, a token design, an emission schedule, an incentive
-  model, a points or airdrop program, wants a second opinion on a token
-  launch, or asks "will this token survive when the
+  review tokenomics, a token design, an emission schedule, an incentive model,
+  or a points or airdrop program, or asks "will this token survive when the
   rewards stop?". Also triggers on /panel-tokenomics with an optional target
-  (path, URL, PR, or chain:address).
+  (path, URL, PR, or chain:address). For a deep single-expert economic audit,
+  use expert-tokenomics instead.
 argument-hint: "[target: path | url | pr | chain:address] [focus: economics|mechanism|compliance|all]"
 ---
 

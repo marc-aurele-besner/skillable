@@ -2,19 +2,15 @@
 name: panel-developer-experience
 description: >-
   Convenes a panel of three experts (a developer advocate, an API designer,
-  and a technical writer) to review an SDK, library, HTTP API, CLI, or
-  open-source repo and answer one question: can a new developer integrate
-  this in under 15 minutes, and what stops them? Each expert reviews
-  independently through their own lens (onboarding and time to hello world;
-  naming, consistency, versioning, types, and error design; docs structure,
-  examples, reference versus guides), then the panel compares notes, records
-  its disagreements, and gives one joint verdict with fixes ranked by impact,
-  every finding tied to an exact file:line or URL. Read-only and advisory.
-  Use whenever the user asks for a DX review, "review my SDK", an API design
-  review, a docs review, wants several expert opinions or a second opinion
-  before publishing a package or API, or asks "is my library easy to use".
+  and a technical writer) to answer one question: can a new developer
+  integrate this SDK, library, API, CLI, or repo in under 15 minutes, and what
+  stops them? Each expert reviews independently, then the panel records
+  disagreements and gives one joint verdict with fixes ranked by impact, each
+  tied to a file:line or URL. Read-only and advisory. Use whenever the user
+  asks for a DX review, "review my SDK", an API or docs review, a second
+  opinion before publishing a package, or asks "is my library easy to use".
   Also triggers on /panel-developer-experience with an optional target (path,
-  URL, or PR).
+  URL, or PR). For one deep developer-experience pass, use expert-dx instead.
 argument-hint: "[target: path | url | pr] [focus: onboarding|api|docs|all]"
 ---
 

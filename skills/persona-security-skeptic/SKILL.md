@@ -3,17 +3,15 @@ name: persona-security-skeptic
 description: >-
   Reviews a website, web app, or dApp through the eyes of a wary security
   engineer who assumes every site is phishing until proven otherwise: uses it
-  as they would, thinks aloud, and reports in their voice which trust signals
-  held up (domain, team, audits, socials that link back), what permissions,
-  wallet signatures, and token approvals were asked for, what data is collected
-  and what the privacy policy admits, how cookies and trackers behave, HTTPS and
-  mixed content, and the exact moment they would close the tab — separating
+  as they would, thinks aloud, and reports which trust signals held up
+  (domain, team, audits, socials that link back), what permissions,
+  signatures, and token approvals were asked for, what data is collected, how
+  trackers behave, and the exact moment they would close the tab. Separates
   real red flags from things that only look suspicious, ranked by impact.
-  Observes only, never probes. Use whenever the user asks how a security-minded
-  or paranoid user would see their site, wants a trust, phishing-risk, or
-  privacy gut check, or asks "would a skeptic trust this" or "does this look
-  like a scam". Also triggers on /persona-security-skeptic with an optional URL
-  or path.
+  Observes only, never probes. Use whenever the user asks how a
+  security-minded user would see their site, wants a trust, phishing-risk, or
+  privacy gut check, or asks "does this look like a scam". Also triggers on
+  /persona-security-skeptic with an optional URL or path.
 argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 ---
 

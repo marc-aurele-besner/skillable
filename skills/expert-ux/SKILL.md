@@ -1,19 +1,17 @@
 ---
 name: expert-ux
 description: >-
-  Review a feature, a user flow, or a whole web app the way a senior UX
-  designer would: walk the real user journeys end to end, then judge task
-  completion, friction and dead ends, information architecture and
-  navigation, forms and validation, loading, empty, and error states,
-  onboarding, feedback and affordances, and microcopy clarity — every finding
-  ranked by severity, tied to an exact file:line or URL and screen, and paired
-  with a concrete fix. Read-only and advisory: it critiques, it does not
-  redesign or edit. When the experience is sound it says so and offers few or
-  no suggestions. Use whenever the user asks for a UX review, UX audit, UX
-  critique, usability review, heuristic evaluation, flow review, or "how does
-  this feel to use", wants to find friction in signup, checkout, or onboarding,
-  or asks whether a feature or PR is confusing for users. Also triggers on
-  /expert-ux with an optional target (path, route, URL, PR, or flow name).
+  Reviews a feature, user flow, or whole web app the way a senior UX designer
+  would: walks real journeys end to end, then judges task completion, friction
+  and dead ends, information architecture, forms, loading, empty, and error
+  states, onboarding, feedback, and microcopy. Findings are ranked by
+  severity, tied to a file:line or URL and screen, and paired with a concrete
+  fix. Read-only and advisory: it critiques, it does not redesign or edit. Use
+  whenever the user asks for a UX review, UX audit, usability review,
+  heuristic evaluation, or flow review, asks "how does this feel to use",
+  wants friction found in signup, checkout, or onboarding, or asks whether a
+  PR is confusing for users. Also triggers on /expert-ux with an optional
+  target (path, route, URL, PR, or flow name).
 argument-hint: "[target: path | route | url | pr | flow-name] [focus: flows|ia|forms|states|onboarding|feedback|copy|all]"
 ---
 

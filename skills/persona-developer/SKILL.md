@@ -2,16 +2,14 @@
 name: persona-developer
 description: >-
   Reviews a product's developer surface (docs site, API, SDK, CLI, smart
-  contracts, or embeddable widget) through the eyes of a working developer who
-  wants to build on it and judges it by time to a working hello world: finds
-  the docs, follows the quickstart as written, copy-pastes the examples, gets
-  an API key or sandbox, makes the first call, and reports in their own voice
-  every step to first success, every point of friction, every out-of-date doc,
-  and whether they would ship on it, each point tied to the page and step
-  where it happened, ranked by impact. Read-only. Use whenever the user asks
-  how a developer would see their docs or API, wants a developer persona
-  review, a DX gut check, a "can someone get to hello world" test, a docs or
-  quickstart walk-through from a builder's point of view, or asks "would a dev
+  contracts, or widget) through the eyes of a working developer who judges it
+  by time to a working hello world: finds the docs, follows the quickstart as
+  written, copy-pastes the examples, gets a key or sandbox, makes the first
+  call, and reports in their voice every step, friction point, and out-of-date
+  doc, and whether they would ship on it. Points are tied to the page and
+  step, ranked by impact. Read-only. Use whenever the user asks how a
+  developer would see their docs or API, wants a developer persona review or
+  DX gut check, a "can someone get to hello world" test, or asks "would a dev
   integrate this". Also triggers on /persona-developer with an optional URL or
   path.
 argument-hint: "[url | path | route] [task: what the persona is trying to do]"

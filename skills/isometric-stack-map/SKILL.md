@@ -1,21 +1,18 @@
 ---
 name: isometric-stack-map
 description: >-
-  Look at a project and build a single-file, fine-line 3D isometric map of its
-  network and tech stack. Tiers (data, services, apps and edge, users and
+  Looks at a project and builds a single-file, fine-line 3D isometric map of
+  its network and tech stack. Tiers (data, services, apps and edge, users and
   clients) step up as a staircase, stack as a tower, or flatten onto one
-  slate. Components look like real objects: servers, disk-stack databases,
-  chip caches, envelope queues, factories, globes, clouds, monitors, phones,
-  and people. VPCs, subnets, and clusters are wireframe
-  zones, and links carry animated packets labeled with protocol and port.
-  Running parts glow; click one to inspect it or switch it off to see the
-  blast radius. Play user actions to see what each triggers.
-  Settings control spacing, show/hide, highlights, and six themes plus a
-  custom one. It can also redraw an existing docker-compose, Kubernetes,
-  Terraform, Mermaid, or C4 model. Use when the user wants to visualize a
-  project's architecture, infrastructure, network topology, service map, or
-  stack as an interactive 3D or isometric picture. Also triggers on
-  /isometric-stack-map with an optional focus.
+  slate. Components look like real objects (servers, databases, queues,
+  globes, clouds, phones, people), VPCs and clusters are wireframe zones, and
+  links carry animated packets labeled with protocol and port. Running parts
+  glow; click one to inspect it or switch it off to see the blast radius. It
+  can also redraw an existing docker-compose, Kubernetes, Terraform, Mermaid,
+  or C4 model. Use when the user wants to visualize a project's architecture,
+  infrastructure, network topology, or service map as an interactive 3D or
+  isometric picture. Also triggers on /isometric-stack-map with an optional
+  focus.
 argument-hint: "[focus=<area>] [from=<compose|k8s|terraform|mermaid file>]"
 ---
 

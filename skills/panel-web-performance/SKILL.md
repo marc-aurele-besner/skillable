@@ -2,19 +2,16 @@
 name: panel-web-performance
 description: >-
   Convenes a panel of three experts (a frontend performance engineer, a bundle
-  and build specialist, and an edge and caching engineer) to review a website
-  or web app and answer one question: does it feel fast on a mid-range phone
-  on a slow network, and which fixes give the biggest win? Each expert reviews
-  independently through their own lens (Core Web Vitals, rendering and
-  hydration; code splitting, tree shaking and third-party scripts; CDN, HTTP
-  caching, images and server response time), then the panel compares notes,
-  records its disagreements, and gives one joint verdict with fixes ranked by
-  impact, every finding tied to an exact file:line or URL. Read-only and
-  advisory. Use whenever the user asks to make a site faster, for a
-  performance review, why an app is slow, to optimize performance, wants
-  several expert opinions or a second opinion on what to fix first, or asks
-  "is this fast enough to ship?". Also triggers on /panel-web-performance
-  with an optional target (path, URL, or PR).
+  and build specialist, and an edge and caching engineer) to answer one
+  question: does the site feel fast on a mid-range phone over a slow network,
+  and which fixes win most? Each expert reviews independently, then the panel
+  records disagreements and gives one joint verdict with fixes ranked by
+  impact, each tied to a file:line or URL. Read-only and advisory. Use
+  whenever the user asks to make a site faster, for a performance review, why
+  an app is slow, or "is this fast enough to ship?". Also triggers on
+  /panel-web-performance with an optional target (path, URL, or PR). For a
+  quick single-lens pass on the source, use expert-frontend-performance
+  instead.
 argument-hint: "[target: path | url | pr] [focus: rendering|bundle|edge|all]"
 ---
 

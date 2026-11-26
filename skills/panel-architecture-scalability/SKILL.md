@@ -2,19 +2,17 @@
 name: panel-architecture-scalability
 description: >-
   Convenes a panel of three experts (a staff backend engineer, a site
-  reliability engineer, and a cloud cost and FinOps engineer) to review a
-  backend and system design and answer one question: does this architecture
-  survive 10x traffic without a rewrite or a runaway bill, and what should
-  change now versus later? Each expert reviews independently through their
-  own lens (data model and API boundaries, failure modes and scaling limits,
-  spend drivers and right-sizing), then the panel compares notes, records its
-  disagreements, and gives one joint verdict with fixes ranked by impact,
-  every finding tied to an exact file:line or URL. Read-only and advisory.
-  Use whenever the user asks for an architecture review, a system design
-  review, a scalability or capacity review, asks "will this scale" or "what
-  breaks at 10x", wants to reduce cloud cost, or wants several expert opinions
-  or a second opinion on a backend design. Also triggers on
-  /panel-architecture-scalability with an optional target (path, URL, or PR).
+  reliability engineer, and a cloud cost and FinOps engineer) to answer one
+  question: does this architecture survive 10x traffic without a rewrite or a
+  runaway bill, and what should change now versus later? Each expert reviews
+  independently, then the panel records disagreements and gives one joint
+  verdict with fixes ranked by impact, each tied to a file:line or URL.
+  Read-only and advisory. Use whenever the user asks for an architecture,
+  system design, scalability, or capacity review, asks "will this scale" or
+  "what breaks at 10x", wants to cut cloud cost, or wants a second opinion on
+  a backend design. Also triggers on /panel-architecture-scalability with an
+  optional target (path, URL, or PR). For a deep pass on the API and data
+  layer use expert-backend instead, and expert-appsec for security.
 argument-hint: "[target: path | url | pr] [focus: backend|reliability|cost|all]"
 ---
 

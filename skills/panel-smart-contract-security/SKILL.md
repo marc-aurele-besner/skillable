@@ -3,18 +3,16 @@ name: panel-smart-contract-security
 description: >-
   Convenes a panel of three experts (a smart contract auditor, a DeFi exploit
   researcher, and a protocol engineer focused on invariants and testing) to
-  review Solidity, Vyper, or Move contracts and answer one question: are these
-  contracts safe to deploy with real value, and what must change first? Each
-  expert reviews independently (code bugs and upgrade or admin risk, oracle,
-  flash-loan, and MEV attack paths, and whether invariants are fuzzed or
-  proven), then the panel compares notes, records its disagreements, and gives one
-  joint verdict with fixes ranked by impact, every finding tied to an exact
-  file:line. Read-only and advisory. Use whenever the user asks to audit my
-  contract, asks "is this contract safe", wants a security review of Solidity,
-  a pre-audit check, a second opinion before mainnet, or several expert
-  opinions on a vault, token, bridge, or DeFi protocol. Also triggers on
-  /panel-smart-contract-security with an optional target (path, PR, or
-  address).
+  answer one question: are these Solidity, Vyper, or Move contracts safe to
+  deploy with real value, and what must change first? Each expert reviews
+  independently, then the panel records disagreements and gives one joint
+  verdict with fixes ranked by impact, each tied to a file:line. Read-only and
+  advisory. Use whenever the user asks to audit a contract, asks "is this
+  contract safe", wants a pre-audit check or a second opinion before mainnet,
+  or wants expert opinions on a vault, token, bridge, or DeFi protocol. Also
+  triggers on /panel-smart-contract-security with an optional target (path,
+  PR, or address). For a deep single-auditor pass with PoCs, use
+  expert-smart-contract-security instead.
 argument-hint: "[target: path | pr | address] [focus: audit|exploit|invariants|all]"
 ---
 

@@ -2,19 +2,15 @@
 name: panel-ui-design
 description: >-
   Convenes a panel of three design experts (a senior product designer, a
-  design-systems lead, and a brand designer) to review the visual quality of
-  a web app, site, screen, component library, or PR and answer one question:
-  does this UI look polished and consistent enough to trust, and what should
-  be fixed first? Each expert reviews independently through their own lens
-  (hierarchy, layout and typography; tokens, component drift and dark mode
-  parity; look and feel and generic templated UI), then the panel compares
-  notes, records its disagreements, and gives one joint verdict with fixes
-  ranked by impact, every finding tied to an exact file:line or URL. Read-only
-  and advisory. Use whenever the user asks for a UI review, a design
-  critique, to polish their UI, wants several design opinions or a second
-  opinion on how an interface looks, or asks "does this look good" or "is
-  this design ready to ship". Also triggers on /panel-ui-design with an
-  optional target (path, URL, or PR).
+  design-systems lead, and a brand designer) to answer one question: does this
+  UI look polished and consistent enough to trust, and what should be fixed
+  first? Each expert reviews independently, then the panel records
+  disagreements and gives one joint verdict with fixes ranked by impact, each
+  tied to a file:line or URL. Read-only and advisory. Use whenever the user
+  asks for a UI review, a design critique, to polish their UI, or asks "does
+  this look good" or "is this design ready to ship". Also triggers on
+  /panel-ui-design with an optional target (path, URL, or PR). For a
+  single-expert deep pass on the visual layer, use expert-ui instead.
 argument-hint: "[target: path | url | pr] [focus: hierarchy|system|brand|all]"
 ---
 

@@ -5,15 +5,13 @@ description: >-
   maps what changed to user-facing risk, writes a risk-based test plan, lists
   the edge cases that break real products (empty, huge, unicode, concurrency,
   timezones, offline, permissions, retries), runs exploratory checks when the
-  app can be launched, finds coverage gaps by comparing risky paths to the
-  tests that actually exercise them, and gives a regression-risk verdict and a
-  release-readiness call (ship / ship with conditions / do not ship). Read-only
-  and advisory — it decides what must be tested and what is untested; it does
-  not write tests or edit code. Use whenever the user asks for a QA pass, a
-  test plan, edge cases, "what could break", "is this ready to ship", release
-  readiness, regression risk, exploratory testing, or a QA sign-off on a PR or
-  release. Also triggers on /expert-qa with an optional PR, branch, feature, or
-  release tag.
+  app can be launched, finds coverage gaps, and gives a regression-risk
+  verdict and a release call (ship, ship with conditions, or do not ship).
+  Read-only and advisory: it decides what must be tested; it does not write
+  tests or edit code. Use whenever the user asks for a QA pass, a test plan,
+  edge cases, "what could break", "is this ready to ship", regression risk, or
+  a QA sign-off on a PR or release. Also triggers on /expert-qa with an
+  optional PR, branch, feature, or release tag.
 argument-hint: "[pr-number-or-url | branch | feature | release-tag] [--plan-only] [--explore]"
 ---
 

@@ -1,19 +1,16 @@
 ---
 name: optimize-pwa
 description: >-
-  Turn a web app into an installable Progressive Web App (PWA) that feels
-  native on phones, then open a PR with the fixes — web app manifest (name,
-  icons including maskable, id, scope, display, colors, screenshots,
-  shortcuts), a safe service worker with an offline fallback and an update
-  prompt, install UX for Android and iOS, and mobile-first polish: viewport
-  and pinch-zoom, safe-area insets for notched screens, dynamic viewport
-  units, touch targets, mobile keyboards (input types, inputmode,
-  autocomplete, 16px inputs), no horizontal overflow, and standalone-mode
-  styling. Detects the stack (Vite, Next.js, Nuxt, SvelteKit, Astro, Angular,
-  Remix, plain HTML, and more) and uses its native PWA plugin or API. Use
-  whenever the user wants to make a site a PWA, installable, add to home
-  screen, work offline, add a service worker or web manifest, or make a web
-  app more mobile friendly, app-like, or responsive on phones. Also triggers
+  Turns a web app into an installable Progressive Web App that feels native on
+  phones, then opens a PR with the fixes: web app manifest (icons including
+  maskable, id, scope, display, colors, shortcuts), a safe service worker with
+  an offline fallback and update prompt, install UX for Android and iOS, and
+  mobile polish (viewport and pinch-zoom, safe-area insets, touch targets,
+  mobile keyboards, no horizontal overflow). Detects the stack (Vite, Next.js,
+  Nuxt, SvelteKit, Astro, Angular, Remix, plain HTML, and more) and uses its
+  native PWA plugin or API. Use whenever the user wants to make a site a PWA,
+  installable, add to home screen, work offline, add a service worker or web
+  manifest, or make a web app more mobile friendly or app-like. Also triggers
   on /optimize-pwa with an optional site URL and focus.
 argument-hint: "[site-url] [focus: install|offline|mobile|all]"
 ---

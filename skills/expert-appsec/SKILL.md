@@ -2,18 +2,17 @@
 name: expert-appsec
 description: >-
   Reviews a web application's own code and configuration as a defensive
-  application security expert, against the OWASP Top 10 and OWASP ASVS:
-  authentication and sessions, authorization and IDOR, injection (SQL, NoSQL,
-  shell, template, path), XSS and CSP, CSRF, SSRF, secrets in code or client
-  bundles, security headers, CORS, file upload, rate limiting, and sensitive
-  data in logs. Traces every candidate from untrusted source to dangerous sink,
-  applies framework-specific checks, verifies each finding before reporting it,
-  and ranks findings on a CVSS-like scale with a concrete failure scenario,
-  exact file:line, and a fix. Read-only and advisory: it never runs exploits
-  against systems the user does not own. Use whenever the user asks for a
-  security review, appsec audit, pentest-style code review, OWASP check, threat
-  review of an endpoint, or "is this secure?" for a web app, API, route, or PR.
-  Also triggers on /expert-appsec with an optional path, route, PR, or focus.
+  application security expert, against the OWASP Top 10 and ASVS:
+  authentication and sessions, authorization and IDOR, injection, XSS and CSP,
+  CSRF, SSRF, secrets in code or bundles, security headers, CORS, uploads,
+  rate limiting, and sensitive data in logs. Traces every candidate from
+  untrusted source to dangerous sink, verifies each finding, and ranks them on
+  a CVSS-like scale with a failure scenario, file:line, and fix. Read-only and
+  advisory: it never runs exploits against systems the user does not own. Use
+  whenever the user asks for a security review, appsec audit, pentest-style
+  code review, OWASP check, or "is this secure?" for a web app, API, route, or
+  PR. Also triggers on /expert-appsec with an optional path, route, PR, or
+  focus.
 argument-hint: "[path | route | pr-number-or-url] [focus: auth|authz|injection|xss|csrf|ssrf|secrets|headers|cors|upload|ratelimit|logging|all]"
 ---
 
