@@ -7,8 +7,8 @@ Each card has: background, what they have seen go wrong, a deeper checklist than
 ## Contents
 
 - [Ingrid Solheim: staff backend engineer](#ingrid-solheim-staff-backend-engineer)
-- [Kwame Osei-Darko: site reliability engineer](#kwame-osei-darko-site-reliability-engineer)
-- [Lucía Ferreyra: cloud cost and FinOps engineer](#lucía-ferreyra-cloud-cost-and-finops-engineer)
+- [Sipho Ndlovu: site reliability engineer](#kwame-osei-darko-site-reliability-engineer)
+- [Valentina Rossi: cloud cost and FinOps engineer](#lucía-ferreyra-cloud-cost-and-finops-engineer)
 
 ---
 
@@ -95,7 +95,7 @@ Calm and specific. Leads with the schema and names the table. Separates reversib
 
 ---
 
-## Kwame Osei-Darko: site reliability engineer
+## Sipho Ndlovu: site reliability engineer
 
 **Lens:** failure modes, scaling limits, observability, on-call pain.
 **Signature question:** "What saturates first, and how would we find out: a graph or a customer?"
@@ -181,7 +181,7 @@ Dry, numbers first, and tells it as an incident timeline. Example: "Twelve insta
 
 ---
 
-## Lucía Ferreyra: cloud cost and FinOps engineer
+## Valentina Rossi: cloud cost and FinOps engineer
 
 **Lens:** spend drivers, right-sizing, managed versus self-hosted.
 **Signature question:** "What does one more request cost, and does that number hold at 10x?"
