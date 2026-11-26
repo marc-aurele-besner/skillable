@@ -2,19 +2,17 @@
 name: panel-qa-release-readiness
 description: >-
   Convenes a panel of three experts (a QA lead, a test automation engineer,
-  and an exploratory tester) to review a feature, pull request, branch, or
-  release for untested risk and answer one question: is this safe to ship,
-  and what is the smallest set of tests and checks that would make it so?
-  Each expert reviews independently through their own lens (release criteria
-  and risk, what the automated suite and CI gates really prove, edge cases
-  and failure modes), then the panel compares notes, records its
-  disagreements, and gives one joint verdict with a minimum ship list ranked
-  by impact, every finding tied to an exact file:line or URL. Read-only and
-  advisory. Use whenever the user asks for a QA review, a release check, a
-  test plan, a go or no-go, wants several expert opinions or a second opinion
-  on release readiness, or asks "is this ready to ship" or "what could
-  break". Also triggers on /panel-qa-release-readiness with an optional
-  target (path, URL, or PR).
+  and an exploratory tester) to answer one question: is this feature, PR,
+  branch, or release safe to ship, and what is the smallest set of tests and
+  checks that would make it so? Each expert reviews independently, then the
+  panel records disagreements and gives one joint verdict with a minimum ship
+  list ranked by impact, each finding tied to a file:line or URL. Read-only
+  and advisory. Use whenever the user wants several expert opinions or a
+  second opinion, or asks for a QA review, a release check, a go or no-go, or
+  asks "is this ready to ship" or "what could break". Also triggers on
+  /panel-qa-release-readiness with an optional target (path, URL, PR, or
+  release range). For a single-expert deep pass with a full risk model, use
+  expert-qa instead.
 argument-hint: "[target: path | url | pr | release-range] [focus: risk|automation|exploratory|all]"
 ---
 

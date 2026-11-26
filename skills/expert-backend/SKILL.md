@@ -1,20 +1,19 @@
 ---
 name: expert-backend
 description: >-
-  Review web2 backend code and architecture the way a staff backend engineer
-  would: detect the stack (Express, NestJS, Fastify, Django, FastAPI, Flask,
-  Go, Rails, Spring, Laravel; Prisma, TypeORM, Drizzle, Sequelize, SQLAlchemy,
-  Django ORM, ActiveRecord, GORM), then check API contracts, versioning,
-  pagination and idempotency, data modeling and migrations, N+1 queries and
-  missing indexes, transactions and concurrency, caching, queues and
-  background jobs, timeouts and retries, scalability limits, observability,
+  Reviews web2 backend code and architecture the way a staff backend engineer
+  would: detects the stack (Express, NestJS, Fastify, Django, FastAPI, Flask,
+  Go, Rails, Spring, Laravel; Prisma, TypeORM, Drizzle, SQLAlchemy, GORM, and
+  more), then checks API contracts, versioning, pagination and idempotency,
+  data modeling and migrations, N+1 queries and missing indexes, transactions,
+  caching, queues, timeouts and retries, scalability limits, observability,
   and failure modes. Every finding is verified against the code and ranked by
   severity with file:line and a concrete fix; a sound backend is called sound.
   Read-only by default. Use whenever the user asks for a backend, API, or
-  service architecture review, asks whether an API or schema will scale, wants
-  N+1 or slow-query hunting, a migration safety check, a resilience or
-  failure-mode review, or a deeper pass than a normal PR review. Also triggers
-  on /expert-backend with an optional path, PR, or focus.
+  service architecture review, whether an API or schema will scale, N+1 or
+  slow-query hunting, a migration safety check, a resilience review, or a
+  deeper pass than a normal PR review. Also triggers on /expert-backend with
+  an optional path, PR, or focus.
 argument-hint: "[path | pr-number-or-url] [focus: api|data|perf|async|resilience|observability|all]"
 ---
 

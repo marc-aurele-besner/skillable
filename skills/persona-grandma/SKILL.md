@@ -2,17 +2,15 @@
 name: persona-grandma
 description: >-
   Reviews a website, web app, or dApp through the eyes of a non-technical
-  grandmother who uses the web for email, photos, and video calls with family:
-  actually uses it as she would, thinks aloud, and reports in her own voice
-  whether she could tell what it is and what to do first, which words, icons,
-  or steps lost her, whether the text was big and clear enough, what felt like
-  it could break her computer or take her money, and whether she finished the
-  main task or gave up and called a grandchild, every point tied to the page
-  and step where it happened, ranked by impact. Read-only. Use whenever the
-  user asks how a grandma, a senior, or an older non-technical user would see
-  their site, wants a grandma test, a "could my mum use this" check, a plain
-  language or first-task gut check, or asks "would my grandmother get this".
-  Also triggers on /persona-grandma with an optional URL or path.
+  grandmother who uses the web for email, photos, and video calls: uses it as
+  she would, thinks aloud, and reports in her voice whether she could tell
+  what it is and what to do first, which words or steps lost her, whether the
+  text was big enough, what felt like it could break her computer or take her
+  money, and whether she finished or called a grandchild. Points are tied to
+  the page and step, ranked by impact. Read-only. Use whenever the user asks
+  how a grandma, senior, or older non-technical user would see their site,
+  wants a grandma test or plain-language check, or asks "would my grandmother
+  get this". Also triggers on /persona-grandma with an optional URL or path.
 argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 ---
 

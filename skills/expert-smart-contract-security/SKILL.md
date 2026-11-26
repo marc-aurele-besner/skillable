@@ -1,20 +1,18 @@
 ---
 name: expert-smart-contract-security
 description: >-
-  Audits Solidity and EVM smart contracts the way a professional security
-  auditor does: fixes the scope and commit, builds a threat model of actors,
-  assets, and trust assumptions, runs the static analyzers and fuzzers that are
-  installed (Slither, Aderyn, forge test and coverage, Echidna, Medusa), then
-  reviews by hand for reentrancy, access control, precision and rounding,
-  oracle and price manipulation, flash loans, front-running and MEV, signature
-  replay (EIP-712, permit), upgradeability and storage layout, external calls,
-  and token integration quirks. Every finding carries a Critical, High, Medium,
-  Low, or Informational severity, an exact file:line, an exploit scenario, and
-  a concrete fix, optionally proven with a Foundry PoC on a local fork. Use
-  whenever the user asks to audit, security-review, or find bugs
-  in a smart contract, DeFi protocol, vault, bridge, or Solidity PR, or
-  asks whether contracts are safe to deploy. Also triggers on
-  /expert-smart-contract-security with an optional path, commit, or PR.
+  Audits Solidity and EVM smart contracts the way a professional auditor does:
+  fixes scope and commit, builds a threat model of actors, assets, and trust
+  assumptions, runs installed analyzers and fuzzers (Slither, Aderyn, forge,
+  Echidna, Medusa), then reviews by hand for reentrancy, access control,
+  precision, oracle manipulation, flash loans, MEV, signature replay,
+  upgradeability, and token quirks. Every finding carries a Critical to
+  Informational severity, file:line, exploit scenario, and fix, optionally
+  proven with a Foundry PoC. Use whenever the user asks to audit,
+  security-review, or find bugs in a smart contract, DeFi protocol, vault,
+  bridge, or Solidity PR, or asks whether contracts are safe to deploy. Also
+  triggers on /expert-smart-contract-security with an optional path, commit,
+  or PR.
 argument-hint: "[path-or-pr] [--commit <sha>] [--focus <area>] [--poc] [--comment]"
 ---
 

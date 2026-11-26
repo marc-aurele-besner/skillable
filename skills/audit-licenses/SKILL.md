@@ -1,19 +1,17 @@
 ---
 name: audit-licenses
 description: >-
-  Build an accurate license inventory for every dependency in a project (direct
-  and transitive), check it against an explicit committed policy, generate the
-  attribution artifacts the obligations require (NOTICE, THIRD_PARTY_LICENSES,
-  bundled license texts), add a CI check that fails on a forbidden license, and
-  open one PR. Handles Node, Python, Rust, Go, Ruby, and PHP ecosystems, and
-  normalizes every declared license to an SPDX id without guessing. Also
-  explains whether the project ships a binary, publishes a package, or runs as a
-  hosted service, because that decides whether copyleft and AGPL are fatal or
-  merely require a notice. Use whenever the user wants a license audit, an
-  SPDX or third-party notice file, a THIRD_PARTY_LICENSES or NOTICE file, an
-  open-source compliance check, a dependency license report, to answer "can we
-  ship this dependency", to clear an AGPL or copyleft blocker, or to add
-  license scanning to CI. Also triggers on /audit-licenses with an optional
+  Builds an accurate license inventory for every dependency in a project
+  (direct and transitive), checks it against an explicit committed policy,
+  generates the attribution artifacts the obligations require (NOTICE,
+  THIRD_PARTY_LICENSES), adds a CI check that fails on a forbidden license,
+  and opens one PR. Covers Node, Python, Rust, Go, Ruby, and PHP, normalizes
+  licenses to SPDX ids, and explains whether copyleft or AGPL is fatal or
+  merely needs a notice, based on whether the project ships a binary,
+  publishes a package, or runs as a hosted service. Use whenever the user
+  wants a license audit, an SPDX or third-party notice file, an open-source
+  compliance check, to answer "can we ship this dependency", or to clear an
+  AGPL or copyleft blocker. Also triggers on /audit-licenses with an optional
   ecosystem and focus.
 argument-hint: "[ecosystem: node|python|rust|go] [focus: inventory|policy|notice|ci|all]"
 ---

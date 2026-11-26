@@ -2,19 +2,17 @@
 name: panel-accessibility
 description: >-
   Convenes a panel of three experts (a WCAG 2.2 and ARIA specialist, a
-  screen-reader and keyboard power user, and an inclusive designer) to review
-  a web app, page, flow, or PR and answer one question: can people with
-  disabilities complete the core flows, and which blockers must be fixed
-  before shipping? Each expert reviews independently through their own lens
-  (conformance and semantics; VoiceOver, NVDA, and focus order; contrast,
-  reduced motion, plain language, and cognitive load), then the panel compares
-  notes, records its disagreements, and gives one joint verdict with fixes
-  ranked by impact, every finding tied to an exact file:line or URL. Read-only
-  and advisory. Use whenever the user asks for an accessibility audit, a11y
-  review, WCAG check, or screen reader support review, wants several expert
-  opinions or a second opinion on accessibility, or asks "is this accessible
-  enough to ship?". Also triggers on /panel-accessibility with an optional
-  target (path, URL, or PR).
+  screen-reader and keyboard power user, and an inclusive designer) to answer
+  one question: can people with disabilities complete the core flows, and
+  which blockers must be fixed before shipping? Each expert reviews
+  independently, then the panel records disagreements and gives one joint
+  verdict with fixes ranked by impact, each tied to a file:line or URL.
+  Read-only and advisory. Use whenever the user wants several expert opinions
+  or a second opinion, or asks for an accessibility audit, a11y review, WCAG
+  check, or screen reader support review, or asks "is this accessible enough
+  to ship?". Also triggers on /panel-accessibility with an optional target
+  (path, URL, or PR). For a criterion-by-criterion WCAG 2.2 AA pass, use
+  expert-accessibility instead.
 argument-hint: "[target: path | url | pr] [focus: standards|assistive|inclusive|all]"
 ---
 

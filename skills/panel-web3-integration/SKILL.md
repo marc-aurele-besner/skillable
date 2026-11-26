@@ -3,18 +3,16 @@ name: panel-web3-integration
 description: >-
   Convenes a panel of three experts (a protocol and RPC infrastructure
   engineer, an indexing engineer, and a senior web3 frontend developer) to
-  review how an app talks to blockchains and answer one question: does the
-  chain integration stay correct and fast under real conditions (reorgs, RPC
-  outages, many chains), and what is fragile? Each expert reviews
-  independently, then the panel compares notes, records its disagreements,
-  and gives one joint verdict with fixes ranked by impact, every finding tied
-  to an exact file:line or URL. Read-only and advisory. Use whenever the user
-  asks to review their web3 integration, RPC setup, provider fallbacks,
-  subgraph or indexer, reorg or nonce handling, wagmi, viem, or ethers code,
-  or multi-chain support, wants several expert opinions before adding a chain
-  or going to mainnet, or asks "will this survive an RPC outage or a reorg?".
-  Also triggers on /panel-web3-integration with an optional target (path,
-  URL, or PR).
+  answer one question: does the chain integration stay correct and fast under
+  reorgs, RPC outages, and many chains, and what is fragile? Each expert
+  reviews independently, then the panel records disagreements and gives one
+  joint verdict with fixes ranked by impact, each tied to a file:line or URL.
+  Read-only and advisory. Use whenever the user wants several expert opinions
+  or a second opinion, or asks to review their web3 integration, RPC setup,
+  provider fallbacks, indexer, reorg or nonce handling, or multi-chain
+  support, or asks "will this survive an RPC outage or a reorg?". Also
+  triggers on /panel-web3-integration with an optional target (path, URL, or
+  PR). For a deep dApp frontend pass, use expert-web3-dapp instead.
 argument-hint: "[target: path | url | pr] [focus: rpc|indexing|frontend|all]"
 ---
 

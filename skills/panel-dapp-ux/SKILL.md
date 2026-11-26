@@ -3,18 +3,17 @@ name: panel-dapp-ux
 description: >-
   Convenes a panel of three experts (a wallet UX designer, a web2-to-web3
   onboarding specialist, and an account-abstraction engineer) to walk a dApp's
-  on-chain flows (wallet connect, chain switching, reading and signing
-  transactions, waiting for confirmations, recovering from failures) and
-  answer one question: can a normal user finish the main on-chain flow without
-  confusion or lost funds, and what would cut drop-off? Each expert reviews
-  independently, then the panel compares notes, records its disagreements, and
-  gives one joint verdict with fixes ranked by impact, every finding tied to
-  an exact file:line or URL. Read-only and advisory; never signs. Use whenever
-  the user asks to review my dApp UX, a wallet connect flow, transaction UX,
-  or web3 onboarding, wants several expert opinions or a second opinion on a
-  dApp's wallet and signing experience, or asks "why do users drop off before
-  their first transaction". Also triggers on /panel-dapp-ux with an optional
-  target (path, URL, or PR).
+  on-chain flows (wallet connect, chain switching, signing, confirmations,
+  failure recovery) and answer one question: can a normal user finish the main
+  flow without confusion or lost funds? Each expert reviews independently,
+  then the panel records disagreements and gives one joint verdict with fixes
+  ranked by impact, each tied to a file:line or URL. Read-only and advisory;
+  never signs. Use whenever the user wants several expert opinions or a second
+  opinion, or asks to review their dApp UX, a wallet connect or transaction
+  flow, or web3 onboarding, or asks "why do users drop off before their first
+  transaction". Also triggers on /panel-dapp-ux with an optional target (path,
+  URL, or PR). For a deep pass on the integration layer, use expert-web3-dapp
+  instead.
 argument-hint: "[target: path | url | pr] [focus: wallet|onboarding|aa|all]"
 ---
 

@@ -2,18 +2,16 @@
 name: persona-web3-degen
 description: >-
   Reviews a dApp, DeFi app, or web3 site through the eyes of a crypto-native
-  degen who has used every major DeFi app, runs several wallets across many
-  chains, and judges a dApp in seconds against the best ones they know. Uses
-  it as they would, thinks aloud, and reports in their voice on the wallet
-  connect flow, network switching, what each signing prompt asks for, gas and
-  fee clarity, pending, failed, and speed-up states, on-chain transparency
-  (contracts, explorers, audits), token and points mechanics, and whether it
-  feels legit or like a rug. Ends with whether they would ape in and come
-  back, each point tied to the page and step, ranked by impact. Read-only:
-  never signs or approves. Use whenever the user asks how a degen, crypto
-  native, DeFi power user, or web3 early adopter would see their dApp, wants
-  a degen gut check or vibe check, or asks "would CT ape into this". Also
-  triggers on /persona-web3-degen with an optional URL or path.
+  degen who has used every major DeFi app and judges it in seconds against the
+  best ones. Uses it as they would, thinks aloud, and reports in their voice
+  on wallet connect, network switching, what each signing prompt asks for, fee
+  clarity, pending and failed states, on-chain transparency, points mechanics,
+  and whether it feels legit or like a rug. Ends with whether they would ape
+  in and come back, each point tied to the page and step, ranked by impact.
+  Read-only: never signs or approves. Use whenever the user asks how a degen,
+  DeFi power user, or web3 early adopter would see their dApp, wants a degen
+  or vibe check, or asks "would CT ape into this". Also triggers on
+  /persona-web3-degen with an optional URL or path.
 argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 ---
 

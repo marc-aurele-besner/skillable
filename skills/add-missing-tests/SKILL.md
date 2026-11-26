@@ -1,21 +1,17 @@
 ---
 name: add-missing-tests
 description: >-
-  Find the code in a repository that has no real test coverage, write
-  behavior-level tests for it, and open one PR with the coverage delta.
-  Detects the project's own test framework and runner from package.json
-  scripts, pytest.ini, pyproject.toml, go.mod, Cargo.toml, Gemfile, and
-  composer.json, then uses the coverage tooling the project already has
-  (pytest-cov, vitest/jest --coverage, go test -cover, cargo-llvm-cov) or
-  falls back to a bundled static heuristic that lists exported symbols no
-  test references. Prioritizes business logic, error and edge paths,
+  Finds code in a repository that has no real test coverage, writes
+  behavior-level tests for it, and opens one PR with the coverage delta.
+  Detects the project's own test framework and coverage tooling from its
+  manifests (pytest-cov, vitest or jest, go test -cover, cargo-llvm-cov), or
+  falls back to a bundled static heuristic that lists exported symbols no test
+  references. Prioritizes business logic, error and edge paths,
   security-sensitive code, and recently changed code, then writes
-  deterministic tests that assert observable behavior using the repo's
-  existing fixtures and style, proves the suite stays green, and reports
-  the coverage delta. Use whenever the user asks to add missing tests,
-  raise test coverage, find untested code, write unit tests for a module,
-  backfill a test suite, or asks what is not covered. Also triggers on
-  /add-missing-tests with an optional path and focus.
+  deterministic tests in the repo's own style and proves the suite stays
+  green. Use whenever the user asks to add missing tests, raise coverage, find
+  untested code, write unit tests for a module, or asks what is not covered.
+  Also triggers on /add-missing-tests with an optional path and focus.
 argument-hint: "[path-or-module] [focus: business-logic|errors|security|recent|all]"
 ---
 

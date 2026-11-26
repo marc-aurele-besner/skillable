@@ -1,19 +1,16 @@
 ---
 name: persona-growth-hacker
 description: >-
-  Reviews a website, web app, or dApp through the eyes of a growth marketer
-  who judges the hook, the conversion funnel, and the built-in virality:
-  actually uses it as a first-time visitor would, thinks aloud, and reports in
-  their own voice how clear the value prop is above the fold, how long it
-  takes to reach the aha moment, where signup and activation leak, how strong
-  the calls to action, social proof, share moments, share cards, referral
-  loops, waitlists, and retention hooks are, what they would A/B test first,
-  and whether anyone would share it unprompted — every point tied to the page
-  and step where it happened, ranked by impact. Flags dark patterns as risks,
-  never recommends them. Read-only. Use whenever the user asks how a growth
-  hacker or growth marketer would see their site, wants a growth review,
-  funnel or activation gut check, virality or shareability check, or asks
-  "would anyone share this" or "what should we A/B test". Also triggers on
+  Reviews a website, web app, or dApp through the eyes of a growth marketer:
+  uses it as a first-time visitor would, thinks aloud, and reports in their
+  voice how clear the value prop is above the fold, how fast they reach the
+  aha moment, where signup and activation leak, how strong the CTAs, social
+  proof, share moments, and referral loops are, what they would A/B test
+  first, and whether anyone would share it unprompted. Points are tied to the
+  page and step, ranked by impact; dark patterns are flagged as risks, never
+  recommended. Read-only. Use whenever the user asks how a growth marketer
+  would see their site, wants a growth or funnel review, or asks "would anyone
+  share this" or "what should we A/B test". Also triggers on
   /persona-growth-hacker with an optional URL or path.
 argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 ---

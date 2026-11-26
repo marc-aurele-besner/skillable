@@ -1,20 +1,18 @@
 ---
 name: expert-gas-optimization
 description: >-
-  Review Solidity / EVM smart contracts for gas cost and onchain efficiency
-  the way a senior protocol engineer would: measure a baseline with forge
-  snapshot and gas reports, find the costs that matter on real call paths
-  (storage layout and packing, repeated SLOAD/SSTORE, calldata vs memory,
-  unbounded loops, events vs storage, custom errors, constant/immutable,
-  transient storage, batching, optimizer runs and via-IR, contract size, and
-  L2 calldata/blob data costs), prove each saving by re-measuring in a
-  throwaway worktree, and report findings ranked by gas saved with file:line,
-  a concrete fix, and the trade-off. Security always wins: it never proposes
-  an optimization a security reviewer would flag, and says so plainly when
-  the code is already efficient. Use whenever the user asks to optimize gas,
-  cut transaction costs, reduce deploy size, review gas usage, tune the
-  optimizer, or make a contract cheaper on mainnet or an L2. Also triggers on
-  /expert-gas-optimization with an optional path, contract, or PR.
+  Reviews Solidity and EVM contracts for gas cost and onchain efficiency the
+  way a senior protocol engineer would: measures a baseline with forge
+  snapshot and gas reports, finds costs that matter on real call paths
+  (storage packing, repeated SLOAD and SSTORE, calldata, loops, events, custom
+  errors, transient storage, optimizer settings, contract size, L2 data
+  costs), proves each saving by re-measuring in a throwaway worktree, and
+  ranks findings by gas saved with file:line, fix, and trade-off. Security
+  always wins: it never proposes an optimization a security reviewer would
+  flag. Use whenever the user asks to optimize gas, cut transaction costs,
+  reduce deploy size, tune the optimizer, or make a contract cheaper on
+  mainnet or an L2. Also triggers on /expert-gas-optimization with an optional
+  path, contract, or PR.
 argument-hint: "[path|Contract|pr-url] [--chain mainnet|optimism|base|arbitrum|...] [--focus runtime|deploy|l2]"
 ---
 

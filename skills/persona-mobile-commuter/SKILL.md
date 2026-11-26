@@ -1,19 +1,17 @@
 ---
 name: persona-mobile-commuter
 description: >-
-  Reviews a website, web app, or dApp through the eyes of a commuter using it
-  on a phone, one-handed, on a bus with patchy 4G and an interruption every
-  couple of minutes: actually uses it at phone width on a throttled network,
-  switches away and back mid-task, and reports in their own voice what they
-  liked, what they disliked, where they got stuck, what they did not
-  understand, and whether they would come back — thumb reach, touch targets,
-  slow loads, keyboards and form inputs, lost progress, wallet deep links and
-  in-app browsers, and home-screen use — every point tied to the page and step
-  where it happened, ranked by impact. Read-only. Use whenever the user asks
-  how a mobile user would see their site, wants a phone, on-the-go, commuter,
-  or one-handed review, a slow-network gut check, or asks "does this work on a
-  phone". Also triggers on /persona-mobile-commuter with an optional URL or
-  path.
+  Reviews a website, web app, or dApp through the eyes of a commuter on a
+  phone, one-handed, on a bus with patchy 4G and interruptions: uses it at
+  phone width on a throttled network, switches away and back mid-task, and
+  reports in their voice what they liked, where they got stuck, what they did
+  not understand, and whether they would come back. Covers thumb reach, touch
+  targets, slow loads, keyboards, lost progress, wallet deep links, and
+  home-screen use. Points are tied to the page and step, ranked by impact.
+  Read-only. Use whenever the user asks how a mobile user would see their
+  site, wants a phone, on-the-go, or one-handed review, a slow-network gut
+  check, or asks "does this work on a phone". Also triggers on
+  /persona-mobile-commuter with an optional URL or path.
 argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 ---
 

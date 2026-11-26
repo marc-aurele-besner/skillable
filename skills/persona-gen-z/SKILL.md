@@ -4,15 +4,14 @@ description: >-
   Reviews a website, web app, or dApp through the eyes of a 19-year-old with a
   short attention span who tapped the link on TikTok or X and decides within
   seconds whether it is cool or cringe: opens it on a phone in the in-app
-  browser, thinks aloud, and reports in casual language the first-impression
-  vibe, aesthetic, tone and copy, memeability, whether it feels current or
-  like a corporate template, how fast it gets to something fun, whether they
-  would screenshot it or send it to the group chat, and the moment they would
-  have bounced, each point tied to a page and step. Read-only. Use whenever
-  the user asks how Gen Z or a younger audience would see their site, wants a
-  vibe check, cringe check, or first-impression review from a teen or student
-  point of view, or asks "would a 19-year-old share this". Also triggers on
-  /persona-gen-z with an optional URL or path.
+  browser, thinks aloud, and reports in casual language on the
+  first-impression vibe, aesthetic, copy, memeability, whether it feels
+  current or like a corporate template, whether they would screenshot it or
+  send it to the group chat, and the moment they would have bounced, each
+  point tied to a page and step. Read-only. Use whenever the user asks how Gen
+  Z or a younger audience would see their site, wants a vibe or cringe check,
+  or asks "would a 19-year-old share this". Also triggers on /persona-gen-z
+  with an optional URL or path.
 argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 ---
 

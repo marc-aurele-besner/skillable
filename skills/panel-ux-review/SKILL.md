@@ -2,18 +2,17 @@
 name: panel-ux-review
 description: >-
   Convenes a panel of three experts (a UX researcher, an interaction designer,
-  and a growth and conversion specialist) to review a product's key user
-  journeys and answer one question: can users reach the core value quickly,
-  and which three changes would help most? Each expert reviews independently
-  for friction, unclear information architecture, and missing loading, empty,
-  and error states, then the panel compares notes, records its disagreements,
-  and gives one joint verdict with fixes ranked by impact, every finding tied
-  to an exact file:line or URL. Read-only and advisory. Use whenever the user
-  asks for a UX review, says "review my user flow", wants an onboarding
-  review, a signup or checkout review, several expert opinions or a second
-  opinion on their UX, or asks "why do users drop off" or "where are we
-  losing people". Also triggers on /panel-ux-review with an optional target
-  (path, route, URL, or PR).
+  and a growth and conversion specialist) to answer one question: can users
+  reach the core value quickly, and which three changes would help most? Each
+  expert reviews independently for friction, unclear information architecture,
+  and missing loading, empty, and error states, then the panel records
+  disagreements and gives one joint verdict with fixes ranked by impact, each
+  tied to a file:line or URL. Read-only and advisory. Use whenever the user
+  wants several expert opinions or a second opinion, or asks for a UX review,
+  a user flow, onboarding, signup, or checkout review, or asks "why do users
+  drop off" or "where are we losing people". Also triggers on /panel-ux-review
+  with an optional target (path, route, URL, or PR). For a deep single-lens UX
+  pass, use expert-ux instead.
 argument-hint: "[target: path | route | url | pr] [focus: research|interaction|growth|all]"
 ---
 
