@@ -4,9 +4,9 @@
 
 **Teach your AI coding agent the workflows you're tired of repeating.**
 
-Skillable is a free, open-source library of **68 Agent Skills**: plain-markdown `SKILL.md` playbooks that let AI coding agents such as Claude Code, Cursor, GitHub Copilot, OpenAI Codex, and Cline merge dependency PRs, fix failing CI, ship GitHub issues, review code like a senior specialist, test your product through user personas, and prototype UI, each with one slash command.
+Skillable is a free, open-source library of **80 Agent Skills**: plain-markdown `SKILL.md` playbooks that let AI coding agents such as Claude Code, Cursor, GitHub Copilot, OpenAI Codex, and Cline merge dependency PRs, fix failing CI, ship GitHub issues, review code like a senior specialist, test your product through user personas, and prototype UI, each with one slash command.
 
-[![Skills](https://img.shields.io/badge/skills-68-blueviolet)](#available-skills)
+[![Skills](https://img.shields.io/badge/skills-80-blueviolet)](#available-skills)
 [![skills.sh](https://img.shields.io/badge/skills.sh-install-black.svg)](https://skills.sh)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -38,7 +38,7 @@ Your agent is smart. It just doesn't know *your* routines: how you triage Depend
 |-------------|-----------------|
 | Repeatable developer workflows across GitHub, CI, dependencies, testing, SEO, performance, security, and design | Generic prompt libraries or "act as" one-liners |
 | Changes delivered as a branch and a pull request you review | Pushing straight to your default branch |
-| Read-only reviews (`expert-*`, `persona-*`) that report findings with exact locations and fixes | Silently editing code during a review |
+| Read-only reviews (`expert-*`, `persona-*`, `panel-*`) that report findings with exact locations and fixes | Silently editing code during a review |
 | Fleet skills that fan out across every repo you own, with guardrails (only green PRs from verified bots get merged; `nudge-stale-prs` is a dry run until you confirm) | Hosted services, background daemons, or anything that runs without your agent |
 | Working with the stack the repo already uses (pnpm, npm, Bun, Poetry, Next.js, Astro, Foundry, …) | Forcing a new framework or toolchain on your project |
 
@@ -132,11 +132,11 @@ There are two ways to run one, and both work in every supported agent:
 | Explore several UX directions before building a feature | `/wireframe-feature team invites with roles` |
 | Understand an unfamiliar codebase | `/architecture-map` |
 
-Skills that change code work on a new branch and open a pull request for you to review. Review skills (`expert-*`, `persona-*`) are read-only and end with a ranked list of findings. Each skill's `SKILL.md` states exactly what it will and won't touch, so read it before you point a fleet skill at every repo you own.
+Skills that change code work on a new branch and open a pull request for you to review. Review skills (`expert-*`, `persona-*`, `panel-*`) are read-only and end with a ranked list of findings. Each skill's `SKILL.md` states exactly what it will and won't touch, so read it before you point a fleet skill at every repo you own.
 
 ## 📦 What's inside
 
-68 skills in seven families. Each links to its folder; the [full catalog](#available-skills) below has a one-line summary of every skill.
+80 skills in eight families. Each links to its folder; the [full catalog](#available-skills) below has a one-line summary of every skill.
 
 - **🤖 Dependency autopilot (10)**: merge, fix, and secure dependency updates: [sweep-dependency-prs](skills/sweep-dependency-prs/), [sweep-all-dependency-prs](skills/sweep-all-dependency-prs/), [fix-renovate-pr](skills/fix-renovate-pr/), [fix-dependabot-pr](skills/fix-dependabot-pr/), [fix-dependabot-alert](skills/fix-dependabot-alert/), [sweep-all-dependabot-alerts](skills/sweep-all-dependabot-alerts/), [audit-vulnerabilities](skills/audit-vulnerabilities/), [dedupe-and-prune-deps](skills/dedupe-and-prune-deps/), [prune-deps-across-org](skills/prune-deps-across-org/), [align-minimum-release-age](skills/align-minimum-release-age/).
 - **🚑 CI, issues & pull requests (10)**: keep the pipeline green and nothing stale: [fix-failing-ci](skills/fix-failing-ci/), [fix-flaky-tests](skills/fix-flaky-tests/), [fix-issue](skills/fix-issue/), [fix-all-issues](skills/fix-all-issues/), [review-pull-request](skills/review-pull-request/), [claim-unassigned-prs](skills/claim-unassigned-prs/), [claim-all-unassigned-prs](skills/claim-all-unassigned-prs/), [nudge-stale-prs](skills/nudge-stale-prs/), [optimize-github-actions](skills/optimize-github-actions/), [optimize-all-github-actions](skills/optimize-all-github-actions/).
@@ -145,10 +145,11 @@ Skills that change code work on a new branch and open a pull request for you to 
 - **🧭 Visibility & understanding (4)**: map code, stacks, licenses, and repos: [architecture-map](skills/architecture-map/), [isometric-stack-map](skills/isometric-stack-map/), [fleet-health-dashboard](skills/fleet-health-dashboard/), [audit-licenses](skills/audit-licenses/).
 - **🎓 Expert review (12)**: a read-only senior specialist on your code: [expert-appsec](skills/expert-appsec/), [expert-accessibility](skills/expert-accessibility/), [expert-backend](skills/expert-backend/), [expert-frontend-performance](skills/expert-frontend-performance/), [expert-ui](skills/expert-ui/), [expert-ux](skills/expert-ux/), [expert-dx](skills/expert-dx/), [expert-qa](skills/expert-qa/), [expert-smart-contract-security](skills/expert-smart-contract-security/), [expert-gas-optimization](skills/expert-gas-optimization/), [expert-tokenomics](skills/expert-tokenomics/), [expert-web3-dapp](skills/expert-web3-dapp/).
 - **👥 Persona review (12)**: a real-feeling user walks your product and reports in their own voice: [persona-grandma](skills/persona-grandma/), [persona-gen-z](skills/persona-gen-z/), [persona-mobile-commuter](skills/persona-mobile-commuter/), [persona-power-user](skills/persona-power-user/), [persona-accessibility-user](skills/persona-accessibility-user/), [persona-developer](skills/persona-developer/), [persona-designer](skills/persona-designer/), [persona-growth-hacker](skills/persona-growth-hacker/), [persona-investor](skills/persona-investor/), [persona-security-skeptic](skills/persona-security-skeptic/), [persona-crypto-newcomer](skills/persona-crypto-newcomer/), [persona-web3-degen](skills/persona-web3-degen/).
+- **🏛 Panel review (12)**: three experts review the same target, each through their own lens, then give one joint verdict: [panel-ux-review](skills/panel-ux-review/), [panel-ui-design](skills/panel-ui-design/), [panel-accessibility](skills/panel-accessibility/), [panel-web-performance](skills/panel-web-performance/), [panel-developer-experience](skills/panel-developer-experience/), [panel-qa-release-readiness](skills/panel-qa-release-readiness/), [panel-web-app-security](skills/panel-web-app-security/), [panel-architecture-scalability](skills/panel-architecture-scalability/), [panel-smart-contract-security](skills/panel-smart-contract-security/), [panel-dapp-ux](skills/panel-dapp-ux/), [panel-web3-integration](skills/panel-web3-integration/), [panel-tokenomics](skills/panel-tokenomics/).
 
 ## Available skills
 
-Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & building · 🎲 ideation & prototyping · 🧭 visibility & understanding · 🎓 expert review · 👥 persona review
+Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & building · 🎲 ideation & prototyping · 🧭 visibility & understanding · 🎓 expert review · 👥 persona review · 🏛 panel review
 
 | Skill | What it does |
 |-------|--------------|
@@ -193,6 +194,12 @@ Legend: 🤖 dependency autopilot · 🚑 CI & issues · 🛠 upgrades & buildin
 | [optimize-pwa](skills/optimize-pwa/) | 🛠 Make your web app installable and native-feeling on phones in one PR: manifest with real-size and maskable icons, a safe service worker with offline fallback and update prompt, install UX for Android and iOS, plus mobile fixes for zoom, notches, `100dvh`, tap targets, and mobile keyboards, using your framework's own PWA tooling |
 | [optimize-seo-aeo](skills/optimize-seo-aeo/) | 🛠 Audit what search engines and AI answer engines actually see, then ship one PR with the fixes that matter: titles, descriptions, canonicals, OG tags, sitemap, robots.txt (AI search bots included), JSON-LD, llms.txt, and server-rendered content, using your framework's own APIs |
 | [panel-accessibility](skills/panel-accessibility/) | 🏛 Seat three experts (a WCAG 2.2 and ARIA specialist, a screen-reader and keyboard power user, an inclusive designer) to judge whether people with disabilities can complete your core flows; each reviews alone, then the panel records its disagreements and gives one joint verdict with the blockers to fix before shipping, every finding tied to a location and its success criterion; read-only |
+| [panel-dapp-ux](skills/panel-dapp-ux/) | 🏛 Convene a wallet UX designer, a web2-to-web3 onboarding specialist, and an account-abstraction engineer to walk your dApp's on-chain flow (connect, chain switch, signing, pending, failure recovery); each reviews alone, then the panel gives one joint verdict on whether a normal user can finish without confusion or lost funds, with recorded disagreements and fixes ranked by impact; read-only, never signs |
+| [panel-developer-experience](skills/panel-developer-experience/) | 🏛 Three experts (a developer advocate, an API designer, and a technical writer) review your SDK, API, CLI, or open-source repo and answer one question: can a new developer integrate this in under 15 minutes, and what stops them? Each reviews alone (time to hello world; naming, types, versioning, and errors; docs and examples), then the panel records its disagreements and gives one joint verdict with ranked fixes; read-only |
+| [panel-smart-contract-security](skills/panel-smart-contract-security/) | 🏛 Seat three experts on your Solidity, Vyper, or Move contracts: an auditor (reentrancy, access control, storage layout, proxy upgrades, admin power), a DeFi exploit researcher (oracle manipulation, flash loans, vault inflation, MEV), and a protocol engineer (invariants, fuzzing, formal specs, gas as liveness); each reviews alone, then one joint verdict on whether the contracts are safe to deploy with real value, with disagreements recorded and fixes ranked, every finding tied to file:line; read-only |
+| [panel-tokenomics](skills/panel-tokenomics/) | 🏛 Token Economics Panel: a crypto-economist, a DeFi mechanism designer, and a crypto compliance analyst each stress-test your token or incentive design alone (supply and emissions, value accrual, mercenary capital and governance games, securities-risk red flags and disclosure), then give one joint verdict on whether it holds up once incentives run out or markets turn, with disagreements recorded and fixes ranked; read-only, not financial or legal advice |
+| [panel-ux-review](skills/panel-ux-review/) | 🏛 Product UX Panel: a UX researcher, an interaction designer, and a growth specialist each review your key user journeys alone, then give one joint verdict on whether users reach the core value quickly, with disagreements recorded and the three changes that would help most; exact locations, read-only |
+| [panel-web3-integration](skills/panel-web3-integration/) | 🏛 Three experts (an RPC and protocol infrastructure engineer, an indexing engineer, and a senior web3 frontend developer) review how your app talks to chains, each on their own, then give one joint verdict on whether the integration stays correct and fast through reorgs, RPC outages, and many chains: provider fallbacks, finality, subgraphs and caches, viem/wagmi/ethers patterns, and transaction state; disagreements recorded, fixes ranked, read-only |
 | [persona-accessibility-user](skills/persona-accessibility-user/) | 👥 Walk your site as a screen reader and keyboard-only user at 200% zoom with reduced motion; it tries to finish the main flows, reports in their own voice what they heard, where focus went, and where they got stuck, each blocker tied to a step and its WCAG criterion; read-only |
 | [persona-crypto-newcomer](skills/persona-crypto-newcomer/) | 👥 A crypto newcomer who has never used a self-custody wallet tries your dApp from scratch and reports in their own voice where they got stuck, which words lost them (gas, bridge, slippage, L2, seed phrase), how custody and recovery came across, and every moment they feared losing money, with the explanation that would have helped; read-only, never signs |
 | [persona-designer](skills/persona-designer/) | 👥 A senior product designer critiques your site as a user with a trained eye: focal point, spacing rhythm, type, component one-offs, hover/focus/loading/empty/error states, dark mode, icons, motion, and whether it feels finished or generic, in their own voice, ranked by impact, read-only |
@@ -239,7 +246,7 @@ A good skill has four traits:
 - **A concise body**: assume the agent is smart; only add what it wouldn't know
 - **Progressive disclosure**: keep `SKILL.md` under 500 lines; push depth into `references/`
 
-Authoring a new one? Copy [`templates/skill/`](templates/skill/) into `skills/<your-skill-name>/`. It lives outside `skills/` so the CLI does not install the placeholder. Persona skills start from [`templates/persona/`](templates/persona/).
+Authoring a new one? Copy [`templates/skill/`](templates/skill/) into `skills/<your-skill-name>/`. It lives outside `skills/` so the CLI does not install the placeholder. Persona skills start from [`templates/persona/`](templates/persona/), and panel skills from [`templates/panel/`](templates/panel/).
 
 ## ❓ FAQ
 
@@ -257,7 +264,7 @@ A prompt is something you paste every time. A rule is always in context, whether
 
 ### Do the skills change my code or push to GitHub on their own?
 
-Skills that change code create a branch, commit, and open a pull request. Merging is up to you, except in the dependency sweep skills, which only merge Dependabot/Renovate PRs from verified bots whose CI is green. Review skills (`expert-*`, `persona-*`) are read-only. Your agent's own permission settings still apply to every command.
+Skills that change code create a branch, commit, and open a pull request. Merging is up to you, except in the dependency sweep skills, which only merge Dependabot/Renovate PRs from verified bots whose CI is green. Review skills (`expert-*`, `persona-*`, `panel-*`) are read-only. Your agent's own permission settings still apply to every command.
 
 ### What do I need installed?
 
