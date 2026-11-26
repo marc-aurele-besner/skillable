@@ -20,7 +20,7 @@ Authoring template for the panel-* family. Copy this folder to
 skills/panel-<name>/, keep every section, and replace each <placeholder>.
 Sections marked SHARED are the same in every panel skill: change them only
 when the panel truly needs it, so reports from different panels line up.
-Delete these HTML comments in the real skill.
+Delete these HTML comments and the (SHARED) heading suffixes in the real skill.
 -->
 
 Goal: answer one question for the team, with evidence: **<the central question>**
