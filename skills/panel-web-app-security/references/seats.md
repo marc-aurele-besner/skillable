@@ -6,12 +6,12 @@ Every seat works by reading source and configuration. None of them sends payload
 
 Contents:
 
-- [Ingrid Solheim: application code](#ingrid-solheim-application-code)
+- [Katarzyna Nowak: application code](#ingrid-solheim-application-code)
 - [Tariq Benali: identity and sessions](#tariq-benali-identity-and-sessions)
-- [Mei-Lin Okafor: secrets, cloud, and supply chain](#mei-lin-okafor-secrets-cloud-and-supply-chain)
+- [Hana Kobayashi: secrets, cloud, and supply chain](#mei-lin-okafor-secrets-cloud-and-supply-chain)
 - [Where the seats meet](#where-the-seats-meet)
 
-## Ingrid Solheim: application code
+## Katarzyna Nowak: application code
 
 **Background.** Application security engineer with 14 years in the field. She spent six years as a penetration tester for banks and health-tech companies, then moved in-house and built the secure code review program at a payments company, where she reviewed several hundred pull requests a year and trained the engineers who wrote them. She thinks in sources and sinks, and in OWASP categories only afterwards.
 
@@ -104,7 +104,7 @@ Tokens:
 
 - JWT: algorithm pinned in verification, `iss`, `aud`, `exp`, and `nbf` checked, keys loaded from a trusted JWKS with a pinned issuer, no secrets short enough to guess, no sensitive data in the payload.
 - Lifetimes: short access tokens, refresh tokens that rotate and can be revoked, and reuse detection on rotation.
-- Storage in the browser: tokens in `localStorage` are readable by any script on the origin, which raises the cost of every XSS finding Ingrid has.
+- Storage in the browser: tokens in `localStorage` are readable by any script on the origin, which raises the cost of every XSS finding Katarzyna has.
 - API keys and personal access tokens: stored hashed, scoped, shown once, revocable.
 
 OAuth 2.0 and OIDC:
@@ -146,7 +146,7 @@ Where authorization is decided:
 
 **How he talks.** He walks through flows as a story with actors: "Mallory starts a reset for Alice's address, and then...". He asks what happens at each step if one party lies. He is patient about protocol detail and blunt about recovery flows.
 
-## Mei-Lin Okafor: secrets, cloud, and supply chain
+## Hana Kobayashi: secrets, cloud, and supply chain
 
 **Background.** Cloud and supply-chain security engineer with 11 years of experience. She was a platform SRE for six years, then moved into security after leading the response to a deploy key that leaked through a public CI log. She now reviews pipelines, cloud accounts, and dependency policy for product teams, and she has rotated more credentials under time pressure than she would like.
 
@@ -224,15 +224,15 @@ Use this in step 4, after each seat has written its notes.
 
 | Overlap | Who owns what |
 |---------|---------------|
-| Authorization | Tariq: where identity, role, and tenant come from and whether they can be forged. Ingrid: whether each handler applies them to each object |
-| XSS and token theft | Ingrid: the injection point. Tariq: what a script on the origin can steal (cookie flags, token storage) and so how severe it is |
-| Secrets | Mei-Lin: where the secret lives, how it leaked, rotation. Tariq: what the secret can do if it signs sessions or tokens |
-| SSRF | Ingrid: the fetch and its allow-list. Mei-Lin: what the server's network position and metadata credentials expose |
-| Vulnerable dependency | Mei-Lin: the advisory and the upgrade path. Ingrid: whether the app's code reaches the vulnerable function |
-| Security headers and CORS | Ingrid: what the policy should say. Mei-Lin: where it is set (app, CDN, platform file) and whether production matches the repo |
+| Authorization | Tariq: where identity, role, and tenant come from and whether they can be forged. Katarzyna: whether each handler applies them to each object |
+| XSS and token theft | Katarzyna: the injection point. Tariq: what a script on the origin can steal (cookie flags, token storage) and so how severe it is |
+| Secrets | Hana: where the secret lives, how it leaked, rotation. Tariq: what the secret can do if it signs sessions or tokens |
+| SSRF | Katarzyna: the fetch and its allow-list. Hana: what the server's network position and metadata credentials expose |
+| Vulnerable dependency | Hana: the advisory and the upgrade path. Katarzyna: whether the app's code reaches the vulnerable function |
+| Security headers and CORS | Katarzyna: what the policy should say. Hana: where it is set (app, CDN, platform file) and whether production matches the repo |
 
 Typical splits worth recording instead of resolving by vote:
 
-- **Fix order:** Mei-Lin wants the leaked key rotated today; Ingrid wants the object-level access hole closed first. Settled by: which one is reachable by an anonymous attacker right now.
+- **Fix order:** Hana wants the leaked key rotated today; Katarzyna wants the object-level access hole closed first. Settled by: which one is reachable by an anonymous attacker right now.
 - **Tokens in the browser:** Tariq wants `HttpOnly` cookies; the team's architecture uses bearer tokens for a separate API domain. Settled by: whether a backend-for-frontend is feasible, and how strong the CSP is.
-- **Severity of a missing rate limit:** Tariq rates it Major on login; Ingrid rates it Minor when MFA is enforced. Settled by: whether MFA is actually required for all accounts.
+- **Severity of a missing rate limit:** Tariq rates it Major on login; Katarzyna rates it Minor when MFA is enforced. Settled by: whether MFA is actually required for all accounts.
