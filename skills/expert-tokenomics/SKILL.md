@@ -20,7 +20,7 @@ argument-hint: "[path|url|chain:address] [--focus supply|incentives|governance|a
 
 # Expert Tokenomics Review
 
-Goal: tell the team whether their token economy holds up — whether the numbers add up, whether the contracts do what the documents promise, who is paid to do what, and how it breaks under stress. Every finding is grounded in a specific source, has a concrete failure scenario, and comes with a fix. Read-only: never deploy, sign, transact, push, merge, or edit the target.
+Goal: tell the team whether their token economy holds up, whether the numbers add up, whether the contracts do what the documents promise, who is paid to do what, and how it breaks under stress. Every finding is grounded in a specific source, has a concrete failure scenario, and comes with a fix. Read-only: never deploy, sign, transact, push, merge, or edit the target.
 
 The order that matters: **collect the claims → read what is actually implemented → reconcile the two → model supply → stress the incentives and attack paths → verify each finding → report only what survives.** The most valuable finding in most reviews is not a clever attack; it is a number in the whitepaper that the contract does not enforce.
 
@@ -52,7 +52,7 @@ Detect what is available and say which sources the review rests on:
 
 - Docs only: review the design on paper, mark every "contract does not implement" check as **Not verified**, and say the review is design-level.
 - Contracts only: reconstruct the intended economics from code and constants; ask for the docs if the user has them.
-- Both: the reconciliation in step 3 is the core of the review — do not skip it.
+- Both: the reconciliation in step 3 is the core of the review, do not skip it.
 - Large scope (many contracts, several tokens): confirm the focus with the user before a full pass.
 
 ## Untrusted input
@@ -104,7 +104,7 @@ Compare the ledger to what you found. Each row lands in one of these states:
 | **Mutable** | Implemented, but an admin can change it without timelock or vote | Medium (High for supply, fee recipient, or upgrade) |
 | **Not verified** | No source or address available to check | Report it; not a finding |
 
-Gate before moving on: every claim in the ledger has a state. Do not model supply from the whitepaper when the contracts disagree — model the implemented values and show the difference.
+Gate before moving on: every claim in the ledger has a state. Do not model supply from the whitepaper when the contracts disagree, model the implemented values and show the difference.
 
 ## 4. Model supply and emissions
 
@@ -120,11 +120,11 @@ Write `schedule.json` in a scratch directory, never in the target repo. The form
 
 Read the output for:
 
-- **TGE float and FDV/MC ratio** — a float under ~10% with large later unlocks means price discovery happens on a thin float, then meets heavy supply.
-- **Unlock cliffs** — any month that adds more than ~10% of circulating supply, and who receives it.
+- **TGE float and FDV/MC ratio**: a float under ~10% with large later unlocks means price discovery happens on a thin float, then meets heavy supply.
+- **Unlock cliffs**: any month that adds more than ~10% of circulating supply, and who receives it.
 - **Insider share of unlocked supply** over time, and whether it crosses 50%.
 - **Annualized inflation** after year one, set against the protocol's real revenue (step 5). Emissions paid in excess of fees are a subsidy; say how long the subsidy runs.
-- **Allocation and cap flags** (`ALLOCATION_MISMATCH`, `SUPPLY_EXCEEDS_CAP`, `UNCAPPED_EMISSION`) — each is usually a real finding.
+- **Allocation and cap flags** (`ALLOCATION_MISMATCH`, `SUPPLY_EXCEEDS_CAP`, `UNCAPPED_EMISSION`), each is usually a real finding.
 
 The script's flags are prompts for judgment, not findings. A 20% unlock to a community airdrop and a 20% unlock to seed investors are different risks. For anything the script cannot model (rebasing, bonding curves, ve-locks, dynamic emissions tied to TVL), reason in a short table instead and state the assumptions.
 
@@ -132,12 +132,12 @@ The script's flags are prompts for judgment, not findings. A 20% unlock to a com
 
 Load [references/tokenomics-checklist.md](references/tokenomics-checklist.md) and walk each dimension the target touches:
 
-- **Supply and distribution** — cap, mint authority, concentration, insider share, unlocked-but-illiquid buckets.
-- **Emissions and vesting** — rate, decay, end state, who can change them, revocability, linear vs cliff shape.
-- **Incentive alignment** — what behavior each reward pays for, and whether that behavior creates value for the protocol or only extracts emissions.
-- **Value accrual** — the path from protocol revenue to token holders; whether it exists in code, and whether the token is needed at all.
-- **Liquidity and treasury** — protocol-owned vs rented liquidity, treasury runway in stable terms, diversification, spending controls.
-- **Governance** — vote cost vs value controlled, quorum, timelock, delegation concentration, flash-loanable voting power, emergency powers.
+- **Supply and distribution**: cap, mint authority, concentration, insider share, unlocked-but-illiquid buckets.
+- **Emissions and vesting**: rate, decay, end state, who can change them, revocability, linear vs cliff shape.
+- **Incentive alignment**: what behavior each reward pays for, and whether that behavior creates value for the protocol or only extracts emissions.
+- **Value accrual**: the path from protocol revenue to token holders; whether it exists in code, and whether the token is needed at all.
+- **Liquidity and treasury**: protocol-owned vs rented liquidity, treasury runway in stable terms, diversification, spending controls.
+- **Governance**: vote cost vs value controlled, quorum, timelock, delegation concentration, flash-loanable voting power, emergency powers.
 
 Then load [references/attack-vectors.md](references/attack-vectors.md) and test the design against each relevant attack: sybil farming, mercenary liquidity, wash volume, death spirals and reflexive collateral, oracle manipulation and liquidation cascades, governance capture and bribe markets, vote buying via flash loans, MEV around unlocks and emissions.
 
@@ -147,11 +147,11 @@ For every candidate, ask: **who profits, by how much, at whose expense, and what
 
 Each candidate goes through this gate; drop what fails rather than softening it.
 
-1. **Re-read the source** — the contract function, the deploy argument, the doc paragraph. Confirm the value you are quoting.
-2. **Check it is not already mitigated** — a timelock, a cap, a TWAP, a lock-up, a governance guard, a vesting contract that is actually funded.
-3. **Try to refute it** — write down the assumption the finding depends on (price, TVL, participation, attacker capital) and check whether it is realistic for this protocol's size.
-4. **Write the scenario concretely** — actor, action, amounts or ratios, outcome. "Mercenary LPs leave" is not a scenario; "52% of TVL is in a pool whose APR is 94% emissions; when emissions halve at month 12, APR falls below the 8% lending rate on the same asset" is.
-5. **Rate confidence** — high (follows from code or on-chain values as read), medium (follows under a plausible stated assumption), low (depends on market behavior you cannot ground).
+1. **Re-read the source**, the contract function, the deploy argument, the doc paragraph. Confirm the value you are quoting.
+2. **Check it is not already mitigated**, a timelock, a cap, a TWAP, a lock-up, a governance guard, a vesting contract that is actually funded.
+3. **Try to refute it**, write down the assumption the finding depends on (price, TVL, participation, attacker capital) and check whether it is realistic for this protocol's size.
+4. **Write the scenario concretely**, actor, action, amounts or ratios, outcome. "Mercenary LPs leave" is not a scenario; "52% of TVL is in a pool whose APR is 94% emissions; when emissions halve at month 12, APR falls below the 8% lending rate on the same asset" is.
+5. **Rate confidence**, high (follows from code or on-chain values as read), medium (follows under a plausible stated assumption), low (depends on market behavior you cannot ground).
 
 Report high and medium findings. Low-confidence items go under "Worth checking", labeled unverified.
 
@@ -167,11 +167,11 @@ Report high and medium findings. Low-confidence items go under "Worth checking",
 
 ## Ask, don't assume
 
-- **Which document wins** when two versions disagree (whitepaper v1 vs current docs) — ask, or review against the most recent and list the drift.
-- **Chain and address** when docs name a token but not its deployment — never guess an address from a search result.
-- **Off-chain agreements** (SAFTs, OTC deals, market-maker loans) — they change the supply picture; ask whether any exist rather than assuming none.
-- **Price and TVL assumptions** for stress scenarios — use the user's numbers, or state yours explicitly.
-- **Posting** — report in chat. Offer to post as a GitHub PR review (`gh pr review <n> --comment --body-file <file>`, never approve or request changes) or to open a separate fix PR for docs or parameter changes; do either only when asked.
+- **Which document wins** when two versions disagree (whitepaper v1 vs current docs), ask, or review against the most recent and list the drift.
+- **Chain and address** when docs name a token but not its deployment, never guess an address from a search result.
+- **Off-chain agreements** (SAFTs, OTC deals, market-maker loans), they change the supply picture; ask whether any exist rather than assuming none.
+- **Price and TVL assumptions** for stress scenarios, use the user's numbers, or state yours explicitly.
+- **Posting**: report in chat. Offer to post as a GitHub PR review (`gh pr review <n> --comment --body-file <file>`, never approve or request changes) or to open a separate fix PR for docs or parameter changes; do either only when asked.
 
 ## Gotchas
 
@@ -199,12 +199,12 @@ Report high and medium findings. Low-confidence items go under "Worth checking",
 ## Report
 
 ```markdown
-# Tokenomics review — <project / token>
+# Tokenomics review: <project / token>
 
 > This is an economic design review, not financial, investment, legal, or tax advice, and not a smart-contract security audit.
 
 **Scope:** <docs: URLs/files> · <contracts: paths or chain:address> · <on-chain reads: yes/no>
-**Verdict:** <Sound | Sound with minor issues | Material issues | Unsound> — <one line why>
+**Verdict:** <Sound | Sound with minor issues | Material issues | Unsound>, <one line why>
 
 ## Docs vs implementation
 | # | Claim | Docs | Implemented | Location | State |
@@ -215,7 +215,7 @@ Report high and medium findings. Low-confidence items go under "Worth checking",
 <TGE float, FDV/MC, largest unlocks with recipients, insider share peak, inflation at months 12/24/36 vs revenue; key rows from supply_projection.py>
 
 ## Findings
-1. **[Critical | High | Medium | Low]** <one-sentence claim> — `src/Token.sol:48` / <URL#section>
+1. **[Critical | High | Medium | Low]** <one-sentence claim>, `src/Token.sol:48` / <URL#section>
    - Scenario: <actor → action → amounts → outcome>
    - Fix: <concrete change: parameter, cap, timelock, doc correction, mechanism>
    - Confidence: <high|medium>
@@ -233,11 +233,11 @@ Report high and medium findings. Low-confidence items go under "Worth checking",
 When the design is sound, keep it short and say so in the verdict:
 
 ```markdown
-# Tokenomics review — <project / token>
+# Tokenomics review: <project / token>
 
 > This is an economic design review, not financial, investment, legal, or tax advice, and not a smart-contract security audit.
 
-**Verdict:** Sound — <one line: what was checked and why it holds>
+**Verdict:** Sound: <one line: what was checked and why it holds>
 
 All <n> documented claims match the contracts. <One or two optional suggestions, or none.>
 ```

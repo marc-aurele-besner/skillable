@@ -1,6 +1,6 @@
 # hreflang: the rules, the pitfalls, and how to validate
 
-`hreflang` tells search engines which URL is which language version of the same content. It is easy to emit, easy to get subtly wrong, and impossible to debug by eye — every error produces "no error", just worse rankings. Read this before writing a single tag.
+`hreflang` tells search engines which URL is which language version of the same content. It is easy to emit, easy to get subtly wrong, and impossible to debug by eye, every error produces "no error", just worse rankings. Read this before writing a single tag.
 
 The tag lives in `<head>`, one per locale:
 
@@ -33,7 +33,7 @@ The tag lives in `<head>`, one per locale:
    | `en-UK` | `en-GB` | The UK has no ISO 3166 code; use `GB` |
    | `zh` | `zh-Hans` / `zh-Hant` | Chinese needs a script to be unambiguous |
 
-6. **Return links are per-language.** When `/en/about` links to `/fr/about` with `hreflang="fr"`, the `/fr/about` page links back with `hreflang="en"` — the codes swap. Both pages use the *same* set of codes, each pointing at the other locale's URL.
+6. **Return links are per-language.** When `/en/about` links to `/fr/about` with `hreflang="fr"`, the `/fr/about` page links back with `hreflang="en"`, the codes swap. Both pages use the *same* set of codes, each pointing at the other locale's URL.
 
 7. **Canonical is per locale.** Each locale canonicalizes to its own URL. A single canonical pointing every locale at the source language tells search engines to index only that one, and the other locales get dropped.
 
@@ -42,7 +42,7 @@ The tag lives in `<head>`, one per locale:
    <link rel="canonical" href="https://example.com/fr/about" />
    ```
 
-8. **Never point hreflang at a `noindex` page.** A noindex target makes the cluster unusable — the alternates are ignored, and the canonical may be ignored too. If a locale is deliberately unindexed, remove it from every other page's alternate list *and* from the sitemap.
+8. **Never point hreflang at a `noindex` page.** A noindex target makes the cluster unusable, the alternates are ignored, and the canonical may be ignored too. If a locale is deliberately unindexed, remove it from every other page's alternate list *and* from the sitemap.
 
 9. **`hreflang` and `canonical` are independent.** `hreflang` says "these are translations of each other"; `canonical` says "this is the one URL to index". A page can have a self-referencing canonical *and* alternates to its siblings. Do not point the canonical at the English version.
 
@@ -87,7 +87,7 @@ The two pages carry the same four lines with the URLs swapped. That is reciproci
 <link rel="alternate" hreflang="fr" href="https://example.com/fr/about" />
 </head></html>
 ```
-The French page lists `hreflang="fr"` → `/fr/about`, which *is* itself — that part is fine. But if the `en` page has no `hreflang="fr"` line, the link is one-way and the whole pair is ignored. Reciprocity is the property that breaks, not the self-reference.
+The French page lists `hreflang="fr"` → `/fr/about`, which *is* itself, that part is fine. But if the `en` page has no `hreflang="fr"` line, the link is one-way and the whole pair is ignored. Reciprocity is the property that breaks, not the self-reference.
 
 ```html
 <!-- WRONG: one canonical for all locales -->
@@ -122,11 +122,11 @@ The French page says "the real version is the English one". Search engines are t
 
 ## Locale-code pitfalls
 
-**`en` vs `en-US`.** `en` means "English, any region"; `en-US` means "United States". They are different hreflang values. If you ship `en-US` and `en-GB` as separate versions, each page lists both, and `en` alone is not a substitute. If you ship one English version for everyone, use `en` and set `<html lang="en">`. Mixing them — `<html lang="en-US">` with `hreflang="en"` — is a mismatch: the self-reference language should match the page's language.
+**`en` vs `en-US`.** `en` means "English, any region"; `en-US` means "United States". They are different hreflang values. If you ship `en-US` and `en-GB` as separate versions, each page lists both, and `en` alone is not a substitute. If you ship one English version for everyone, use `en` and set `<html lang="en">`. Mixing them, `<html lang="en-US">` with `hreflang="en"`, is a mismatch: the self-reference language should match the page's language.
 
 **`zh-Hans` vs `zh-Hant`.** Simplified and Traditional Chinese are different scripts and often different sites. `zh` alone is ambiguous and search engines treat it as a weaker signal. Use `zh-Hans` (Simplified) and `zh-Hant` (Traditional), and `zh-Hans-CN` / `zh-Hant-TW` when the region matters.
 
-**`pt-BR` vs `pt-PT`.** Brazilian and European Portuguese are not interchangeable — different vocabulary, different spelling. Shipping one as "Portuguese" and calling it `pt` loses the distinction; shipping both means two versions and two full translations.
+**`pt-BR` vs `pt-PT`.** Brazilian and European Portuguese are not interchangeable, different vocabulary, different spelling. Shipping one as "Portuguese" and calling it `pt` loses the distinction; shipping both means two versions and two full translations.
 
 **`sr-Latn` vs `sr-Cyrl`.** Script matters for Serbian, Azerbaijani (`az-Latn` / `az-Arab`), Uzbek (`uz-Latn` / `uz-Cyrl`), and Mongolian (`mn-Mong` vs `mn`).
 
@@ -161,7 +161,7 @@ The sitemap lists every locale URL, each with its alternates via the `xhtml:link
 </urlset>
 ```
 
-Each `<url>` entry carries the full alternate set. Do not list a locale URL in the sitemap that is `noindex` — remove it from the sitemap entirely.
+Each `<url>` entry carries the full alternate set. Do not list a locale URL in the sitemap that is `noindex`, remove it from the sitemap entirely.
 
 ## How to validate
 
@@ -194,17 +194,17 @@ For SSR apps with no static build, save the rendered HTML of the key routes with
 curl -s https://example.com/fr/about | grep -i -e 'hreflang' -e 'rel="canonical"' -e '<html'
 ```
 
-Compare the set of alternates on two locale URLs by eye — they should carry the same codes with swapped URLs.
+Compare the set of alternates on two locale URLs by eye, they should carry the same codes with swapped URLs.
 
 ### 3. Google Search Console
 
-The **International Targeting** report lists the languages Google has indexed for the site, and the **Hreflang** report (in Search Console's Pages section) lists every error it found: missing return link, no self-reference, page with another locale's canonical, and so on. Ask the user to check it — it is account-gated, and the agent should not log into it.
+The **International Targeting** report lists the languages Google has indexed for the site, and the **Hreflang** report (in Search Console's Pages section) lists every error it found: missing return link, no self-reference, page with another locale's canonical, and so on. Ask the user to check it, it is account-gated, and the agent should not log into it.
 
 ### 4. Other validators
 
 - Google's Search Console International Targeting report (authoritative, needs the user's account).
-- The `hreflang` tag tester in third-party SEO tools — handy but not authoritative; Google explicitly warns against relying on them.
-- `curl` + a quick diff of the alternate sets between two locale URLs — a ten-second check that catches the reciprocity break.
+- The `hreflang` tag tester in third-party SEO tools, handy but not authoritative; Google explicitly warns against relying on them.
+- `curl` + a quick diff of the alternate sets between two locale URLs, a ten-second check that catches the reciprocity break.
 
 ## Common failures and their fix
 

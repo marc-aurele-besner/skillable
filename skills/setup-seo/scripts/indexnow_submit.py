@@ -188,10 +188,10 @@ def main() -> int:
             if result["status"] == "dry-run":
                 print(f"dry-run: {result['urls']} URL(s)")
             else:
-                print(f"HTTP {result['status']}: {result['urls']} URL(s) — {result['response'] or '(empty body)'}")
+                print(f"HTTP {result['status']}: {result['urls']} URL(s): {result['response'] or '(empty body)'}")
         if not failed and not args.dry_run:
             print("\nAccepted. HTTP 200 means the engine received the URLs; HTTP 202 means key validation is pending.")
-            print("Receipt is not an indexing guarantee — check Bing Webmaster Tools for actual indexing.")
+            print("Receipt is not an indexing guarantee: check Bing Webmaster Tools for actual indexing.")
 
     return 1 if failed else 0
 

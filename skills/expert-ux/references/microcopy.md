@@ -7,7 +7,7 @@ Load this when the review touches wording: buttons, labels, errors, empty states
 Check all of these, not only component markup:
 
 - JSX/template strings and `aria-label`/`title` text that is also shown
-- i18n catalogs (`locales/*.json`, `messages/*.po`, `*.ftl`) — the shipped text may differ from the source default
+- i18n catalogs (`locales/*.json`, `messages/*.po`, `*.ftl`): the shipped text may differ from the source default
 - Server error messages passed through to the UI (API `message` fields, validation libraries' default messages)
 - Email and notification templates
 - CMS or config-driven content
@@ -29,7 +29,7 @@ rg -n -g '!node_modules' -e '"Submit"' -e "'Submit'" -e '>Submit<' -e '"OK"' -e 
 Every error answers: **what happened, is my work safe, what do I do now.**
 
 - `Invalid input` → `Enter a date in the future`
-- `Error 500` → `We couldn't save your changes. Your draft is kept — try again in a moment.`
+- `Error 500` → `We couldn't save your changes. Your draft is kept, try again in a moment.`
 - `Payment failed` → `Your card was declined. Try another card or contact your bank.`
 - Never blame: `You entered a wrong password` → `That password doesn't match this email`.
 - Never expose internals: stack traces, SQL, error codes without meaning, `undefined`, `[object Object]`.

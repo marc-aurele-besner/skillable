@@ -20,9 +20,9 @@ Grep with `rg` when available (`rg -n --glob '!node_modules' --glob '!vendor' '<
 | Status codes mean what they say | `200 {"error": "not found"}`; `500` for a validation error; `404` vs `403` leaking whether a resource exists to unauthorized callers |
 | One error shape | Some routes return `{error}`, others `{message, code}`, framework default HTML on unhandled errors |
 | Validate at the boundary | Handler reads `req.body.amount` with no schema; `limit`, `page`, `sort` from the query string passed straight to the ORM; arbitrary `sort` field enables sorting on unindexed or private columns |
-| No mass assignment | `User.update(req.body)`, `Model(**payload)`, `params.permit!`, `@Body() dto` without `whitelist: true` — lets clients set `role`, `tenant_id`, `price` |
+| No mass assignment | `User.update(req.body)`, `Model(**payload)`, `params.permit!`, `@Body() dto` without `whitelist: true`, lets clients set `role`, `tenant_id`, `price` |
 | Response shaping | ORM entities serialized directly (password hash, internal flags, soft-deleted relations); responses that grow with related data (embedding all comments in a post) |
-| Breaking changes | Field renamed or removed, type narrowed (`string` → enum), nullable → required in request, default changed, enum value removed, error code changed — on a public or multi-consumer API without a new version |
+| Breaking changes | Field renamed or removed, type narrowed (`string` → enum), nullable → required in request, default changed, enum value removed, error code changed, on a public or multi-consumer API without a new version |
 | Contract drift | OpenAPI / GraphQL SDL / `.proto` disagrees with the handler (field names, required flags, status codes) |
 | Versioning | Public API has no version strategy (URL `/v1`, header, or date-based); internal events have no `version` or `type` field; consumers fail on unknown fields |
 | Deprecation | Removed field with no `Deprecation`/`Sunset` header, no `@deprecated` in schema, no changelog |
@@ -38,8 +38,8 @@ Do not report: REST purity debates (PUT vs PATCH semantics on an internal API), 
 | Heuristic | Defect |
 |-----------|--------|
 | Bounded by default | `findMany()` / `.all()` / `SELECT ... FROM orders WHERE user_id = ?` with no `LIMIT`; a client-controlled `limit` with no max (`?limit=1000000`) |
-| Offset on big or hot tables | `OFFSET 200000` scans and discards 200k rows; rows inserted between pages shift results (duplicates and skips in feeds) — use keyset: `WHERE (created_at, id) < (?, ?) ORDER BY created_at DESC, id DESC LIMIT ?` |
-| Stable unique sort | `ORDER BY created_at` alone — ties make page boundaries nondeterministic; add the primary key as tiebreaker |
+| Offset on big or hot tables | `OFFSET 200000` scans and discards 200k rows; rows inserted between pages shift results (duplicates and skips in feeds), use keyset: `WHERE (created_at, id) < (?, ?) ORDER BY created_at DESC, id DESC LIMIT ?` |
+| Stable unique sort | `ORDER BY created_at` alone, ties make page boundaries nondeterministic; add the primary key as tiebreaker |
 | Index supports filter + sort | Keyset query needs an index matching `(filter columns..., sort columns...)` |
 | Count cost | `COUNT(*)` on every page request of a large table; consider `has_next` via `LIMIT n+1`, estimated counts, or cached totals |
 | Cursor opacity | Cursor exposes raw IDs/offsets clients start to construct; cursor not validated (tampered cursor → 500) |
@@ -72,7 +72,7 @@ Note: Django `get_or_create` and Rails `find_or_create_by` are **not** race-safe
 | Constraints in the DB | Required field nullable in the schema; FK relation with no FK constraint (orphans after deletes); uniqueness only in a validator |
 | Money | `float`/`double`/JS `number` arithmetic on currency; amounts without a currency column |
 | Time | Naive datetimes (`DateTimeField` with `USE_TZ = False`, `timestamp without time zone` storing local time); `Date.now()` vs DB `now()` mixing clocks for ordering |
-| IDs | Sequential integer IDs exposed in a public API enabling enumeration of other tenants' resources (pair with authz check); UUIDv4 primary keys on very large, insert-heavy B-tree tables (index fragmentation — UUIDv7/ULID are time-ordered) |
+| IDs | Sequential integer IDs exposed in a public API enabling enumeration of other tenants' resources (pair with authz check); UUIDv4 primary keys on very large, insert-heavy B-tree tables (index fragmentation, UUIDv7/ULID are time-ordered) |
 | Enums | Postgres native enum where values change often (`ALTER TYPE ... ADD VALUE` cannot run in a transaction on older versions, removal is hard); string enums without a `CHECK` |
 | Multi-tenancy | Table without `tenant_id`, or queries that do not filter on it; unique constraints missing the tenant column (`UNIQUE(email)` instead of `UNIQUE(tenant_id, email)`) |
 | Soft delete | Unique constraint not partial; queries/joins that forget `deleted_at IS NULL`; cascades that hard-delete children of a soft-deleted parent |
@@ -88,7 +88,7 @@ Check against the engine. PostgreSQL facts (11+ unless noted):
 
 | Operation | Risk | Safe pattern |
 |-----------|------|--------------|
-| `ADD COLUMN` nullable, no default | Fast (metadata only) | — |
+| `ADD COLUMN` nullable, no default | Fast (metadata only) |, |
 | `ADD COLUMN ... DEFAULT <constant>` | Fast on PG 11+; full rewrite on PG ≤ 10 | Check version |
 | `ADD COLUMN ... DEFAULT <volatile>` (`now()`, `gen_random_uuid()`) | Full table rewrite under `ACCESS EXCLUSIVE` | Add nullable, backfill in batches, then set default |
 | `SET NOT NULL` | Full scan under `ACCESS EXCLUSIVE` | `ADD CONSTRAINT ... CHECK (col IS NOT NULL) NOT VALID`, `VALIDATE CONSTRAINT`, then `SET NOT NULL` (PG 12+ uses the check) |
@@ -136,10 +136,10 @@ Do not report: N+1 bounded by a small constant (≤ ~5 items always); missing in
 | Atomic multi-write | Order created, then line items inserted in a separate implicit transaction → crash leaves an order with no items |
 | External I/O in a transaction | HTTP call to a payment provider while holding row locks → long transactions, pool exhaustion, and the call is not rolled back |
 | Lost update | `balance = read(); balance -= x; save(balance)` from two requests → one deduction lost. Fix: `UPDATE accounts SET balance = balance - ? WHERE id = ? AND balance >= ?` and check rows affected; or `SELECT ... FOR UPDATE`; or a `version` column (optimistic locking) |
-| Dual write | `db.save(order); queue.publish(OrderCreated)` — crash between them loses or invents events. Fix: transactional outbox, or `transaction.on_commit` / `after_commit` publish with a reconciler |
+| Dual write | `db.save(order); queue.publish(OrderCreated)`: crash between them loses or invents events. Fix: transactional outbox, or `transaction.on_commit` / `after_commit` publish with a reconciler |
 | Enqueue before commit | Job enqueued inside the transaction runs before commit, reads nothing, fails or no-ops (classic with Sidekiq/Celery/BullMQ) |
 | Deadlocks | Two code paths lock the same rows in different orders |
-| Isolation assumptions | Code relies on `REPEATABLE READ`/`SERIALIZABLE` behavior while running at the default `READ COMMITTED` (PostgreSQL) — or MySQL's `REPEATABLE READ` gap locks surprising the author |
+| Isolation assumptions | Code relies on `REPEATABLE READ`/`SERIALIZABLE` behavior while running at the default `READ COMMITTED` (PostgreSQL), or MySQL's `REPEATABLE READ` gap locks surprising the author |
 | Long transactions | Transaction wrapping a whole batch job or file processing |
 | Distributed locks | Redis `SETNX` lock with no TTL, or with TTL shorter than the work, or released by a non-owner (no token check) |
 
@@ -157,7 +157,7 @@ Grep: `transaction|atomic|\$transaction|BEGIN|on_commit|after_commit|FOR UPDATE|
 | Cache as source of truth | Data only in Redis with eviction enabled (`allkeys-lru`) or no persistence |
 | Failure handling | Redis down → every request 500s instead of falling back to the DB with a short timeout |
 | Unbounded memory | In-process `Map`/dict/`lru_cache` without size limit keyed by user input; module-level caches in multi-instance deployments that silently diverge |
-| Caching too early | A cache layer on an endpoint that is neither hot nor slow adds invalidation bugs for no benefit — a Note, not a finding, unless it already causes staleness |
+| Caching too early | A cache layer on an endpoint that is neither hot nor slow adds invalidation bugs for no benefit, a Note, not a finding, unless it already causes staleness |
 
 Grep: `redis|cache\.(get|set)|@cache|lru_cache|Cache-Control|cache_page|Rails\.cache|memoize|new Map\(\)`.
 
@@ -207,7 +207,7 @@ Grep: `fetch\(|axios|requests\.(get|post)|httpx|http\.Client|http\.DefaultClient
 | Search in the primary DB | `ILIKE` full scans for user search on large tables → full-text index or a search engine |
 | Abuse | Expensive unauthenticated endpoints with no rate limit or size limit |
 
-Do not report: horizontal-scaling gaps on a service documented or evidently running as a single instance with modest traffic — mention as a Note if growth is planned.
+Do not report: horizontal-scaling gaps on a service documented or evidently running as a single instance with modest traffic, mention as a Note if growth is planned.
 
 ## 12. Observability
 

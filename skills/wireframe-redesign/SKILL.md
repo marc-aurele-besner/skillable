@@ -19,7 +19,7 @@ argument-hint: "[site-url-or-path] [variants=4] [direction hints]"
 
 # Wireframe Redesign
 
-Goal: show what the **whole** product could become — not one feature, every page — in several competing directions the user can click through, switch between on any page, and compare side by side. The redesign keeps every feature the product has today; only the presentation, information architecture, and interaction model change. Like `wireframe-feature`, the output is throwaway exploration: one artifact, never commits to the project.
+Goal: show what the **whole** product could become, not one feature, every page, in several competing directions the user can click through, switch between on any page, and compare side by side. The redesign keeps every feature the product has today; only the presentation, information architecture, and interaction model change. Like `wireframe-feature`, the output is throwaway exploration: one artifact, never commits to the project.
 
 ## When to use
 
@@ -40,7 +40,7 @@ Goal: show what the **whole** product could become — not one feature, every pa
 
 Do not run a questionnaire. Assume, then list assumptions in the report.
 
-## 1. Inventory the product — every page, every feature
+## 1. Inventory the product, every page, every feature
 
 This is what separates a redesign prototype from a mood board: nothing the product does today may disappear. Build the inventory before designing anything; [references/site-inventory.md](references/site-inventory.md) says where to look per stack and how to crawl a URL.
 
@@ -52,35 +52,35 @@ Write a working **coverage matrix** with one row per route:
 
 Cover, at minimum:
 
-1. **Routes** — every static and dynamic route (with one or two real slugs each), redirects, 404, and pages only reachable by link (reset password, shared result pages, legal).
-2. **Features per page** — search and autocomplete, filters and sort, pagination, forms and their validation rules, uploads, copy/share, favorites, quotas and paywalls, streaming or async results, notifications, keyboard shortcuts.
-3. **Roles and gates** — guest, signed-in tiers (free, pro…), admin; what each sees or is blocked from; usage limits.
-4. **Global chrome** — header, nav labels and order, footer columns, mobile nav, theme switch, banners, cookie notice, sponsored slots.
-5. **States** — loading, empty, error, success, rate-limited, permission-denied, long content.
-6. **Content model** — entity types, fields, counts, and where the real content lives (seed files, JSON, MDX, CMS exports, DB fixtures).
+1. **Routes**, every static and dynamic route (with one or two real slugs each), redirects, 404, and pages only reachable by link (reset password, shared result pages, legal).
+2. **Features per page**, search and autocomplete, filters and sort, pagination, forms and their validation rules, uploads, copy/share, favorites, quotas and paywalls, streaming or async results, notifications, keyboard shortcuts.
+3. **Roles and gates**, guest, signed-in tiers (free, pro…), admin; what each sees or is blocked from; usage limits.
+4. **Global chrome**, header, nav labels and order, footer columns, mobile nav, theme switch, banners, cookie notice, sponsored slots.
+5. **States**, loading, empty, error, success, rate-limited, permission-denied, long content.
+6. **Content model**, entity types, fields, counts, and where the real content lives (seed files, JSON, MDX, CMS exports, DB fixtures).
 
 The matrix becomes the prototype's **sitemap** (step 4) and the coverage check (step 6). If a route cannot be reproduced faithfully (a third-party checkout, an OAuth provider), keep the page and stub the hand-off with a clearly marked placeholder.
 
 ## 2. Capture the current design language and real content
 
-- **Design language** — tokens and their names, themes and the switch mechanism, fonts, breakpoints, layout shell, component idioms, icon set, copy tone. If a published design system exists (e.g. from `extract-design-system`), start from it. The redesign may propose new values, but keeps the project's **token names** so the winning direction maps back onto the codebase. Comment proposed values as `/* proposed */` when they differ.
-- **Real content** — export the product's actual content into one plain data object (`window.<APP>_DATA = {…}`) embedded in the page: entity lists with the fields pages need, real counts, a few full records for detail pages. Trim long lists to a representative slice but keep the true totals for counters. No customer data, no secrets, no network calls. Keep the whole artifact well under the 16 MB limit (aim for ≤ 3 MB).
+- **Design language**: tokens and their names, themes and the switch mechanism, fonts, breakpoints, layout shell, component idioms, icon set, copy tone. If a published design system exists (e.g. from `extract-design-system`), start from it. The redesign may propose new values, but keeps the project's **token names** so the winning direction maps back onto the codebase. Comment proposed values as `/* proposed */` when they differ.
+- **Real content**: export the product's actual content into one plain data object (`window.<APP>_DATA = {…}`) embedded in the page: entity lists with the fields pages need, real counts, a few full records for detail pages. Trim long lists to a representative slice but keep the true totals for counters. No customer data, no secrets, no network calls. Keep the whole artifact well under the 16 MB limit (aim for ≤ 3 MB).
 
 ## 3. Diverge: distinct redesign directions
 
 Each variant is a whole-product concept, not a palette swap. Vary what matters for this product, for example:
 
-- **Shell and IA** — marketing top nav vs. app shell with sidebar and ⌘K palette vs. editorial masthead; what is first-class in the nav.
-- **Primary job on the home page** — search-first, tool-first, content-first, dashboard-first.
-- **Content presentation** — dense grids vs. cards vs. long-form editorial; quick-view drawers vs. full pages.
-- **Interaction model** — omnibox, wizard, inline editing, command palette, bottom tab bar on mobile.
-- **Visual voice** — type pairing, radius, density, motion — within the token names.
+- **Shell and IA**: marketing top nav vs. app shell with sidebar and ⌘K palette vs. editorial masthead; what is first-class in the nav.
+- **Primary job on the home page**, search-first, tool-first, content-first, dashboard-first.
+- **Content presentation**: dense grids vs. cards vs. long-form editorial; quick-view drawers vs. full pages.
+- **Interaction model**: omnibox, wizard, inline editing, command palette, bottom tab bar on mobile.
+- **Visual voice**: type pairing, radius, density, motion, within the token names.
 
 Name each variant `<Letter> · <Name>` ("A · Omnibox", "B · Decoder studio", "C · Editorial", "D · Bento app") with a one-sentence **thesis**. Every variant implements **every** route and feature from the matrix; a variant may reorganize where a feature lives, but never drop it.
 
 ## 4. Build one prototype that holds every variant
 
-One self-contained HTML file, vanilla JS and CSS (or a pinned CDN library the project already uses), no build step. The full harness pattern — router, state, render loop, toolbar, compare — is in [references/prototype-harness.md](references/prototype-harness.md). Requirements:
+One self-contained HTML file, vanilla JS and CSS (or a pinned CDN library the project already uses), no build step. The full harness pattern, router, state, render loop, toolbar, compare, is in [references/prototype-harness.md](references/prototype-harness.md). Requirements:
 
 **Routing and variants**
 - Hash routes `#/<variant>/<path>?<query>` mirror the real URL paths, so `#/c/emoji/skull` is the emoji page in variant C and switching variant keeps the current page and query.
@@ -107,7 +107,7 @@ One self-contained HTML file, vanilla JS and CSS (or a pinned CDN library the pr
 - Reproduce or deliberately redesign responsive behavior at ~375, ~768, and ≥1280 px: no horizontal scroll, touch targets ≥ 40 px, mobile nav per variant (drawer, tab bar…).
 - Mark anything invented by the redesign (a new metric, a feature the product lacks) with a dotted underline and a `title` tooltip, so it is not mistaken for an existing capability.
 
-## 5. Publish — one artifact
+## 5. Publish, one artifact
 
 - Publish the single page as **one** artifact titled `<Product> redesign`, with the variant names in the description. A design canvas is the wrong shape for a whole site; use the single-page harness.
 - No artifact tool: write `redesign-<product>.html` outside the project's tracked tree (scratch or temp directory) and open it locally.
@@ -115,7 +115,7 @@ One self-contained HTML file, vanilla JS and CSS (or a pinned CDN library the pr
 
 ## 6. Verify coverage before reporting
 
-- Walk the coverage matrix: every route opens in every variant (use the page jump or a headless browser loop over `#/<v>/<route>` when available — see the harness reference), with no console errors and no 404 fallthrough.
+- Walk the coverage matrix: every route opens in every variant (use the page jump or a headless browser loop over `#/<v>/<route>` when available, see the harness reference), with no console errors and no 404 fallthrough.
 - Every feature in the matrix is reachable in each variant; every forced state renders on data pages; every role changes what it should.
 - Theme switch repaints every surface; nothing hard-coded survives in either theme.
 - Compare view loads all variants for a deep page (a detail page, not just home).
@@ -133,8 +133,8 @@ Fix gaps before reporting. If something is intentionally stubbed, list it.
 | --- | --- | --- | --- |
 | A · Omnibox | … | … | … |
 
-**Coverage:** <R> routes, <F> features, roles <list> — all in every variant. Stubbed: <list or "none">.
-**Try:** <2–3 pages where the variants differ most, e.g. home, a detail page, the paywall> — open **Compare** on each.
+**Coverage:** <R> routes, <F> features, roles <list>, all in every variant. Stubbed: <list or "none">.
+**Try:** <2–3 pages where the variants differ most, e.g. home, a detail page, the paywall>, open **Compare** on each.
 **Assumptions:** <bullets>
 **Pick one, mix ("C's typography with D's shell"), or ask for another round.**
 ```
@@ -147,7 +147,7 @@ Every iteration republishes the **same** artifact so the link and the history of
 - **"Mix A and D"** → add a new variant letter (e.g. "E · D's shell + A's omnibox") naming what it took from each, with full route coverage.
 - **"More ideas"** → new letters whose theses explicitly avoid the concepts already shown.
 - **Page or feature feedback** → apply it to the chosen variant, list what changed in a line or two.
-- **Handoff** when the user is happy: per route, the screens and states, which existing components each part maps to, new components and token changes needed, features moved between pages, and open questions — so implementation can start from it (e.g. via `spike-variants`). To keep the prototype in the repo as a standalone vanilla site under `.wireframe/`, use `save-wireframe`.
+- **Handoff** when the user is happy: per route, the screens and states, which existing components each part maps to, new components and token changes needed, features moved between pages, and open questions, so implementation can start from it (e.g. via `spike-variants`). To keep the prototype in the repo as a standalone vanilla site under `.wireframe/`, use `save-wireframe`.
 
 ## Quality bar
 

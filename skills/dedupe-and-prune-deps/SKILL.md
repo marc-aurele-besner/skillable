@@ -6,7 +6,7 @@ disable-model-invocation: false
 
 # Dedupe and Prune Dependencies
 
-Goal: make the dependency tree honest and minimal — collapse duplicate versions, declare phantom imports, remove genuinely unused packages — then reinstall, verify with the repo's own CI commands, commit, push to a new branch, and open a PR. Do not merge.
+Goal: make the dependency tree honest and minimal, collapse duplicate versions, declare phantom imports, remove genuinely unused packages, then reinstall, verify with the repo's own CI commands, commit, push to a new branch, and open a PR. Do not merge.
 
 ## 1. Detect the package manager and layout
 
@@ -17,7 +17,7 @@ Goal: make the dependency tree honest and minimal — collapse duplicate version
 
 Do not skip any of the three.
 
-**Duplicates** — the same package resolved at multiple versions:
+**Duplicates**: the same package resolved at multiple versions:
 
 ```bash
 # see which versions exist and who pulls them in
@@ -28,7 +28,7 @@ npm dedupe --dry-run     # yarn dedupe --check (berry) / pnpm dedupe --check
 
 Prefer collapsing to a single supported version that satisfies every declared range. If ranges conflict, prefer aligning the declared ranges over forcing with overrides/resolutions.
 
-**Unused** — declared in `dependencies`/`devDependencies` but never referenced. Run a depcheck-style pass (`npx depcheck`, or `npx knip` where configured) **and** confirm each candidate with a grep across source, npm scripts, and config files — depcheck output alone is not evidence. Treat these as used even when no source file imports them:
+**Unused**: declared in `dependencies`/`devDependencies` but never referenced. Run a depcheck-style pass (`npx depcheck`, or `npx knip` where configured) **and** confirm each candidate with a grep across source, npm scripts, and config files, depcheck output alone is not evidence. Treat these as used even when no source file imports them:
 
 - CLI tools invoked from `package.json` scripts, CI workflows, Dockerfiles, or git hooks
 - Plugins loaded by name from config (ESLint, Prettier, Jest, Vite, Rollup, Babel, PostCSS, Tailwind, Next, etc.)
@@ -36,7 +36,7 @@ Prefer collapsing to a single supported version that satisfies every declared ra
 - Packages required by codegen, migrations, or seed scripts
 - Peer dependencies the app must provide for another dependency to work
 
-**Phantoms** — imported or required in source but missing from the declaring package's `package.json` (they resolve only because a parent hoisted them). Find them by cross-checking each workspace's imports against its own declared dependencies (depcheck/knip report these as "missing"). Each phantom must become a direct dependency of the package that imports it, at a version compatible with what the tree already resolves — do not leave code relying on hoisting.
+**Phantoms**: imported or required in source but missing from the declaring package's `package.json` (they resolve only because a parent hoisted them). Find them by cross-checking each workspace's imports against its own declared dependencies (depcheck/knip report these as "missing"). Each phantom must become a direct dependency of the package that imports it, at a version compatible with what the tree already resolves, do not leave code relying on hoisting.
 
 ## 3. Create a working branch
 
@@ -51,7 +51,7 @@ git checkout -b chore/dedupe-and-prune-deps origin/<default-branch>
 
 1. **Declare phantoms first** so the tree is honest before anything is removed.
 2. **Dedupe / align versions** (`npm dedupe`, `yarn dedupe`, `pnpm dedupe`, plus range alignment in manifests). Do not cross a major version just to collapse a duplicate unless the migration is trivial and verified; otherwise keep the duplicate and note it in the report.
-3. **Remove unused packages last**, one logical group per pass. Never remove a package solely "because depcheck said so" — check scripts, CI workflows, Docker, codegen, and config first. When genuinely unsure, leave it in and list it under "reviewed, kept" with the reason.
+3. **Remove unused packages last**, one logical group per pass. Never remove a package solely "because depcheck said so", check scripts, CI workflows, Docker, codegen, and config first. When genuinely unsure, leave it in and list it under "reviewed, kept" with the reason.
 
 Keep changes scoped to dependency hygiene: no drive-by refactors, no formatting sweeps, and no `audit fix` across the whole tree as a side effect of this skill.
 
@@ -65,7 +65,7 @@ Commit the lockfile if it changed. Note the lockfile delta (lines or resolved-pa
 
 ## 6. Verify with the repo's own CI commands
 
-Read `.github/workflows/*.yml` for the exact commands CI runs (install, build, lint, typecheck, test) and run them locally in the same order. These commands are the definition of done. If something breaks, revert that specific removal or dedupe rather than papering over it — a package that turned out to be used goes back in and onto the "reviewed, kept" list.
+Read `.github/workflows/*.yml` for the exact commands CI runs (install, build, lint, typecheck, test) and run them locally in the same order. These commands are the definition of done. If something breaks, revert that specific removal or dedupe rather than papering over it, a package that turned out to be used goes back in and onto the "reviewed, kept" list.
 
 ## 7. Commit, push, and open a PR
 

@@ -19,7 +19,7 @@ A bad service worker is worse than none: it can pin users to a broken version un
 Use when the stack has no plugin, or to fix a broken custom SW. Replace `VERSION` and `PRECACHE` at build time (a postbuild script that hashes the build output) or keep the list short and bump `VERSION` on each deploy.
 
 ```js
-// sw.js — served from the app root with Cache-Control: no-cache
+// sw.js: served from the app root with Cache-Control: no-cache
 const VERSION = 'v1';
 const SHELL = `shell-${VERSION}`;
 const RUNTIME = `runtime-${VERSION}`;

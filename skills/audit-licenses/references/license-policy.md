@@ -8,7 +8,7 @@ This is engineering hygiene, not legal advice. A qualified lawyer owns the final
 
 The policy file has three tiers. A package's tier is decided by its normalized SPDX id.
 
-### Allowed — permissive, ship freely
+### Allowed: permissive, ship freely
 
 | SPDX id | Notes |
 |---------|-------|
@@ -20,7 +20,7 @@ The policy file has three tiers. A package's tier is decided by its normalized S
 | `Unlicense` | Public-domain dedication; nothing required |
 | `0BSD` | Attribution |
 
-### Restricted — copyleft or otherwise conditional, allowed with obligations
+### Restricted: copyleft or otherwise conditional, allowed with obligations
 
 Allowed only when the obligations are met, and only after the owner has agreed to the distribution model.
 
@@ -35,7 +35,7 @@ Allowed only when the obligations are met, and only after the owner has agreed t
 | `Artistic-2.0` | Permissive with a distribution condition |
 | `PSF-2.0`, `Python-2.0` | Permissive with a notice condition |
 
-### Forbidden — do not ship without an explicit, reviewed exception
+### Forbidden: do not ship without an explicit, reviewed exception
 
 | SPDX id | Notes |
 |---------|-------|
@@ -264,7 +264,7 @@ You may obtain a copy of the License at
 `THIRD_PARTY_LICENSES` (a flat list, for a project with many dependencies):
 
 ```text
-<dependency name>@<version> — <SPDX id> — <upstream URL>
+<dependency name>@<version>: <SPDX id>, <upstream URL>
 ```
 
 Keep the file generated from the resolved tree when the ecosystem offers a generator (`license-checker`, `license-report`, `oss-attribution`, `cargo license`). A hand-maintained list drifts.

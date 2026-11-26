@@ -4,7 +4,7 @@ Reference for the `audit-vulnerabilities` skill. Read the section for the ecosys
 
 ## Source priority
 
-Use the ecosystem's own auditor first — it understands that ecosystem's resolution semantics, which OSV and GitHub Advisory Database do not.
+Use the ecosystem's own auditor first: it understands that ecosystem's resolution semantics, which OSV and GitHub Advisory Database do not.
 
 | Priority | Source | Covers | Needs network | Needs a key |
 |----------|--------|--------|---------------|-------------|
@@ -55,7 +55,7 @@ poetry show --tree                        # dependency tree
 uv pip list
 ```
 
-`pip-audit` reports the advisory id and the fixed versions but often no severity — a `PYSEC-…` id maps to a GitHub advisory that does. Resolve severity from OSV or GHSA when `pip-audit` reports `unknown`.
+`pip-audit` reports the advisory id and the fixed versions but often no severity, a `PYSEC-…` id maps to a GitHub advisory that does. Resolve severity from OSV or GHSA when `pip-audit` reports `unknown`.
 
 ### Rust (cargo)
 
@@ -66,7 +66,7 @@ cargo tree -i <package>                  # inverse tree: who depends on this
 cargo tree -p <package>
 ```
 
-`cargo audit` requires the RustSec advisory database (`cargo install cargo-audit`; the database is fetched and cached automatically). It exits non-zero when it finds advisories — that is a finding, not a crash.
+`cargo audit` requires the RustSec advisory database (`cargo install cargo-audit`; the database is fetched and cached automatically). It exits non-zero when it finds advisories, that is a finding, not a crash.
 
 ### Go
 
@@ -96,25 +96,25 @@ gh api /advisories/GHSA-xxxx-xxxx-xxxx
 gh api repos/<owner>/<repo>/dependabot/alerts --paginate
 ```
 
-The Dependabot alerts endpoint is useful for cross-checking a repo's own alerts, but it only lists what GitHub's bots already found — it is not a full-tree audit. See `fix-dependabot-alert` for working a single alert.
+The Dependabot alerts endpoint is useful for cross-checking a repo's own alerts, but it only lists what GitHub's bots already found, it is not a full-tree audit. See `fix-dependabot-alert` for working a single alert.
 
 ## What each database covers (and does not)
 
-- **GitHub Advisory Database** — community-curated advisories for npm, PyPI, RubyGems, Maven, NuGet, Go, Rust, Erlang, Swift, and more. Does not cover every CVE in an ecosystem: packages outside GitHub's index are absent, and a dependency with no GHSA entry is invisible here.
-- **OSV.dev** — aggregates many upstream databases (GitHub, PyPA, RustSec, Go, RubyGems, Packagist, Debian, and others) behind one schema. Better coverage of less common ecosystems, and it records version ranges and ecosystem-specific data precisely.
-- **RustSec** — the Rust ecosystem's own database, with a maintained `informational` category that does not map cleanly onto CVSS severity. `cargo audit` reports it; treat `unmaintained` advisories as maintenance risk, not exploitability.
-- **PyPA Advisory Database** — `pip-audit` reads it. Coverage is good for popular packages and thin for long-tail ones.
-- **Go vulnerability database** — `GO-…` ids published by the Go security team, mirrored into OSV. `govulncheck` uses it with call-graph analysis.
+- **GitHub Advisory Database**: community-curated advisories for npm, PyPI, RubyGems, Maven, NuGet, Go, Rust, Erlang, Swift, and more. Does not cover every CVE in an ecosystem: packages outside GitHub's index are absent, and a dependency with no GHSA entry is invisible here.
+- **OSV.dev**: aggregates many upstream databases (GitHub, PyPA, RustSec, Go, RubyGems, Packagist, Debian, and others) behind one schema. Better coverage of less common ecosystems, and it records version ranges and ecosystem-specific data precisely.
+- **RustSec**: the Rust ecosystem's own database, with a maintained `informational` category that does not map cleanly onto CVSS severity. `cargo audit` reports it; treat `unmaintained` advisories as maintenance risk, not exploitability.
+- **PyPA Advisory Database**: `pip-audit` reads it. Coverage is good for popular packages and thin for long-tail ones.
+- **Go vulnerability database**: `GO-…` ids published by the Go security team, mirrored into OSV. `govulncheck` uses it with call-graph analysis.
 
 ## Severity vs. exploitability vs. reachability
 
 These are three different questions. The advisory score answers only the first.
 
-**Severity** — the intrinsic impact if the flaw is exploited: critical, high, medium, low. Sources express this differently (CVSS base score, CVSS vector, a proprietary label). The bundled collector normalizes them and computes a CVSS v3.x base score from a vector string when the source only exposes a vector.
+**Severity**: the intrinsic impact if the flaw is exploited: critical, high, medium, low. Sources express this differently (CVSS base score, CVSS vector, a proprietary label). The bundled collector normalizes them and computes a CVSS v3.x base score from a vector string when the source only exposes a vector.
 
-**Exploitability** — how practically the flaw can be reached: is there a public exploit, is it in a commonly exploited list (CISA KEV), does the flaw need unusual preconditions? An advisory with no exploit in the wild and a narrow precondition is materially less urgent than its score suggests. The GitHub advisory API exposes `cvss`, `cwes`, and sometimes an exploit reference; CISA KEV is a public JSON catalog worth checking for high-value targets.
+**Exploitability**: how practically the flaw can be reached: is there a public exploit, is it in a commonly exploited list (CISA KEV), does the flaw need unusual preconditions? An advisory with no exploit in the wild and a narrow precondition is materially less urgent than its score suggests. The GitHub advisory API exposes `cvss`, `cwes`, and sometimes an exploit reference; CISA KEV is a public JSON catalog worth checking for high-value targets.
 
-**Reachability** — whether this project can reach the vulnerable code at all. This is the question that decides the tier, and it is entirely project-specific:
+**Reachability**: whether this project can reach the vulnerable code at all. This is the question that decides the tier, and it is entirely project-specific:
 
 - Is the package a **direct** dependency, or pulled in transitively? A transitive vuln in a build tool does not ship.
 - Is it **production**, **dev**, or **build-only**? A vulnerable package used only by the test runner never processes production input.
@@ -238,10 +238,10 @@ composer update <vendor>/<package>
 
 A good PR body answers four questions without making the reader open the diff:
 
-1. **What was vulnerable and why it matters here** — the advisory id, the package, and the one sentence on real exposure ("this package parses attacker-supplied archives in the import path", not "critical severity").
-2. **What changed** — the manifest and lockfile diff, in plain words.
-3. **Why this remediation** — why the direct bump, and not the override. Mention the alternatives you rejected and why.
-4. **What is left** — the residual risk you did not fix, with the tracking issue, and any major-version migration deferred.
+1. **What was vulnerable and why it matters here**, the advisory id, the package, and the one sentence on real exposure ("this package parses attacker-supplied archives in the import path", not "critical severity").
+2. **What changed**, the manifest and lockfile diff, in plain words.
+3. **Why this remediation**, why the direct bump, and not the override. Mention the alternatives you rejected and why.
+4. **What is left**, the residual risk you did not fix, with the tracking issue, and any major-version migration deferred.
 
 Template:
 

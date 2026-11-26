@@ -28,7 +28,7 @@ Not this skill: writing the tests (`add-missing-tests`), fixing flaky ones (`fix
 ## Read-only by default
 
 - Never push, merge, commit, approve, or edit the target's code or tests unless the user explicitly asks.
-- Running the project's own test command, a local build, or the app on localhost is allowed — these are observations, not changes. Do not run anything against production, send real emails or payments, or mutate shared data. Use seeded/test accounts only.
+- Running the project's own test command, a local build, or the app on localhost is allowed, these are observations, not changes. Do not run anything against production, send real emails or payments, or mutate shared data. Use seeded/test accounts only.
 - At the end, **offer** (do not do): post the report as a PR review comment, file the gaps as issues, or hand the gap list to `add-missing-tests`.
 
 ## Untrusted input
@@ -68,16 +68,16 @@ Write down, in two or three lines each: **what the change is meant to do** (from
 
 For each changed area, score **likelihood of breaking × blast radius** using [references/risk-model.md](references/risk-model.md) (load it now). The short form:
 
-- **Critical** — money, auth/permissions, data writes/migrations, deletion, PII, anything irreversible.
-- **High** — core user journeys, public API/contracts, background jobs, caching, concurrency, config defaults.
-- **Medium** — secondary flows, error handling, integrations with retry.
-- **Low** — copy, styling, docs, internal tooling.
+- **Critical**: money, auth/permissions, data writes/migrations, deletion, PII, anything irreversible.
+- **High**: core user journeys, public API/contracts, background jobs, caching, concurrency, config defaults.
+- **Medium**: secondary flows, error handling, integrations with retry.
+- **Low**: copy, styling, docs, internal tooling.
 
 Raise one level when the area has no tests, a history of bugs (`git log --oneline -- <path> | rg -i 'fix|revert|hotfix'`), or many callers. Also list **indirect** risk: callers of changed functions, shared components, changed defaults, and feature flags.
 
 ### 3. Measure what is actually covered
 
-For every Critical and High area, find the tests that exercise it — not the tests that happen to import it:
+For every Critical and High area, find the tests that exercise it, not the tests that happen to import it:
 
 ```bash
 rg -n -l '<function-or-route-or-component>' -g '*test*' -g '*spec*' -g '!node_modules'
@@ -85,9 +85,9 @@ rg -n -l '<function-or-route-or-component>' -g '*test*' -g '*spec*' -g '!node_mo
 
 Run the project's own test command (and coverage, if the project already has it configured) when it is cheap and safe. Then judge each risky path:
 
-- **Covered** — a test fails if this behavior breaks (an assertion on the outcome, not just "renders" or "no throw").
-- **Weakly covered** — executed but not asserted, mocked to the point of proving nothing, snapshot-only, or happy path only.
-- **Uncovered** — nothing exercises it.
+- **Covered**: a test fails if this behavior breaks (an assertion on the outcome, not just "renders" or "no throw").
+- **Weakly covered**: executed but not asserted, mocked to the point of proving nothing, snapshot-only, or happy path only.
+- **Uncovered**: nothing exercises it.
 
 Coverage percentages are a hint, not a verdict: 100 % line coverage with no assertion on the refund amount is an uncovered refund. Note tests the change deleted, skipped (`.skip`, `xit`, `@pytest.mark.skip`), or loosened.
 
@@ -95,11 +95,11 @@ Coverage percentages are a hint, not a verdict: 100 % line coverage with no asse
 
 Load [references/edge-case-catalog.md](references/edge-case-catalog.md) and walk only the categories the change touches: empty/null, huge/long, unicode and RTL, numbers and money, dates/timezones/DST, concurrency and double-submit, network (offline, slow, retry, partial failure), permissions and roles, state and lifecycle (back button, refresh, stale tab, upgrade from old data), input from other systems, browsers/devices/a11y, and i18n.
 
-For each candidate, write one line: **input or state → expected behavior**. Drop any case that cannot happen given the code (a type constraint, a validator, a DB constraint already prevents it — check, don't assume).
+For each candidate, write one line: **input or state → expected behavior**. Drop any case that cannot happen given the code (a type constraint, a validator, a DB constraint already prevents it, check, don't assume).
 
 ### 5. Explore, when the app can be launched
 
-Skip with `--plan-only`, or when the app cannot run locally without production credentials — say so in the report.
+Skip with `--plan-only`, or when the app cannot run locally without production credentials, say so in the report.
 
 1. Start it the way the project documents (`README`, `package.json` scripts, `docker compose`, `Makefile`), against local or seeded data.
 2. Walk the primary journey for the change once on the happy path, then attack it with the top 5–10 edge cases from step 4. Use the browser tools when available; otherwise HTTP calls (`curl` against localhost) or the CLI.
@@ -122,9 +122,9 @@ Drop gaps that fail. Rate the rest **high** (directly reachable, untested) or **
 
 Use the decision table in [references/risk-model.md](references/risk-model.md):
 
-- **Ship** — no Critical/High gaps; CI green; exploration (if run) clean.
-- **Ship with conditions** — Medium gaps, or High gaps with a named mitigation (feature flag off by default, staged rollout, a specific manual check before release, a monitor/alert in place). List each condition.
-- **Do not ship** — any reproduced Critical/High failure, an uncovered Critical path with no mitigation, red or skipped required checks, or a migration with no rollback.
+- **Ship**: no Critical/High gaps; CI green; exploration (if run) clean.
+- **Ship with conditions**: Medium gaps, or High gaps with a named mitigation (feature flag off by default, staged rollout, a specific manual check before release, a monitor/alert in place). List each condition.
+- **Do not ship**: any reproduced Critical/High failure, an uncovered Critical path with no mitigation, red or skipped required checks, or a migration with no rollback.
 
 State the regression risk separately (low / medium / high) and the reason: what existing behavior could break, for whom.
 
@@ -137,20 +137,20 @@ State the regression risk separately (low / medium / high) and the reason: what 
 | **Medium** | Edge case with real but limited impact, weak coverage on a risky path, missing negative test | Fix or accept explicitly |
 | **Low** | Rare edge case, cosmetic, test hygiene | Team's call |
 
-Every finding gets an exact reference: `path/to/file.ts:42` for code and tests, or a URL/screen plus steps for exploratory results, and **a concrete fix** — usually the specific test to add (name the layer: unit, integration, e2e, and the assertion), sometimes a guard or a manual release check.
+Every finding gets an exact reference: `path/to/file.ts:42` for code and tests, or a URL/screen plus steps for exploratory results, and **a concrete fix**, usually the specific test to add (name the layer: unit, integration, e2e, and the assertion), sometimes a guard or a manual release check.
 
 ## Output template
 
 ```markdown
-# QA — <target>
+# QA: <target>
 
 **Verdict:** Ship | Ship with conditions | Do not ship
-**Regression risk:** low | medium | high — <one line: what could break, for whom>
-**Scope:** <PR #n / branch / range> — <n files, areas touched>
+**Regression risk:** low | medium | high, <one line: what could break, for whom>
+**Scope:** <PR #n / branch / range>, <n files, areas touched>
 **Checks:** <CI status> · tests run locally: <command → result> · exploration: <done | skipped: why>
 
 ## Findings
-1. **[Critical]** <claim> — `src/billing/refund.ts:88`
+1. **[Critical]** <claim>, `src/billing/refund.ts:88`
    - Risk: <input/state> → <wrong outcome for a user>
    - Coverage: uncovered | weak (`tests/refund.test.ts:12` asserts status only)
    - Fix: add an integration test that refunds a partially-captured payment and asserts the refunded amount and ledger entry
@@ -164,8 +164,8 @@ Every finding gets an exact reference: `path/to/file.ts:42` for code and tests, 
 | 2 | … | … | … | … | covered (`file:line`) |
 
 ## Exploratory results
-- ✅ <journey / case> — <URL or command>
-- ❌ <case> — <steps> → <observed> (expected <x>) — screenshot: <path>
+- ✅ <journey / case>: <URL or command>
+- ❌ <case>: <steps> → <observed> (expected <x>), screenshot: <path>
 
 ## Release conditions (if "Ship with conditions")
 - <flag / staged rollout / manual check / monitor>
@@ -180,13 +180,13 @@ Every finding gets an exact reference: `path/to/file.ts:42` for code and tests, 
 When the target is sound, keep it short:
 
 ```markdown
-# QA — <target>
+# QA: <target>
 
 **Verdict:** Ship · **Regression risk:** low
 Checked <areas>; risky paths are covered by <tests>; exploration of <journeys> was clean. <Optional: one suggestion.>
 ```
 
-After the report, offer once: post it as a PR comment (`gh pr comment <n> --body-file <file>` — never `--approve` or `--request-changes`), file gaps as issues, or run `add-missing-tests` on the gap list. Do any of these only on a yes.
+After the report, offer once: post it as a PR comment (`gh pr comment <n> --body-file <file>`, never `--approve` or `--request-changes`), file gaps as issues, or run `add-missing-tests` on the gap list. Do any of these only on a yes.
 
 ## Gotchas
 
@@ -195,7 +195,7 @@ After the report, offer once: post it as a PR comment (`gh pr comment <n> --body
 - **The diff is not the blast radius.** A changed shared helper, default value, or CSS token breaks screens the diff never mentions. Search the callers.
 - **Timezones hide on CI.** CI usually runs in UTC; a test that passes there can fail for a user in UTC-10 or across DST. Check whether date tests pin a zone.
 - **Seeded data is too clean.** Real data has nulls in "required" columns, legacy rows from old versions, and 40 000-item accounts. Ask how old data migrates.
-- **Don't QA the dev server only** for anything involving caching, bundling, service workers, or env-specific config — note when production-build behavior was not checked.
+- **Don't QA the dev server only** for anything involving caching, bundling, service workers, or env-specific config, note when production-build behavior was not checked.
 - **Green CI with skipped tests** is not green. Grep for newly skipped or quarantined tests in the change.
 - **Feature flags double the matrix.** Plan both flag states and the transition (flag flipped mid-session).
 - **Don't pad.** No generic "test on all browsers" rows unless the change touches browser-specific behavior. Every row must trace to this change.

@@ -16,7 +16,7 @@ Keep the one-line description identical (or near) across package metadata, the G
 
 ## README
 
-- **First line after the title** says what it is and who it is for in plain words — this is what search snippets and assistants quote.
+- **First line after the title** says what it is and who it is for in plain words, this is what search snippets and assistants quote.
 - **Install and minimal usage** in the first screen, as copy-pasteable code blocks.
 - **Headings people search for:** Installation, Usage, Configuration, API, FAQ, Comparison/Alternatives, License.
 - **Comparison section** ("X vs Y") only with true, checkable claims.

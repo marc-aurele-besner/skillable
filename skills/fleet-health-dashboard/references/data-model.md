@@ -39,9 +39,9 @@ fragment health on Repository {
 
 Run with `gh api graphql -f query=@query.graphql`. Classify each PR:
 
-- **Bot PR** — author login is `dependabot`, `dependabot[bot]`, `renovate`, or `renovate[bot]`. Green = rollup `SUCCESS`; red = `FAILURE`/`ERROR`; pending otherwise; conflicting = `mergeable == CONFLICTING`.
-- **Unassigned** — not a draft, not authored by the user or a bot, and `assignees`, `reviewRequests`, and `reviews` are all 0.
-- **Stale** — not a draft and `updatedAt` older than 2 days.
+- **Bot PR**: author login is `dependabot`, `dependabot[bot]`, `renovate`, or `renovate[bot]`. Green = rollup `SUCCESS`; red = `FAILURE`/`ERROR`; pending otherwise; conflicting = `mergeable == CONFLICTING`.
+- **Unassigned**: not a draft, not authored by the user or a bot, and `assignees`, `reviewRequests`, and `reviews` are all 0.
+- **Stale**: not a draft and `updatedAt` older than 2 days.
 
 ### Dependabot alerts (REST)
 
@@ -67,7 +67,7 @@ Check, in order, and keep the first hit: `.nvmrc`, `.node-version`, `package.jso
 
 ## Database collections
 
-### `repos` — one document per repo, id `OWNER__REPO`
+### `repos`: one document per repo, id `OWNER__REPO`
 
 ```json
 {
@@ -92,13 +92,13 @@ Check, in order, and keep the first hit: `.nvmrc`, `.node-version`, `package.jso
 }
 ```
 
-### `runs` — one document per refresh, id = ISO timestamp
+### `runs`: one document per refresh, id = ISO timestamp
 
 ```json
 { "at": "2026-10-19T07:00:00Z", "repos": 58, "red": 4, "yellow": 11, "green": 43, "alerts": { "critical": 1, "high": 6 }, "botPrs": 17, "durationSec": 94 }
 ```
 
-### `meta` — single document `config`
+### `meta`: single document `config`
 
 ```json
 { "user": "login", "orgs": ["org1", "org2"], "filters": "none", "lastRefresh": "2026-10-19T07:00:00Z" }

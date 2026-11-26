@@ -12,7 +12,7 @@ Reference for the `optimize-images` skill. Read the section you need; do not rea
 | **PNG** | lossless | universal | screenshots, text, flat graphics, transparency | baseline |
 | **GIF** | lossless, 256 colours | universal | animation only | baseline |
 | **SVG** | vector | universal | icons, logos, illustrations | usually 1–10 KB vs. 20–200 KB PNG |
-| **JPEG XL** | lossy / lossless | Chrome and Edge behind a flag; not in Safari or Firefox | experimental only | n/a — do not ship |
+| **JPEG XL** | lossy / lossless | Chrome and Edge behind a flag; not in Safari or Firefox | experimental only | n/a, do not ship |
 
 Practical rule: **AVIF → WebP → original** as the `<picture>` fallback chain. Keep PNG and GIF originals in the repo; do not delete them, they are the fallback and the source.
 
@@ -85,7 +85,7 @@ Rules that keep this honest:
 
 - The `src` attribute is the fallback for browsers without `srcset`; keep it at the most common size.
 - `sizes` must describe the **CSS layout width**, not the file width. When unsure, `sizes="100vw"` is safe but wasteful.
-- Never list a width larger than the intrinsic size of the file — that is an upscale.
+- Never list a width larger than the intrinsic size of the file, that is an upscale.
 - Generate one file per width you list, from the largest original. Never upscale to fill a width.
 - Widths in `srcset` are CSS pixels (`w`), density descriptors (`x`) are multipliers of the `src`.
 - The `width`/`height` attributes must be the CSS size of the rendered image and must match the intrinsic ratio of the file, so the browser can reserve space.
@@ -114,8 +114,8 @@ If the site already transforms images at the edge, the local file is the *source
 
 | Service | How it works | Double-optimizing looks like |
 |---------|--------------|------------------------------|
-| **Vercel / Next Image** | `/_next/image?url=…&w=…&q=…` | Shipping a pre-compressed AVIF through the Next loader — it re-encodes and the cache key changes |
-| **Cloudinary** | `https://res.cloudinary.com/<cloud>/image/upload/f_avif,q_auto,w_800/<public-id>` | Pre-converting locally and also passing `f_auto` — double compression and banding |
+| **Vercel / Next Image** | `/_next/image?url=…&w=…&q=…` | Shipping a pre-compressed AVIF through the Next loader, it re-encodes and the cache key changes |
+| **Cloudinary** | `https://res.cloudinary.com/<cloud>/image/upload/f_avif,q_auto,w_800/<public-id>` | Pre-converting locally and also passing `f_auto`, double compression and banding |
 | **imgix** | `?auto=format&fit=max&w=800&q=75` | The same; `auto=format` already negotiates AVIF/WebP |
 | **Cloudflare Images** | Edge-resized variants via a custom loader or `/cdn-cgi/image/…` | Local conversion plus edge resize |
 | **Netlify Image CDN** | `/.netlify/images?url=…&w=…&q=…` | Same |
@@ -131,7 +131,7 @@ When the edge does the work, the local change is only: correct `width`/`height`,
 
 ## LCP-aware priority rules
 
-The LCP image is the largest contentful element in the viewport — usually the hero. Getting it right is worth more than any other single image change.
+The LCP image is the largest contentful element in the viewport, usually the hero. Getting it right is worth more than any other single image change.
 
 1. **One image only.** Exactly one image per page gets `fetchpriority="high"`. Two "high" priorities cancel out.
 2. **Never lazy-load it.** `loading="lazy"` on the LCP image delays the paint and can make it slower than not lazy-loading at all.
@@ -174,7 +174,7 @@ How to pick the numbers:
 
 1. Measure first: `python3 -I scripts/audit_images.py . --json > /tmp/images-before.json`, then read `totals.total_bytes` and `bytes_by_page`.
 2. Set `max_image_bytes` to about 1.2× the current largest *shipped* image, and `max_total_bytes` / `max_page_bytes` to about 1.1–1.2× today's totals. CI starts green, with headroom for content that has not been optimized yet.
-3. Tighten the numbers in the same PR as the optimization work, or in a follow-up PR, once the site is measurably smaller. Lowering a budget below today's real number fails CI immediately — that is the point, but do it deliberately.
+3. Tighten the numbers in the same PR as the optimization work, or in a follow-up PR, once the site is measurably smaller. Lowering a budget below today's real number fails CI immediately, that is the point, but do it deliberately.
 4. Keep the budget file in the repo, and keep the auditor next to it so CI can run `python3 -I scripts/audit_images.py . --budget-file image-budget.json`.
 
 Budgets are a policy decision. If the user owns the budget, ask before tightening it; if they do not, propose the numbers in the PR description.

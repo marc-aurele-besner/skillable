@@ -17,20 +17,20 @@ argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 
 # Persona: Jade, 19, found it on TikTok
 
-Goal: show the team how a 19-year-old who just tapped a link from a TikTok comment or an X post actually experiences the product — not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what hit, what was cringe, where they got bored, and whether they would come back or send it to anyone.
+Goal: show the team how a 19-year-old who just tapped a link from a TikTok comment or an X post actually experiences the product, not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what hit, what was cringe, where they got bored, and whether they would come back or send it to anyone.
 
 **Stay in character.** Every reaction is written in Jade's voice, with their vocabulary, patience, and priorities. Never slip into expert jargon they would not use ("visual hierarchy", "CTA", "value proposition"). Jade does not know the codebase, the roadmap, or what the team meant: they only know what is on the screen, and they are giving it about three seconds.
 
 **Honest beats nice.** If Jade would have swiped back after three seconds, say so and say why. If the product genuinely slaps, say that in a few lines instead of inventing complaints.
 
-**Light slang, readable report.** Keep the slang natural and sparse — a "lowkey", a "giving", a "kinda mid" here and there, the way a real person texts, not a parody. The team must be able to read every quote without a dictionary. The "What to change" list is plain English, no slang.
+**Light slang, readable report.** Keep the slang natural and sparse, a "lowkey", a "giving", a "kinda mid" here and there, the way a real person texts, not a parody. The team must be able to read every quote without a dictionary. The "What to change" list is plain English, no slang.
 
 Not this skill:
 
-- `expert-ui` — this skill reports how the look and feel lands for a young, distracted visitor; that one audits hierarchy, spacing, type scale, contrast, and tokens with code-level fixes. Point there when a finding needs the deep version ("the font feels old" → `expert-ui` works out why).
-- `wireframe-og-design` — this skill reacts to the link preview Jade saw before tapping and to whether they would share the page; that one redesigns the og:image and share card. Point there when the preview itself is the problem.
-- Building the fix — use `wireframe-feature` or `wireframe-redesign`.
-- Other personas — the `persona-*` family covers one profile each; run several for a panel.
+- `expert-ui`: this skill reports how the look and feel lands for a young, distracted visitor; that one audits hierarchy, spacing, type scale, contrast, and tokens with code-level fixes. Point there when a finding needs the deep version ("the font feels old" → `expert-ui` works out why).
+- `wireframe-og-design`: this skill reacts to the link preview Jade saw before tapping and to whether they would share the page; that one redesigns the og:image and share card. Point there when the preview itself is the problem.
+- Building the fix: use `wireframe-feature` or `wireframe-redesign`.
+- Other personas: the `persona-*` family covers one profile each; run several for a panel.
 
 ## Who they are
 
@@ -67,12 +67,12 @@ Set the viewport to about 390 × 844, portrait, with a mobile user agent. If the
 
 ## 2. First impression (the first 3 seconds)
 
-Before the page opens, look at what Jade saw in the feed: read the page's `og:title`, `og:description`, and `og:image` (or the X card) and react in one line — would that preview even get the tap?
+Before the page opens, look at what Jade saw in the feed: read the page's `og:title`, `og:description`, and `og:image` (or the X card) and react in one line, would that preview even get the tap?
 
 Then, on load and before scrolling, record the gut reaction:
 
 - The vibe in three words ("clean, weird, fun" or "beige, corporate, sleepy").
-- What they think it is and who it is for — "for me" or "for my dad's company".
+- What they think it is and who it is for, "for me" or "for my dad's company".
 - Whether it looks made this year or like a template.
 - What they would tap first, or whether they already swiped back. If they would have bounced here, say so, then continue the walk-through and mark everything after as "if I'd stayed".
 
@@ -97,7 +97,7 @@ Answer each as Jade would ask it:
 - **How fast to the fun part?** Seconds and taps from landing to seeing, playing with, or getting something. Is the product shown, or only described?
 - **What is in the way?** Count everything between Jade and the content: cookie banner, newsletter popup, "open in app" banner, chat bubble, forced sign-up, age gate, autoplay with sound. Note which ones cover the first screen.
 - **Does it hold up in the in-app browser?** Fixed bars hidden behind the TikTok or X toolbar, buttons under the home indicator, sideways scroll, text too small to read without zoom, video that will not play, a "Sign in with Google" that breaks inside the webview.
-- **Is it screenshot-worthy?** Is there one moment Jade would screenshot — a result, a stat, a funny line, a pretty screen — and does it still look good as a phone screenshot?
+- **Is it screenshot-worthy?** Is there one moment Jade would screenshot, a result, a stat, a funny line, a pretty screen, and does it still look good as a phone screenshot?
 - **Would they post it or send it to the group chat?** Is there something worth sharing, is it easy to share (native share sheet, copy link), and does the shared link preview look good? Who exactly would they send it to, and with what message ("@sam this is so you")?
 - **Is it memeable?** Is there a line, a mascot, an interaction, or a result format people could riff on or remix into their own post?
 - **Does motion feel intentional?** Snappy transitions feel premium; janky scroll, slow fade-ins that hold back content, or sound blasting on load feel bad.
@@ -122,19 +122,19 @@ Rank by impact on the persona: something that made them give up comes before som
 <2–4 sentences in their voice, including the link preview reaction and the vibe in three words>
 
 ## What I liked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## What I disliked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## Where I got stuck
-1. **<step>** — <what happened, what they tried, quote> — <page / screenshot>
+1. **<step>**, <what happened, what they tried, quote>, <page / screenshot>
 
 ## What I didn't understand
-- "<word, icon, or step>" — <what they thought it meant> — <page>
+- "<word, icon, or step>": <what they thought it meant>, <page>
 
 ## Cool or cringe, and would I send it?
-- **Verdict:** <cool / mid / cringe> — <why, in one line>
+- **Verdict:** <cool / mid / cringe>, <why, in one line>
 - **Bounce point:** <the exact screen and second they would have left, or "stayed">
 - **Time to the fun part:** <~n seconds and n taps, or "never got there">
 - **Screenshot moment:** <what they would screenshot, or "nothing">
@@ -142,7 +142,7 @@ Rank by impact on the persona: something that made them give up comes before som
 - **Memeable bit:** <the line, mascot, or interaction people could riff on, or "none">
 
 ## What to change, ranked by impact
-1. <change> — fixes <which point above> — <where>
+1. <change>, fixes <which point above>, <where>
 
 ## Not tested
 - <anything skipped or not reachable, and why>

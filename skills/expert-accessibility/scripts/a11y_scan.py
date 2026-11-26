@@ -141,7 +141,7 @@ def main() -> int:
         return 0
     for h in hits:
         rel = os.path.relpath(h["file"], root) if root.is_dir() else h["file"]
-        print(f"{rel}:{h['line']}  [{h['rule']}]  {h['message']}  — {h['wcag']}")
+        print(f"{rel}:{h['line']}  [{h['rule']}]  {h['message']}: {h['wcag']}")
         if h["snippet"]:
             print(f"    {h['snippet']}")
     print(f"\n{total} candidate(s){' (truncated)' if total > len(hits) else ''}. Verify each in context before reporting.")

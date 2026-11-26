@@ -4,7 +4,7 @@ Adaptable skeletons for the artifacts this skill creates. Every `<...>` placehol
 
 ## The placeholder list
 
-Fill these from the repo before writing anything. If a value is not in the repo and the file needs it, ask the owner — do not guess.
+Fill these from the repo before writing anything. If a value is not in the repo and the file needs it, ask the owner, do not guess.
 
 | Placeholder | Where it comes from |
 |-------------|--------------------|
@@ -32,7 +32,7 @@ Fill these from the repo before writing anything. If a value is not in the repo 
 | `<CODEOWNER_TEAM>` | the team or person that owns the hot paths; ask when unsure |
 | `<SUPPORTED_VERSIONS>` | the release lines the project still patches |
 | `<RESPONSE_TIMELINE>` | what the owner commits to, e.g. "acknowledged within 3 business days" |
-| `<TONE>` | the existing voice of the README and docs — plain, formal, friendly; match it |
+| `<TONE>` | the existing voice of the README and docs, plain, formal, friendly; match it |
 
 Never write `<SECURITY_EMAIL>`, `<SUPPORT_CHANNEL>`, `<CODEOWNER_TEAM>`, or `<RESPONSE_TIMELINE>` without the owner's answer. Ask once, in a single batch, and wait.
 
@@ -205,7 +205,7 @@ The contact route is the whole point. Ask for it; never fabricate an address and
 
 ## Reporting a vulnerability
 
-Please report suspected vulnerabilities privately — do not open a public issue.
+Please report suspected vulnerabilities privately: do not open a public issue.
 
 - Email: <SECURITY_EMAIL>
 - Or use GitHub's private advisory form: <REPO_URL>/security/advisories/new
@@ -346,7 +346,7 @@ body:
       required: false
 ```
 
-`.github/ISSUE_TEMPLATE/config.yml` — the chooser. Keep it minimal unless the project wants to route issues to specific trackers:
+`.github/ISSUE_TEMPLATE/config.yml`: the chooser. Keep it minimal unless the project wants to route issues to specific trackers:
 
 ```yaml
 blank_issues_enabled: true
@@ -364,7 +364,7 @@ missing any of them does not render on GitHub.
 This is the highest-leverage file: every later agent session on the repo gets faster because of it. Keep it factual, short, and specific to the repo. The same content works in `AGENTS.md` and `CLAUDE.md`; write `AGENTS.md` (the cross-tool convention) and add a one-line pointer from `CLAUDE.md` if both are in use.
 
 ````markdown
-# <PROJECT_NAME> — agent guide
+# <PROJECT_NAME>: agent guide
 
 ## Commands
 
@@ -463,7 +463,7 @@ npm-debug.log*
 .vscode/
 ```
 
-Keep `.env.example` (or `.env.sample`) tracked — it is the documented shape of
+Keep `.env.example` (or `.env.sample`) tracked: it is the documented shape of
 the env vars with no values in it.
 
 ## .github/FUNDING.yml
@@ -479,7 +479,7 @@ ko_fi: <CREATOR>
 
 ## Dependency automation
 
-`.github/dependabot.yml` — only if the repo does not already use Renovate:
+`.github/dependabot.yml`: only if the repo does not already use Renovate:
 
 ```yaml
 version: 2
@@ -516,5 +516,5 @@ already uses or clearly needs.
 
 Only create a `docs/` tree when the project has enough surface to justify it
 (more than a handful of commands, an architecture worth describing, or
-runbooks). Do not move existing content into it as part of a hygiene PR — that
+runbooks). Do not move existing content into it as part of a hygiene PR, that
 is a refactor, not hygiene, and it breaks links.

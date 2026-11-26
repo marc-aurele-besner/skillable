@@ -158,7 +158,7 @@ If nothing survives verification, say it in the first line: "No verified finding
 ## 10. Report
 
 ```markdown
-# Web3 dApp review — <app or repo> (<path | PR #n | URL>)
+# Web3 dApp review: <app or repo> (<path | PR #n | URL>)
 
 **Stack:** <client + version> · <bindings + version> · <wallet UI + version> · <AA SDK, if any>
 **Chains:** <chain names (ids)> · **RPC:** <dedicated | public | fallback>
@@ -166,7 +166,7 @@ If nothing survives verification, say it in the first line: "No verified finding
 **Verdict:** <n> verified findings (<c> critical, <h> high, <m> medium, <l> low) | No verified findings
 
 ## Verified findings
-1. **[Critical]** `src/hooks/useDeposit.ts:42` — <one-sentence claim>
+1. **[Critical]** `src/hooks/useDeposit.ts:42`, <one-sentence claim>
    - Scenario: <wallet state or input> → <what the user sees or signs>
    - Fix: <concrete change in this stack, with a short code snippet when it helps>
    - Confidence: <high | medium>

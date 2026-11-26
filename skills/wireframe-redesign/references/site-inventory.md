@@ -1,6 +1,6 @@
 # Site inventory: finding every page and feature
 
-Read what exists; skip the rest. The source of truth is the router and the content files, not the nav — nav menus routinely omit pages.
+Read what exists; skip the rest. The source of truth is the router and the content files, not the nav, nav menus routinely omit pages.
 
 ## Routes by stack
 

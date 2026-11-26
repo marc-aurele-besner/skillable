@@ -125,7 +125,7 @@ False positives: `alt=""` on decorative images is correct. CMS-driven alt cannot
 | 2.2.1 Timing Adjustable (A) | Session timeouts warn and can be extended (at least 20 s to respond) |
 | 1.4.2 Audio Control (A) | Audio playing more than 3 s automatically can be paused or muted |
 
-`prefers-reduced-motion`: honoring it is required by 2.3.3 Animation from Interactions, which is **AAA**. Report missing reduced-motion handling as a failure only when it also breaks an A/AA criterion (auto-playing motion with no pause control, 2.2.2) or causes a vestibular hazard in a core flow (large parallax, zooming page transitions) — then cite 2.2.2 if applicable and put the rest under "Report only" with the AAA citation. Code signal: `@keyframes`, `animation:`, `transition` on transform, Framer Motion, GSAP, Lottie, `scroll-behavior: smooth` without a `@media (prefers-reduced-motion: reduce)` block or a `useReducedMotion` check.
+`prefers-reduced-motion`: honoring it is required by 2.3.3 Animation from Interactions, which is **AAA**. Report missing reduced-motion handling as a failure only when it also breaks an A/AA criterion (auto-playing motion with no pause control, 2.2.2) or causes a vestibular hazard in a core flow (large parallax, zooming page transitions), then cite 2.2.2 if applicable and put the rest under "Report only" with the AAA citation. Code signal: `@keyframes`, `animation:`, `transition` on transform, Framer Motion, GSAP, Lottie, `scroll-behavior: smooth` without a `@media (prefers-reduced-motion: reduce)` block or a `useReducedMotion` check.
 
 ## 8. Dynamic content and announcements
 

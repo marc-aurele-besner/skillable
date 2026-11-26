@@ -300,7 +300,7 @@ def check_report(report: dict, budget: dict, source: str) -> dict:
 
 
 def print_report(results: list, budget_path: str) -> None:
-    print(f"Web Vitals budget check — budgets: {budget_path}\n")
+    print(f"Web Vitals budget check: budgets: {budget_path}\n")
     for result in results:
         target = result["url"] or result["source"]
         print(f"Report: {result['source']}")

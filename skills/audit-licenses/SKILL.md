@@ -48,8 +48,8 @@ ls Dockerfile* docker-compose* .github/workflows 2>/dev/null | head -40
 
 Establish three things, and write them down before touching any dependency:
 
-1. **The ecosystem and package manager** — read the lockfile and the manifest, not the folder name. `pnpm-lock.yaml`, `package-lock.json`, `yarn.lock`, `bun.lock`, `poetry.lock`, `uv.lock`, `requirements.txt`, `Cargo.lock`, `go.sum`, `Gemfile.lock`, `composer.lock`.
-2. **The distribution model** — pick one:
+1. **The ecosystem and package manager**, read the lockfile and the manifest, not the folder name. `pnpm-lock.yaml`, `package-lock.json`, `yarn.lock`, `bun.lock`, `poetry.lock`, `uv.lock`, `requirements.txt`, `Cargo.lock`, `go.sum`, `Gemfile.lock`, `composer.lock`.
+2. **The distribution model**, pick one:
 
 | Model | Signals | Consequence |
 |-------|---------|-------------|
@@ -58,7 +58,7 @@ Establish three things, and write them down before touching any dependency:
 | **Hosted SaaS** | no artifact shipped, deploy to a platform | Nothing is distributed, but AGPL section 13 and SSPL can still trigger on network use |
 | **Internal only** | no publish, no release artifact | No distribution obligation; still worth an inventory for future changes |
 
-3. **The project's own license** — read it, note the SPDX id, and never touch the file.
+3. **The project's own license**, read it, note the SPDX id, and never touch the file.
 
 Also check the CI workflows for an existing license job before adding one.
 
@@ -115,10 +115,10 @@ For every non-permissive license in the tree, write down:
 
 | Tier | Meaning | Action |
 |------|---------|--------|
-| **P0 — forbidden** | A forbidden license ships in a distributed artifact: AGPL, SSPL, BUSL, Elastic, `UNLICENSED`, `LicenseRef-Proprietary`, or an unresolved `UNKNOWN` that turns out to be restrictive | Flag for a human decision. Never silently resolve it, never remove the dependency on your own |
-| **P1 — unmet obligation** | A required notice or attribution file is missing, a license text is not bundled, a `NOTICE` from an Apache-2.0 upstream is not reproduced, a copyleft source offer is not prepared | Fix: generate the attribution artifact and wire it into the release |
-| **P2 — unenforceable** | The inventory cannot be reproduced, no policy file is committed, CI has no check, an exception has no owner or review date | Fix: commit the policy, add the CI check, complete the exception records |
-| **P3 — hygiene** | A dependency has no license field but is clearly permissive and ships its own `LICENSE`, an inventory file is stale, a dependency is duplicated across versions with different licenses | Fix when cheap; list the rest |
+| **P0: forbidden** | A forbidden license ships in a distributed artifact: AGPL, SSPL, BUSL, Elastic, `UNLICENSED`, `LicenseRef-Proprietary`, or an unresolved `UNKNOWN` that turns out to be restrictive | Flag for a human decision. Never silently resolve it, never remove the dependency on your own |
+| **P1: unmet obligation** | A required notice or attribution file is missing, a license text is not bundled, a `NOTICE` from an Apache-2.0 upstream is not reproduced, a copyleft source offer is not prepared | Fix: generate the attribution artifact and wire it into the release |
+| **P2: unenforceable** | The inventory cannot be reproduced, no policy file is committed, CI has no check, an exception has no owner or review date | Fix: commit the policy, add the CI check, complete the exception records |
+| **P3: hygiene** | A dependency has no license field but is clearly permissive and ships its own `LICENSE`, an inventory file is stale, a dependency is duplicated across versions with different licenses | Fix when cheap; list the rest |
 | **Report only** | Legal review, whether a specific use is compliant, commercial licensing, patent analysis, trademark questions, whether the owner should relicense their own project | List as follow-ups. Never answer these yourself |
 
 **Ask, don't assume.** These are the owner's calls, not yours:
@@ -141,12 +141,12 @@ git checkout -b feat/license-compliance origin/<default-branch>
 
 Commit in small logical steps, one artifact per commit, in this order:
 
-1. **Policy** — commit `license-policy.json` with the three tiers and a comment-free, reviewable list. If the project already has one, extend it.
-2. **Inventory** — commit the generated inventory (for example `licenses/licenses.json`) so changes to dependencies show up as diffs. Note in the file header how it was generated and with which command.
-3. **Attribution** — generate `NOTICE` or `THIRD_PARTY_LICENSES` from the resolved tree. Prefer the ecosystem's generator (`license-checker`, `license-report`, `oss-attribution`, `cargo license`) over a hand-written list. Include the upstream copyright line and license text for each dependency, and reproduce each Apache-2.0 upstream `NOTICE` in full. **Never remove a notice that was already there.**
-4. **License text bundling** — when the model requires it (a copyleft dependency in a distributed artifact), ship the license texts in the artifact: `LICENSES/` for npm `files`, `license-files` in Cargo, `MANIFEST.in` for Python, a copy step in the Dockerfile.
-5. **CI check** — add a job that fails on a forbidden license or a missing attribution file. Wire the collector into the workflow the project already uses, and cache the install step so the job is fast.
-6. **Exceptions** — for every accepted risk, add an entry to the policy's `exceptions` array with the package, the license, a reason, an owner, and a `review_by` date.
+1. **Policy**, commit `license-policy.json` with the three tiers and a comment-free, reviewable list. If the project already has one, extend it.
+2. **Inventory**, commit the generated inventory (for example `licenses/licenses.json`) so changes to dependencies show up as diffs. Note in the file header how it was generated and with which command.
+3. **Attribution**, generate `NOTICE` or `THIRD_PARTY_LICENSES` from the resolved tree. Prefer the ecosystem's generator (`license-checker`, `license-report`, `oss-attribution`, `cargo license`) over a hand-written list. Include the upstream copyright line and license text for each dependency, and reproduce each Apache-2.0 upstream `NOTICE` in full. **Never remove a notice that was already there.**
+4. **License text bundling**, when the model requires it (a copyleft dependency in a distributed artifact), ship the license texts in the artifact: `LICENSES/` for npm `files`, `license-files` in Cargo, `MANIFEST.in` for Python, a copy step in the Dockerfile.
+5. **CI check**, add a job that fails on a forbidden license or a missing attribution file. Wire the collector into the workflow the project already uses, and cache the install step so the job is fast.
+6. **Exceptions**, for every accepted risk, add an entry to the policy's `exceptions` array with the package, the license, a reason, an owner, and a `review_by` date.
 
 Match the codebase: same file layout, naming, and formatting conventions as the rest of the repo.
 
@@ -184,7 +184,7 @@ Watch CI (`gh pr checks --watch`). Fix failures caused by this change; record un
 ## 9. Report
 
 ```markdown
-# License audit — <project>
+# License audit: <project>
 
 **Ecosystem:** <node|python|rust|go> (<package manager>)  **Model:** <application|package|saas|internal>
 **Project license:** <SPDX id> (unchanged)  **PR:** <url> | already in good shape, no PR
@@ -200,7 +200,7 @@ Watch CI (`gh pr checks --watch`). Fix failures caused by this change; record un
 Direct: <n>  Transitive: <n>  Total: <n>
 
 ## Obligations that apply here
-- <SPDX id> — <the obligation> — <met / not met>
+- <SPDX id>: <the obligation>, <met / not met>
 
 ## Fixed
 - P1 …

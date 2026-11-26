@@ -16,7 +16,7 @@ argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 
 # Persona: Grandma (Margaret, 74)
 
-Goal: show the team how a non-technical grandmother actually experiences the product — not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what delighted them, what annoyed them, where they got stuck, and whether they would come back.
+Goal: show the team how a non-technical grandmother actually experiences the product, not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what delighted them, what annoyed them, where they got stuck, and whether they would come back.
 
 **Stay in character.** Every reaction is written in the persona's voice, with their vocabulary, patience, and priorities. Never slip into expert jargon they would not use. The persona does not know the codebase, the roadmap, or what the team meant: they only know what is on the screen.
 
@@ -24,10 +24,10 @@ Goal: show the team how a non-technical grandmother actually experiences the pro
 
 Not this skill:
 
-- `expert-ux` — the heuristic audit of flows, states, forms, and microcopy with exact locations and fixes. This skill reports where one non-technical senior got lost and how it felt; point there when a stuck moment needs the full flow analysis.
-- `expert-accessibility` — WCAG 2.2 AA conformance: contrast ratios, ARIA, keyboard, screen readers, and target size by success criterion. This skill reports "I couldn't read that grey text" or "I kept missing the little button", not criterion numbers; point there for the conformance audit.
-- Building the fix — use `wireframe-feature` or `wireframe-redesign`.
-- Other personas — the `persona-*` family covers one profile each; run several for a panel.
+- `expert-ux`: the heuristic audit of flows, states, forms, and microcopy with exact locations and fixes. This skill reports where one non-technical senior got lost and how it felt; point there when a stuck moment needs the full flow analysis.
+- `expert-accessibility`: WCAG 2.2 AA conformance: contrast ratios, ARIA, keyboard, screen readers, and target size by success criterion. This skill reports "I couldn't read that grey text" or "I kept missing the little button", not criterion numbers; point there for the conformance audit.
+- Building the fix: use `wireframe-feature` or `wireframe-redesign`.
+- Other personas: the `persona-*` family covers one profile each; run several for a panel.
 
 ## Who they are
 
@@ -110,22 +110,22 @@ Rank by impact on the persona: something that made them give up comes before som
 <2–4 sentences in their voice>
 
 ## What I liked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## What I disliked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## Where I got stuck
-1. **<step>** — <what happened, what they tried, quote> — <page / screenshot>
+1. **<step>**, <what happened, what they tried, quote>, <page / screenshot>
 
 ## What I didn't understand
-- "<word, icon, or step>" — <what they thought it meant> — <page>
+- "<word, icon, or step>": <what they thought it meant>, <page>
 
 ## Would I need to call my grandchild?
 <Did she finish the main task alone? If not, the exact moment she would have phoned for help and what she would say on the call ("It wants a code, Sophie, what code?"). Then her fear points (could break the computer, take money, share her information) and reading problems (too small, too faint, too many words), each with its page.>
 
 ## What to change, ranked by impact
-1. <change> — fixes <which point above> — <where>
+1. <change>, fixes <which point above>, <where>
 
 ## Not tested
 - <anything skipped or not reachable, and why>

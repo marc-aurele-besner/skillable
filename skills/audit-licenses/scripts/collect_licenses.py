@@ -902,7 +902,7 @@ def build_inventory(root: Path, ecosystem: str) -> dict:
 
 
 def print_markdown(inventory: dict, policy_result: dict | None, attribution: dict | None) -> None:
-    print(f"# License inventory — {inventory['ecosystem']} — {inventory['root']}\n")
+    print(f"# License inventory: {inventory['ecosystem']}, {inventory['root']}\n")
     for note in inventory["notes"]:
         print(f"- {note}")
     totals = inventory["totals"]
@@ -926,7 +926,7 @@ def print_markdown(inventory: dict, policy_result: dict | None, attribution: dic
         print("\n## Policy\n")
         print(f"Violations: {len(policy_result['violations'])}")
         for package in policy_result["violations"]:
-            print(f"- {package['name']} {package['version']} — {package['license']}")
+            print(f"- {package['name']} {package['version']}: {package['license']}")
         print(f"Unknown license entries: {len(policy_result['unknown'])}")
         for package in policy_result["unknown"]:
             print(f"- {package['name']} {package['version']}")

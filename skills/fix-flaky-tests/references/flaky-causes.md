@@ -30,7 +30,7 @@ Read the section for the runner the target repo actually uses. Fix the **cause**
 
 ---
 
-## Python — pytest
+## Python: pytest
 
 | Cause | Fix |
 |-------|-----|
@@ -47,11 +47,11 @@ Read the section for the runner the target repo actually uses. Fix the **cause**
 | Floating point comparisons | Compare with `pytest.approx` or round to a fixed precision |
 | Fixture scope mismatch | A `session`-scoped fixture that leaks state into tests: narrow the scope, or make it read-only |
 
-Quarantine idiom: `@pytest.mark.skip(reason="external outage, tracked in #1234")` or `@pytest.mark.xfail(strict=True, reason=...)`. `xfail(strict=True)` fails the run if the test unexpectedly passes — use it so a fixed flake is noticed.
+Quarantine idiom: `@pytest.mark.skip(reason="external outage, tracked in #1234")` or `@pytest.mark.xfail(strict=True, reason=...)`. `xfail(strict=True)` fails the run if the test unexpectedly passes, use it so a fixed flake is noticed.
 
 ---
 
-## JavaScript / TypeScript — Jest, Vitest
+## JavaScript / TypeScript: Jest, Vitest
 
 | Cause | Fix |
 |-------|-----|
@@ -68,9 +68,9 @@ Quarantine idiom: `@pytest.mark.skip(reason="external outage, tracked in #1234")
 | Randomness | Seed the RNG in `beforeEach`; use `jest.spyOn(Math, 'random')` for a single deterministic value |
 | Fake clock vs. real clock drift | `jest.setSystemTime(new Date('2024-01-01T00:00:00Z'))` |
 
-Order flags: `jest --randomize` (Jest 29+), `vitest --sequence.shuffle`, `vitest --sequence.seed <n>`. `jest --runInBand` serializes the run — use it to test whether parallelism is the trigger.
+Order flags: `jest --randomize` (Jest 29+), `vitest --sequence.shuffle`, `vitest --sequence.seed <n>`. `jest --runInBand` serializes the run, use it to test whether parallelism is the trigger.
 
-Quarantine idiom: `it.skip('reason — owner @who, tracked in #1234', () => {...})`. To make it loud, assert on the skip count in a suite-level test.
+Quarantine idiom: `it.skip('reason: owner @who, tracked in #1234', () => {...})`. To make it loud, assert on the skip count in a suite-level test.
 
 ---
 
@@ -88,9 +88,9 @@ Quarantine idiom: `it.skip('reason — owner @who, tracked in #1234', () => {...
 | Goroutine leak | `errgroup` with `context` and a timeout; assert the goroutine count settles |
 | Environment variables | `t.Setenv` (which fails if the test is parallel) instead of `os.Setenv` |
 
-Order flags: `go test -shuffle=on ./...` randomizes test order; `-shuffle=<seed>` makes it reproducible. `go test -count=10 ./pkg/...` reruns the package ten times — the built-in way to detect a flake.
+Order flags: `go test -shuffle=on ./...` randomizes test order; `-shuffle=<seed>` makes it reproducible. `go test -count=10 ./pkg/...` reruns the package ten times, the built-in way to detect a flake.
 
-Quarantine idiom: `t.Skip("external outage — owner @who, tracked in #1234")`.
+Quarantine idiom: `t.Skip("external outage: owner @who, tracked in #1234")`.
 
 ---
 
@@ -109,11 +109,11 @@ Quarantine idiom: `t.Skip("external outage — owner @who, tracked in #1234")`.
 
 Order flags: `cargo test -- --test-threads=1`, `cargo nextest run --test-threads=1`, and `cargo test -- --nocapture` to see prints.
 
-Quarantine idiom: `#[ignore = "external outage — owner @who, tracked in #1234"]` — note that ignored tests are invisible by default; pair it with a loud check (see step 5).
+Quarantine idiom: `#[ignore = "external outage: owner @who, tracked in #1234"]`, note that ignored tests are invisible by default; pair it with a loud check (see step 5).
 
 ---
 
-## Ruby — RSpec
+## Ruby: RSpec
 
 | Cause | Fix |
 |-------|-----|
@@ -126,11 +126,11 @@ Quarantine idiom: `#[ignore = "external outage — owner @who, tracked in #1234"
 | File fixtures | `Dir.mktmpdir` per example, cleaned in `after` |
 | Ports | `TCPServer.new('127.0.0.1', 0)` and read the assigned port |
 
-Quarantine idiom: `skip "external outage — owner @who, tracked in #1234"` — keep the reason string; RSpec prints it in the summary, which is already loud.
+Quarantine idiom: `skip "external outage: owner @who, tracked in #1234"`, keep the reason string; RSpec prints it in the summary, which is already loud.
 
 ---
 
-## Java / Kotlin — JUnit
+## Java / Kotlin: JUnit
 
 | Cause | Fix |
 |-------|-----|
@@ -143,11 +143,11 @@ Quarantine idiom: `skip "external outage — owner @who, tracked in #1234"` — 
 | Parallel execution | JUnit 5 parallel execution is opt-in; when enabled, give each test unique resources |
 | Async / Awaitility | Use Awaitility's polling assertions instead of `Thread.sleep` |
 
-Quarantine idiom: `@Disabled("external outage — owner @who, tracked in #1234")` — a disabled test is not reported as a failure, so pair it with a loud check.
+Quarantine idiom: `@Disabled("external outage: owner @who, tracked in #1234")`, a disabled test is not reported as a failure, so pair it with a loud check.
 
 ---
 
-## End-to-end — Playwright, Cypress
+## End-to-end: Playwright, Cypress
 
 | Cause | Fix |
 |-------|-----|
@@ -162,7 +162,7 @@ Quarantine idiom: `@Disabled("external outage — owner @who, tracked in #1234")
 | Third-party widgets | Block or stub third-party requests (`page.route`) |
 | Eventual consistency | Poll for the state change with a deadline instead of asserting once |
 
-Quarantine idiom: `test.skip(condition, 'reason')` or `test.fixme('reason')`. `test.fixme` is reported as a known failure rather than a skip — often the more honest option.
+Quarantine idiom: `test.skip(condition, 'reason')` or `test.fixme('reason')`. `test.fixme` is reported as a known failure rather than a skip, often the more honest option.
 
 ---
 

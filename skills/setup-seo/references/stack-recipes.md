@@ -1,6 +1,6 @@
 # Stack recipes
 
-Where the IndexNow key file goes, where the sitemap and robots.txt live, and where to hook the post-build ping. Prefer what the project already uses — check the installed framework version (`npm ls <pkg>` or the lockfile) before choosing an API, since these move between majors.
+Where the IndexNow key file goes, where the sitemap and robots.txt live, and where to hook the post-build ping. Prefer what the project already uses, check the installed framework version (`npm ls <pkg>` or the lockfile) before choosing an API, since these move between majors.
 
 ```bash
 rg -n -g '!node_modules' -e 'sitemap' -e 'robots' -e 'publicDir' -e 'assets' -e 'postbuild' -e 'build' package.json astro.config.* nuxt.config.* next.config.* svelte.config.* gatsby-config.* vite.config.* 2>/dev/null | head -40
@@ -35,7 +35,7 @@ The key file must be served at the site root, so it must live in the directory t
 
 Submit **changed URLs only**. Compute them from the diff, map file paths to public routes, and pass them to the submit script.
 
-### Any stack — a build script
+### Any stack: a build script
 
 Add a post-build step that runs after the site is built and deployed:
 
@@ -92,7 +92,7 @@ The submit script should fail soft: a failed ping must not break the deploy. Log
 ### Hugo / Jekyll / Eleventy / Docusaurus
 
 - Key file: `static/` (Hugo, Docusaurus) or the root/passthrough directory (Jekyll, Eleventy).
-- Sitemap: built in — set `baseURL`/`siteUrl`/`url` so the absolute URLs are right.
+- Sitemap: built in: set `baseURL`/`siteUrl`/`url` so the absolute URLs are right.
 - Changed routes: map changed content files to their output paths.
 
 ### Plain HTML / other
@@ -102,7 +102,7 @@ The submit script should fail soft: a failed ping must not break the deploy. Log
 
 ## Where the ping runs
 
-Pick the place that already exists in the project — do not add a CI provider that the project does not use.
+Pick the place that already exists in the project, do not add a CI provider that the project does not use.
 
 | Target | Where to hook |
 |--------|---------------|
@@ -127,11 +127,11 @@ Pick the place that already exists in the project — do not add a CI provider t
   continue-on-error: true
 ```
 
-Set `SITE_URL` as a repository **variable** (public) and `INDEXNOW_KEY` as a repository **secret** (or a variable — it is published anyway, but a secret keeps it out of the workflow logs). `continue-on-error: true` keeps a failed ping from failing the deploy.
+Set `SITE_URL` as a repository **variable** (public) and `INDEXNOW_KEY` as a repository **secret** (or a variable, it is published anyway, but a secret keeps it out of the workflow logs). `continue-on-error: true` keeps a failed ping from failing the deploy.
 
-### GitHub Actions — sitemap-driven variant
+### GitHub Actions: sitemap-driven variant
 
-When the project cannot map diffs to routes, submit the sitemap's URLs instead — once, not on every commit:
+When the project cannot map diffs to routes, submit the sitemap's URLs instead, once, not on every commit:
 
 ```bash
 python3 -I scripts/indexnow-submit.py \

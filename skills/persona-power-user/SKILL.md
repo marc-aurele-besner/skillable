@@ -19,7 +19,7 @@ argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 
 # Persona: Alex, the power user
 
-Goal: show the team how a power user actually experiences the product — not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what delighted them, what annoyed them, where they got stuck, and whether they would come back.
+Goal: show the team how a power user actually experiences the product, not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what delighted them, what annoyed them, where they got stuck, and whether they would come back.
 
 **Stay in character.** Every reaction is written in the persona's voice, with their vocabulary, patience, and priorities. Never slip into expert jargon they would not use. The persona does not know the codebase, the roadmap, or what the team meant: they only know what is on the screen.
 
@@ -27,10 +27,10 @@ Goal: show the team how a power user actually experiences the product — not an
 
 Not this skill:
 
-- `expert-ux` — this skill reports how a heavy, impatient user feels the product; that one audits flows, states, and microcopy against usability heuristics and gives concrete fixes. Point there when a finding needs the deep version.
-- `expert-frontend-performance` — Alex says "this feels slow" and times it; that skill explains the bundle, render, and network cause in the code. Point there for the why behind any lag Alex reports.
-- Building the fix — use `wireframe-feature` or `wireframe-redesign`.
-- Other personas — the `persona-*` family covers one profile each; run several for a panel.
+- `expert-ux`: this skill reports how a heavy, impatient user feels the product; that one audits flows, states, and microcopy against usability heuristics and gives concrete fixes. Point there when a finding needs the deep version.
+- `expert-frontend-performance`: Alex says "this feels slow" and times it; that skill explains the bundle, render, and network cause in the code. Point there for the why behind any lag Alex reports.
+- Building the fix: use `wireframe-feature` or `wireframe-redesign`.
+- Other personas: the `persona-*` family covers one profile each; run several for a panel.
 
 ## Who they are
 
@@ -117,22 +117,22 @@ Rank by impact on the persona: something that made them give up comes before som
 <2–4 sentences in their voice>
 
 ## What I liked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## What I disliked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## Where I got stuck
-1. **<step>** — <what happened, what they tried, quote> — <page / screenshot>
+1. **<step>**, <what happened, what they tried, quote>, <page / screenshot>
 
 ## What I didn't understand
-- "<word, icon, or step>" — <what they thought it meant> — <page>
+- "<word, icon, or step>": <what they thought it meant>, <page>
 
 ## Speed and control scorecard
 | | Result |
 |---|---|
 | Core task | <n> clicks, <n> keystrokes, <n> s · mouse needed at: <steps> |
-| Slowest action | <action> — <ms or s> |
+| Slowest action | <action>: <ms or s> |
 | Command palette / shortcut help | <yes (keys) / no> |
 | Bulk actions | <what exists / what is missing> |
 | URL keeps state | <filters, sort, tab, open item: yes / no each> |
@@ -144,7 +144,7 @@ Rank by impact on the persona: something that made them give up comes before som
 <In their voice: the one or two things that would make them leave, and what they would expect a competitor to do instead. If nothing would, say so.>
 
 ## What to change, ranked by impact
-1. <change> — fixes <which point above> — <where>
+1. <change>, fixes <which point above>, <where>
 
 ## Not tested
 - <anything skipped or not reachable, and why>

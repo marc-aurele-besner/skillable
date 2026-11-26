@@ -1,4 +1,4 @@
-# Core Web Vitals — metrics, thresholds, and how to measure them
+# Core Web Vitals: metrics, thresholds, and how to measure them
 
 Read this before writing a budget or reporting a number to the user. It defines each metric, the thresholds Google uses, where field data comes from, how to read a Lighthouse JSON report, and the false alarms that make agents report wins that do not exist.
 
@@ -13,17 +13,17 @@ Read this before writing a budget or reporting a number to the user. It defines 
 
 TTFB is not a Core Web Vital, but it is the leading indicator for the other three: a slow server delays LCP, delays hydration, and lengthens every interaction.
 
-The official thresholds live at <https://web.dev/articles/vitals>. The 75th percentile (p75) of all real-user sessions is what counts — not the median, not the best run.
+The official thresholds live at <https://web.dev/articles/vitals>. The 75th percentile (p75) of all real-user sessions is what counts, not the median, not the best run.
 
 ## How each metric is computed
 
-**LCP** — the browser reports render times for candidate elements and takes the largest one painted before the first user interaction. The usual offenders: an oversized hero image that is not the priority resource, a slow server response, render-blocking CSS or JS in `<head>`, and web fonts that block text paint (`font-display: swap` fixes it).
+**LCP**: the browser reports render times for candidate elements and takes the largest one painted before the first user interaction. The usual offenders: an oversized hero image that is not the priority resource, a slow server response, render-blocking CSS or JS in `<head>`, and web fonts that block text paint (`font-display: swap` fixes it).
 
-**INP** (replaced FID in March 2024) — for the longest interaction in the session, the browser measures the delay between the input and the next frame painted after the handler runs. The whole interaction latency counts, not just the handler. Offenders: long tasks (each over 50 ms blocks the main thread), heavy hydration on a large DOM, expensive event handlers doing synchronous work, and third-party scripts attaching long listeners.
+**INP** (replaced FID in March 2024): for the longest interaction in the session, the browser measures the delay between the input and the next frame painted after the handler runs. The whole interaction latency counts, not just the handler. Offenders: long tasks (each over 50 ms blocks the main thread), heavy hydration on a large DOM, expensive event handlers doing synchronous work, and third-party scripts attaching long listeners.
 
-**CLS** — the browser sums the layout shift scores of every unexpected visible element movement during the session, weighted by impact distance. Offenders: images and iframes with no width/height, late-loading web fonts that swap to a different size, ads or announcement bars inserted above existing content, and async embeds.
+**CLS**: the browser sums the layout shift scores of every unexpected visible element movement during the session, weighted by impact distance. Offenders: images and iframes with no width/height, late-loading web fonts that swap to a different size, ads or announcement bars inserted above existing content, and async embeds.
 
-**TTFB** — the delta between the navigation start and the first byte of the main document response. Offenders: uncached server responses, slow database or API queries in the render path, and missing CDN or edge caching.
+**TTFB**: the delta between the navigation start and the first byte of the main document response. Offenders: uncached server responses, slow database or API queries in the render path, and missing CDN or edge caching.
 
 ## Field data vs. lab data
 
@@ -39,13 +39,13 @@ Rules:
 
 ## Getting field data
 
-### 1. Chrome UX Report API (CrUX) — best free source
+### 1. Chrome UX Report API (CrUX), best free source
 
 CrUX aggregates real Chrome users' data. It needs a Google Cloud API key with the Chrome UX Report API enabled.
 
 Ask the user for the key and for the environment variable name to use. Say something like:
 
-> Field data comes from the Chrome UX Report API, which needs a Google Cloud API key with the Chrome UX Report API enabled. You can create one at <https://console.cloud.google.com/apis/credentials>. Put it in a `CRUX_API_KEY` environment variable (or paste it here and I will use it for this run only — I will not commit it or write it into the repo).
+> Field data comes from the Chrome UX Report API, which needs a Google Cloud API key with the Chrome UX Report API enabled. You can create one at <https://console.cloud.google.com/apis/credentials>. Put it in a `CRUX_API_KEY` environment variable (or paste it here and I will use it for this run only, I will not commit it or write it into the repo).
 
 Never commit the key, never write it into a repo file, never paste it into a PR body or issue. Read it from the environment at call time.
 
@@ -70,7 +70,7 @@ Useful fields:
 
 TTFB is not part of the standard CrUX metric set. Use the site's own RUM, or treat it as a lab-only diagnostic from Lighthouse.
 
-### 2. PageSpeed Insights API — field + lab in one call
+### 2. PageSpeed Insights API, field + lab in one call
 
 No key is needed for the free tier, but the API is rate-limited; a key raises the limit.
 
@@ -78,9 +78,9 @@ No key is needed for the free tier, but the API is rate-limited; a key raises th
 curl -s "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://example.com&strategy=mobile&category=performance"
 ```
 
-- `loadingExperience` holds the **field** p75 values (from CrUX) — this is the section to quote.
+- `loadingExperience` holds the **field** p75 values (from CrUX), this is the section to quote.
 - `lighthouseResult` holds the **lab** run.
-- When `loadingExperience.overall_category` is `SPEED_GENERIC` or below, there is not enough field data to score — report the lab numbers as lab numbers and say field data is unavailable.
+- When `loadingExperience.overall_category` is `SPEED_GENERIC` or below, there is not enough field data to score, report the lab numbers as lab numbers and say field data is unavailable.
 
 ### 3. The project's own RUM or analytics
 
@@ -96,16 +96,16 @@ Do not add a new RUM vendor without the user's approval.
 
 Lighthouse writes a JSON report with `--output json --output-path`. Structure:
 
-- `audits` — an object keyed by audit id, each with `title`, `score`, `numericValue`, `numericUnit`, `displayValue`, and `details`.
-- `categories.performance.score` — the 0–100 score. It is **not** a Core Web Vital.
-- `finalUrl` / `requestedUrl` — the URL that was measured.
+- `audits`: an object keyed by audit id, each with `title`, `score`, `numericValue`, `numericUnit`, `displayValue`, and `details`.
+- `categories.performance.score`: the 0–100 score. It is **not** a Core Web Vital.
+- `finalUrl` / `requestedUrl`: the URL that was measured.
 
 Audit id to metric mapping (this is what the bundled checker uses):
 
 | Metric | Audit id | Where the value lives |
 |--------|----------|----------------------|
 | LCP | `largest-contentful-paint` | `audits["largest-contentful-paint"].numericValue` (ms) |
-| INP | `interaction-to-next-paint` (older: `experimental-interaction-to-next-paint`) | `audits[...].numericValue` (ms) — often absent in lab runs |
+| INP | `interaction-to-next-paint` (older: `experimental-interaction-to-next-paint`) | `audits[...].numericValue` (ms), often absent in lab runs |
 | CLS | `cumulative-layout-shift` | `audits["cumulative-layout-shift"].numericValue` (unitless) |
 | TTFB | `server-response-time` | `audits["server-response-time"].numericValue` (ms) |
 | TBT | `total-blocking-time` | `audits["total-blocking-time"].numericValue` (ms) |
@@ -117,8 +117,8 @@ A `metrics` array at the top level holds the same values under camelCase names (
 Notes:
 
 - `server-response-time` measures the main document response, so it is a good TTFB proxy. `server-response-time` also has a `details` breakdown per redirect and per origin when it is slow.
-- Lighthouse usually does not produce INP unless the page was interacted with. If the audit is missing, treat INP as "not measured" and fall back to TBT as the lab proxy — and say that is what you did.
-- `network-requests` under `audits` holds the full request list with transfer sizes — use it to find the biggest LCP asset.
+- Lighthouse usually does not produce INP unless the page was interacted with. If the audit is missing, treat INP as "not measured" and fall back to TBT as the lab proxy, and say that is what you did.
+- `network-requests` under `audits` holds the full request list with transfer sizes, use it to find the biggest LCP asset.
 - `unused-javascript`, `render-blocking-resources`, `uses-responsive-images`, `offscreen-images`, `font-display`, `third-party-summary`, `mainthread-work-breakdown`, `long-tasks`, `layout-shifts`, `cls-culprits-insight` are the diagnostic audits that tell you what to fix.
 
 Running Lighthouse locally:
@@ -128,7 +128,7 @@ npx lighthouse https://example.com --output json --output-path "$TMPDIR/lh.json"
 npx lighthouse https://example.com --preset=desktop --output json --output-path "$TMPDIR/lh-desktop.json" --quiet
 ```
 
-Use the production build served locally or the deployed URL — never the dev server.
+Use the production build served locally or the deployed URL, never the dev server.
 
 ## Worked budget file example
 
@@ -153,7 +153,7 @@ How it resolves:
 
 - `defaults` apply to every route with no specific match.
 - `routes` keys are glob patterns matched against the path (`*` and `?` match any characters, including `/`); the most specific match wins, so `/blog/*` beats a catch-all.
-- Route values override `defaults` per metric, not wholesale — `/` only sets LCP, the other metrics still come from `defaults`.
+- Route values override `defaults` per metric, not wholesale, `/` only sets LCP, the other metrics still come from `defaults`.
 - Units are milliseconds for `lcp`, `inp`, `ttfb`, `tbt`, `fcp`, `si` and unitless for `cls`.
 - A metric missing from the budget is not checked. A metric missing from the *report* is reported as `SKIP`, not as a pass.
 
@@ -171,7 +171,7 @@ Thresholds must be achievable from day one.
 | False alarm | What is really happening |
 |-------------|------------------------|
 | "Lighthouse says 98, so the site is fast" | The score is not a Core Web Vital. Users get LCP, INP, CLS. A 98 score can hide a failing INP and a bad TTFB. |
-| "We improved LCP from 4.1 s to 2.6 s" | Lab only. Field p75 may not have moved at all — or moved the other way. Say "lab" or say "field", never just "LCP improved". |
+| "We improved LCP from 4.1 s to 2.6 s" | Lab only. Field p75 may not have moved at all, or moved the other way. Say "lab" or say "field", never just "LCP improved". |
 | "The dev build measured better than production" | Usually the opposite: dev has no minification, no compression, no CDN, and source maps. Always measure the production build. |
 | "HTTP/3 made it faster" | One cold TLS handshake on a new connection can add more than HTTP/2 multiplexing saves. Compare the same number of requests over the same connection state. |
 | "The first run was slow because of caching" | A cold cache penalizes every asset. Run at least three times, discard the first, and compare medians. State the run count in the report. |

@@ -4,16 +4,16 @@ Rules for drawing each social card so variants are comparable, legible at feed s
 
 ## The canvas
 
-- **Size** — every card is a fixed `1200 × 630` element. Scale it for display with `transform: scale()` inside a wrapper; never let it reflow. Label the real size under it.
-- **Safe area** — keep text and the logo inside a `64 px` inset (live area `1072 × 502`). Some platforms round the corners or crop a few pixels; the inset survives both.
-- **Center band** — anything that must survive a square crop (`summary` cards, some chat apps) sits inside the centered `630 × 630` band. Show that band in the safe-area overlay.
-- **One ground** — a single background from the project's tokens (light ground, dark ground, or brand color). A texture, grid, or motif is fine only if the site already uses it.
+- **Size**: every card is a fixed `1200 × 630` element. Scale it for display with `transform: scale()` inside a wrapper; never let it reflow. Label the real size under it.
+- **Safe area**: keep text and the logo inside a `64 px` inset (live area `1072 × 502`). Some platforms round the corners or crop a few pixels; the inset survives both.
+- **Center band**: anything that must survive a square crop (`summary` cards, some chat apps) sits inside the centered `630 × 630` band. Show that band in the safe-area overlay.
+- **One ground**: a single background from the project's tokens (light ground, dark ground, or brand color). A texture, grid, or motif is fine only if the site already uses it.
 
 ## Typography
 
-- **Headline** — the project's display family and weight, 56–88 px, at most 3 lines, line height 1.05–1.15. At 300 px wide it must still read; if it does not, shorten the copy before shrinking the type.
-- **Supporting line** — body family, 28–36 px, at most 2 lines. Optional.
-- **Meta line** — domain or site name, 22–26 px. Never smaller than 22 px on the 1200 px card.
+- **Headline**: the project's display family and weight, 56–88 px, at most 3 lines, line height 1.05–1.15. At 300 px wide it must still read; if it does not, shorten the copy before shrinking the type.
+- **Supporting line**: body family, 28–36 px, at most 2 lines. Optional.
+- **Meta line**: domain or site name, 22–26 px. Never smaller than 22 px on the 1200 px card.
 - Load fonts through the project's own link. If a font is not loadable, fall back to the closest system family and name it in the report.
 
 ## Composition

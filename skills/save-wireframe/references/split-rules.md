@@ -11,7 +11,7 @@ How to cut a single-file wireframe into a vanilla site without changing what it 
 | CSS | Every `<style>` block, in document order | `styles/NN-<section>.css` |
 | Large data | A `<script>` that only assigns a big literal (`window.APP_DATA = {…}`), or a JSON `<script type="application/json">` | `data/NN-<name>.js` as `window.<NAME> = …;` (JSON scripts: read with `JSON.parse` in the same place the original did, now from the global) |
 | Code | Remaining `<script>` blocks, in document order | `scripts/NN-<section>.js` |
-| Inline handlers | `onclick="…"` attributes | Left as they are — they still work and moving them changes behavior |
+| Inline handlers | `onclick="…"` attributes | Left as they are, they still work and moving them changes behavior |
 | Body skeleton | Mount points (`#app`, `#proto`, `#toasts`) and static markup | `index.html` `<body>` |
 | Inline images | `data:` URIs over ~4 KB in CSS or HTML | `assets/<name>.<ext>`, referenced relatively (from CSS: `../assets/…`) |
 
@@ -28,14 +28,14 @@ Cut at the source's own banner comments:
 /* ================= ROUTER ================= */ → scripts/03-router.js
 ```
 
-No banners? Cut at clear seams only — between top-level rule groups (CSS) or top-level function groups (JS) — and fall back to one `styles/main.css` and one `scripts/main.js` rather than guessing. Never cut inside a rule, an `@media` block, a function, or a statement.
+No banners? Cut at clear seams only, between top-level rule groups (CSS) or top-level function groups (JS), and fall back to one `styles/main.css` and one `scripts/main.js` rather than guessing. Never cut inside a rule, an `@media` block, a function, or a statement.
 
 Empty `<script></script>` placeholders are dropped. A file under ~20 lines merges into its neighbor.
 
 ## Why order is sacred
 
 - CSS: later rules win at equal specificity; variant overrides (`body[data-v="c"] …`) and responsive rules depend on coming after the base.
-- JS: classic scripts share one global scope and run in order; a function declared in file 5 is callable from file 3 only after file 5 has loaded — so code that runs immediately (top-level calls, `render()`) must stay after everything it uses, exactly as in the source.
+- JS: classic scripts share one global scope and run in order; a function declared in file 5 is callable from file 3 only after file 5 has loaded, so code that runs immediately (top-level calls, `render()`) must stay after everything it uses, exactly as in the source.
 
 ## Lossless check
 

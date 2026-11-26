@@ -87,11 +87,11 @@ def validate(scene: dict) -> tuple[list[str], list[str]]:
         if not isinstance(tags, list) or not all(isinstance(t, str) for t in tags):
             errors.append(f"{where} ({node['id']}): tags must be a list of strings")
         if not node.get("cite") and node.get("kind") not in CLIENT_KINDS:
-            warnings.append(f"{where} ({node['id']}): no cite — every component should point at the file that proves it")
+            warnings.append(f"{where} ({node['id']}): no cite: every component should point at the file that proves it")
     if len(set(node_ids)) != len(node_ids):
         errors.append("nodes: ids must be unique")
     if len(node_ids) > MAX_NODES:
-        warnings.append(f"{len(node_ids)} nodes — above {MAX_NODES} the map gets unreadable; group or split it")
+        warnings.append(f"{len(node_ids)} nodes: above {MAX_NODES} the map gets unreadable; group or split it")
 
     known = set(node_ids)
     link_keys = set()
@@ -136,7 +136,7 @@ def validate(scene: dict) -> tuple[list[str], list[str]]:
                 errors.append(f"{path}: only https:// URLs are allowed")
         for pattern in SECRET_RES:
             if pattern.search(text):
-                errors.append(f"{path}: looks like a secret or credential — remove it (use the env var name only)")
+                errors.append(f"{path}: looks like a secret or credential, remove it (use the env var name only)")
                 break
     return errors, warnings
 
@@ -173,7 +173,7 @@ def main() -> int:
         return 1
     args.out.write_text(inject(args.template.read_text(encoding="utf-8"), scene), encoding="utf-8")
     n, l = len(scene.get("nodes") or []), len(scene.get("links") or [])
-    print(f"wrote {args.out} — {n} components, {l} links, {len(scene.get('flows') or [])} flows")
+    print(f"wrote {args.out}: {n} components, {l} links, {len(scene.get('flows') or [])} flows")
     return 0
 
 

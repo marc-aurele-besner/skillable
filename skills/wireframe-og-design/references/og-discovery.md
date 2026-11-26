@@ -32,10 +32,10 @@ If the README or package metadata names a deployed URL, fetching its HTML head s
 
 For every image found, record:
 
-- **Size** — 1200 × 630 (1.91:1) is the safe default for `summary_large_image` and Open Graph. Under 600 px wide often falls back to a small thumbnail.
-- **Format and weight** — PNG or JPEG; under 5 MB for X, under 8 MB for Open Graph. SVG is not supported as `og:image` by most platforms.
-- **URL** — must be absolute (`https://…`). Relative paths break on most unfurlers.
-- **Generated or static** — a generator route means a redesign is a template change, not a file swap. Read its JSX to see the current layout.
+- **Size**: 1200 × 630 (1.91:1) is the safe default for `summary_large_image` and Open Graph. Under 600 px wide often falls back to a small thumbnail.
+- **Format and weight**: PNG or JPEG; under 5 MB for X, under 8 MB for Open Graph. SVG is not supported as `og:image` by most platforms.
+- **URL**: must be absolute (`https://…`). Relative paths break on most unfurlers.
+- **Generated or static**: a generator route means a redesign is a template change, not a file swap. Read its JSX to see the current layout.
 
 ```bash
 file path/to/og.png        # format and pixel size

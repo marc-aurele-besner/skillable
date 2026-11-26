@@ -33,14 +33,14 @@ Deep checklist behind step 3 of the skill. Each category lists the sources and s
 | JWT | `verify` with a pinned algorithm list, check `exp`, `nbf`, `aud`, `iss`; short-lived access tokens; refresh rotation with reuse detection | `decode` without verify; `alg: none`; HS256 with the RS public key; secret is a default (`secret`, `changeme`); no revocation path for a stolen token |
 | OAuth / OIDC | `state` (CSRF) and PKCE; exact `redirect_uri` match; `nonce` for OIDC; verify the ID token; link accounts only on a verified email | Missing `state`; open redirect in `redirect_uri` or post-login `next`/`returnTo`; account takeover by linking on an unverified email from the provider |
 | MFA | Enforced server-side on every login path; OTP rate-limited and single-use; recovery codes hashed | MFA checked only in the UI; a second login endpoint (API, mobile) skips it; OTP brute-forceable |
-| Enumeration | Same response and similar timing for "unknown user" and "wrong password"; reset says "if the account exists…" | Distinct messages or status codes — usually **Low**, unless combined with no rate limit |
-| Open redirect | Allow-list of relative paths; reject `//evil.com`, `/\evil.com`, `https:` schemes | `res.redirect(req.query.next)` — Medium alone, High when it leaks OAuth codes or tokens |
+| Enumeration | Same response and similar timing for "unknown user" and "wrong password"; reset says "if the account exists…" | Distinct messages or status codes, usually **Low**, unless combined with no rate limit |
+| Open redirect | Allow-list of relative paths; reject `//evil.com`, `/\evil.com`, `https:` schemes | `res.redirect(req.query.next)`, Medium alone, High when it leaks OAuth codes or tokens |
 
 **What not to report:** password complexity rules alone, missing MFA on an app that never offered it (Info at most), enumeration on a public-profile product where usernames are public anyway.
 
 ## 2. Authorization and IDOR
 
-**Trace:** every handler that reads, updates, or deletes an object by an id from the request — path params, query, body, GraphQL args, server action args, WebSocket messages.
+**Trace:** every handler that reads, updates, or deletes an object by an id from the request, path params, query, body, GraphQL args, server action args, WebSocket messages.
 
 | Check | Effective control | How it fails |
 |-------|-------------------|--------------|
@@ -58,7 +58,7 @@ Deep checklist behind step 3 of the skill. Each category lists the sources and s
 
 ## 3. Injection
 
-**Trace:** request data into any interpreter — SQL, NoSQL query objects, shell, template engines, file paths, XPath/LDAP, headers, deserializers, `eval`.
+**Trace:** request data into any interpreter: SQL, NoSQL query objects, shell, template engines, file paths, XPath/LDAP, headers, deserializers, `eval`.
 
 | Sink | Effective control | How it fails |
 |------|-------------------|--------------|
@@ -70,8 +70,8 @@ Deep checklist behind step 3 of the skill. Each category lists the sources and s
 | Header / CRLF | Framework header APIs that reject newlines | Raw header writes with user data; `Content-Disposition` filename not encoded |
 | Deserialization | JSON only; schema-validated | `pickle.loads`, `yaml.load` (not `safe_load`), Java `ObjectInputStream`, PHP `unserialize`, `Marshal.load`, `node-serialize` on user data |
 | Prototype pollution | Reject `__proto__`, `constructor`, `prototype` keys; `Object.create(null)`; maintained merge libs | Deep-merge or set-by-path of request JSON into objects; query parsers creating nested objects |
-| `eval` family | None needed — remove it | `eval`, `Function()`, `vm.runInContext` (not a sandbox), `setTimeout(string)`, Python `eval`/`exec` on request data |
-| Regex (ReDoS) | Linear-time engines (RE2) or bounded input length | User-supplied regex; catastrophic patterns like `(a+)+$` on user input — Medium (availability) |
+| `eval` family | None needed: remove it | `eval`, `Function()`, `vm.runInContext` (not a sandbox), `setTimeout(string)`, Python `eval`/`exec` on request data |
+| Regex (ReDoS) | Linear-time engines (RE2) or bounded input length | User-supplied regex; catastrophic patterns like `(a+)+$` on user input, Medium (availability) |
 
 **What not to report:** raw SQL with only constant strings or allow-listed identifiers; `exec` with fully constant arguments; template compilation of developer-owned files.
 
@@ -109,7 +109,7 @@ Deep checklist behind step 3 of the skill. Each category lists the sources and s
 
 ## 6. SSRF
 
-**Trace:** any server-side request whose URL, host, or path comes from the user — link previews, webhooks, image/PDF/HTML renderers, import-from-URL, OAuth/OIDC discovery with user-supplied issuers, XML external entities, headless browsers.
+**Trace:** any server-side request whose URL, host, or path comes from the user, link previews, webhooks, image/PDF/HTML renderers, import-from-URL, OAuth/OIDC discovery with user-supplied issuers, XML external entities, headless browsers.
 
 | Check | Effective control | How it fails |
 |-------|-------------------|--------------|
@@ -132,7 +132,7 @@ Deep checklist behind step 3 of the skill. Each category lists the sources and s
 | Client bundle | Only publishable/anon keys under client prefixes | Server secret under `NEXT_PUBLIC_`/`VITE_`; server module imported into a client component; secret in `next.config.js` `env` (inlined) |
 | Source maps | Not deployed publicly, or uploaded privately to the error tracker | `productionBrowserSourceMaps: true`, `build.sourcemap: true` exposing server-side comments and internal endpoints |
 | Static serving | Static root excludes config | `express.static('.')` or a web root that serves `.env`, `.git/` |
-| Defaults | No fallback secrets in code | `process.env.JWT_SECRET || 'dev-secret'` — Critical if production can fall through |
+| Defaults | No fallback secrets in code | `process.env.JWT_SECRET || 'dev-secret'`, Critical if production can fall through |
 | Crypto | Keys long and random; no hardcoded IVs; AES-GCM or libsodium; no ECB | Hardcoded encryption key; `Math.random` for tokens |
 
 **Severity:** a live production secret with write access → Critical; a test or revoked key → Low/Info (confirm with the user, never test it yourself). Always redact.
@@ -151,7 +151,7 @@ Check code (Helmet, `next.config.js` `headers()`, Django `SECURE_*` settings, Ra
 | `Permissions-Policy` | Disable unused powerful features | Info unless the app is embedded |
 | Cookies | `Secure; HttpOnly; SameSite=Lax`, `__Host-` prefix | Session cookie flags are an auth finding, not a header nit |
 
-**What not to report:** `X-XSS-Protection` (deprecated — recommend removing it or `0`), `Server`/`X-Powered-By` version disclosure as a standalone finding (Info at most), missing headers on a pure JSON API except HSTS.
+**What not to report:** `X-XSS-Protection` (deprecated: recommend removing it or `0`), `Server`/`X-Powered-By` version disclosure as a standalone finding (Info at most), missing headers on a pure JSON API except HSTS.
 
 ## 9. CORS
 
@@ -183,7 +183,7 @@ Check code (Helmet, `next.config.js` `headers()`, Django `SECURE_*` settings, Ra
 |-------|-------------------|--------------|
 | Credential endpoints | Limits per account and per IP on login, reset, OTP, MFA, signup; lockout or progressive delay | No limit on a 6-digit OTP → brute force in minutes (High) |
 | Key choice | Key on account id and trusted client IP | Keyed on `X-Forwarded-For` without `trust proxy` configuration → rotate the header to bypass |
-| Storage | Shared store (Redis) across instances | In-memory limiter on a multi-instance or serverless deploy — effectively no limit |
+| Storage | Shared store (Redis) across instances | In-memory limiter on a multi-instance or serverless deploy, effectively no limit |
 | Cost amplification | Limits on expensive endpoints (search, export, AI calls, email/SMS sends) | Unauthenticated endpoint that sends SMS → toll fraud; LLM endpoint without per-user quotas |
 | Enumeration | Uniform responses + limits | Unlimited `/api/users/check-email` |
 | Pagination | Server-enforced max page size | `?limit=1000000` |
@@ -199,7 +199,7 @@ Check code (Helmet, `next.config.js` `headers()`, Django `SECURE_*` settings, Ra
 | Error trackers | `beforeSend` scrubbing in Sentry and similar; `sendDefaultPii: false` | Request bodies and cookies shipped to a third party |
 | Errors to clients | Generic messages in production; `DEBUG=False`; no stack traces | Django `DEBUG=True`, Express default error handler in prod, GraphQL errors exposing SQL |
 | Over-returning | Explicit response serializers/DTOs | Returning the whole user row (`passwordHash`, `resetToken`, `mfaSecret`) to the client |
-| Security events | Log auth failures, permission denials, and admin actions without the secrets | No audit trail for admin actions — Info unless compliance requires it |
+| Security events | Log auth failures, permission denials, and admin actions without the secrets | No audit trail for admin actions, Info unless compliance requires it |
 | GraphQL | Introspection disabled in production if the schema is private; field-level auth | Introspection on is Info, not a vulnerability by itself |
 
 ---
@@ -209,5 +209,5 @@ Check code (Helmet, `next.config.js` `headers()`, Django `SECURE_*` settings, Ra
 - Anything already prevented by a framework default confirmed in `framework-checks.md`.
 - Findings that require the attacker to already be an admin, unless they escalate further (e.g. admin → RCE on a multi-tenant host).
 - Self-XSS, clickjacking on pages with no state-changing action, and missing headers on non-HTML responses.
-- Dependency CVEs — hand them to `audit-vulnerabilities`.
+- Dependency CVEs: hand them to `audit-vulnerabilities`.
 - Generic advice ("consider a WAF", "add pentesting") with no tie to the code.

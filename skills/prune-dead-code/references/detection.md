@@ -23,7 +23,7 @@ Per-language tooling, config, dynamic-reference pitfalls, and the standard false
 
 ## Choosing a detector
 
-Prefer the project's existing tooling. Only add a new dev dependency when the project has none and the value is clear — and commit its config so the check is reproducible.
+Prefer the project's existing tooling. Only add a new dev dependency when the project has none and the value is clear, and commit its config so the check is reproducible.
 
 | Project already has | Use |
 |---------------------|-----|
@@ -36,7 +36,7 @@ Run every detector from the repository root so relative paths, workspace globs, 
 
 ## JavaScript and TypeScript
 
-**knip** — the most complete option. It reports unused files, exports, dependencies, and types, and it reads the project's own entry points.
+**knip**: the most complete option. It reports unused files, exports, dependencies, and types, and it reads the project's own entry points.
 
 ```bash
 npx knip                       # report
@@ -54,14 +54,14 @@ Config lives in `knip.json`, `knip.ts`, or the `knip` key of `package.json`. Tel
 }
 ```
 
-**ts-prune** — exports only. It reports every exported name nothing imports.
+**ts-prune**: exports only. It reports every exported name nothing imports.
 
 ```bash
 npx ts-prune
 npx ts-prune -i 'Foo' 'Bar'   # ignore names
 ```
 
-**ESLint** — locals and imports only; it does not follow cross-file exports.
+**ESLint**: locals and imports only; it does not follow cross-file exports.
 
 ```bash
 npx eslint . --rule '{"no-unused-vars":"error"}'
@@ -74,7 +74,7 @@ TypeScript compiler flags are the cheapest first pass:
 npx tsc --noEmit --noUnusedLocals --noUnusedParameters
 ```
 
-TypeScript's `noUnusedLocals` does **not** flag exported symbols — a file-level `export` silences the warning. That is why `knip` or `ts-prune` is needed for the export layer.
+TypeScript's `noUnusedLocals` does **not** flag exported symbols, a file-level `export` silences the warning. That is why `knip` or `ts-prune` is needed for the export layer.
 
 **Monorepos:** run knip per workspace package (`knip --workspace packages/*`) or configure `workspaces`; a single root run misses package-level exports.
 
@@ -93,7 +93,7 @@ python -m pyflakes .                           # if ruff is unavailable
 vulture . --exclude 'src/api/__init__.py' --exclude 'tests/*'
 ```
 
-`# noqa: F401` marks a deliberate re-export; do not remove those. A module with `__all__` is a public surface — treat its names as exported API, not dead code.
+`# noqa: F401` marks a deliberate re-export; do not remove those. A module with `__all__` is a public surface, treat its names as exported API, not dead code.
 
 `pytest --collect-only` and `python -m compileall` confirm the tree still imports after each removal.
 
@@ -106,7 +106,7 @@ go mod tidy -diff          # unused module requirements; Go 1.23+
 gopls check ./...           # unused variables, unused imports
 ```
 
-`staticcheck -unused` finds unused functions, types, fields, and constants, and understands Go's package model. It respects `//lint:ignore` directives — those are deliberate.
+`staticcheck -unused` finds unused functions, types, fields, and constants, and understands Go's package model. It respects `//lint:ignore` directives, those are deliberate.
 
 Anything with a lowercase first letter is unexported and invisible outside its package; anything exported is part of the package's API even if the package is internal. Check `internal/` boundaries before treating an exported symbol as removable.
 
@@ -127,7 +127,7 @@ bundle exec rubocop --only Lint/UselessAssignment,Lint/Void,Lint/UnusedMethodArg
 bundle exec vulture .
 ```
 
-Rails: `bin/rails routes` lists every route — a controller action not in the route file is unreachable unless it is called directly. `config/routes.rb`, `config/initializers/`, and `config/application.rb` all reference classes by string; grep the class name as a string before deleting it.
+Rails: `bin/rails routes` lists every route: a controller action not in the route file is unreachable unless it is called directly. `config/routes.rb`, `config/initializers/`, and `config/application.rb` all reference classes by string; grep the class name as a string before deleting it.
 
 ## Java and Kotlin
 
@@ -153,7 +153,7 @@ Compile-database aware tools (`clang-tidy -p build`) give the best results. `gcc
 nm -C --defined-only ./target/app | head -100
 ```
 
-C++ static initializers and templates defeat most static analysis. Registering a type with a factory or a global registry makes it used even without a direct call site — grep for the type name as a string.
+C++ static initializers and templates defeat most static analysis. Registering a type with a factory or a global registry makes it used even without a direct call site, grep for the type name as a string.
 
 ## Orphan file detection
 
@@ -175,7 +175,7 @@ rg -n 'feature_[a-z_]+' src/            # find every reference to the flag name
 rg -n 'FEATURE_[A-Z_]+\s*=\s*(True|False)' .   # constant definitions
 ```
 
-Check for a remote-config writer (LaunchDarkly, Unleash, Firebase Remote Config, a config service) before removing anything — a flag with no local writer may still be set remotely, which makes the local branch dead but the flag alive.
+Check for a remote-config writer (LaunchDarkly, Unleash, Firebase Remote Config, a config service) before removing anything, a flag with no local writer may still be set remotely, which makes the local branch dead but the flag alive.
 
 Also: a flag whose value never changes at runtime is a constant, and the branches it guards are dead code. Remove the flag, the branches, and the code together.
 
@@ -183,12 +183,12 @@ Also: a flag whose value never changes at runtime is a constant, and the branche
 
 Build the route table and compare it with the links in the app:
 
-- Next.js `app/` and `pages/` — every file is a route by convention. A file not linked from anywhere may still be a valid deep link; check `sitemap`, `robots`, and external traffic before deleting.
-- React Router / Vue Router — `createBrowserRouter`, `routes.ts`, or `path:` declarations.
-- Express / FastAPI / NestJS — route decorators and `app.include_router`.
-- Django — `urls.py`; `path()` entries.
-- Rails — `config/routes.rb`.
-- Go — `net/http` `HandleFunc` calls, or a router library.
+- Next.js `app/` and `pages/`: every file is a route by convention. A file not linked from anywhere may still be a valid deep link; check `sitemap`, `robots`, and external traffic before deleting.
+- React Router / Vue Router: `createBrowserRouter`, `routes.ts`, or `path:` declarations.
+- Express / FastAPI / NestJS: route decorators and `app.include_router`.
+- Django: `urls.py`; `path()` entries.
+- Rails: `config/routes.rb`.
+- Go: `net/http` `HandleFunc` calls, or a router library.
 
 Compare the route table against actual navigation: `rg -n 'href="/' src/`, `to="/..."`, `navigate("/...")`, `router.push`. A route with zero inbound links is unreachable from the UI but may still be a public API (a webhook, a health check, a deep link from an email). Check webhooks, third-party integrations, and `fetch("/api/...")` calls before deleting.
 
@@ -205,7 +205,7 @@ Better: list the assets on disk and check each filename against the union of sou
 - Fonts referenced only through a CSS `@font-face` with a relative path.
 - Icons imported through an icon library that maps name to file.
 - Images referenced only from a `manifest.json`, an `og:image` meta tag, or a docs markdown file.
-- Source maps and chunks that are outputs, not sources — never delete build artifacts from the repo tree; regenerate them.
+- Source maps and chunks that are outputs, not sources, never delete build artifacts from the repo tree; regenerate them.
 
 ## Unused i18n keys
 
@@ -252,7 +252,7 @@ These are the cases that defeat static analysis. Grep the **string**, not just t
 | ORM / reflection | Models mapped by class name, `get_model("User")` | Grep for the model name as a string |
 | Database migrations | Migration files reference models by name | Never delete a migration or a model a migration touches |
 | Seeds and fixtures | `factory.create(User)` or a JSON fixture keyed by name | Grep the fixture directory |
-| Serialization | JSON schema, protobuf, GraphQL, OpenAPI — the type name is the wire format | Treat as a public contract |
+| Serialization | JSON schema, protobuf, GraphQL, OpenAPI, the type name is the wire format | Treat as a public contract |
 | Serverless / edge handlers | `functions/*.ts` picked up by file glob | Check the deploy config |
 | CLI entry points | `bin` in `package.json`, `console_scripts` in `pyproject.toml`, `[[bin]]` in `Cargo.toml` | Read the manifest |
 | Framework file routing | `pages/`, `app/`, `routes/`, `src/views/` | Every file is a route |
@@ -283,7 +283,7 @@ Treat these as "used" unless you have positive proof otherwise.
 - ORM entities and migration helpers.
 - Constants used through enum-like lookup (`MyEnum.FOO`).
 - `main` / `setup` / `teardown` / `beforeEach` hooks.
-- Anything referenced only from a comment or docstring — check whether that reference is real.
+- Anything referenced only from a comment or docstring, check whether that reference is real.
 - Files matched by a build config glob rather than an explicit import.
 - Decorator-registered handlers (CLI commands, task queues, event listeners).
 - Deprecation shims kept on purpose for backwards compatibility.

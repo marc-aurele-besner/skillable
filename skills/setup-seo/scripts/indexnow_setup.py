@@ -170,7 +170,7 @@ def cmd_plan(args: argparse.Namespace) -> int:
     print(f"stack:            {plan['stack']}")
     print(f"site-root dir:    {plan['key_file_dir']}")
     if not plan["key_file_dir_exists"]:
-        print("                  (does not exist yet — create it, or pass --out)")
+        print("                  (does not exist yet: create it, or pass --out)")
     if existing:
         print("existing key file(s):")
         for path in existing:

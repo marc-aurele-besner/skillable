@@ -2,7 +2,7 @@
 
 Each row: what to check, the tier, and the fix. Tiers are defined in `SKILL.md` step 3. Auditor codes in brackets are what `scripts/audit_site.py` reports.
 
-## P0 — invisible
+## P0: invisible
 
 | Check | Fix |
 |-------|-----|
@@ -15,7 +15,7 @@ Each row: what to check, the tier, and the fix. Tiers are defined in `SKILL.md` 
 | Important content only behind tabs/accordions that load on click | Render it in the HTML; hiding with CSS is fine, fetching on click is not |
 | Preview/staging domain indexable and duplicating production | `noindex` or robots block on non-production hosts via env |
 
-## P1 — undescribed
+## P1: undescribed
 
 | Check | Fix |
 |-------|-----|
@@ -29,7 +29,7 @@ Each row: what to check, the tier, and the fix. Tiers are defined in `SKILL.md` 
 | Missing `og:title`, `og:description`, `og:image`, `og:url`, `og:type`, `twitter:card` [`og-missing`] | Site defaults plus per-page overrides; absolute image URL; 1200 × 630; `summary_large_image` |
 | No `Organization` (or `Person`) and `WebSite` JSON-LD on the home page [`no-jsonld`] | Add one block with name, url, logo, `sameAs` (only real profiles listed in the repo) |
 
-## P2 — machine-readable
+## P2: machine-readable
 
 | Check | Fix |
 |-------|-----|
@@ -43,7 +43,7 @@ Each row: what to check, the tier, and the fix. Tiers are defined in `SKILL.md` 
 | Orphan pages (no internal links in) | Link from nav, hubs, or related-content blocks with descriptive anchor text |
 | Favicon / apple-touch-icon / web manifest missing | Use the framework's icon convention; reuse existing brand assets |
 
-## P3 — answerable content
+## P3: answerable content
 
 | Check | Fix |
 |-------|-----|

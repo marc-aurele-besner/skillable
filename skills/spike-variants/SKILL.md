@@ -1,9 +1,9 @@
 ---
 name: spike-variants
 description: >-
-  Implement the same feature N different ways at once — each variant built by
+  Implement the same feature N different ways at once, each variant built by
   its own subagent in its own isolated git worktree from a shared acceptance
-  contract — then run every variant through the project's tests, lint,
+  contract, then run every variant through the project's tests, lint,
   typecheck, and optional benchmark, publish a side-by-side comparison (diff
   size, new dependencies, test results, performance, trade-offs), and turn the
   chosen variant into a clean branch and pull request while cleaning up the
@@ -17,7 +17,7 @@ argument-hint: "<feature> [variants=3] [bench=\"<cmd>\"]"
 
 # Spike Variants
 
-Goal: replace "which approach should we take?" debates with evidence. Build N genuinely different implementations of the same feature in parallel, hold them to the same acceptance contract, measure them the same way, and let the user pick — then ship only the winner.
+Goal: replace "which approach should we take?" debates with evidence. Build N genuinely different implementations of the same feature in parallel, hold them to the same acceptance contract, measure them the same way, and let the user pick, then ship only the winner.
 
 ## When to use
 
@@ -38,23 +38,23 @@ Goal: replace "which approach should we take?" debates with evidence. Build N ge
 
 ## 0. Preflight
 
-1. `git fetch origin`; confirm the working tree is clean (stash nothing silently — if it is dirty, stop and ask).
+1. `git fetch origin`; confirm the working tree is clean (stash nothing silently, if it is dirty, stop and ask).
 2. Detect the project's commands from `package.json` scripts, `Makefile`, CI workflows, or docs: install, test, lint, typecheck, build. Run the test command once on the base to record a **baseline** (pass/fail counts, duration). If the baseline is already red, say so and record which tests fail so variants are not blamed for them.
 
 ## 1. Model the feature and the contract
 
 Before any variant is written, define what "done" means for all of them:
 
-- **Acceptance criteria** — 3–8 observable behaviors, including edge cases and error paths.
-- **Shared acceptance tests** — when the project has a test suite, write tests for the criteria against a stable public seam (route, exported function, component props, CLI). Commit them on a base branch `spike/<feature>` from `origin/<default>`. Every variant starts from this commit and must not edit these tests. If a stable seam is impossible before choosing an approach, write the criteria as a checklist each variant must demonstrate instead.
-- **Constraints** — performance budget, no new runtime dependencies (or allowed ones), compatibility targets, files that must not change.
+- **Acceptance criteria**: 3–8 observable behaviors, including edge cases and error paths.
+- **Shared acceptance tests**: when the project has a test suite, write tests for the criteria against a stable public seam (route, exported function, component props, CLI). Commit them on a base branch `spike/<feature>` from `origin/<default>`. Every variant starts from this commit and must not edit these tests. If a stable seam is impossible before choosing an approach, write the criteria as a checklist each variant must demonstrate instead.
+- **Constraints**: performance budget, no new runtime dependencies (or allowed ones), compatibility targets, files that must not change.
 
 ## 2. Diverge: choose distinct approaches
 
 Pick N approaches that differ in **architecture or strategy**, not style:
 
 - Where state lives (server vs. client, store vs. local, DB vs. cache)
-- Build vs. buy (hand-rolled vs. a library — name the library and its size)
+- Build vs. buy (hand-rolled vs. a library, name the library and its size)
 - Data flow (push vs. pull, sync vs. queue, optimistic vs. pessimistic)
 - Generality (narrow fix vs. reusable abstraction)
 
@@ -81,9 +81,9 @@ notes: what was hard, what was skipped, known gaps
 
 ## 4. Measure the same way
 
-After all variants return, re-run the checks yourself in each worktree — do not trust self-reports blindly. See [references/comparison-report.md](references/comparison-report.md) for the metric list and scoring rubric. At minimum: acceptance and suite results, lint/typecheck/build, diff size, new dependencies, bundle or binary size delta when the project builds one, the bench command (median of 5 runs) when given, and a short **code-fit** review (follows existing patterns, readability, extensibility, risk).
+After all variants return, re-run the checks yourself in each worktree, do not trust self-reports blindly. See [references/comparison-report.md](references/comparison-report.md) for the metric list and scoring rubric. At minimum: acceptance and suite results, lint/typecheck/build, diff size, new dependencies, bundle or binary size delta when the project builds one, the bench command (median of 5 runs) when given, and a short **code-fit** review (follows existing patterns, readability, extensibility, risk).
 
-A variant that cannot pass its acceptance tests stays in the report as **failed**, with the reason — that is a finding, not something to hide.
+A variant that cannot pass its acceptance tests stays in the report as **failed**, with the reason, that is a finding, not something to hide.
 
 ## 5. Publish the comparison
 
@@ -97,7 +97,7 @@ Then report:
 
 | Variant | Acceptance | Suite | Diff | New deps | Bench | Fit |
 | --- | --- | --- | --- | --- | --- | --- |
-| A · Server actions | 8/8 | ✅ | +214/−31 | — | 42 ms | ●●●○ |
+| A · Server actions | 8/8 | ✅ | +214/−31 |, | 42 ms | ●●●○ |
 
 **Recommendation:** <variant> because <one sentence>; runner-up <variant> if <condition>.
 **Pick one, mix (e.g. "A with C's retry logic"), or ask for another round.**
@@ -116,7 +116,7 @@ After the PR is open (or the user abandons the spike): remove every spike worktr
 ## Guardrails
 
 - Never modify the user's current working tree or branch; all work happens in worktrees.
-- Variants never push, open PRs, or touch shared remotes — only the converge step does.
+- Variants never push, open PRs, or touch shared remotes, only the converge step does.
 - Do not add dependencies the constraints forbid; flag licenses that differ from the project's.
 - Keep secrets out of the comparison page; redact env values from command output.
 

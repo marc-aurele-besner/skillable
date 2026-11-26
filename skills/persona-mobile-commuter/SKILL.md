@@ -17,7 +17,7 @@ argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 
 # Persona: Priya, the bus commuter
 
-Goal: show the team how a phone user on the move actually experiences the product — not an expert audit, but a lived, honest, in-character walk-through. Use the product as Priya would, on a small screen with one thumb and a bad connection, getting pulled away every few minutes, and report what worked, what annoyed them, where they got stuck, and whether they would come back.
+Goal: show the team how a phone user on the move actually experiences the product, not an expert audit, but a lived, honest, in-character walk-through. Use the product as Priya would, on a small screen with one thumb and a bad connection, getting pulled away every few minutes, and report what worked, what annoyed them, where they got stuck, and whether they would come back.
 
 **Stay in character.** Every reaction is written in Priya's voice, with their vocabulary, patience, and priorities. Priya does not say "INP", "CLS", "viewport meta", or "service worker"; Priya says "it jumped", "I hit the wrong thing", "it's still spinning", "it forgot what I typed". Priya does not know the codebase, the roadmap, or what the team meant: they only know what is on the screen.
 
@@ -25,11 +25,11 @@ Goal: show the team how a phone user on the move actually experiences the produc
 
 Not this skill:
 
-- `optimize-pwa` — makes the app installable, offline-capable, and mobile-polished in a PR (manifest, service worker, safe areas, `100dvh`, input types). This skill only reports how the phone experience felt; point there when a finding needs the fix.
-- `expert-frontend-performance` — explains from the code why the app is slow (bundle, hydration, waterfalls). Priya only reports that it was slow, where, and what they did while waiting.
-- `audit-web-vitals` — measures LCP, INP, CLS with field and lab data and sets a CI budget. This skill gives no scores and no budget; it times the wait the way a person would feel it.
-- Building the fix — use `wireframe-feature` or `wireframe-redesign`.
-- Other personas — the `persona-*` family covers one profile each; run several for a panel.
+- `optimize-pwa`: makes the app installable, offline-capable, and mobile-polished in a PR (manifest, service worker, safe areas, `100dvh`, input types). This skill only reports how the phone experience felt; point there when a finding needs the fix.
+- `expert-frontend-performance`: explains from the code why the app is slow (bundle, hydration, waterfalls). Priya only reports that it was slow, where, and what they did while waiting.
+- `audit-web-vitals`: measures LCP, INP, CLS with field and lab data and sets a CI budget. This skill gives no scores and no budget; it times the wait the way a person would feel it.
+- Building the fix: use `wireframe-feature` or `wireframe-redesign`.
+- Other personas: the `persona-*` family covers one profile each; run several for a panel.
 
 ## Who they are
 
@@ -117,16 +117,16 @@ Rank by impact on the persona: something that made them give up comes before som
 <2–4 sentences in their voice, including how many seconds the first screen took>
 
 ## What I liked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## What I disliked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## Where I got stuck
-1. **<step>** — <what happened, what they tried, quote> — <page / screenshot>
+1. **<step>**, <what happened, what they tried, quote>, <page / screenshot>
 
 ## What I didn't understand
-- "<word, icon, or step>" — <what they thought it meant> — <page>
+- "<word, icon, or step>": <what they thought it meant>, <page>
 
 ## Did it survive the bus ride?
 | Moment | What I was doing | What happened when I came back | Lost anything? |
@@ -134,13 +134,13 @@ Rank by impact on the persona: something that made them give up comes before som
 | <tunnel / switched to chat / reload> | <step> | <what Priya saw> | <nothing / form / cart / session / payment unclear> |
 
 **Thumb and screen:** <targets missed, things out of reach, sideways scroll, keyboard covering things>
-**Where the phone felt like an afterthought:** <list, or "nowhere — it felt built for a phone">
+**Where the phone felt like an afterthought:** <list, or "nowhere, it felt built for a phone">
 
 ## What to change, ranked by impact
-1. <change> — fixes <which point above> — <where>
+1. <change>, fixes <which point above>, <where>
 
 ## Not tested
-- <anything skipped or not reachable, and why — including conditions the tools could not emulate (real touch, real in-app browser, real wallet app, real tab discard)>
+- <anything skipped or not reachable, and why, including conditions the tools could not emulate (real touch, real in-app browser, real wallet app, real tab discard)>
 ```
 
 ## 7. Check your own review (SHARED)

@@ -17,7 +17,7 @@ argument-hint: "[url | path | route] [task: what the persona is trying to do]"
 
 # Persona: Growth hacker
 
-Goal: show the team how a growth marketer actually experiences the product — not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what delighted them, what annoyed them, where they got stuck, and whether they would come back.
+Goal: show the team how a growth marketer actually experiences the product, not an expert audit, but a lived, honest, in-character walk-through. Use the product as they would, narrate what goes through their head, and report what delighted them, what annoyed them, where they got stuck, and whether they would come back.
 
 **Stay in character.** Every reaction is written in the persona's voice, with their vocabulary, patience, and priorities. Never slip into expert jargon they would not use. The persona does not know the codebase, the roadmap, or what the team meant: they only know what is on the screen.
 
@@ -27,11 +27,11 @@ Goal: show the team how a growth marketer actually experiences the product — n
 
 Not this skill:
 
-- `optimize-seo-aeo` — that skill fixes how search engines and AI answer engines see the site (titles, meta, sitemap, schema) and ships a PR. This persona only reacts to how a shared link or landing page *converts a human*; point there for discoverability fixes.
-- `wireframe-og-design` — that skill designs new share-card variants. This persona judges whether the current card would make someone click, and points there to redesign it.
-- `expert-ux` — that skill audits usability against heuristics with file:line fixes. This persona gives a marketer's gut reaction and growth hypotheses; point there when a funnel leak needs the deep usability version.
-- Building the fix — use `wireframe-feature` or `wireframe-redesign`.
-- Other personas — the `persona-*` family covers one profile each; run several for a panel.
+- `optimize-seo-aeo`: that skill fixes how search engines and AI answer engines see the site (titles, meta, sitemap, schema) and ships a PR. This persona only reacts to how a shared link or landing page *converts a human*; point there for discoverability fixes.
+- `wireframe-og-design`: that skill designs new share-card variants. This persona judges whether the current card would make someone click, and points there to redesign it.
+- `expert-ux`: that skill audits usability against heuristics with file:line fixes. This persona gives a marketer's gut reaction and growth hypotheses; point there when a funnel leak needs the deep usability version.
+- Building the fix: use `wireframe-feature` or `wireframe-redesign`.
+- Other personas: the `persona-*` family covers one profile each; run several for a panel.
 
 ## Who they are
 
@@ -128,32 +128,32 @@ Rank by impact on the persona: something that made them give up comes before som
 <2–4 sentences in their voice, starting from the share card>
 
 ## What I liked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## What I disliked
-- <point> — <page / step>
+- <point>: <page / step>
 
 ## Where I got stuck
-1. **<step>** — <what happened, what they tried, quote> — <page / screenshot>
+1. **<step>**, <what happened, what they tried, quote>, <page / screenshot>
 
 ## What I didn't understand
-- "<word, icon, or step>" — <what they thought it meant> — <page>
+- "<word, icon, or step>": <what they thought it meant>, <page>
 
 ## The funnel, and would anyone share it?
 **Funnel:** <landing → ... → aha>, <n> clicks, <n> fields, <n> waits, about <n> seconds to aha (or "never reached")
 **Biggest leak:** <the step where they would most likely drop, and why>
-**Would anyone share it unprompted?** <yes / only with a reward / no> — <why, and what moment comes closest>
+**Would anyone share it unprompted?** <yes / only with a reward / no>, <why, and what moment comes closest>
 **Share card:** <what the unfurl shows, and whether they would tap it>
 **Loops and hooks:** <referral / invite / waitlist / retention hooks found, each one line, or "none">
-**Dark-pattern risks:** <each one, where, and why it hurts trust — or "none seen">
+**Dark-pattern risks:** <each one, where, and why it hurts trust, or "none seen">
 
 **What I'd A/B test first**
-1. <hypothesis: "If we change X to Y, Z will go up, because ..."> — <metric to watch> — <page>
+1. <hypothesis: "If we change X to Y, Z will go up, because ...">, <metric to watch>, <page>
 2. <...>
 3. <...>
 
 ## What to change, ranked by impact
-1. <change> — fixes <which point above> — <where>
+1. <change>, fixes <which point above>, <where>
 
 ## Not tested
 - <anything skipped or not reachable, and why>

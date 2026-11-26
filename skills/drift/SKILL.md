@@ -4,8 +4,8 @@ description: >-
   Answer one prompt with k distinct responses, each tagged with a self-assessed
   probability, ranked from conventional to wild (verbalized sampling, credit: OpenDrift,
   https://opendrift.app/). Use when the user wants every possibility instead of one
-  safe answer — brainstorming, naming, taglines, story openings, alternative designs,
-  unusual angles — or asks to "drift", "go wild", "sample the tails", or "show me
+  safe answer, brainstorming, naming, taglines, story openings, alternative designs,
+  unusual angles, or asks to "drift", "go wild", "sample the tails", or "show me
   the unlikely answers".
 argument-hint: "[prompt] [k=5] [tau=1.0]"
 ---
@@ -17,7 +17,7 @@ as a reply to the prompt, and rank them from conventional to wild.
 This is **verbalized sampling** (Zhang et al., 2025, "Verbalized Sampling: How to Mitigate Mode
 Collapse and Unlock LLM Diversity"). Asking a model for a *distribution of responses with
 probabilities* recovers diversity that preference tuning suppresses when you ask for *one* response.
-No external API is needed — you run the procedure yourself.
+No external API is needed: you run the procedure yourself.
 
 > **Credit:** the workflow, the k / τ / P dials, and the conventional → creative → wild tiers are
 > modeled on [OpenDrift](https://opendrift.app/) ("One prompt. Every possibility."). Use
@@ -39,7 +39,7 @@ If there is no prompt in the arguments or the conversation, ask for one in a sin
 ## Procedure
 
 1. **Frame the distribution.** Consider the full space of replies a capable model could give to the
-   prompt as written — tone, structure, interpretation, genre, premise. Do not narrow it to what you
+   prompt as written: tone, structure, interpretation, genre, premise. Do not narrow it to what you
    would normally say.
 
 2. **Sample k candidates.** Internally, draw the candidates as if prompted:
@@ -49,7 +49,7 @@ If there is no prompt in the arguments or the conversation, ask for one in a sin
    > distribution such that the probability of each response is less than τ).
 
    Rules:
-   - Each response answers the prompt fully and stands alone — no fragments or "variant of #2".
+   - Each response answers the prompt fully and stands alone, no fragments or "variant of #2".
    - Responses must differ in *substance* (premise, angle, form, interpretation), not just wording.
    - Keep every response within the prompt's hard constraints (length, format, audience). Wild
      means surprising, not off-task, unsafe, or incoherent.
@@ -58,10 +58,10 @@ If there is no prompt in the arguments or the conversation, ask for one in a sin
 3. **Assign probabilities.** For each response give `P` = your honest estimate of how likely a typical
    assistant reply to this prompt would be *essentially this answer*. Use two significant figures
    (e.g. 0.42, 0.07, 0.003). Probabilities describe separate points in a large space, so they need not
-   sum to 1 — but when τ = 1.0 the most typical answer should usually be present with the highest P.
+   sum to 1: but when τ = 1.0 the most typical answer should usually be present with the highest P.
 
 4. **Enforce τ.** Drop and resample any response with `P ≥ τ`. Never lower a P just to pass the
-   threshold — if the answer is genuinely typical, replace it with a less typical one.
+   threshold: if the answer is genuinely typical, replace it with a less typical one.
 
 5. **Tier and rank.** Sort by P descending and label each response:
 
@@ -88,7 +88,7 @@ Print the settings line, then the responses, most probable first. Show each resp
 <response text>
 ```
 
-After the list, add at most one line pointing out the response you would pick and why (optional —
+After the list, add at most one line pointing out the response you would pick and why (optional,
 skip it when the user only wants the spread). Do not pad with commentary about the method.
 
 ### Follow-ups

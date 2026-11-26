@@ -10,17 +10,17 @@ Score each changed area on two axes, then combine.
 
 | Score | Signals |
 |-------|---------|
-| 3 — high | New logic with branches; concurrency, retries, or async ordering; date/time math; parsing external input; migrations; no tests; area with recent `fix`/`revert` commits |
-| 2 — medium | Modified existing logic with some tests; config or default changes; new dependency or major bump; refactor touching many call sites |
-| 1 — low | Copy, styling, docs, rename with compiler/type coverage, pure additions behind a flag that is off |
+| 3: high | New logic with branches; concurrency, retries, or async ordering; date/time math; parsing external input; migrations; no tests; area with recent `fix`/`revert` commits |
+| 2: medium | Modified existing logic with some tests; config or default changes; new dependency or major bump; refactor touching many call sites |
+| 1: low | Copy, styling, docs, rename with compiler/type coverage, pure additions behind a flag that is off |
 
 **Blast radius**
 
 | Score | Signals |
 |-------|---------|
-| 3 — high | Money, auth, permissions, PII, data writes or deletion, anything irreversible; every user affected; public API or event schema other systems read |
-| 2 — medium | A core journey for some users; admin tools; background jobs with retry; caching layer |
-| 1 — low | A secondary screen, internal tooling, a reversible setting |
+| 3: high | Money, auth, permissions, PII, data writes or deletion, anything irreversible; every user affected; public API or event schema other systems read |
+| 2: medium | A core journey for some users; admin tools; background jobs with retry; caching layer |
+| 1: low | A secondary screen, internal tooling, a reversible setting |
 
 **Combined risk** = likelihood × radius: 7–9 Critical, 4–6 High, 2–3 Medium, 1 Low. Raise one level when the area is uncovered or has many callers; never lower a money/auth/data-loss area below High.
 
@@ -53,10 +53,10 @@ Recommend the lowest layer that would actually fail when the behavior breaks. Do
 
 ## Test plan priorities
 
-- **P0** — Critical-risk paths and every reproduced failure. Must exist before release.
-- **P1** — High-risk paths, main negative cases (permission denied, invalid input, provider error).
-- **P2** — Medium edge cases from the catalog that apply.
-- **P3** — Nice to have; list only if cheap.
+- **P0**: Critical-risk paths and every reproduced failure. Must exist before release.
+- **P1**: High-risk paths, main negative cases (permission denied, invalid input, provider error).
+- **P2**: Medium edge cases from the catalog that apply.
+- **P3**: Nice to have; list only if cheap.
 
 Cap the plan at what the team will actually run. A focused 10–20 row plan is usually right for a PR; group by feature for a release.
 
@@ -76,9 +76,9 @@ Cap the plan at what the team will actually run. A focused 10–20 row plan is u
 
 State it separately from the verdict:
 
-- **High** — existing behavior on a core path changes, or shared code with weak coverage was modified.
-- **Medium** — existing secondary behavior changes, or core changes that are well covered.
-- **Low** — additive change, behind a flag, or fully covered.
+- **High**: existing behavior on a core path changes, or shared code with weak coverage was modified.
+- **Medium**: existing secondary behavior changes, or core changes that are well covered.
+- **Low**: additive change, behind a flag, or fully covered.
 
 Always name *what* could regress and *for whom* ("users with saved carts from before v3", "API clients that send `limit=0`").
 
@@ -90,4 +90,4 @@ Always name *what* could regress and *for whom* ("users with saved carts from be
 - A monitor or alert on the metric that would show the failure (error rate on route X, refund mismatch count).
 - A rollback plan: revert the deploy, down-migration, or a data backfill script.
 
-Only suggest mitigations the project can actually use — check for an existing flag system or rollout tooling first.
+Only suggest mitigations the project can actually use, check for an existing flag system or rollout tooling first.
