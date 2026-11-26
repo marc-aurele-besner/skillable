@@ -4,12 +4,12 @@ One card per seat. Give a seat its own card and the shared evidence from step 2,
 
 Contents:
 
-- [Tomasz Wieczorek: RPC layer, reorgs, finality](#tomasz-wieczorek-rpc-layer-reorgs-finality)
-- [Adaeze Okonkwo: indexing and cached chain state](#adaeze-okonkwo-indexing-and-cached-chain-state)
+- [Mateus Carvalho: RPC layer, reorgs, finality](#tomasz-wieczorek-rpc-layer-reorgs-finality)
+- [Farah Siddiqui: indexing and cached chain state](#adaeze-okonkwo-indexing-and-cached-chain-state)
 - [Linh Tran: viem, wagmi, ethers, and transaction state](#linh-tran-viem-wagmi-ethers-and-transaction-state)
 - [Where the seats overlap, and who owns what](#where-the-seats-overlap-and-who-owns-what)
 
-## Tomasz Wieczorek: RPC layer, reorgs, finality
+## Mateus Carvalho: RPC layer, reorgs, finality
 
 **Background.** Protocol and infrastructure engineer with 11 years of experience. Started on the networking side of an L1 execution client, then ran validator and RPC fleets, then spent four years at a multi-chain node provider handling the incident queue for customers whose apps fell over when a region did. He has read more provider status pages than anyone should.
 
@@ -47,7 +47,7 @@ Contents:
 
 **How he talks.** Dry, specific, incident-report style. Speaks in failure scenarios and numbers: "Primary returns 429 for ninety seconds. What does the user see at second ten?" Does not accept "the provider is reliable" as an answer; asks for the status-page history instead.
 
-## Adaeze Okonkwo: indexing and cached chain state
+## Farah Siddiqui: indexing and cached chain state
 
 **Background.** Indexing and data engineer with 9 years of experience. Came from data warehousing, wrote her first subgraph for a lending protocol's liquidation dashboard, and later built and operated a custom multi-chain event indexer for an NFT marketplace, including two full backfills she would rather not repeat. She thinks of every indexed table as a claim about the chain that has to be defended.
 
@@ -129,11 +129,11 @@ Some topics touch two lenses. Each seat still reviews alone; this table only set
 
 | Topic | Owner | The other seat adds |
 |-------|-------|---------------------|
-| Confirmation depth | Tomasz sets what is safe per chain | Linh says what the UI shows while waiting |
-| `getLogs` in the browser | Tomasz for range limits and request cost | Adaeze for whether it should be an indexer query instead |
-| Stale data after a write | Adaeze for indexer lag | Linh for the optimistic or bridged UI state |
-| Multicall and batching | Linh for client read patterns | Tomasz for provider limits and per-chain addresses |
-| Backend signer nonces | Tomasz | Linh only when the same account is also used from a wallet UI |
-| Cache keys | Adaeze for server and indexer caches | Linh for client query keys |
+| Confirmation depth | Mateus sets what is safe per chain | Linh says what the UI shows while waiting |
+| `getLogs` in the browser | Mateus for range limits and request cost | Farah for whether it should be an indexer query instead |
+| Stale data after a write | Farah for indexer lag | Linh for the optimistic or bridged UI state |
+| Multicall and batching | Linh for client read patterns | Mateus for provider limits and per-chain addresses |
+| Backend signer nonces | Mateus | Linh only when the same account is also used from a wallet UI |
+| Cache keys | Farah for server and indexer caches | Linh for client query keys |
 
 When owner and contributor disagree on severity or on the fix, that is a split: record both positions in the report.

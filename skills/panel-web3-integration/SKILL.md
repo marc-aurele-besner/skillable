@@ -42,8 +42,8 @@ Not this skill:
 
 | Seat | Who | Lens | Asks |
 |------|-----|------|------|
-| **Tomasz Wieczorek** | Protocol and infrastructure engineer, 11 years, ran validator and RPC fleets for an L1 client team and then for a multi-chain node provider | The RPC layer: providers, rate limits, fallbacks, timeouts, reorgs, finality, per-chain differences | "What happens to this code when the provider returns a 429, a stale block, or nothing at all?" |
-| **Adaeze Okonkwo** | Indexing and data engineer, 9 years, built subgraphs and custom event indexers for a lending protocol and an NFT marketplace | Derived state: subgraphs, event indexers, log queries, caches of on-chain data, backfills | "How do you know this number matches the chain right now, and what tells you when it does not?" |
+| **Mateus Carvalho** | Protocol and infrastructure engineer, 11 years, ran validator and RPC fleets for an L1 client team and then for a multi-chain node provider | The RPC layer: providers, rate limits, fallbacks, timeouts, reorgs, finality, per-chain differences | "What happens to this code when the provider returns a 429, a stale block, or nothing at all?" |
+| **Farah Siddiqui** | Indexing and data engineer, 9 years, built subgraphs and custom event indexers for a lending protocol and an NFT marketplace | Derived state: subgraphs, event indexers, log queries, caches of on-chain data, backfills | "How do you know this number matches the chain right now, and what tells you when it does not?" |
 | **Linh Tran** | Senior web3 frontend developer, 8 years, shipped wallet and trading interfaces on ethers v5, then led migrations to viem and wagmi | The client: viem, wagmi, and ethers patterns, typed ABIs, transaction state machines, query caching, multi-chain config in the UI | "Which state is this transaction in, and can the UI ever say something the chain does not?" |
 
 Read `references/seats.md` before step 3: it holds each seat's full background, checklist, and the things that seat refuses to let slide.
@@ -65,7 +65,7 @@ Two additions for this domain. RPC and indexer calls are limited to a handful of
 | Path or route | One feature, package, or contract | Read it, then its entry points and callers |
 | Nothing | The whole project | Inventory first (step 1), propose the scope, and confirm before going deep |
 
-A focus word runs one seat only: `rpc` (Tomasz), `indexing` (Adaeze), `frontend` (Linh). Say in the report that the other two seats did not sit.
+A focus word runs one seat only: `rpc` (Mateus), `indexing` (Farah), `frontend` (Linh). Say in the report that the other two seats did not sit.
 
 Ask only when the target is ambiguous or too large to review in one pass. One question is worth asking early: which chains are live in production, since configs often list more chains than the product supports and severity depends on it.
 
@@ -119,7 +119,7 @@ Each seat returns:
 - its findings, each with a location, the evidence, the impact, and a concrete fix,
 - what it could not judge.
 
-### Tomasz Wieczorek: RPC layer, reorgs, finality
+### Mateus Carvalho: RPC layer, reorgs, finality
 
 - Is there more than one provider per production chain, wired so the app fails over on its own (viem `fallback`, ethers `FallbackProvider`), or is one URL a single point of failure? Do the fallbacks belong to different vendors, or to the same vendor twice?
 - Does any client fall back to the chain's default public RPC (`http()` with no URL, a chain definition's built-in endpoint) in production?
@@ -130,7 +130,7 @@ Each seat returns:
 - Do load-balanced reads stay consistent? A `latest` read that lands on a lagging node right after a write is the classic "my balance went backwards" bug.
 - Are per-chain differences respected: `eth_getLogs` range and result caps, block time, missing `finalized` tag, different Multicall3 address, L2 fee fields, and websocket support?
 
-### Adaeze Okonkwo: indexing and cached chain state
+### Farah Siddiqui: indexing and cached chain state
 
 - Does the indexer handle reorgs by design (a subgraph, Ponder, or a custom indexer that stores block hashes and rolls back), or does it insert rows at the head and never look back?
 - Are writes idempotent? Events should be keyed by chain id, transaction hash, and log index, so a retry or a re-delivered log updates one row instead of creating a second.
@@ -160,7 +160,7 @@ Lay the three sets of notes side by side.
 - **Solo findings:** raised by one seat. Let the other two challenge each one: is it real, is it in scope, is the severity right?
 - **Splits:** where seats disagree on a finding or on the fix. Record each position in one line, and name the fact, measurement, or decision that would settle it.
 
-Splits this panel often produces, and that are worth writing down instead of resolving by force: confirmation depth (Tomasz wants finality, Linh wants a fast UI), where truth lives (Adaeze wants one indexer, Linh wants direct reads for anything that gates an action), and how many providers are worth paying for.
+Splits this panel often produces, and that are worth writing down instead of resolving by force: confirmation depth (Mateus wants finality, Linh wants a fast UI), where truth lives (Farah wants one indexer, Linh wants direct reads for anything that gates an action), and how many providers are worth paying for.
 
 ## 5. Verify before reporting
 
@@ -196,8 +196,8 @@ ALWAYS use this template. Keep each seat's voice in its own summary line; keep f
 ## Where each expert landed
 | Seat | Answer | In one line |
 |------|--------|-------------|
-| Tomasz Wieczorek, RPC layer | <Yes / With fixes / No> | "<their summary, in their voice>" |
-| Adaeze Okonkwo, indexing | ... | ... |
+| Mateus Carvalho, RPC layer | <Yes / With fixes / No> | "<their summary, in their voice>" |
+| Farah Siddiqui, indexing | ... | ... |
 | Linh Tran, frontend | ... | ... |
 
 ## Findings
