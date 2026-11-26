@@ -42,8 +42,8 @@ Not this skill:
 
 | Seat | Who | Lens | Asks |
 |------|-----|------|------|
-| **Ngozi Adeyemi-Clarke** | Frontend performance engineer, 12 years on consumer web apps for markets where a 3-year-old Android phone on 3G is the normal customer | Core Web Vitals, rendering strategy, hydration, main-thread work, data fetching on the critical path | "What does the user see at one second, three seconds, and five, and when can they tap it?" |
-| **Tomasz Wieczorek** | Bundle and build specialist, 10 years maintaining build pipelines and design-system packages for large JavaScript monorepos | What ships to the browser and why: code splitting, tree shaking, dependencies, polyfills, third-party scripts | "Who asked for these bytes, and does this route need them before first paint?" |
+| **Chiamaka Eze** | Frontend performance engineer, 12 years on consumer web apps for markets where a 3-year-old Android phone on 3G is the normal customer | Core Web Vitals, rendering strategy, hydration, main-thread work, data fetching on the critical path | "What does the user see at one second, three seconds, and five, and when can they tap it?" |
+| **Arjun Venkataraman** | Bundle and build specialist, 10 years maintaining build pipelines and design-system packages for large JavaScript monorepos | What ships to the browser and why: code splitting, tree shaking, dependencies, polyfills, third-party scripts | "Who asked for these bytes, and does this route need them before first paint?" |
 | **Leilani Kahale-Ortiz** | Edge and caching engineer, 14 years across CDN operations and platform teams for media and e-commerce sites | Everything before and between the bytes: server response time, CDN, HTTP caching, compression, protocols, images and fonts on the wire | "Why did this request reach the origin at all?" |
 
 Read `references/seats.md` before step 3: it holds each seat's full background, checklist, and the things that seat refuses to let slide.
@@ -65,7 +65,7 @@ Measuring is allowed: reading files, GET requests to the project's own URLs, lab
 | Path or route | One feature, package, or route | Read it, then its entry points and callers |
 | Nothing | The whole project | Inventory first (step 1), propose the scope, and confirm before going deep |
 
-A focus word runs one seat only: `rendering` (Ngozi), `bundle` (Tomasz), `edge` (Leilani). Say in the report that the other two seats did not sit.
+A focus word runs one seat only: `rendering` (Chiamaka), `bundle` (Arjun), `edge` (Leilani). Say in the report that the other two seats did not sit.
 
 Ask only when the target is ambiguous or too large to review in one pass.
 
@@ -109,7 +109,7 @@ Each seat returns:
 
 For this panel, "impact" means a cost on a named route (ms, KB compressed, round trips, or a vitals metric moved) and a rough effort for the fix (hours, days, or a rearchitecture). The ranking in step 4 depends on both.
 
-### Ngozi Adeyemi-Clarke: Core Web Vitals, rendering, hydration
+### Chiamaka Eze: Core Web Vitals, rendering, hydration
 
 - What is the LCP element on each key route, and what stands between the first byte and it: a client-side fetch, a font, a lazy-loaded hero image, a JS-rendered shell?
 - Does content arrive in the HTML, or does the phone have to download, parse, and run the app before anything useful paints?
@@ -120,7 +120,7 @@ For this panel, "impact" means a cost on a named route (ms, KB compressed, round
 - Do taps get feedback within 200 ms on the throttled profile, or does the UI wait on the network or a heavy render before responding?
 - Do long lists, tables, or feeds render everything at once?
 
-### Tomasz Wieczorek: bundles, build, third-party scripts
+### Arjun Venkataraman: bundles, build, third-party scripts
 
 - How much JavaScript does each key route load before it is usable, compressed and uncompressed, and what are the five largest modules in it?
 - Which heavy libraries sit in the entry or shared chunk but are used on one route, behind a click, or below the fold?
@@ -150,7 +150,7 @@ Lay the three sets of notes side by side.
 - **Solo findings:** raised by one seat. Let the other two challenge each one: is it real, is it in scope, is the severity right?
 - **Splits:** where seats disagree on a finding or on the fix. Record each position in one line, and name the fact, measurement, or decision that would settle it.
 
-Then rank. Order the surviving findings by the time they give back to a user on the throttled profile on the most important route, and break ties by effort. Check for one cause seen three ways: a slow LCP that Ngozi blames on client rendering, Tomasz on bundle size, and Leilani on an uncached document is often a single finding with one best fix. Merge it and credit all three seats.
+Then rank. Order the surviving findings by the time they give back to a user on the throttled profile on the most important route, and break ties by effort. Check for one cause seen three ways: a slow LCP that Chiamaka blames on client rendering, Arjun on bundle size, and Leilani on an uncached document is often a single finding with one best fix. Merge it and credit all three seats.
 
 ## 5. Verify before reporting
 
@@ -187,8 +187,8 @@ ALWAYS use this template. Keep each seat's voice in its own summary line; keep f
 ## Where each expert landed
 | Seat | Answer | In one line |
 |------|--------|-------------|
-| Ngozi Adeyemi-Clarke, rendering and vitals | <Yes / With fixes / No> | "<their summary, in their voice>" |
-| Tomasz Wieczorek, bundles and build | ... | ... |
+| Chiamaka Eze, rendering and vitals | <Yes / With fixes / No> | "<their summary, in their voice>" |
+| Arjun Venkataraman, bundles and build | ... | ... |
 | Leilani Kahale-Ortiz, edge and caching | ... | ... |
 
 ## Findings

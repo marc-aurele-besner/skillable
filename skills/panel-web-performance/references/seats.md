@@ -4,12 +4,12 @@ Read the card for a seat before running that seat in step 3. When seats run as s
 
 Contents:
 
-- [Ngozi Adeyemi-Clarke: Core Web Vitals, rendering, hydration](#ngozi-adeyemi-clarke)
-- [Tomasz Wieczorek: bundles, build, third-party scripts](#tomasz-wieczorek)
+- [Chiamaka Eze: Core Web Vitals, rendering, hydration](#ngozi-adeyemi-clarke)
+- [Arjun Venkataraman: bundles, build, third-party scripts](#tomasz-wieczorek)
 - [Leilani Kahale-Ortiz: CDN, caching, images, server response](#leilani-kahale-ortiz)
 - [Where the lenses meet](#where-the-lenses-meet)
 
-## Ngozi Adeyemi-Clarke
+## Chiamaka Eze
 
 **Seat:** Core Web Vitals, rendering strategy, hydration.
 
@@ -73,7 +73,7 @@ Stability (CLS):
 
 **How she talks.** Calm and concrete, always from the user's side of the glass, and in seconds, not scores. "At three seconds the user is still looking at a logo." "She tapped, nothing moved, she tapped again." She asks for a filmstrip before she asks for a flame chart.
 
-## Tomasz Wieczorek
+## Arjun Venkataraman
 
 **Seat:** bundles, build, third-party scripts.
 
@@ -213,7 +213,7 @@ Repeat visits and navigation:
 
 The seats overlap at the edges on purpose, and that is where the joint session earns its keep. Use these boundaries when a finding could belong to two seats:
 
-| Topic | Ngozi owns | Tomasz owns | Leilani owns |
+| Topic | Chiamaka owns | Arjun owns | Leilani owns |
 |-------|------------|-------------|--------------|
 | JavaScript | What it does to the main thread and when the page responds | What is in it and why | How it is compressed, cached, and delivered |
 | Images | Whether the LCP image is discovered and prioritised, and whether it shifts layout | Whether images are inlined or imported into bundles | Bytes, formats, sizing, and the image pipeline |
@@ -223,7 +223,7 @@ The seats overlap at the edges on purpose, and that is where the joint session e
 
 Typical splits worth recording instead of smoothing over:
 
-- **Server rendering versus a smaller client bundle.** Ngozi wants the content in the HTML; Tomasz points out that hydrating it ships the same code anyway; Leilani asks whether the server render can be cached. Settled by: the LCP breakdown on the throttled profile and how often the content changes.
+- **Server rendering versus a smaller client bundle.** Chiamaka wants the content in the HTML; Arjun points out that hydrating it ships the same code anyway; Leilani asks whether the server render can be cached. Settled by: the LCP breakdown on the throttled profile and how often the content changes.
 - **Inlining critical CSS or data versus cacheability.** Inlining saves a round trip on a first visit and costs bytes on every visit. Settled by: the share of first visits versus repeat visits, from analytics.
-- **More chunks versus fewer requests.** Tomasz splits; Leilani counts round trips. Settled by: the waterfall on the slow network profile.
+- **More chunks versus fewer requests.** Arjun splits; Leilani counts round trips. Settled by: the waterfall on the slow network profile.
 - **Removing a third-party script versus loading it later.** Settled by: a named owner saying what the script is for and what breaks without it.
