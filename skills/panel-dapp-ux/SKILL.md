@@ -8,11 +8,12 @@ description: >-
   flow without confusion or lost funds? Each expert reviews independently,
   then the panel records disagreements and gives one joint verdict with fixes
   ranked by impact, each tied to a file:line or URL. Read-only and advisory;
-  never signs. Use whenever the user asks to review their dApp UX, a wallet
-  connect or transaction flow, or web3 onboarding, or asks "why do users drop
-  off before their first transaction". Also triggers on /panel-dapp-ux with an
-  optional target (path, URL, or PR). For a deep pass on the integration
-  layer, use expert-web3-dapp instead.
+  never signs. Use whenever the user wants several expert opinions or a second
+  opinion, or asks to review their dApp UX, a wallet connect or transaction
+  flow, or web3 onboarding, or asks "why do users drop off before their first
+  transaction". Also triggers on /panel-dapp-ux with an optional target (path,
+  URL, or PR). For a deep pass on the integration layer, use expert-web3-dapp
+  instead.
 argument-hint: "[target: path | url | pr] [focus: wallet|onboarding|aa|all]"
 ---
 

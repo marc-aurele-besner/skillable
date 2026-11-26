@@ -7,11 +7,11 @@ description: >-
   and which fixes win most? Each expert reviews independently, then the panel
   records disagreements and gives one joint verdict with fixes ranked by
   impact, each tied to a file:line or URL. Read-only and advisory. Use
-  whenever the user asks to make a site faster, for a performance review, why
-  an app is slow, or "is this fast enough to ship?". Also triggers on
-  /panel-web-performance with an optional target (path, URL, or PR). For a
-  quick single-lens pass on the source, use expert-frontend-performance
-  instead.
+  whenever the user wants several expert opinions or a second opinion, or asks
+  to make a site faster, for a performance review, why an app is slow, or "is
+  this fast enough to ship?". Also triggers on /panel-web-performance with an
+  optional target (path, URL, or PR). For a quick single-lens pass on the
+  source, use expert-frontend-performance instead.
 argument-hint: "[target: path | url | pr] [focus: rendering|bundle|edge|all]"
 ---
 

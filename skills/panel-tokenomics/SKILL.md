@@ -7,12 +7,13 @@ description: >-
   and what should change? Each expert reviews independently, then the panel
   records disagreements and gives one joint verdict with fixes ranked by
   impact, each tied to a file:line, contract address, or doc URL. Read-only
-  and advisory; not financial or legal advice. Use whenever the user asks to
-  review tokenomics, a token design, an emission schedule, an incentive model,
-  or a points or airdrop program, or asks "will this token survive when the
-  rewards stop?". Also triggers on /panel-tokenomics with an optional target
-  (path, URL, PR, or chain:address). For a deep single-expert economic audit,
-  use expert-tokenomics instead.
+  and advisory; not financial or legal advice. Use whenever the user wants
+  several expert opinions or a second opinion, or asks to review tokenomics, a
+  token design, an emission schedule, an incentive model, or a points or
+  airdrop program, or asks "will this token survive when the rewards stop?".
+  Also triggers on /panel-tokenomics with an optional target (path, URL, PR,
+  or chain:address). For a deep single-expert economic audit, use
+  expert-tokenomics instead.
 argument-hint: "[target: path | url | pr | chain:address] [focus: economics|mechanism|compliance|all]"
 ---
 

@@ -9,11 +9,11 @@ description: >-
   expert reviews independently, then the panel records disagreements and gives
   one joint verdict with fixes ranked by impact, each tied to a file:line.
   Defensive, read-only, and advisory: it never exploits or scans anything. Use
-  whenever the user asks to security review their app, wants an OWASP check,
-  an auth review, or a pentest-style review, or asks "is my app safe to
-  ship?". Also triggers on /panel-web-app-security with an optional target
-  (path, URL, or PR). For a deep single-expert code pass, use expert-appsec
-  instead.
+  whenever the user wants several expert opinions or a second opinion, or asks
+  to security review their app, wants an OWASP check, an auth review, or a
+  pentest-style review, or asks "is my app safe to ship?". Also triggers on
+  /panel-web-app-security with an optional target (path, URL, or PR). For a
+  deep single-expert code pass, use expert-appsec instead.
 argument-hint: "[target: path | url | pr] [focus: appsec|identity|supply-chain|all]"
 ---
 

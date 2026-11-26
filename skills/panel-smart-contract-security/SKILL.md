@@ -7,11 +7,12 @@ description: >-
   deploy with real value, and what must change first? Each expert reviews
   independently, then the panel records disagreements and gives one joint
   verdict with fixes ranked by impact, each tied to a file:line. Read-only and
-  advisory. Use whenever the user asks to audit a contract, asks "is this
-  contract safe", wants a pre-audit check or a second opinion before mainnet,
-  or wants expert opinions on a vault, token, bridge, or DeFi protocol. Also
-  triggers on /panel-smart-contract-security with an optional target (path,
-  PR, or address). For a deep single-auditor pass with PoCs, use
+  advisory. Use whenever the user wants several expert opinions or a second
+  opinion, or asks to audit a contract, asks "is this contract safe", wants a
+  pre-audit check or a second opinion before mainnet, or wants expert opinions
+  on a vault, token, bridge, or DeFi protocol. Also triggers on
+  /panel-smart-contract-security with an optional target (path, PR, or
+  address). For a deep single-auditor pass with PoCs, use
   expert-smart-contract-security instead.
 argument-hint: "[target: path | pr | address] [focus: audit|exploit|invariants|all]"
 ---

@@ -7,12 +7,13 @@ description: >-
   runaway bill, and what should change now versus later? Each expert reviews
   independently, then the panel records disagreements and gives one joint
   verdict with fixes ranked by impact, each tied to a file:line or URL.
-  Read-only and advisory. Use whenever the user asks for an architecture,
-  system design, scalability, or capacity review, asks "will this scale" or
-  "what breaks at 10x", wants to cut cloud cost, or wants a second opinion on
-  a backend design. Also triggers on /panel-architecture-scalability with an
-  optional target (path, URL, or PR). For a deep pass on the API and data
-  layer use expert-backend instead, and expert-appsec for security.
+  Read-only and advisory. Use whenever the user wants several expert opinions
+  or a second opinion, or asks for an architecture, system design,
+  scalability, or capacity review, asks "will this scale" or "what breaks at
+  10x", wants to cut cloud cost, or wants a second opinion on a backend
+  design. Also triggers on /panel-architecture-scalability with an optional
+  target (path, URL, or PR). For a deep pass on the API and data layer use
+  expert-backend instead, and expert-appsec for security.
 argument-hint: "[target: path | url | pr] [focus: backend|reliability|cost|all]"
 ---
 

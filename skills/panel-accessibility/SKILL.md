@@ -7,11 +7,12 @@ description: >-
   which blockers must be fixed before shipping? Each expert reviews
   independently, then the panel records disagreements and gives one joint
   verdict with fixes ranked by impact, each tied to a file:line or URL.
-  Read-only and advisory. Use whenever the user asks for an accessibility
-  audit, a11y review, WCAG check, or screen reader support review, or asks "is
-  this accessible enough to ship?". Also triggers on /panel-accessibility with
-  an optional target (path, URL, or PR). For a criterion-by-criterion WCAG 2.2
-  AA pass, use expert-accessibility instead.
+  Read-only and advisory. Use whenever the user wants several expert opinions
+  or a second opinion, or asks for an accessibility audit, a11y review, WCAG
+  check, or screen reader support review, or asks "is this accessible enough
+  to ship?". Also triggers on /panel-accessibility with an optional target
+  (path, URL, or PR). For a criterion-by-criterion WCAG 2.2 AA pass, use
+  expert-accessibility instead.
 argument-hint: "[target: path | url | pr] [focus: standards|assistive|inclusive|all]"
 ---
 

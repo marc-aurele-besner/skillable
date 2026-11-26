@@ -7,10 +7,11 @@ description: >-
   first? Each expert reviews independently, then the panel records
   disagreements and gives one joint verdict with fixes ranked by impact, each
   tied to a file:line or URL. Read-only and advisory. Use whenever the user
-  asks for a UI review, a design critique, to polish their UI, or asks "does
-  this look good" or "is this design ready to ship". Also triggers on
-  /panel-ui-design with an optional target (path, URL, or PR). For a
-  single-expert deep pass on the visual layer, use expert-ui instead.
+  wants several expert opinions or a second opinion, or asks for a UI review,
+  a design critique, to polish their UI, or asks "does this look good" or "is
+  this design ready to ship". Also triggers on /panel-ui-design with an
+  optional target (path, URL, or PR). For a single-expert deep pass on the
+  visual layer, use expert-ui instead.
 argument-hint: "[target: path | url | pr] [focus: hierarchy|system|brand|all]"
 ---
 

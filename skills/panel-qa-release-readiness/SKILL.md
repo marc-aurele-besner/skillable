@@ -7,11 +7,12 @@ description: >-
   checks that would make it so? Each expert reviews independently, then the
   panel records disagreements and gives one joint verdict with a minimum ship
   list ranked by impact, each finding tied to a file:line or URL. Read-only
-  and advisory. Use whenever the user asks for a QA review, a release check, a
-  go or no-go, or asks "is this ready to ship" or "what could break". Also
-  triggers on /panel-qa-release-readiness with an optional target (path, URL,
-  PR, or release range). For a single-expert deep pass with a full risk model,
-  use expert-qa instead.
+  and advisory. Use whenever the user wants several expert opinions or a
+  second opinion, or asks for a QA review, a release check, a go or no-go, or
+  asks "is this ready to ship" or "what could break". Also triggers on
+  /panel-qa-release-readiness with an optional target (path, URL, PR, or
+  release range). For a single-expert deep pass with a full risk model, use
+  expert-qa instead.
 argument-hint: "[target: path | url | pr | release-range] [focus: risk|automation|exploratory|all]"
 ---
 

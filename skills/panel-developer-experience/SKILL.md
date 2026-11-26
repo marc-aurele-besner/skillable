@@ -7,10 +7,11 @@ description: >-
   stops them? Each expert reviews independently, then the panel records
   disagreements and gives one joint verdict with fixes ranked by impact, each
   tied to a file:line or URL. Read-only and advisory. Use whenever the user
-  asks for a DX review, "review my SDK", an API or docs review, a second
-  opinion before publishing a package, or asks "is my library easy to use".
-  Also triggers on /panel-developer-experience with an optional target (path,
-  URL, or PR). For one deep developer-experience pass, use expert-dx instead.
+  wants several expert opinions or a second opinion, or asks for a DX review,
+  "review my SDK", an API or docs review, a second opinion before publishing a
+  package, or asks "is my library easy to use". Also triggers on
+  /panel-developer-experience with an optional target (path, URL, or PR). For
+  one deep developer-experience pass, use expert-dx instead.
 argument-hint: "[target: path | url | pr] [focus: onboarding|api|docs|all]"
 ---
 
